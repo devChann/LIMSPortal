@@ -1,0 +1,23 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "v4.0.0",
+    "jquery-validation": "1.14.0",
+    "jquery-validation-unobtrusive": "3.2.6",
+    "ol3-layerswitcher": "1.1.2",
+    "maptiks-leaflet": "https://cdn.maptiks.com/maptiks-leaflet.min.js",
+    "ol3-popup": "1.0.3",
+    "requirejs": "2.3.3",
+    "chart.js": "2.5.0",
+    "jquery.easing": "v1.3.1",
+    "twitter-bootstrap-wizard": "1.4.2",
+    "jquery": "3.3.1",
+    "leaflet": "v1.3.1",
+    "bower-ol3": "ol3#v3.10.1",
+    "openlayers3": "v3.0.0"
+  },
+  "resolutions": {
+    "bootstrap": "v4.0.0"
+  }
+}

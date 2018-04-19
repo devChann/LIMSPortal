@@ -1,0 +1,168 @@
+﻿/*custom font*/
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url(https://fonts.googleapis.com/css?family=Oxygen);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+html, body {
+    height: 100%;
+    font-family: Roboto, arial, verdana;
+}
+
+.container {
+    min-height: 100%;
+    position: relative;
+}
+
+.header-content {
+    width: 100%;
+}
+
+.navbar-nav > li {
+    display: inline-block;
+}
+
+.navbar-collapse {
+    margin-left: 70px;
+}
+
+.body-content {
+    padding: 10px;
+    padding-bottom: 100px; /* Height of the footer */
+}
+
+footer-content {
+    bottom: 0;
+    height: 100px;
+}
+
+.footer-text {
+    margin-top: 30px;
+}
+
+
+div.col-sm-3, div.col-sm-9 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+div.col-sm-3 {
+    margin-right: auto;
+    z-index: 2;
+}
+
+li .glyphicon {
+    margin-right: 10px;
+}
+
+/* Highlighting rules for nav menu items */
+li.link-active a,
+li.link-active a:hover,
+li.link-active a:focus {
+    background-color: #4189C7;
+    color: white;
+}
+
+
+.list-group-item {
+    border: none;
+}
+
+
+@media (min-width: 992px) {
+    .row .no-float {
+        display: table-cell;
+        float: none;
+    }
+}
+
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Start Map Styles*/
+.map {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+    height: 100%
+}
+
+
+.ol-zoom {
+    z-index: 10000;
+    left: 50px;
+    top: 10%
+}
+/*End Map Styles*/
+
+.row.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+    .row.no-gutters > [class^="col-"],
+    .row.no-gutters > [class*=" col-"] {
+        padding-right: 0;
+        padding-left: 15px;
+    }
+
+
+.btn-search {
+    background: #424242;
+    border-radius: 0;
+    color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #1c1c1c;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+    .btn-search:link, .btn-search:visited {
+        color: #fff;
+    }
+
+    .btn-search:active, .btn-search:hover {
+        background: #1c1c1c;
+        color: #fff;
+    }
+
+.input-group {
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.btn-search {
+    background: #424242;
+    border-radius: 0;
+    color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #1c1c1c;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+    .btn-search:link, .btn-search:visited {
+        color: #fff;
+    }
+
+    .btn-search:active, .btn-search:hover {
+        background: #1c1c1c;
+        color: #fff;
+    }
+
+.input-group {
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+#pane-input-fields {
+    padding-top: 12px;
+    margin-left: 15px;
+}
