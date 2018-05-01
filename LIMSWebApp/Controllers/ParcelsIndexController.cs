@@ -479,13 +479,13 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> payments(int? id)
+        public async Task<IActionResult> payments(int id)
         {
 
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
             var parcels = await _context.Parcel
                 .Include(c => c.Administration)
                 
