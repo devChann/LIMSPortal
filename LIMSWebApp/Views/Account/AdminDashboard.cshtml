@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "UserProfile";
+    Layout = "_LayoutAdmin";
+}
+ 
+<div>
+    <div class="row no-gutters">
+        <div class="col-sm-3 col-md-3 left_col">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <span class="glyphicon glyphicon-user text-success">
+                                </span>Manage user Accounts
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-briefcase"></span><a asp-controller="ApplicationRole" asp-action="Index">Add Role</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-edit text-success"></span><a asp-controller="ApplicationRole" asp-action="Index">Edit User Roles</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-adjust text-info"></span><a asp-controller="User" asp-action="Index">Add User</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-pencil text-success"></span><a asp-controller="User" asp-action="Index">Edit User Info</a>
+
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                <span class="glyphicon glyphicon-tasks">
+                                </span>Parcels Management
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-briefcase"></span><a asp-controller="ParcelsIndex" asp-action="Search">Land Parcels</a>
+                                    </td>
+                                </tr>
+                                
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                <span class="glyphicon glyphicon-user">
+                                </span>Admin Account
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        @await Html.PartialAsync("_LoginPartial.cshtml")
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-9">
+
+            <div>
+                @await Html.PartialAsync("~/Views/Dashboard/Index.cshtml")
+            </div>
+
+        </div>
+    </div>
+</div>

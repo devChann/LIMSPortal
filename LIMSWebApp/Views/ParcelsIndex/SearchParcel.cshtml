@@ -1,0 +1,87 @@
+﻿@model LIMSWebApp.ViewModels.LIMSViewModels.ParcelSearchViewModel
+@{
+    ViewData["Title"] = "Search Land Parcel";
+    Layout = "_LayoutNav";
+}
+<a style="font-size:smaller;color:black" @Html.ActionLink("Rates Payment", "payments", "ParcelsIndex", new { id = Model.ID }) </a>|
+<a style="font-size:smaller;color:black" @Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </a>|
+<a style="font-size:smaller;color:black" @Html.ActionLink("View On Map", "MapView", "ParcelsIndex", new { id = Model.ID })</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2" style="color:white">
+
+
+
+
+                </div>
+                <div class="col-md-8" id="=intro">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="panel panel-default" id="info">
+                                <div class="panel-heading">
+
+                                    <h3 class="panel-title">
+                                        Parcel Details
+                                    </h3>
+                                </div>
+                                <div class="panel-body p" style="box-shadow:0px 0px 1px 1px;border-bottom-left-radius:10px;border-top-left-radius:10px;border-bottom-right-radius:10px;border-top-right-radius:10px">
+                                    <p>Parcel Number: @Html.DisplayFor(modelItem => Model.ParcelNumber)</p>
+                                    <p>Area of Parcel: @Html.DisplayFor(modelItem => Model.Area)</p>
+                                    <p>District: @Html.DisplayFor(modelItem => Model.AdministrationArea)</p>
+                                    <p>LandUse : @Html.DisplayFor(modelItem => Model.landUse)</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        Owners Details
+                                    </h3>
+                                </div>
+                                <div class="panel-body" style="box-shadow:0px 0px 1px 1px;border-bottom-left-radius:10px;border-top-left-radius:10px;border-bottom-right-radius:10px;border-top-right-radius:10px">
+                                    <p>Name: @Html.DisplayFor(modelItem => Model.Name)</p>
+                                    <p>PIN: @Html.DisplayFor(modelItem => Model.PIN)</p>
+                                    <p>Postal Adress: @Html.DisplayFor(modelItem => Model.Adress)</p>
+                                    <p>Phone: @Html.DisplayFor(modelItem => Model.Phone)</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Other Parcel Details
+                            </h3>
+                        </div>
+                        <div class="panel-body " style="box-shadow:0px 0px 1px 1px;border-bottom-left-radius:10px;border-top-left-radius:10px;border-bottom-right-radius:10px;border-top-right-radius:10px">
+                            <p>Tenure Type: @Html.DisplayFor(modelItem => Model.Tenure)</p>
+                            <p>Spatial Unit Type: @Html.DisplayFor(modelItem => Model.SpatialUnitType)</p>
+                            <p>Valuation Remarks: @Html.DisplayFor(modelItem => Model.ValuationRemarks)</p>
+                            <p>Valuer: @Html.DisplayFor(modelItem => Model.Valuer)</p>
+                            <p>Registration Type: @Html.DisplayFor(modelItem => Model.RegistrationType)</p>
+                            <p>Registration Section: @Html.DisplayFor(modelItem => Model.RegistrationSection)</p>
+                            <p>Registration Date: @Html.DisplayFor(modelItem => Model.RegistrationDate)</p>
+                            <p>Morgage: @Html.DisplayFor(modelItem => Model.MAmount)</p>
+                            <p>Lender: @Html.DisplayFor(modelItem => Model.Lender)</p>
+                            <p>Charge Amount: @Html.DisplayFor(modelItem => Model.amount)</p>
+                            <p>Charge Lender: @Html.DisplayFor(modelItem => Model.ChargeLender)</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

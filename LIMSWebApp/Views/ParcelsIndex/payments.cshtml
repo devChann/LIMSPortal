@@ -1,0 +1,113 @@
+﻿@model LIMSWebApp.ViewModels.LIMSViewModels.ParcelSearchViewModel;
+@{
+    ViewData["Title"] = "Payments";
+    Layout = "_LayoutNav";
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2" style="color:white">
+                    @*<a style="font-size:smaller;color:black" @Html.ActionLink("Download", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </a>|
+                    @*<a* style="font-size:smaller;color:black" @Html.ActionLink("Rates Payment", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </a>*@
+                </div>
+                <div class="col-md-8" id="=intro">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-default" id="info">
+                                <div class="panel-heading">
+
+                                    <h3 class="panel-title">
+                                        Parcel Details
+                                    </h3>
+                                </div>
+                                <div class="panel-body p" style="box-shadow:0px 0px 1px 1px;border-bottom-left-radius:10px;border-top-left-radius:10px;border-bottom-right-radius:10px;border-top-right-radius:10px">
+                                    <p>Parcel Number: @Html.DisplayFor(modelItem => Model.ParcelNumber)</p>
+                                    <p>Area of Parcel: @Html.DisplayFor(modelItem => Model.Area)</p>
+                                    <p>District: @Html.DisplayFor(modelItem => Model.AdministrationArea)</p>
+                                    <p>LandUse : @Html.DisplayFor(modelItem => Model.landUse)</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        Owners Details
+                                    </h3>
+                                </div>
+                                <div class="panel-body" style="box-shadow:0px 0px 1px 1px;border-bottom-left-radius:10px;border-top-left-radius:10px;border-bottom-right-radius:10px;border-top-right-radius:10px">
+                                    <p>Name: @Html.DisplayFor(modelItem => Model.Name)</p>
+                                    <p>PIN: @Html.DisplayFor(modelItem => Model.PIN)</p>
+                                    <p>Postal Adress: @Html.DisplayFor(modelItem => Model.Adress)</p>
+                                    <p>Phone: @Html.DisplayFor(modelItem => Model.Phone)</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Payment History
+                            </h3>
+                        </div>
+                        <div class="panel-body " style="box-shadow:0px 0px 1px 1px;border-bottom-left-radius:10px;border-top-left-radius:10px;border-bottom-right-radius:10px;border-top-right-radius:10px">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Receipt Number</th>
+                                        <th>Mode Of Payment</th>
+                                        <th>Payment Date</th>
+                                        <th>Amount Paid</th>
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Payment)
+                                        {
+                                            string selectedRow = "";
+                                                if (item.Id == (int?)ViewData["Rateid"])
+                                                         {
+                                                             selectedRow = "success";
+                                                          }
+                            <tr class="@selectedRow">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ReceiptNo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModeOfPayment)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PaymentDate)
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                               
+                            </tr>
+                                     }
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<link id="cartApiUrl"
+    href="@Url.RouteUrl("DefaultApi",
+            new { httproute = "", controller = "Cart",action=})"
+    rel="api" />*@

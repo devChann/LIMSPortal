@@ -1,0 +1,82 @@
+﻿<h1>Admin Panel</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <span class="glyphicon glyphicon-folder-close">
+                                </span>User Management 
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <table class="table">
+                                
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file text-success"></span><a asp-controller="ApplicationRole" asp-action="Index">Manage Roles</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file text-info"></span><a asp-controller="User" asp-action="Index">Manage Users(Staff)</a>
+                                    </td>
+                                </tr>
+                                                            
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                <span class="glyphicon glyphicon-user">
+                                </span>Account
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @await Html.PartialAsync("~/Views/Shared/_LoginPartial.cshtml")
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                <span class="glyphicon glyphicon-file">
+                                </span>Reports
+                            </a>
+                        </h4>
+                    </div>
+                    @*<div id="collapseFour" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-file"></span><a href="">files</a>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-9">
+            <div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
