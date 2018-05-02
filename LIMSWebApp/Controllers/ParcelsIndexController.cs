@@ -476,6 +476,7 @@ namespace LIMSWebApp.Controllers
         public IActionResult MapView(int id)
         {
             ViewBag.MyRouteId = id;
+            
             return View();
         }
 
@@ -494,7 +495,7 @@ namespace LIMSWebApp.Controllers
                     
 
                 .AsNoTracking()
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(c => c.Id == id);
 
             var model = new ParcelSearchViewModel();
 
