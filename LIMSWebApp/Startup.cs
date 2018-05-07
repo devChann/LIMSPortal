@@ -6,7 +6,9 @@ using LIMSInfrastructure.Services.Payment;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,13 @@ namespace LIMSCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             //Application Db context - users database
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LIMSUserDbConnection"),
@@ -56,32 +65,34 @@ namespace LIMSCore
 
             //Inject repository
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
+           
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.Stores.MaxLengthForKeys = 128;
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = true;
+                options.Password.RequiredUniqueChars = 1;
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>(config=> 
-                {    
-                    // Password settings
-                    config.Password.RequireDigit = true;
-                    config.Password.RequiredLength = 8;
-                    config.Password.RequireNonAlphanumeric = true;
-                    config.Password.RequireUppercase = false;
-                    config.Password.RequireLowercase = true;
-                    config.Password.RequiredUniqueChars = 1;
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
 
-                    // Lockout settings
-                    config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    config.Lockout.MaxFailedAccessAttempts = 5;
-                    config.Lockout.AllowedForNewUsers = true;
-
-                    //sign in settings
-                    config.SignIn.RequireConfirmedEmail = false;
-                    config.SignIn.RequireConfirmedPhoneNumber = false;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                //sign in settings
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            //.AddDefaultUI()
+            .AddDefaultTokenProviders();
 
             // Add application services
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
@@ -115,8 +126,10 @@ namespace LIMSCore
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseAuthentication();

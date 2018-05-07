@@ -52,17 +52,19 @@
                 <a href="#intro"><img src="~/images/logos/oakarlogo.png" alt="" title=" LIMS PORTAL"></a>
             </div>
 
-            <nav id="nav-menu-container">
+            @*<nav id="nav-menu-container">*@
+
                 <ul class="nav-menu">
                     <li class="menu-active"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    @*<li><a href="#about"> About Us</a></li>
-                        <li><a href="#features">Contact Us</a></li>
-                        <li><a asp-controller="Account" asp-action="Login">Log In </a></li>
-                        <li><a href="#team">Create Account</a></li>*@
-
+                    <li><a href="#about"> About Us</a></li>
+                    <li><a href="#features">Contact Us</a></li>
+                    @*<li><a asp-controller="Account" asp-action="Login">Log In </a></li>
+            <li><a href="#team">Create Account</a></li>*@
                 </ul>
-
-            </nav>
+                @{
+                    await Html.RenderPartialAsync("_LoginPartial");
+                }
+            @*</nav>*@
 
         </div>
     </header>
@@ -70,8 +72,8 @@
 
     <div class="container-fluid" style="padding-top:120px;padding-left:inherit">
         @RenderBody()
-
     </div>
+
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/jquery.easing/js/jquery.easing.js"></script>
@@ -80,11 +82,8 @@
         <script src="~/lib/ol3-layerswitcher/src/ol3-layerswitcher.js"></script>
         <script src="~/lib/ol3-popup/src/ol3-popup.js"></script>
         <script src="~/lib/maptiks-leaflet/index.js"></script>
-        <script src="~/lib/chart.js/dist/Chart.min.js"></script>
-       
-       
+        <script src="~/lib/chart.js/dist/Chart.min.js"></script>             
         <script src="~/js/site.js" asp-append-version="true"></script>
-
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/jquery/dist/jquery-migrate.min.js"></script>
         <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -96,14 +95,9 @@
         <script src="~/lib/leaflet/dist/leaflet.js"></script>
         <script src="~/js/Map.js" asp-append-version="true"></script>
         <script src="~/js/main.js"></script>
-        <script src="https://raw.github.com/mapbox/leaflet-knn/master/leaflet-knn.min.js"></script>
-
-        <!-- Contact Form JavaScript File -->
-        <!-- Template Main Javascript File -->
-
-
-
+        <script src="https://raw.github.com/mapbox/leaflet-knn/master/leaflet-knn.min.js"></script>     
     </environment>
+
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
@@ -123,10 +117,7 @@
         <script src="~/lib/ol3-popup/src/ol3-popup.js"></script>
         <script src="~/lib/maptiks-leaflet/index.js"></script>
         <script src="~/lib/chart.js/dist/Chart.min.js"></script>
-
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-
-
     </environment>
 
     @RenderSection("Scripts", required: false)

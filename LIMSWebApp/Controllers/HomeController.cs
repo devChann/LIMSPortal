@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LIMSCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using LIMSWebApp.ViewModels;
 
 namespace LIMSWebApp.Controllers
 {

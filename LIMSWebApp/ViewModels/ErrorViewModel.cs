@@ -1,6 +1,6 @@
 using System;
 
-namespace LIMSCore.ViewModels
+namespace LIMSWebApp.ViewModels
 {
     public class ErrorViewModel
     {

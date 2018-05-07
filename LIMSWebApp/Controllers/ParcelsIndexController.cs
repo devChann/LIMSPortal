@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LIMSCore.Entities;
 using LIMSWebApp.ViewModels.LIMSViewModels;
 using LIMSInfrastructure.Data;
 
@@ -11,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Text;
-using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -19,7 +16,7 @@ using iTextSharp.text.pdf;
 
 namespace LIMSWebApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ParcelsIndexController : Controller
     {
         private readonly LIMScoreContext _context;
@@ -32,8 +29,9 @@ namespace LIMSWebApp.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var viewModel = new ParcelsIndexViewModel();
-            viewModel.Parcels = await _context.Parcel
+            var viewModel = new ParcelsIndexViewModel
+            {
+                Parcels = await _context.Parcel
                 .Include(i => i.Administration)
                 .Include(i => i.LandUse)
                 .Include(i => i.SpatialUnit)
@@ -42,15 +40,18 @@ namespace LIMSWebApp.Controllers
                 .Include(i => i.Owner)
                  .AsNoTracking()
                 .OrderBy(i => i.ParcelNum)
-                .ToListAsync();
+                .ToListAsync()
+            };
 
 
             return View(viewModel);
         }
+
         public IActionResult Search()
         {
             return View();
         }
+
         [HttpGet]
         public IActionResult SearchParcel(string parcelnum)
         {
@@ -107,11 +108,11 @@ namespace LIMSWebApp.Controllers
             return View(parcelviewmodel);
         }
 
-
         public IActionResult Details()
         {
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> DetailsView(int? ID)
 
@@ -139,12 +140,14 @@ namespace LIMSWebApp.Controllers
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.Id == ID);
 
-            var model = new ParcelSearchViewModel();
-            model.ParcelNumber = parcels.ParcelNum;
-            model.AdministrationArea = parcels.Administration.DistrictName;
-            model.Area = parcels.Area;
-            model.landUse = parcels.LandUse.LandUseType;
-            model.Tenure = parcels.Tenure.TenureType;
+            var model = new ParcelSearchViewModel
+            {
+                ParcelNumber = parcels.ParcelNum,
+                AdministrationArea = parcels.Administration.DistrictName,
+                Area = parcels.Area,
+                landUse = parcels.LandUse.LandUseType,
+                Tenure = parcels.Tenure.TenureType
+            };
 
 
             if (parcels == null)
@@ -230,31 +233,41 @@ namespace LIMSWebApp.Controllers
             
             footerlogo.SetAbsolutePosition(doc.PageSize.Width - 36f - 72f,doc.PageSize.Height - 800.6f);
             doc.Add(footerlogo);
-           
-                        
-            Paragraph headingone = new Paragraph("REPUBLIC OF KENYA", new Font(Font.HELVETICA, 12f, Font.BOLD));
-            headingone.Alignment = Element.ALIGN_CENTER;
-            headingone.SpacingAfter = 5f;
+
+
+            Paragraph headingone = new Paragraph("REPUBLIC OF KENYA", new Font(Font.HELVETICA, 12f, Font.BOLD))
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingAfter = 5f
+            };
             doc.Add(headingone);
 
-            Paragraph headingtwo = new Paragraph("THE REGISTERED LAND ACT", new Font(Font.HELVETICA, 12f, Font.BOLD));
-            headingtwo.Alignment = Element.ALIGN_CENTER;
-            headingtwo.SpacingAfter = 5f;
+            Paragraph headingtwo = new Paragraph("THE REGISTERED LAND ACT", new Font(Font.HELVETICA, 12f, Font.BOLD))
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingAfter = 5f
+            };
             doc.Add(headingtwo);
 
-            Paragraph headingthree = new Paragraph("(Cap 300)", new Font(Font.HELVETICA, 9f, Font.BOLD));
-            headingthree.Alignment = Element.ALIGN_CENTER;
-            headingthree.SpacingAfter = 5f;
+            Paragraph headingthree = new Paragraph("(Cap 300)", new Font(Font.HELVETICA, 9f, Font.BOLD))
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingAfter = 5f
+            };
             doc.Add(headingthree);
 
-            Paragraph headingfour = new Paragraph("CERTIFICATE OF OFFICIAL SEARCH", new Font(Font.HELVETICA, 12f, Font.BOLD));
-            headingfour.Alignment = Element.ALIGN_CENTER;
-            headingfour.SpacingAfter = 20f;
+            Paragraph headingfour = new Paragraph("CERTIFICATE OF OFFICIAL SEARCH", new Font(Font.HELVETICA, 12f, Font.BOLD))
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingAfter = 20f
+            };
             doc.Add(headingfour);
 
-            Paragraph headingPARTA = new Paragraph("PART A: PARCEL INFORMATION", new Font(Font.HELVETICA, 11f));
-            headingPARTA.Alignment = Element.ALIGN_CENTER;
-            headingPARTA.SpacingAfter = 20f;
+            Paragraph headingPARTA = new Paragraph("PART A: PARCEL INFORMATION", new Font(Font.HELVETICA, 11f))
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingAfter = 20f
+            };
             doc.Add(headingPARTA);
 
 
@@ -263,17 +276,23 @@ namespace LIMSWebApp.Controllers
 
             PdfPTable table1 = new PdfPTable(5);
 
-            Paragraph Title = new Paragraph("Title Number:", new Font(Font.HELVETICA, 10f));
-            Title.Alignment = Element.ALIGN_LEFT;
+            Paragraph Title = new Paragraph("Title Number:", new Font(Font.HELVETICA, 10f))
+            {
+                Alignment = Element.ALIGN_LEFT
+            };
 
 
 
-            Paragraph SearchNumber = new Paragraph("Search Number:", new Font(Font.HELVETICA, 10f));
-            SearchNumber.Alignment = Element.ALIGN_LEFT;
+            Paragraph SearchNumber = new Paragraph("Search Number:", new Font(Font.HELVETICA, 10f))
+            {
+                Alignment = Element.ALIGN_LEFT
+            };
 
 
-            Paragraph DATEOFSEARCH = new Paragraph("Date Of Search:", new Font(Font.HELVETICA, 10f));
-            DATEOFSEARCH.Alignment = Element.ALIGN_LEFT;
+            Paragraph DATEOFSEARCH = new Paragraph("Date Of Search:", new Font(Font.HELVETICA, 10f))
+            {
+                Alignment = Element.ALIGN_LEFT
+            };
 
 
 
@@ -283,94 +302,131 @@ namespace LIMSWebApp.Controllers
             table1.AddCell("");
             table1.AddCell(SearchNumber);
             table1.AddCell(r);// search number
-            PdfPCell PDST = new PdfPCell(new Phrase("Date Of Search:"));
-            PDST.Colspan = 1;
-            PDST.HorizontalAlignment = 0;
-            table1.AddCell(PDST);
-            PdfPCell PDSV = new PdfPCell(new Phrase(datetime)); // date of search 
-            PDSV.Colspan = 4;
-            PDSV.BorderColorLeft = new BaseColor(255, 255, 255);
 
-            PDSV.HorizontalAlignment = 0;
+            PdfPCell PDST = new PdfPCell(new Phrase("Date Of Search:"))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
+            table1.AddCell(PDST);
+
+            PdfPCell PDSV = new PdfPCell(new Phrase(datetime))
+            {
+                Colspan = 4,
+                BorderColorLeft = new BaseColor(255, 255, 255),
+
+                HorizontalAlignment = 0
+            }; // date of search 
             table1.AddCell(PDSV);
 
-            PdfPCell NOT = new PdfPCell(new Phrase("Nature Of Title: "));
-            NOT.Colspan = 2;
-            NOT.HorizontalAlignment = 0;
+            PdfPCell NOT = new PdfPCell(new Phrase("Nature Of Title: "))
+            {
+                Colspan = 2,
+                HorizontalAlignment = 0
+            };
             table1.AddCell(NOT);
 
-            PdfPCell NOTvalue = new PdfPCell(new Phrase("Absolute"));
-            NOTvalue.Colspan = 3;
-            NOTvalue.HorizontalAlignment = 0;
+            PdfPCell NOTvalue = new PdfPCell(new Phrase("Absolute"))
+            {
+                Colspan = 3,
+                HorizontalAlignment = 0
+            };
             table1.AddCell(NOTvalue);
-                    
-            PdfPCell AAT = new PdfPCell(new Phrase("Approximate Area:"));
-            AAT.Colspan = 3;
-            AAT.HorizontalAlignment = 0;
+
+            PdfPCell AAT = new PdfPCell(new Phrase("Approximate Area:"))
+            {
+                Colspan = 3,
+                HorizontalAlignment = 0
+            };
             table1.AddCell(AAT);
-            PdfPCell AAV = new PdfPCell(new Phrase(Convert.ToDecimal(parcelviewmodel.Area).ToString()));
-            AAV.Colspan = 2;
-            AAV.HorizontalAlignment = 0;
+
+            PdfPCell AAV = new PdfPCell(new Phrase(Convert.ToDecimal(parcelviewmodel.Area).ToString()))
+            {
+                Colspan = 2,
+                HorizontalAlignment = 0
+            };
             table1.AddCell(AAV);
 
-            PdfPCell Tenure = new PdfPCell(new Phrase("Tenure Type:"));
-            Tenure.Colspan = 1;
-            Tenure.HorizontalAlignment = 0;
+            PdfPCell Tenure = new PdfPCell(new Phrase("Tenure Type:"))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table1.AddCell(Tenure);
 
-            PdfPCell TenureType = new PdfPCell(new Phrase(parcelviewmodel.Tenure));
-            TenureType.Colspan = 4;
-            TenureType.HorizontalAlignment = 0;
+            PdfPCell TenureType = new PdfPCell(new Phrase(parcelviewmodel.Tenure))
+            {
+                Colspan = 4,
+                HorizontalAlignment = 0
+            };
             table1.AddCell(TenureType);
             doc.Add(table1);
 
             PdfPTable table2 = new PdfPTable(5);
-            Paragraph headingPARTB = new Paragraph("PART B: PROPRIETORSHIP SECTION", new Font(Font.HELVETICA, 11f));
-            headingPARTB.Alignment = Element.ALIGN_CENTER;
-            headingPARTB.SpacingAfter = 20f;
+            Paragraph headingPARTB = new Paragraph("PART B: PROPRIETORSHIP SECTION", new Font(Font.HELVETICA, 11f))
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingAfter = 20f
+            };
             doc.Add(headingPARTB);
 
-            PdfPCell Name = new PdfPCell(new Paragraph("NAME:", new Font(Font.HELVETICA, 10f)));
-            Name.Colspan = 1;
-            Name.HorizontalAlignment = 0;
+            PdfPCell Name = new PdfPCell(new Paragraph("NAME:", new Font(Font.HELVETICA, 10f)))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table2.AddCell(Name);
 
-            PdfPCell NameValue = new PdfPCell(new Phrase(parcelviewmodel.Name));
-            NameValue.Colspan = 2;
-            NameValue.HorizontalAlignment = 0;
+            PdfPCell NameValue = new PdfPCell(new Phrase(parcelviewmodel.Name))
+            {
+                Colspan = 2,
+                HorizontalAlignment = 0
+            };
             table2.AddCell(NameValue);
 
-            PdfPCell PIN = new PdfPCell(new Paragraph("PIN: ", new Font(Font.HELVETICA, 10f)));
-            PIN.Colspan = 1;
-            PIN.HorizontalAlignment = 0;
+            PdfPCell PIN = new PdfPCell(new Paragraph("PIN: ", new Font(Font.HELVETICA, 10f)))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table2.AddCell(PIN);
 
-            PdfPCell PINVALUE = new PdfPCell(new Phrase(parcelviewmodel.PIN));
-            PINVALUE.Colspan = 2;
-            PINVALUE.BorderColorLeft = new BaseColor(255, 255, 255);
-            PINVALUE.HorizontalAlignment = 0;
+            PdfPCell PINVALUE = new PdfPCell(new Phrase(parcelviewmodel.PIN))
+            {
+                Colspan = 2,
+                BorderColorLeft = new BaseColor(255, 255, 255),
+                HorizontalAlignment = 0
+            };
 
             table2.AddCell(PINVALUE);
 
 
-            PdfPCell PADRESS = new PdfPCell(new Paragraph("Postal Address:", new Font(Font.HELVETICA, 10f)));
-            PADRESS.Colspan = 1;
-            PADRESS.HorizontalAlignment = 0;
+            PdfPCell PADRESS = new PdfPCell(new Paragraph("Postal Address:", new Font(Font.HELVETICA, 10f)))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table2.AddCell(PADRESS);
 
-            PdfPCell POA = new PdfPCell(new Phrase(parcelviewmodel.Adress));
-            POA.Colspan = 4;
-            POA.HorizontalAlignment = 0;
+            PdfPCell POA = new PdfPCell(new Phrase(parcelviewmodel.Adress))
+            {
+                Colspan = 4,
+                HorizontalAlignment = 0
+            };
             table2.AddCell(POA);
 
-            PdfPCell PHONE = new PdfPCell(new Paragraph("Phone Number:", new Font(Font.HELVETICA, 10f)));
-            PHONE.Colspan = 1;
-            PHONE.HorizontalAlignment = 0;
+            PdfPCell PHONE = new PdfPCell(new Paragraph("Phone Number:", new Font(Font.HELVETICA, 10f)))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table2.AddCell(PHONE);
 
-            PdfPCell PhoneValue = new PdfPCell(new Phrase(parcelviewmodel.Phone));
-            PhoneValue.Colspan = 4;
-            PhoneValue.HorizontalAlignment = 0;
+            PdfPCell PhoneValue = new PdfPCell(new Phrase(parcelviewmodel.Phone))
+            {
+                Colspan = 4,
+                HorizontalAlignment = 0
+            };
             table2.AddCell(PhoneValue);
 
 
@@ -378,64 +434,86 @@ namespace LIMSWebApp.Controllers
 
 
 
-            Paragraph headingPARTC = new Paragraph("PART C: ENCUMBRANCE (Charges,Lease e.t.c)", new Font(Font.HELVETICA, 11f));
-            headingPARTC.Alignment = Element.ALIGN_CENTER;
-            headingPARTC.SpacingAfter = 20f;
+            Paragraph headingPARTC = new Paragraph("PART C: ENCUMBRANCE (Charges,Lease e.t.c)", new Font(Font.HELVETICA, 11f))
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingAfter = 20f
+            };
             doc.Add(headingPARTC);
 
             PdfPTable table3 = new PdfPTable(2);
-            PdfPCell Charges = new PdfPCell(new Paragraph("Charges", new Font(Font.HELVETICA, 10f)));
-            Charges.Colspan = 2;
-            Charges.HorizontalAlignment = 1;
+            PdfPCell Charges = new PdfPCell(new Paragraph("Charges", new Font(Font.HELVETICA, 10f)))
+            {
+                Colspan = 2,
+                HorizontalAlignment = 1
+            };
             table3.AddCell(Charges);
 
-            PdfPCell chargetitle = new PdfPCell(new Phrase("Amount"));
-            chargetitle.Colspan = 1;
-            chargetitle.HorizontalAlignment = 0;
+            PdfPCell chargetitle = new PdfPCell(new Phrase("Amount"))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table3.AddCell(chargetitle);
 
-            PdfPCell LenderTitle = new PdfPCell(new Phrase("Lender"));
-            LenderTitle.Colspan = 1;
-            LenderTitle.HorizontalAlignment = 0;
+            PdfPCell LenderTitle = new PdfPCell(new Phrase("Lender"))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table3.AddCell(LenderTitle);
 
-            PdfPCell AmountValue = new PdfPCell(new Phrase(Convert.ToDecimal(parcelviewmodel.amount).ToString("Ksh. ")));
-            AmountValue.Colspan = 1;
-            AmountValue.HorizontalAlignment = 0;
+            PdfPCell AmountValue = new PdfPCell(new Phrase(Convert.ToDecimal(parcelviewmodel.amount).ToString("Ksh. ")))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table3.AddCell(AmountValue);
 
-            PdfPCell lendervalue = new PdfPCell(new Phrase(parcelviewmodel.Lender));
-            lendervalue.Colspan = 1;
-            lendervalue.HorizontalAlignment = 0;
+            PdfPCell lendervalue = new PdfPCell(new Phrase(parcelviewmodel.Lender))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table3.AddCell(lendervalue);
             doc.Add(table3);
 
             // morgage 
 
             PdfPTable table4 = new PdfPTable(2);
-            PdfPCell Morgage = new PdfPCell(new Paragraph("Morgage", new Font(Font.HELVETICA, 10f)));
-            Morgage.Colspan = 2;
-            Morgage.HorizontalAlignment = 1;
+            PdfPCell Morgage = new PdfPCell(new Paragraph("Morgage", new Font(Font.HELVETICA, 10f)))
+            {
+                Colspan = 2,
+                HorizontalAlignment = 1
+            };
             table4.AddCell(Morgage);
 
-            PdfPCell Mtitle = new PdfPCell(new Phrase("Amount"));
-            Mtitle.Colspan = 1;
-            Mtitle.HorizontalAlignment = 0;
+            PdfPCell Mtitle = new PdfPCell(new Phrase("Amount"))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table4.AddCell(Mtitle);
 
-            PdfPCell MLenderTitle = new PdfPCell(new Phrase("Lender"));
-            MLenderTitle.Colspan = 1;
-            MLenderTitle.HorizontalAlignment = 0;
+            PdfPCell MLenderTitle = new PdfPCell(new Phrase("Lender"))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table4.AddCell(MLenderTitle);
 
-            PdfPCell MAmountValue = new PdfPCell(new Phrase(Convert.ToDecimal(parcelviewmodel.MAmount).ToString("Ksh. ")));
-            MAmountValue.Colspan = 1;
-            MAmountValue.HorizontalAlignment = 0;
+            PdfPCell MAmountValue = new PdfPCell(new Phrase(Convert.ToDecimal(parcelviewmodel.MAmount).ToString("Ksh. ")))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table4.AddCell(MAmountValue);
 
-            PdfPCell Mlendervalue = new PdfPCell(new Phrase(parcelviewmodel.MorgageLender));
-            Mlendervalue.Colspan = 1;
-            Mlendervalue.HorizontalAlignment = 0;
+            PdfPCell Mlendervalue = new PdfPCell(new Phrase(parcelviewmodel.MorgageLender))
+            {
+                Colspan = 1,
+                HorizontalAlignment = 0
+            };
             table4.AddCell(Mlendervalue);
             doc.Add(table4);
 
@@ -480,7 +558,7 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> payments(int id)
+        public async Task<IActionResult> Payments(int id)
         {
 
             //if (id == null)
@@ -497,22 +575,19 @@ namespace LIMSWebApp.Controllers
                 .AsNoTracking()
                 .SingleOrDefaultAsync(c => c.Id == id);
 
-            var model = new ParcelSearchViewModel();
-
-            model.ParcelNumber = parcels.ParcelNum;
-            model.AdministrationArea = parcels.Administration.DistrictName;
-            model.Area = parcels.Area;
-            model.id1 = parcels.Id1.Id;
-            
-
-            
-
-            model.Name = parcels.Owner.Name;
-            model.Phone = parcels.Owner.TelephoneAddress;
-            model.Adress = parcels.Owner.PostalAddress;
-            model.DateSearched = DateTime.Now;
-            model.PIN = parcels.Owner.Pin;
-            model.Payment = parcels.Id1.Payments;
+            var model = new ParcelSearchViewModel
+            {
+                ParcelNumber = parcels.ParcelNum,
+                AdministrationArea = parcels.Administration.DistrictName,
+                Area = parcels.Area,
+                id1 = parcels.Id1.Id,
+                Name = parcels.Owner.Name,
+                Phone = parcels.Owner.TelephoneAddress,
+                Adress = parcels.Owner.PostalAddress,
+                DateSearched = DateTime.Now,
+                PIN = parcels.Owner.Pin,
+                Payment = parcels.Id1.Payments
+            };
 
             if (parcels == null)
             {

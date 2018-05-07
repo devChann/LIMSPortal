@@ -1,7 +1,7 @@
 ﻿@model LIMSWebApp.ViewModels.LIMSViewModels.ParcelSearchViewModel
 @{
     ViewData["Title"] = "Search Land Parcel";
-    Layout = "_LayoutNav";
+    Layout = "_Layout";
 }
 <a style="font-size:smaller;color:black" @Html.ActionLink("Rates Payment", "payments", "ParcelsIndex", new { id = Model.ID }) </a>|
 <a style="font-size:smaller;color:black" @Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </a>|
