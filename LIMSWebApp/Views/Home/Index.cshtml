@@ -1,128 +1,53 @@
-@{
-    Layout = "_Layout";
-}
 
 
-@section intro{
-    <section id="intro">
+<div class="jumbotron">
+    <h2>Welcome to the Land Information Portal</h2>
+    <p class="lead">Access land managment services from this portal</p>
+    <hr class="my-sm-1">
+    <p>
+        Land Information Management System allows you to perform Title search, <br />
+        Check Land Rates Status and Print Your Search  Certificate
+    </p>
+    <p class="lead">
+        <a class="btn btn-success btn-lg" asp-controller="Maps" asp-action="Map" role="button">Manage Your Land Information</a>
+    </p>
+</div>
 
-        <div class="intro-text">
-            <br /><br /><br />
-            <h2>Welcome To LIMS - Portal</h2>
-            <p>
-                Land Information Management System allows you to perform Title search, <br />
-                Check Land Rates Status and Print Your Search  Certificate
-            </p>
-            <a href="#about" class="btn-get-started scrollto">Get Started</a>
+<div class="row">
+    <div class="col-lg-4 col-md-4">
+        <div class="contact-about">
+            <h3>LIMS Portal</h3>
+            <p>LIMS portal is Online Platform which allows easy acess to land related infromation. To utilize the benefits of this portal you need to create user account or login</p>
+            <div class="social-links">
+                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
         </div>
+    </div>
 
-        @*<div class="product-screens">
+    
+</div>
 
-                <div class="product-screen-1 wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.6s">
-                    @*<span class="glyphicon glyphicon-search">Search Parcel</span>
-                </div>
 
-                <div class="product-screen-2 wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.6s">
-                    <img src="~/images/icons/product-screen-2.png" alt="">
-                </div>
+<div class="row">
+    <div class="col-md-8">
+        <h4 class="section-title">About Us</h4>
+        <span class="section-divider"></span>
+        <p class="section-description">
+            The National Land Commission Act of 2012, section 5 (2) (d) mandates the National
+            Land Commission with the task of developing and implementing a nationwide land information
+            management system at both national and county levels. To help the Commission in this quest,
+            the Land Information Management System (LIMS)  was created.
+        </p>
+    </div>
+    
+</div>
 
-                <div class="product-screen-3 wow fadeInUp" data-wow-duration="0.6s">
-                    <img src="~/images/icons/product-screen-3.png" alt="">
-                </div>
 
-            </div>*@
-
-    </section>
-}
-@section contact{
-    <main id="main">
-        <section id="contact">
-            <div class="container">
-                <div class="row wow fadeInUp">
-
-                    <div class="col-lg-4 col-md-4">
-                        <div class="contact-about">
-                            <h3>LIMS Portal</h3>
-                            <p>LIMS portal is Online Platform which allows easy acess to land related infromation. To utilize the benefits of this portal you need to create user account or login</p>
-                            <div class="social-links">
-                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
-                                <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
-                                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4">
-                        <div class="info">
-                            <div>
-                                <i class="ion-ios-location-outline"></i>
-                                <p>Upper Hill<br>Kilimanjaro Road, Nairobi</p>
-                            </div>
-
-                            <div>
-                                <i class="ion-ios-email-outline"></i>
-                                <p>www.osl.co.ke</p>
-                            </div>
-
-                            <div>
-                                <i class="ion-ios-telephone-outline"></i>
-                                <p>+254 713 928142</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-}
-@section about{
-    <section id="about" class="section-bg">
-        <div class="container-fluid">
-            <div class="section-header">
-                <h3 class="section-title">About Us</h3>
-                <span class="section-divider"></span>
-                <p class="section-description">
-                    The National Land Commission Act of 2012, section 5 (2) (d) mandates the National 
-                    Land Commission with the task of developing and implementing a nationwide land information 
-                    management system at both national and county levels. To help the Commission in this quest, 
-                    the Land Information Management System (LIMS)  was created.
-                </p>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-6 about-img wow fadeInLeft">
-                    <img src="~/images/land/about-img.jpg" alt="">
-                </div>
-
-                <div class="col-lg-6 content wow fadeInRight">
-                    <h2>Services Offered By LAND INFORMATION MANAGEMENT SYSTEM</h2>
-
-                    <p>
-                        <h2>1:Title Search </h2>
-                    </p>
-                    <p>
-                        <h2>2:Print Search Certificate</h2>
-                    </p>
-                    <p>
-                        <h2>3:View Your Rate Payments History</h2>
-                    </p>
-                    <p>
-                        <h2>4:View The Piece Of Parcel On a Map</h2>
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </section><!-- #about -->
-}
-
-<div class="row centered">
+<div class="row">
     <div class="col-md-4">
         <a asp-controller="Account" asp-action="Register">
             <span class='glyphicon glyphicon-user'></span> Create Account
@@ -145,4 +70,6 @@
         <p>Avoid long queues at the County Halls<br />And Make your payments online<br /> Click here to learn more</p>
     </div>
 </div>
+
+
 

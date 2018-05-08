@@ -18,19 +18,18 @@
     <None Remove="wwwroot\Rotativa\**" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <AspNetCoreModuleHostingModel>inprocess</AspNetCoreModuleHostingModel>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.7.385" />
     <PackageReference Include="ChartJSCore" Version="1.2.4" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.2" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0-preview2-final" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-preview2-final" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0-rc1-final" />
+    <!--<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-rc1-final" PrivateAssets="All" />-->
     <PackageReference Include="Rotativa.AspNetCore" Version="1.0.6" />
     <PackageReference Include="Rotativa.NetCore" Version="1.0.4" />  
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -40,6 +39,13 @@
   
 <ItemGroup>
   <Folder Include="Properties\PublishProfiles\" />
+</ItemGroup>
+  
+<ItemGroup>
+  <None Include="wwwroot\lib\leaflet\dist\leaflet-src.js" />
+  <None Include="wwwroot\lib\leaflet\dist\leaflet-src.js.map" />
+  <None Include="wwwroot\lib\leaflet\dist\leaflet.js" />
+  <None Include="wwwroot\lib\leaflet\dist\leaflet.js.map" />
 </ItemGroup> 
 
 </Project>

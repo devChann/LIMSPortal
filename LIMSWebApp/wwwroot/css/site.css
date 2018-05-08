@@ -3,166 +3,137 @@
 @import url(https://fonts.googleapis.com/css?family=Oxygen);
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 
-html, body {
-    height: 100%;
-    font-family: Roboto, arial, verdana;
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
 }
 
-.container {
-    min-height: 100%;
-    position: relative;
+.jumbotron {
+    margin-top: 10px;
 }
 
-.header-content {
+.map {
+    margin-top: 10px;
+    height: 400px;
     width: 100%;
 }
 
-.navbar-nav > li {
-    display: inline-block;
+#controls {
+    margin-bottom: 10px;
+    margin-top: 50px;
 }
 
-.navbar-collapse {
-    margin-left: 70px;
+.player {
+    margin-top: 10px;
 }
 
+.legend-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.parent-legend {
+    margin-top: 80px;
+}
+
+.legend {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.legend-1 {
+    background: brown;
+}
+
+.legend-2 {
+    background: red;
+}
+
+.legend-3 {
+    background: orange;
+}
+
+.legend-4 {
+    background: yellow;
+}
+
+.legend-5 {
+    background: #ffffcc;
+}
+
+.legend-label {
+    float: right;
+    padding-top: 5px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding: 10px;
-    padding-bottom: 100px; /* Height of the footer */
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
-footer-content {
-    bottom: 0;
-    height: 100px;
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
 }
 
-.footer-text {
-    margin-top: 30px;
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
 }
-
-
-div.col-sm-3, div.col-sm-9 {
-    padding-left: 0px;
-    padding-right: 0px;
-}
-
-div.col-sm-3 {
-    margin-right: auto;
-    z-index: 2;
-}
-
-li .glyphicon {
-    margin-right: 10px;
-}
-
-/* Highlighting rules for nav menu items */
-li.link-active a,
-li.link-active a:hover,
-li.link-active a:focus {
-    background-color: #4189C7;
-    color: white;
-}
-
-
-.list-group-item {
-    border: none;
-}
-
-
-@media (min-width: 992px) {
-    .row .no-float {
-        display: table-cell;
-        float: none;
-    }
-}
-
 
 /* QR code generator */
 #qrCode {
     margin: 15px;
 }
 
-/* Start Map Styles*/
-.map {
-    top: auto;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 0;
-    height: 100%
-}
-
-
-.ol-zoom {
-    z-index: 10000;
-    left: 50px;
-    top: 10%
-}
-/*End Map Styles*/
-
-.row.no-gutters {
-    margin-right: 0;
-    margin-left: 0;
-}
-
-    .row.no-gutters > [class^="col-"],
-    .row.no-gutters > [class*=" col-"] {
-        padding-right: 0;
-        padding-left: 15px;
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
     }
+}
 
 
-.btn-search {
-    background: #424242;
+/*Custom Navbar*/
+.navbar-custom {
+    background-color: #229922;
+    color: #ffffff;
     border-radius: 0;
-    color: #fff;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #1c1c1c;
-    padding-left: 50px;
-    padding-right: 50px;
 }
 
-    .btn-search:link, .btn-search:visited {
+    .navbar-custom .navbar-nav > li > a {
         color: #fff;
     }
 
-    .btn-search:active, .btn-search:hover {
-        background: #1c1c1c;
-        color: #fff;
+    .navbar-custom .navbar-nav > .active > a {
+        color: #ffffff;
+        background-color: transparent;
     }
 
-.input-group {
-    padding-top: 10px;
-    padding-bottom: 5px;
-}
+        .navbar-custom .navbar-nav > li > a:hover,
+        .navbar-custom .navbar-nav > li > a:focus,
+        .navbar-custom .navbar-nav > .active > a:hover,
+        .navbar-custom .navbar-nav > .active > a:focus,
+        .navbar-custom .navbar-nav > .open > a {
+            text-decoration: none;
+            background-color: #33aa33;
+        }
 
-.btn-search {
-    background: #424242;
-    border-radius: 0;
-    color: #fff;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #1c1c1c;
-    padding-left: 50px;
-    padding-right: 50px;
-}
-
-    .btn-search:link, .btn-search:visited {
-        color: #fff;
+    .navbar-custom .navbar-brand {
+        color: #eeeeee;
     }
 
-    .btn-search:active, .btn-search:hover {
-        background: #1c1c1c;
-        color: #fff;
+    .navbar-custom .navbar-toggle {
+        background-color: #eeeeee;
     }
 
-.input-group {
-    padding-top: 10px;
-    padding-bottom: 5px;
-}
-
-#pane-input-fields {
-    padding-top: 12px;
-    margin-left: 15px;
-}
+    .navbar-custom .icon-bar {
+        background-color: #33aa33;
+    }
+/*End Custom Navbar*/
