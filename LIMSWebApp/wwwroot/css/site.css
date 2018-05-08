@@ -102,17 +102,17 @@ body {
 
 /*Custom Navbar*/
 .navbar-custom {
-    background-color: #229922;
-    color: #ffffff;
+    background-color: #996600;
+    color: #ffcc00;
     border-radius: 0;
 }
 
     .navbar-custom .navbar-nav > li > a {
-        color: #fff;
+        color: #ffcc00;
     }
 
     .navbar-custom .navbar-nav > .active > a {
-        color: #ffffff;
+        color: #663300;
         background-color: transparent;
     }
 
@@ -122,18 +122,18 @@ body {
         .navbar-custom .navbar-nav > .active > a:focus,
         .navbar-custom .navbar-nav > .open > a {
             text-decoration: none;
-            background-color: #33aa33;
+            background-color: #663300;
         }
 
     .navbar-custom .navbar-brand {
-        color: #eeeeee;
+        color: #ffcc00;
     }
 
     .navbar-custom .navbar-toggle {
-        background-color: #eeeeee;
+        background-color: #663300;
     }
 
     .navbar-custom .icon-bar {
-        background-color: #33aa33;
+        background-color: #663300;
     }
 /*End Custom Navbar*/
