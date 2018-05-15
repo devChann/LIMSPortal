@@ -16,7 +16,7 @@ using iTextSharp.text.pdf;
 
 namespace LIMSWebApp.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ParcelsIndexController : Controller
     {
         private readonly LIMScoreContext _context;
@@ -27,6 +27,7 @@ namespace LIMSWebApp.Controllers
             _context = context;
             _hostingEnvironment = hostingEnvironment;
         }
+
         public async Task<IActionResult> Index()
         {
             var viewModel = new ParcelsIndexViewModel
@@ -158,6 +159,7 @@ namespace LIMSWebApp.Controllers
 
             return View(model);
         }
+
         public FileResult CreatePdf(string parcelnum)
         {
             var parcelviewmodel = new ParcelSearchViewModel(); // instance variable
@@ -530,6 +532,7 @@ namespace LIMSWebApp.Controllers
             return File(workStream, "application/pdf", strPDFFileName);
 
         }
+
         public class PdfFooter: PdfPageEventHelper
         {
             public override void OnEndPage(PdfWriter writer, Document document)

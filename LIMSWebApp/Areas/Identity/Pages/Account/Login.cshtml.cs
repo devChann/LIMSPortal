@@ -37,9 +37,13 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            //[Required]
+
             //[EmailAddress]
             //public string Email { get; set; }
+
+            //[IDNumber]
+            //[Display(Name="National ID Number"]
+            //public string IDNumber { get; set; }
 
             [Required]
             [StringLength(20)]
@@ -53,7 +57,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
-
+     
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))

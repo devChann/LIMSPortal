@@ -2,9 +2,11 @@
 @model LogoutModel
 @{
     ViewData["Title"] = "Log out";
+    ViewData["ReturnUrl"] = "/Index";
 }
 
 <header>
     <h1>@ViewData["Title"]</h1>
     <p>You have successfully logged out of the application.</p>
+    <a asp-controller="Home" asp-action="Index">Go to Home Page</a>
 </header>

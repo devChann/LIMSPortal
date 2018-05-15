@@ -3,7 +3,7 @@ using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Repository;
 using LIMSInfrastructure.Services;
 using LIMSInfrastructure.Services.Payment;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +32,13 @@ namespace LIMSCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication().AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.LoginPath = new PathString("Identity/Account/Login/");
+                    options.AccessDeniedPath = new PathString("Identity/Account/Forbidden/");
+                    options.LogoutPath = new PathString("Identity/Account/Logout/");                  
+                });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -93,6 +100,7 @@ namespace LIMSCore
             // Add application services
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
@@ -112,29 +120,32 @@ namespace LIMSCore
        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             //stripe configuration
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);
 
+
+            //loggerFactory.AddConsole();
+            //env.EnvironmentName = EnvironmentName.Production;
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();            
                 app.UseBrowserLink();
                 app.UseDatabaseErrorPage();              
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error");              
                 app.UseHsts();
             }
 
+            app.UseStatusCodePages();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseAuthentication();
-            //app.UseIdentity();
-
+            app.UseAuthentication();           
 
             app.UseMvc(routes =>
             {

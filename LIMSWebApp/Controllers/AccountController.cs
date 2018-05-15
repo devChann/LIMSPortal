@@ -7,13 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LIMSWebApp.Controllers
 {
-    [Authorize]
+   
     public class AccountController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
+
+       
+        [Route("/Services")]
+        [Authorize]
         public IActionResult UserProfile()
         {
             return View();

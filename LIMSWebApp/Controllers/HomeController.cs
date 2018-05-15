@@ -44,10 +44,13 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
+        [Route("/Error")]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
         public IActionResult Profile()
         {
             return View();

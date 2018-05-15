@@ -1,24 +1,74 @@
 ﻿@{
     ViewData["Title"] = "UserProfile";
-    Layout = "_Layout";
-
 }
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-6" style="box-shadow:0px 0px 1px 1px;border-bottom-left-radius:10px;border-top-left-radius:10px;border-bottom-right-radius:10px;border-top-right-radius:10px">
-            <div class="list-group">
-                <a class="list-group-item alert-dark"></a>
-                <a class="list-group-item primary">Services</a>
-                <div class="list-group-item">
-                    <a asp-controller="ParcelsIndex" asp-action="Search">Search Parcel</a> <br /><br />
-                    <a asp-controller="ParcelsIndex" asp-action="Search">View Parcel Rate</a>
-                </div>
 
+@*<div class="row text-center" style="padding-top:20px;">
+    <div class="col-lg-4">
+        <div class="card">
+            <i class="glyphicon glyphicon-search"></i>
+            <div class="card-container">
+                <a asp-controller="ParcelsIndex" asp-action="Search">Search Parcel</a>
             </div>
         </div>
-        <div class="col-md-3">
+    </div>
+   
+    <div class="col-lg-4">
+        <div class="card">
+            <i class="glyphicon glyphicon-search"></i>
+            <div class="card-container">
+                <a asp-controller="ParcelsIndex" asp-action="Search">View Parcel Rate</a>
+            </div>
+        </div>
+    </div> 
+</div>*@
+
+<div class="card-deck mb-3 text-center">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Land Search</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title"><small class="text-muted">Requirements</small></h1>
+            @*<span><i class="fa fa-search-plus"></i></span>*@
+            <ul class="list-unstyled mt-3 mb-4">
+                <li>Parcel Number</li>
+                <li>Your National ID</li>
+                <li>Your KRA PIN</li>                
+            </ul>
+            <button type="button" onclick="location.href='@Url.Action("Search", "ParcelsIndex")'" class="btn btn-lg btn-block btn-outline-primary">Land Search</button>
+        </div>
+    </div>
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Pro</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title"><small class="text-muted">Requirements</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+                <li>Parcel Number</li>
+                <li>Your National ID</li>
+                <li>Your KRA PIN</li>
+
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-primary">Land Transfer</button>
+        </div>
+    </div>
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Other Services</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title"><small class="text-muted">Requirements</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+                <li>Parcel Number</li>
+                <li>Your National ID</li>
+                <li>Your KRA PIN</li>
+
+            </ul>
+            <button type="button" class="btn btn-lg btn-block btn-primary">Other Services</button>
         </div>
     </div>
 </div>
+
+
+
