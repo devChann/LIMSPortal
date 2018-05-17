@@ -60,6 +60,9 @@ namespace LIMSWebApp.Controllers
             {
                 return NotFound();
             }
+
+            
+
             var parcelviewmodel = new ParcelSearchViewModel(); // instance variable
             var parcel = _context.Parcel
                 .Include(i => i.Administration)
@@ -75,6 +78,8 @@ namespace LIMSWebApp.Controllers
                 .Include(i => i.Valuation)
                 .Include(i => i.Owner)
                 .Where(a => a.ParcelNum == parcelnum).SingleOrDefault();
+
+            ViewBag.MyRouteId = parcel.Id;
             if (parcel == null)
             {
                 return NoContent();

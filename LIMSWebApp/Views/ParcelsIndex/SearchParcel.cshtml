@@ -3,11 +3,11 @@
     ViewData["Title"] = "Search Land Parcel";
     Layout = "_Layout";
 }
-
+<script> var routeId = @ViewData["MyRouteId"] </script>
 <div class="row">
     <div class="col-md-6">
         <a style="font-size:smaller;color:black"> @Html.ActionLink("Rates Payment", "payments", "ParcelsIndex", new { id = Model.ID }) </a>|
-        <a style="font-size:smaller;color:black"><span><i class="fa fa-download"></i></span> @Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </a>|
+        <a style="font-size:smaller;color:black"><span class="fa fa-download"> @Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </span></a>|
         <a style="font-size:smaller;color:black"> @Html.ActionLink("View On Map", "MapView", "ParcelsIndex", new { id = Model.ID })</a>
     </div>
 </div>
@@ -79,7 +79,8 @@
             </div>
 
             <div class="col-6">
-                @await Html.PartialAsync("MapView")
+                @*@await Html.PartialAsync("MapView")*@
+                <div id="map" style="height: 400px;width:500px"></div>
             </div>
            
         </div>
