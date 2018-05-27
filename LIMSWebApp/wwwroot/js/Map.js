@@ -66,9 +66,6 @@ fetch('https://demo.osl.co.ke:7575/LIMSParcels/service.svc/post', {
 /*========================================================================================*/
 //OpenLayers WFS Filter Example// Credits: http://bl.ocks.org/ThomasG77/530d830eca124cc1b836ff341bc63da6
 
-
-
-
 /*
  <!DOCTYPE html>
 <html>
