@@ -32,6 +32,14 @@ namespace LIMSCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+
             services.AddAuthentication().AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
                     options.LoginPath = new PathString("Identity/Account/Login/");
@@ -132,7 +140,7 @@ namespace LIMSCore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();            
-                app.UseBrowserLink();
+               
                 app.UseDatabaseErrorPage();              
             }
             else
@@ -144,8 +152,10 @@ namespace LIMSCore
             app.UseStatusCodePages();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
-            app.UseAuthentication();           
+            app.UseAuthentication();
+            
 
             app.UseMvc(routes =>
             {
@@ -153,10 +163,7 @@ namespace LIMSCore
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{*id}");
             });
-            //RotativaConfiguration.Setup(env);
-            //create roles here
-            //var serviceProvider = app.ApplicationServices.GetService<IServiceProvider>();
-            //CreateRoles(serviceProvider).Wait();
+           
         }
 
         //public async Task CreateRoles(IServiceProvider serviceProvider)

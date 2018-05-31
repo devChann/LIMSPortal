@@ -13,7 +13,8 @@ namespace LIMSCore
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
+           
+            var host = CreateWebHostBuilder(args).Build(); 
 
             //database initializer/seeder
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -40,9 +41,11 @@ namespace LIMSCore
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+                .UseStartup<Startup>();
+
     }
+
 }

@@ -52,16 +52,17 @@
 
         @await Html.PartialAsync("_LoginPartial")
     </div>
-
+    <partial name="_CookieConsentPartial" />
     <div class="container">
         @RenderBody()
 
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
-                <div class="col-12 col-md">          
+                <div class="col-12 col-md">
                     <small style="font-size:medium">
-                     Concept by: <a href="http://www.osl.co.ke" target="_blank" style="color:darkorange; text-decoration:none">
-                            Oakar Services</a>
+                        Concept by: <a href="http://www.osl.co.ke" target="_blank" style="color:darkorange; text-decoration:none">
+                            Oakar Services
+                        </a>
                     </small>
                     <small class="d-block mb-3 text-muted">
                         &copy; @DateTime.Now.Year Land Information Management System. All Rights Reserved.
@@ -97,6 +98,7 @@
             </div>
         </footer>
     </div>
+
 
 
     <environment include="Development">
