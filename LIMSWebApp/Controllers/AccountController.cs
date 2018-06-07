@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LIMSWebApp.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,8 +17,9 @@ namespace LIMSWebApp.Controllers
         }
 
        
-        [Route("/Services")]
+        
         [Authorize]
+        [Route("/Home/Services")]
         public IActionResult UserProfile()
         {
             return View();

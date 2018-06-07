@@ -6,25 +6,49 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
+<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
 
-        <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" asp-controller="Account" asp-action="UserProfile">Services</a>
-            <a class="p-2 text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)</a>         
-        </nav>
+    @*<nav class="my-2 my-md-0 mr-md-3">
+        <a class="nav-link" asp-controller="Account" asp-action="UserProfile">Services</a>
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)</a>
+    </nav>*@
+    <ul class="navbar-nav mr-auto pull-right">
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="UserProfile">Services</a>
+        </li>
+        <li class="nav-item">
+            <img src="~/Photo" />
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)</a>
+        </li>
+    </ul>
+    @*<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown04">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+        </li>*@
 
-        <button type="submit" class="btn btn-link navbar-btn nav-link">Logout</button>
+    <button type="submit" class="btn btn-link navbar-btn nav-link">Logout</button>
+    @*<a class="btn btn-default btn-sm" role="button" asp-controller="Account" asp-action="UserProfile">Logout</a>*@
 
 
-    </form>
+</form>
 }
 else
 {
-    <nav class="my-2 my-md-0 mr-md-3">     
-        <a class="p-2 text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        <a class="p-2 text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+  
+    <ul class="navbar-nav mr-auto pull-right">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    </ul>
 
-    </nav>
-   
 
 }

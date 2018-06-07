@@ -31,29 +31,7 @@ namespace LIMSCore
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
-
-            services.AddAuthentication().AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
-                {
-                    options.LoginPath = new PathString("Identity/Account/Login/");
-                    options.AccessDeniedPath = new PathString("Identity/Account/Forbidden/");
-                    options.LogoutPath = new PathString("Identity/Account/Logout/");                  
-                });
-
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
+        {                               
             //Application Db context - users database
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LIMSUserDbConnection"),
@@ -80,7 +58,24 @@ namespace LIMSCore
 
             //Inject repository
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
-           
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+               
+                options.LoginPath = "/Identity/Account/Login/";
+                options.AccessDeniedPath = "/Identity/Account/Forbidden/";
+                options.LogoutPath = "/Identity/Account/Logout/";
+            });
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+
+            });
+
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
                 options.Stores.MaxLengthForKeys = 128;
@@ -100,14 +95,21 @@ namespace LIMSCore
                 //sign in settings
                 options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedPhoneNumber = false;
+
+               
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             //.AddDefaultUI()
             .AddDefaultTokenProviders();
 
+           
+
+
             // Add application services
             services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+              
             
             services.AddAuthorization(options =>
             {
@@ -118,7 +120,7 @@ namespace LIMSCore
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             //Configure SendGrid 
-            services.Configure<AuthMessageSenderOptions>(Configuration);
+            //services.Configure<AuthMessageSenderOptions>(Configuration.GetSection(""));
 
             //Configure Stripe
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
@@ -131,11 +133,7 @@ namespace LIMSCore
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             //stripe configuration
-            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);
-
-
-            //loggerFactory.AddConsole();
-            //env.EnvironmentName = EnvironmentName.Production;
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);           
 
             if (env.IsDevelopment())
             {
@@ -155,7 +153,6 @@ namespace LIMSCore
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-            
 
             app.UseMvc(routes =>
             {

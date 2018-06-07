@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using LIMSWebApp.ViewModels.LIMSViewModels;
 using LIMSInfrastructure.Data;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-
+using LIMSWebApp.Extensions;
 
 namespace LIMSWebApp.Controllers
 {
@@ -60,9 +59,7 @@ namespace LIMSWebApp.Controllers
             {
                 return NotFound();
             }
-
-            
-
+      
             var parcelviewmodel = new ParcelSearchViewModel(); // instance variable
             var parcel = _context.Parcel
                 .Include(i => i.Administration)

@@ -11,5 +11,7 @@ namespace LIMSInfrastructure.Identity
     public class ApplicationUser : IdentityUser
     {
        public string Name { get; set; }
+       public byte[] Photo { get; set; }
+        
     }
 }

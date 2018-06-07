@@ -18,6 +18,9 @@
     <Compile Include="Migrations\20180420062117_InitialCreate.Designer.cs" />
     <Compile Include="Migrations\20180420063022_FirstMigration.cs" />
     <Compile Include="Migrations\20180420063022_FirstMigration.Designer.cs" />
+    <Compile Include="Migrations\ApplicationDb\20180606124120_v21.cs" />
+    <Compile Include="Migrations\ApplicationDb\20180606124120_v21.Designer.cs" />
+    <Compile Include="Migrations\ApplicationDb\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="Migrations\LIMScoreContextModelSnapshot.cs" />
   </ItemGroup>
 
