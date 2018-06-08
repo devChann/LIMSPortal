@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LIMSWebApp.ViewModels.LIMSViewModels;
 using LIMSInfrastructure.Data;
+using LIMSInfrastructure.Services.Printing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ using LIMSWebApp.Extensions;
 namespace LIMSWebApp.Controllers
 {
     [Authorize]
-    public class ParcelsIndexController : Controller
+    public partial class ParcelsIndexController : Controller
     {
         private readonly LIMScoreContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -57,7 +58,7 @@ namespace LIMSWebApp.Controllers
         {
             if (parcelnum == null)
             {
-                return NotFound();
+                return BadRequest();
             }
       
             var parcelviewmodel = new ParcelSearchViewModel(); // instance variable
@@ -65,9 +66,6 @@ namespace LIMSWebApp.Controllers
                 .Include(i => i.Administration)
                 .Include(i => i.LandUse)
                 .Include(i => i.Registration)
-                //.Include(i=>i.Responsibilities)
-                //.Include(i=>i.OwnershipRights)
-                //.Include(i=>i.Id1)
                 .Include(i => i.RestrictionsNavigation.Chrage)
                 .Include(i=>i.RestrictionsNavigation.Morgage)
                 .Include(i => i.SpatialUnit)
@@ -76,13 +74,16 @@ namespace LIMSWebApp.Controllers
                 .Include(i => i.Owner)
                 .Where(a => a.ParcelNum == parcelnum).SingleOrDefault();
 
-            ViewBag.MyRouteId = parcel.Id;
+           
+
             if (parcel == null)
             {
-                return NoContent();
+                return BadRequest();
             }
             else
             {
+                ViewBag.MyRouteId = parcel.Id;
+
                 parcelviewmodel.ID = parcel.Id;
                 parcelviewmodel.ParcelNumber = parcel.ParcelNum;
                 parcelviewmodel.Area = parcel.Area;
@@ -103,7 +104,7 @@ namespace LIMSWebApp.Controllers
                 parcelviewmodel.amount = parcel.RestrictionsNavigation.Chrage.Amount;
                 parcelviewmodel.ChargeLender = parcel.RestrictionsNavigation.Chrage.Lender;
 
-                //parcelviewmodel.RegistrationDate = parcel.Registration.RegistrationDate;
+                parcelviewmodel.RegistrationDate = parcel.Registration.RegistrationDate;
 
 
             }
@@ -535,26 +536,6 @@ namespace LIMSWebApp.Controllers
 
         }
 
-        public class PdfFooter: PdfPageEventHelper
-        {
-            public override void OnEndPage(PdfWriter writer, Document document)
-            {
-               
-                base.OnEndPage(writer, document);
-                PdfPTable tabFot = new PdfPTable(new float[] { 1F });
-                PdfPCell cell;
-                tabFot.TotalWidth = 300F;
-                //var logo = iTextSharp.text.Image.GetInstance(path);
-                //logo.Alignment = Element.ALIGN_CENTER;
-                //logo.ScaleAbsoluteHeight(70);
-                //logo.ScaleAbsoluteWidth(70);
-                //doc.Add(logo);
-                cell = new PdfPCell(new Phrase("Land Information Management System | Official Search Certificate"));
-                tabFot.AddCell(cell);
-                tabFot.WriteSelectedRows(0, -1, 150, document.Bottom, writer.DirectContent);
-            }
-        }
-
         //[HttpGet("/mapview/{id}")]
         public IActionResult MapView(int id)
         {
@@ -563,44 +544,40 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Payments(int id)
+        public IActionResult Payments(string parcelnum)
         {
-
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-            var parcels = await _context.Parcel
-                .Include(c => c.Administration)
-                
+            var ratesmodel = new RatesPaymentViewModel();
+            var parcel1 = _context.Parcel
+                .Include(c => c.Administration)               
                 .Include(c => c.Owner)
-                .Include(c => c.Id1.Payments)
-                    
-
+                .Include(c => c.Rate)
+                .ThenInclude(p => p.Payments)
                 .AsNoTracking()
-                .SingleOrDefaultAsync(c => c.Id == id);
+                .SingleOrDefault(a => a.ParcelNum == parcelnum);
 
-            var model = new ParcelSearchViewModel
-            {
-                ParcelNumber = parcels.ParcelNum,
-                AdministrationArea = parcels.Administration.DistrictName,
-                Area = parcels.Area,
-                id1 = parcels.Id1.Id,
-                Name = parcels.Owner.Name,
-                Phone = parcels.Owner.TelephoneAddress,
-                Adress = parcels.Owner.PostalAddress,
-                DateSearched = DateTime.Now,
-                PIN = parcels.Owner.Pin,
-                Payment = parcels.Id1.Payments
-            };
 
-            if (parcels == null)
+            if (parcel1 != null)
             {
-                return NotFound();
+
+                ratesmodel.ParcelNumber = parcel1.ParcelNum;
+                ratesmodel.AdministrationArea = parcel1.Administration.DistrictName;
+                ratesmodel.Area = parcel1.Area;
+                ratesmodel.Id = parcel1.Rate.Id;
+                ratesmodel.Name = parcel1.Owner.Name;
+                ratesmodel.Phone = parcel1.Owner.TelephoneAddress;
+                ratesmodel.Adress = parcel1.Owner.PostalAddress;
+                ratesmodel.DateSearched = DateTime.Now;
+                ratesmodel.PIN = parcel1.Owner.Pin;
+                ratesmodel.Payment = parcel1.Rate.Payments;
+               
+
+            }
+            else
+            {
+                return BadRequest();
             }
 
-
-            return View(model);                  
+            return View(ratesmodel);                  
         }
 
 

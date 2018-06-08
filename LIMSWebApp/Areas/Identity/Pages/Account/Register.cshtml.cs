@@ -45,6 +45,11 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             public string UserName { get; set; }
 
             [Required]
+            [StringLength(11)]
+            [Display(Name = "KRA PIN")]
+            public string KRAPIN { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -71,7 +76,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email, KRAPIN = Input.KRAPIN };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

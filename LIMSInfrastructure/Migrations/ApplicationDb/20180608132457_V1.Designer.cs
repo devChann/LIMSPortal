@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LIMSInfrastructure.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180606124120_v21")]
-    partial class v21
+    [Migration("20180608132457_V1")]
+    partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,6 +67,8 @@ namespace LIMSInfrastructure.Migrations.ApplicationDb
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("KRAPIN");
 
                     b.Property<bool>("LockoutEnabled");
 

@@ -66,6 +66,8 @@ namespace LIMSInfrastructure.Migrations.ApplicationDb
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("KRAPIN");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");

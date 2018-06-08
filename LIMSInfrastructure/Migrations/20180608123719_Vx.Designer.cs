@@ -4,14 +4,16 @@ using LIMSInfrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(LIMScoreContext))]
-    partial class LIMScoreContextModelSnapshot : ModelSnapshot
+    [Migration("20180608123719_Vx")]
+    partial class Vx
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1077,7 +1079,7 @@ namespace LIMSInfrastructure.Migrations
                         .HasConstraintName("FK_Parcel_Administration")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Entities.BuruParcels", "BuruParcel")
+                    b.HasOne("LIMSCore.Entities.BuruParcels", "IdNavigation")
                         .WithOne("Parcel")
                         .HasForeignKey("LIMSCore.Entities.Parcel", "Id")
                         .HasConstraintName("FK_Parcel_BuruParcels");

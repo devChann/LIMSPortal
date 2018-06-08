@@ -12,6 +12,7 @@ namespace LIMSInfrastructure.Identity
     {
        public string Name { get; set; }
        public byte[] Photo { get; set; }
-        
+        public string KRAPIN { get; set; }
+
     }
 }

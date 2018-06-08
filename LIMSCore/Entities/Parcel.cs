@@ -8,6 +8,9 @@ namespace LIMSCore.Entities
         public Parcel()
         {
             Operation = new HashSet<Operation>();
+            Administration = new Administration();
+            Rate = new Rates();
+            Owner = new Owner();
         }
 
         public int Id { get; set; }
@@ -25,8 +28,8 @@ namespace LIMSCore.Entities
         public int Restrictions { get; set; }
 
         public Administration Administration { get; set; }
-        public Rates Id1 { get; set; }
-        public BuruParcels IdNavigation { get; set; }
+        public Rates Rate { get; set; }
+        public BuruParcels BuruParcel { get; set; }
         public LandUse LandUse { get; set; }
         public Owner Owner { get; set; }
         public OwnershiRights OwnershipRightsNavigation { get; set; }

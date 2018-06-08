@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LIMSInfrastructure.Migrations.ApplicationDb
 {
-    public partial class v21 : Migration
+    public partial class V1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,7 +46,8 @@ namespace LIMSInfrastructure.Migrations.ApplicationDb
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Photo = table.Column<byte[]>(nullable: true)
+                    Photo = table.Column<byte[]>(nullable: true),
+                    KRAPIN = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

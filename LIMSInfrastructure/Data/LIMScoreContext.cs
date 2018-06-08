@@ -310,13 +310,13 @@ namespace LIMSInfrastructure.Data
                     .HasForeignKey(d => d.Administrationid)
                     .HasConstraintName("FK_Parcel_Administration");
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.BuruParcel)
                     .WithOne(p => p.Parcel)
                     .HasForeignKey<Parcel>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Parcel_BuruParcels");
 
-                entity.HasOne(d => d.Id1)
+                entity.HasOne(d => d.Rate)
                     .WithOne(p => p.Parcel)
                     .HasForeignKey<Parcel>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -365,7 +365,7 @@ namespace LIMSInfrastructure.Data
 
             modelBuilder.Entity<Payments>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("Id");
 
                 entity.Property(e => e.Amount).HasColumnType("money");
 
@@ -415,7 +415,7 @@ namespace LIMSInfrastructure.Data
             modelBuilder.Entity<Rates>(entity =>
             {
                 entity.Property(e => e.Id)
-                    .HasColumnName("id")
+                    .HasColumnName("Id")
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.Amount).HasColumnType("money");

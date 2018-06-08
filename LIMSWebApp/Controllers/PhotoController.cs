@@ -30,12 +30,8 @@ namespace AuthWithPhoto.Controllers
                     _cache.Set(id, photo);
                 }
             }
-            if (photo != null)
-            {
-                return File(photo, "image/png");
-            } else {
-                return File(Url.Content("~/images/blank.png"), "image/png");
-            }
+
+            return photo != null ? File(photo, "image/png") : (IActionResult)File(Url.Content("~/images/blank.png"), "image/png");
 
         }
     }
