@@ -37,7 +37,7 @@ namespace LIMSWebApp.Controllers
 
             //query parcels that match property ownership creteria
 
-            var owner = _limscontext.Owner.SingleOrDefault(o => o.Pin == user.KRAPIN);
+            var owner = _limscontext.Owner.SingleOrDefault(o => o.PIN == user.KRAPIN);
 
             var parcelsowned = _limscontext.Parcel
                 .Where(i => i.OwnerId == owner.Id)

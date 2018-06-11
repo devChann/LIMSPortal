@@ -10,10 +10,9 @@ namespace LIMSCore.Entities
             Payments = new HashSet<Payments>();
         }
 
-        public decimal? Amount { get; set; }
         public int Id { get; set; }
+        public decimal? Amount { get; set; }
 
-        public Parcel Parcel { get; set; }
         public ICollection<Payments> Payments { get; set; }
     }
 }

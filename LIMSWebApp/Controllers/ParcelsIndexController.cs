@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using LIMSWebApp.Extensions;
+using System.Collections.Generic;
 
 namespace LIMSWebApp.Controllers
 {
@@ -90,7 +91,7 @@ namespace LIMSWebApp.Controllers
                 parcelviewmodel.AdministrationArea = parcel.Administration.DistrictName;
                 parcelviewmodel.landUse = parcel.LandUse.LandUseType;
                 parcelviewmodel.Tenure = parcel.Tenure.TenureType;
-                parcelviewmodel.PIN = parcel.Owner.Pin;
+                parcelviewmodel.PIN = parcel.Owner.PIN;
                 parcelviewmodel.Name = parcel.Owner.Name;
                 parcelviewmodel.Phone = parcel.Owner.TelephoneAddress;
                 parcelviewmodel.Adress = parcel.Owner.PostalAddress;
@@ -190,7 +191,7 @@ namespace LIMSWebApp.Controllers
             parcelviewmodel.Phone = parcel.Owner.TelephoneAddress;
             parcelviewmodel.Adress = parcel.Owner.PostalAddress;
             parcelviewmodel.DateSearched = DateTime.Now;
-            parcelviewmodel.PIN = parcel.Owner.Pin;
+            parcelviewmodel.PIN = parcel.Owner.PIN;
             parcelviewmodel.amount = parcel.RestrictionsNavigation.Chrage.Amount;
             parcelviewmodel.MAmount = parcel.RestrictionsNavigation.Morgage.Amount;
             parcelviewmodel.Lender = parcel.RestrictionsNavigation.Chrage.Lender;
@@ -544,38 +545,36 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
-        public IActionResult Payments(string parcelnum)
+        public async Task<IActionResult> Payments(string parcelnum)
         {
             var ratesmodel = new RatesPaymentViewModel();
-            var parcel1 = _context.Parcel
-                .Include(c => c.Administration)               
-                .Include(c => c.Owner)
-                .Include(c => c.Rate)
-                .ThenInclude(p => p.Payments)
-                .AsNoTracking()
-                .SingleOrDefault(a => a.ParcelNum == parcelnum);
 
+            //var parcel = await _context.Parcel
+            //    .Include(c => c.Administration)
+            //    .Include(b => b.Owner)
+            //    .SingleOrDefaultAsync(a => a.ParcelNum == parcelnum);
 
-            if (parcel1 != null)
-            {
-
-                ratesmodel.ParcelNumber = parcel1.ParcelNum;
-                ratesmodel.AdministrationArea = parcel1.Administration.DistrictName;
-                ratesmodel.Area = parcel1.Area;
-                ratesmodel.Id = parcel1.Rate.Id;
-                ratesmodel.Name = parcel1.Owner.Name;
-                ratesmodel.Phone = parcel1.Owner.TelephoneAddress;
-                ratesmodel.Adress = parcel1.Owner.PostalAddress;
+            var payments = await _context.Payments
+                .Include(p => p.Rate)
+                .Include(p => p.Parcel)
+                .ThenInclude(a => a.LandUse)
+                .Include(p => p.Parcel).ThenInclude(a => a.Administration)
+                .Include(p => p.Parcel).ThenInclude(b => b.Owner)
+                .SingleOrDefaultAsync(a => a.Parcel.ParcelNum == parcelnum);
+                
+                ratesmodel.ParcelNumber = payments.Parcel.ParcelNum;
+                ratesmodel.AdministrationArea = payments.Parcel.Administration.DistrictName;
+                ratesmodel.Area = payments.Parcel.Area;
+                ratesmodel.Id = payments.Rate.Id;
+                ratesmodel.Name = payments.Parcel.Owner.Name;
+                ratesmodel.Phone = payments.Parcel.Owner.TelephoneAddress;
+                ratesmodel.Adress = payments.Parcel.Owner.PostalAddress;
                 ratesmodel.DateSearched = DateTime.Now;
-                ratesmodel.PIN = parcel1.Owner.Pin;
-                ratesmodel.Payment = parcel1.Rate.Payments;
-               
+                ratesmodel.PIN = payments.Parcel.Owner.PIN;
+                ratesmodel.Payments = payments.Rate.Payments;
+                ratesmodel.LandUse = payments.Parcel.LandUse.LandUseType;
 
-            }
-            else
-            {
-                return BadRequest();
-            }
+        
 
             return View(ratesmodel);                  
         }

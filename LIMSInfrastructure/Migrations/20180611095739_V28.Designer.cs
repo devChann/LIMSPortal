@@ -4,14 +4,16 @@ using LIMSInfrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(LIMScoreContext))]
-    partial class LIMScoreContextModelSnapshot : ModelSnapshot
+    [Migration("20180611095739_V28")]
+    partial class V28
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -599,7 +601,9 @@ namespace LIMSInfrastructure.Migrations
                     b.Property<string>("ModeOfPayment")
                         .HasColumnType("nchar(10)");
 
-                    b.Property<int>("ParcelId");
+                    b.Property<string>("ParcelId");
+
+                    b.Property<int?>("ParcelId1");
 
                     b.Property<DateTime?>("PaymentDate")
                         .ValueGeneratedOnAdd()
@@ -614,7 +618,7 @@ namespace LIMSInfrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParcelId");
+                    b.HasIndex("ParcelId1");
 
                     b.HasIndex("RateId");
 
@@ -1148,8 +1152,7 @@ namespace LIMSInfrastructure.Migrations
                 {
                     b.HasOne("LIMSCore.Entities.Parcel", "Parcel")
                         .WithMany()
-                        .HasForeignKey("ParcelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ParcelId1");
 
                     b.HasOne("LIMSCore.Entities.Rates", "Rate")
                         .WithMany("Payments")

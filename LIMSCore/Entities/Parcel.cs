@@ -5,13 +5,13 @@ namespace LIMSCore.Entities
 {
     public partial class Parcel
     {
-        public Parcel()
-        {
-            Operation = new HashSet<Operation>();
-            Administration = new Administration();
-            Rate = new Rates();
-            Owner = new Owner();
-        }
+        //public Parcel()
+        //{
+        //    Operations = new HashSet<Operation>();
+        //    Administration = new Administration();
+        //    Rate = new Rates();
+        //    Owner = new Owner();
+        //}
 
         public int Id { get; set; }
         public int Administrationid { get; set; }
@@ -39,6 +39,6 @@ namespace LIMSCore.Entities
         public SpatialUnit SpatialUnit { get; set; }
         public Tenure Tenure { get; set; }
         public Valution Valuation { get; set; }
-        public ICollection<Operation> Operation { get; set; }
+        public ICollection<Operation> Operations { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace LIMSCore.Entities
     {
         public Operation()
         {
-            Service = new HashSet<Service>();
+            Services = new HashSet<Service>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace LIMSCore.Entities
         public int? Parcelid { get; set; }
 
         public Parcel Parcel { get; set; }
-        public ICollection<Service> Service { get; set; }
+        public ICollection<Service> Services { get; set; }
     }
 }

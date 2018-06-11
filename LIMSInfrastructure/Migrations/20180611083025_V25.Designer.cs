@@ -4,14 +4,16 @@ using LIMSInfrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(LIMScoreContext))]
-    partial class LIMScoreContextModelSnapshot : ModelSnapshot
+    [Migration("20180611083025_V25")]
+    partial class V25
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,8 +547,6 @@ namespace LIMSInfrastructure.Migrations
                     b.Property<string>("ParcelNum")
                         .IsRequired();
 
-                    b.Property<int?>("RateId");
-
                     b.Property<int>("RegistrationId");
 
                     b.Property<int>("Responsibilities");
@@ -568,8 +568,6 @@ namespace LIMSInfrastructure.Migrations
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("OwnershipRights");
-
-                    b.HasIndex("RateId");
 
                     b.HasIndex("RegistrationId");
 
@@ -599,24 +597,20 @@ namespace LIMSInfrastructure.Migrations
                     b.Property<string>("ModeOfPayment")
                         .HasColumnType("nchar(10)");
 
-                    b.Property<int>("ParcelId");
-
                     b.Property<DateTime?>("PaymentDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
                         .HasDefaultValueSql("(getdate())");
 
-                    b.Property<int>("RateId")
-                        .HasColumnName("RateId");
+                    b.Property<int>("Rateid")
+                        .HasColumnName("rateid");
 
                     b.Property<string>("ReceiptNo")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParcelId");
-
-                    b.HasIndex("RateId");
+                    b.HasIndex("Rateid");
 
                     b.ToTable("Payments");
                 });
@@ -1090,6 +1084,11 @@ namespace LIMSInfrastructure.Migrations
                         .HasForeignKey("LIMSCore.Entities.Parcel", "Id")
                         .HasConstraintName("FK_Parcel_BuruParcels");
 
+                    b.HasOne("LIMSCore.Entities.Rates", "Rate")
+                        .WithOne("Parcel")
+                        .HasForeignKey("LIMSCore.Entities.Parcel", "Id")
+                        .HasConstraintName("FK_Parcel_To_Rates");
+
                     b.HasOne("LIMSCore.Entities.LandUse", "LandUse")
                         .WithMany("Parcel")
                         .HasForeignKey("LandUseId")
@@ -1106,10 +1105,6 @@ namespace LIMSInfrastructure.Migrations
                         .HasForeignKey("OwnershipRights")
                         .HasConstraintName("FK_Parcel_OwnershiRights")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("LIMSCore.Entities.Rates", "Rate")
-                        .WithMany()
-                        .HasForeignKey("RateId");
 
                     b.HasOne("LIMSCore.Entities.Registration", "Registration")
                         .WithMany("Parcel")
@@ -1146,15 +1141,10 @@ namespace LIMSInfrastructure.Migrations
 
             modelBuilder.Entity("LIMSCore.Entities.Payments", b =>
                 {
-                    b.HasOne("LIMSCore.Entities.Parcel", "Parcel")
-                        .WithMany()
-                        .HasForeignKey("ParcelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("LIMSCore.Entities.Rates", "Rate")
                         .WithMany("Payments")
-                        .HasForeignKey("RateId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Rateid")
+                        .HasConstraintName("FK_Payments_To_Rates");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Person", b =>
