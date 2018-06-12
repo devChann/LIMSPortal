@@ -14,30 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\20180420062117_InitialCreate.cs" />
-    <Compile Include="Migrations\20180420062117_InitialCreate.Designer.cs" />
-    <Compile Include="Migrations\20180420063022_FirstMigration.cs" />
-    <Compile Include="Migrations\20180420063022_FirstMigration.Designer.cs" />
-    <Compile Include="Migrations\20180608123719_Vx.cs" />
-    <Compile Include="Migrations\20180608123719_Vx.Designer.cs" />
-    <Compile Include="Migrations\20180608124240_v23.cs" />
-    <Compile Include="Migrations\20180608124240_v23.Designer.cs" />
-    <Compile Include="Migrations\20180611081846_V24.cs" />
-    <Compile Include="Migrations\20180611081846_V24.Designer.cs" />
-    <Compile Include="Migrations\20180611083025_V25.cs" />
-    <Compile Include="Migrations\20180611083025_V25.Designer.cs" />
-    <Compile Include="Migrations\20180611083817_V26.cs" />
-    <Compile Include="Migrations\20180611083817_V26.Designer.cs" />
-    <Compile Include="Migrations\20180611093207_V27.cs" />
-    <Compile Include="Migrations\20180611093207_V27.Designer.cs" />
-    <Compile Include="Migrations\20180611095739_V28.cs" />
-    <Compile Include="Migrations\20180611095739_V28.Designer.cs" />
-    <Compile Include="Migrations\20180611101417_29.cs" />
-    <Compile Include="Migrations\20180611101417_29.Designer.cs" />
     <Compile Include="Migrations\ApplicationDb\20180608132457_V1.cs" />
     <Compile Include="Migrations\ApplicationDb\20180608132457_V1.Designer.cs" />
     <Compile Include="Migrations\ApplicationDb\ApplicationDbContextModelSnapshot.cs" />
-    <Compile Include="Migrations\LIMScoreContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>

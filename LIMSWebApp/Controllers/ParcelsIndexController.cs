@@ -20,10 +20,10 @@ namespace LIMSWebApp.Controllers
     [Authorize]
     public partial class ParcelsIndexController : Controller
     {
-        private readonly LIMScoreContext _context;
+        private readonly LIMSCoreDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ParcelsIndexController(LIMScoreContext context, IHostingEnvironment hostingEnvironment)
+        public ParcelsIndexController(LIMSCoreDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
@@ -61,21 +61,21 @@ namespace LIMSWebApp.Controllers
             {
                 return BadRequest();
             }
-      
+
             var parcelviewmodel = new ParcelSearchViewModel(); // instance variable
             var parcel = _context.Parcel
                 .Include(i => i.Administration)
                 .Include(i => i.LandUse)
                 .Include(i => i.Registration)
                 .Include(i => i.RestrictionsNavigation.Chrage)
-                .Include(i=>i.RestrictionsNavigation.Morgage)
+                .Include(i => i.RestrictionsNavigation.Morgage)
                 .Include(i => i.SpatialUnit)
                 .Include(i => i.Tenure)
                 .Include(i => i.Valuation)
                 .Include(i => i.Owner)
                 .Where(a => a.ParcelNum == parcelnum).SingleOrDefault();
 
-           
+
 
             if (parcel == null)
             {
@@ -212,7 +212,7 @@ namespace LIMSWebApp.Controllers
             Document doc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
 
             // pull data returned by search parcel action
-           
+
 
 
             //file will created in this path  
@@ -236,8 +236,8 @@ namespace LIMSWebApp.Controllers
             footerlogo.Alignment = Element.ALIGN_CENTER;
             footerlogo.ScaleAbsoluteHeight(20);
             footerlogo.ScaleAbsoluteWidth(70);
-            
-            footerlogo.SetAbsolutePosition(doc.PageSize.Width - 36f - 72f,doc.PageSize.Height - 800.6f);
+
+            footerlogo.SetAbsolutePosition(doc.PageSize.Width - 36f - 72f, doc.PageSize.Height - 800.6f);
             doc.Add(footerlogo);
 
 
@@ -541,7 +541,7 @@ namespace LIMSWebApp.Controllers
         public IActionResult MapView(int id)
         {
             ViewBag.MyRouteId = id;
-            
+
             return View();
         }
 
@@ -549,34 +549,29 @@ namespace LIMSWebApp.Controllers
         {
             var ratesmodel = new RatesPaymentViewModel();
 
-            //var parcel = await _context.Parcel
-            //    .Include(c => c.Administration)
-            //    .Include(b => b.Owner)
-            //    .SingleOrDefaultAsync(a => a.ParcelNum == parcelnum);
-
-            var payments = await _context.Payments
-                .Include(p => p.Rate)
-                .Include(p => p.Parcel)
-                .ThenInclude(a => a.LandUse)
-                .Include(p => p.Parcel).ThenInclude(a => a.Administration)
-                .Include(p => p.Parcel).ThenInclude(b => b.Owner)
-                .SingleOrDefaultAsync(a => a.Parcel.ParcelNum == parcelnum);
+            var payments = await _context.Parcel
+                .Include(a => a.LandUse)
+                .Include(p => p.Administration)
+                .Include(p => p.Owner)
+                .Include(a => a.Payments)
+                .Include(b => b.Rate)
+                .SingleOrDefaultAsync(a => a.ParcelNum == parcelnum);
                 
-                ratesmodel.ParcelNumber = payments.Parcel.ParcelNum;
-                ratesmodel.AdministrationArea = payments.Parcel.Administration.DistrictName;
-                ratesmodel.Area = payments.Parcel.Area;
-                ratesmodel.Id = payments.Rate.Id;
-                ratesmodel.Name = payments.Parcel.Owner.Name;
-                ratesmodel.Phone = payments.Parcel.Owner.TelephoneAddress;
-                ratesmodel.Adress = payments.Parcel.Owner.PostalAddress;
-                ratesmodel.DateSearched = DateTime.Now;
-                ratesmodel.PIN = payments.Parcel.Owner.PIN;
-                ratesmodel.Payments = payments.Rate.Payments;
-                ratesmodel.LandUse = payments.Parcel.LandUse.LandUseType;
 
-        
+            ratesmodel.ParcelNumber = payments.ParcelNum;
+            ratesmodel.AdministrationArea = payments.Administration.DistrictName;
+            ratesmodel.Area = payments.Area;
+            ratesmodel.Id = payments.Id;
+            ratesmodel.Name = payments.Owner.Name;
+            ratesmodel.Phone = payments.Owner.TelephoneAddress;
+            ratesmodel.Adress = payments.Owner.PostalAddress;
+            ratesmodel.DateSearched = DateTime.Now;
+            ratesmodel.PIN = payments.Owner.PIN;
+            ratesmodel.Payments = payments.Payments;
+            ratesmodel.LandUse = payments.LandUse.LandUseType;
+            ratesmodel.Rate = payments.Rate.Amount;
 
-            return View(ratesmodel);                  
+            return View(ratesmodel);
         }
 
 

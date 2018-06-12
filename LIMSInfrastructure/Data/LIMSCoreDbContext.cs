@@ -1,14 +1,21 @@
-﻿using LIMSCore.Entities;
+﻿using System;
+using LIMSCore.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LIMSInfrastructure.Data
 {
-    public partial class LIMScoreContext : DbContext
+    public partial class LIMSCoreDbContext : DbContext
     {
-        public LIMScoreContext(DbContextOptions<LIMScoreContext>options):base(options)
+        public LIMSCoreDbContext()
         {
-
         }
+
+        public LIMSCoreDbContext(DbContextOptions<LIMSCoreDbContext> options)
+            : base(options)
+        {
+        }
+
         public virtual DbSet<Administration> Administration { get; set; }
         public virtual DbSet<Apartment> Apartment { get; set; }
         public virtual DbSet<Beacon> Beacon { get; set; }
@@ -16,7 +23,6 @@ namespace LIMSInfrastructure.Data
         public virtual DbSet<BoundaryBeacon> BoundaryBeacon { get; set; }
         public virtual DbSet<Building> Building { get; set; }
         public virtual DbSet<BuildingRegulations> BuildingRegulations { get; set; }
-        public virtual DbSet<BuruParcels> BuruParcels { get; set; }
         public virtual DbSet<Charge> Charge { get; set; }
         public virtual DbSet<Freehold> Freehold { get; set; }
         public virtual DbSet<GroupGroupLeadership> GroupGroupLeadership { get; set; }
@@ -55,12 +61,22 @@ namespace LIMSInfrastructure.Data
         public virtual DbSet<Valution> Valution { get; set; }
         public virtual DbSet<Zone> Zone { get; set; }
 
-       
+        // Unable to generate entity type for table 'dbo.BuruParcels'. Please see the warning messages.
+
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                optionsBuilder.UseSqlServer("Data Source=192.168.1.231;Initial Catalog=LIMSCoreDb;Persist Security Info=True;User ID=sa;Password=MobileST!!;");
+//            }
+//        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Beacon>(entity =>
             {
-                entity.Property(e => e.DateSet).HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.DateSet).HasDefaultValueSql("(getdate())");               
             });
 
             modelBuilder.Entity<BoundaryBeacon>(entity =>
@@ -98,27 +114,6 @@ namespace LIMSInfrastructure.Data
                 entity.Property(e => e.Gcr).HasColumnName("GCR");
 
                 entity.Property(e => e.Pcr).HasColumnName("PCR");
-            });
-
-            modelBuilder.Entity<BuruParcels>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.AmountPai).HasColumnName("Amount_Pai");
-
-                entity.Property(e => e.Boundary).HasMaxLength(30);
-
-                entity.Property(e => e.ParcelOwn)
-                    .HasColumnName("Parcel_Own")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.ShapeArea).HasColumnName("Shape_Area");
-
-                entity.Property(e => e.ShapeLeng).HasColumnName("Shape_Leng");
-
-                entity.Property(e => e.Status).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Charge>(entity =>
@@ -274,7 +269,7 @@ namespace LIMSInfrastructure.Data
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.HasOne(d => d.Parcel)
-                    .WithMany(p => p.Operations)
+                    .WithMany(p => p.Operation)
                     .HasForeignKey(d => d.Parcelid)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Operation_Parcel");
@@ -293,7 +288,13 @@ namespace LIMSInfrastructure.Data
 
                 entity.HasIndex(e => e.OwnerId);
 
+                entity.HasIndex(e => e.OwnershipRights);
+
                 entity.HasIndex(e => e.RegistrationId);
+
+                entity.HasIndex(e => e.Responsibilities);
+
+                entity.HasIndex(e => e.Restrictions);
 
                 entity.HasIndex(e => e.SpatialUnitId);
 
@@ -301,22 +302,12 @@ namespace LIMSInfrastructure.Data
 
                 entity.HasIndex(e => e.ValuationId);
 
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.ParcelNum).IsRequired();
 
                 entity.HasOne(d => d.Administration)
                     .WithMany(p => p.Parcel)
                     .HasForeignKey(d => d.Administrationid)
                     .HasConstraintName("FK_Parcel_Administration");
-
-                entity.HasOne(d => d.BuruParcel)
-                    .WithOne(p => p.Parcel)
-                    .HasForeignKey<Parcel>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Parcel_BuruParcels");
-
-                
 
                 entity.HasOne(d => d.LandUse)
                     .WithMany(p => p.Parcel)
@@ -331,6 +322,11 @@ namespace LIMSInfrastructure.Data
                     .WithMany(p => p.Parcel)
                     .HasForeignKey(d => d.OwnershipRights)
                     .HasConstraintName("FK_Parcel_OwnershiRights");
+
+                entity.HasOne(d => d.Rate)
+                    .WithMany(p => p.Parcel)
+                    .HasForeignKey(d => d.RateId)
+                    .HasConstraintName("FK_Parcel_Rates");
 
                 entity.HasOne(d => d.Registration)
                     .WithMany(p => p.Parcel)
@@ -361,26 +357,22 @@ namespace LIMSInfrastructure.Data
 
             modelBuilder.Entity<Payments>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("Id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Amount).HasColumnType("money");
 
-                entity.Property(e => e.ModeOfPayment).HasColumnType("nchar(10)");
+                entity.Property(e => e.ModeOfPayment).HasMaxLength(10);
 
                 entity.Property(e => e.PaymentDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.RateId).HasColumnName("RateId");
-
                 entity.Property(e => e.ReceiptNo).HasColumnType("text");
 
-                //entity.HasOne(d => d.Rate)
-                //    .WithMany(p => p.Payments)
-                //    .HasForeignKey(d => d.RateId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_Payments_To_Rates");
-                
+                entity.HasOne(d => d.Parcel)
+                    .WithMany(p => p.Payments)
+                    .HasForeignKey(d => d.ParcelId)
+                    .HasConstraintName("FK_Payments_Parcel");
             });
 
             modelBuilder.Entity<Person>(entity =>
@@ -412,10 +404,8 @@ namespace LIMSInfrastructure.Data
             modelBuilder.Entity<Rates>(entity =>
             {
                 entity.Property(e => e.Id)
-                    .HasColumnName("Id")
-                    .ValueGeneratedNever();             
-
-                entity.HasMany(e => e.Payments).WithOne(e => e.Rate);
+                    .HasColumnName("id")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Amount).HasColumnType("money");
             });
@@ -427,6 +417,14 @@ namespace LIMSInfrastructure.Data
 
             modelBuilder.Entity<Restriction>(entity =>
             {
+                entity.HasIndex(e => e.ChrageId);
+
+                entity.HasIndex(e => e.Morgageid);
+
+                entity.HasIndex(e => e.ReserveId);
+
+                entity.HasIndex(e => e.Statutoryid);
+
                 entity.Property(e => e.ChrageId).HasColumnName("chrageId");
 
                 entity.Property(e => e.LandUseId).HasColumnName("landUseId");
@@ -467,7 +465,7 @@ namespace LIMSInfrastructure.Data
                 entity.Property(e => e.Opid).HasColumnName("OPid");
 
                 entity.HasOne(d => d.Op)
-                    .WithMany(p => p.Services)
+                    .WithMany(p => p.Service)
                     .HasForeignKey(d => d.Opid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Service_Operation");

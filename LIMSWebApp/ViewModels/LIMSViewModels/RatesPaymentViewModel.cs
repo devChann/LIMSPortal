@@ -49,6 +49,7 @@ namespace LIMSWebApp.ViewModels.LIMSViewModels
         public string Adress { get; set; }
         public string Phone { get; set; }
         public string PIN { get; set; }
+        public decimal? Rate { get; set; }
         //public string OwnershipType { get; set; }
 
 
@@ -59,6 +60,6 @@ namespace LIMSWebApp.ViewModels.LIMSViewModels
         //public int Rateid { get; set; }
         //public string ReceiptNo { get; set; }
 
-        public IEnumerable<Payments> Payments { get; set; }
+        public ICollection<Payments> Payments { get; set; }
     }
 }

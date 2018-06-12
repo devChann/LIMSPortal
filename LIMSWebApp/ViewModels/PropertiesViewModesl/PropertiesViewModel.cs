@@ -9,6 +9,7 @@ namespace LIMSWebApp.ViewModels.PropertiesViewModesl
     {
         public string ParcelNum { get; set; }
         public string TenureType { get; set; }
-            
+        public decimal? Rate { get; set; }
+
     }
 }

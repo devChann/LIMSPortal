@@ -9,7 +9,7 @@ namespace LIMSWebApp.ViewModels.LIMSViewModels
     public class ParcelsIndexViewModel
     {
         public IEnumerable<Parcel> Parcels { get; set; }
-        public IEnumerable<Rrr> RRRs { get; set; }
+        //public IEnumerable<RRRs> RRRs { get; set; }
         public IEnumerable<Owner> Owners { get; set; }
         
         //public IEnumerable<OwnerRRR> OwnerRRRs { get; set; }

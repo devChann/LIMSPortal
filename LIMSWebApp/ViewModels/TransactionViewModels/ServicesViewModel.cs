@@ -18,7 +18,7 @@ namespace LIMSWebApp.ViewModels.TransactionViewModels
         public string Comments { get; set; }
 
         public IEnumerable<Parcel> Parcels { get; set; }
-        public IEnumerable<Rrr> RRRs { get; set; }
+        //public IEnumerable<Rrr> RRRs { get; set; }
       
         [Display(Name ="Choose A service")]
         public List<SelectListItem> Operations { get; set; }

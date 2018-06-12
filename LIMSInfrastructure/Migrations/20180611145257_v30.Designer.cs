@@ -4,14 +4,16 @@ using LIMSInfrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(LIMScoreContext))]
-    partial class LIMScoreContextModelSnapshot : ModelSnapshot
+    [Migration("20180611145257_v30")]
+    partial class v30
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,8 +547,6 @@ namespace LIMSInfrastructure.Migrations
                     b.Property<string>("ParcelNum")
                         .IsRequired();
 
-                    b.Property<int?>("RateId");
-
                     b.Property<int>("RegistrationId");
 
                     b.Property<int>("Responsibilities");
@@ -568,8 +568,6 @@ namespace LIMSInfrastructure.Migrations
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("OwnershipRights");
-
-                    b.HasIndex("RateId");
 
                     b.HasIndex("RegistrationId");
 
@@ -599,8 +597,6 @@ namespace LIMSInfrastructure.Migrations
                     b.Property<string>("ModeOfPayment")
                         .HasColumnType("nchar(10)");
 
-                    b.Property<int>("ParcelId");
-
                     b.Property<DateTime?>("PaymentDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
@@ -613,8 +609,6 @@ namespace LIMSInfrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ParcelId");
 
                     b.HasIndex("RateId");
 
@@ -668,7 +662,12 @@ namespace LIMSInfrastructure.Migrations
                     b.Property<decimal?>("Amount")
                         .HasColumnType("money");
 
+                    b.Property<int>("ParcelId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParcelId")
+                        .IsUnique();
 
                     b.ToTable("Rates");
                 });
@@ -1107,10 +1106,6 @@ namespace LIMSInfrastructure.Migrations
                         .HasConstraintName("FK_Parcel_OwnershiRights")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Entities.Rates", "Rate")
-                        .WithMany()
-                        .HasForeignKey("RateId");
-
                     b.HasOne("LIMSCore.Entities.Registration", "Registration")
                         .WithMany("Parcel")
                         .HasForeignKey("RegistrationId")
@@ -1146,15 +1141,10 @@ namespace LIMSInfrastructure.Migrations
 
             modelBuilder.Entity("LIMSCore.Entities.Payments", b =>
                 {
-                    b.HasOne("LIMSCore.Entities.Parcel", "Parcel")
-                        .WithMany()
-                        .HasForeignKey("ParcelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("LIMSCore.Entities.Rates", "Rate")
                         .WithMany("Payments")
                         .HasForeignKey("RateId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("FK_Payments_To_Rates");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Person", b =>
@@ -1175,6 +1165,14 @@ namespace LIMSInfrastructure.Migrations
                     b.HasOne("LIMSCore.Entities.Person", "Person")
                         .WithMany("PersonGroupMembership")
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("LIMSCore.Entities.Rates", b =>
+                {
+                    b.HasOne("LIMSCore.Entities.Parcel", "Parcel")
+                        .WithOne("Rates")
+                        .HasForeignKey("LIMSCore.Entities.Rates", "ParcelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

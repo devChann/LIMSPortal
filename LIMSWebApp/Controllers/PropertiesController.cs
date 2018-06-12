@@ -16,19 +16,19 @@ namespace LIMSWebApp.Controllers
 {
     public class PropertiesController : Controller
     {
-        private readonly LIMScoreContext _limscontext;      
+        private readonly LIMSCoreDbContext _limscontext;
         private readonly IHostingEnvironment _hostingEnv;
         private readonly ApplicationDbContext _usercontext;
 
-        public PropertiesController(LIMScoreContext limscontext, ApplicationDbContext usercontext, IHostingEnvironment hostingEnv)
+        public PropertiesController(LIMSCoreDbContext limscontext, ApplicationDbContext usercontext, IHostingEnvironment hostingEnv)
         {
-            _limscontext = limscontext;          
+            _limscontext = limscontext;
             _hostingEnv = hostingEnv;
             _usercontext = usercontext;
 
-        }      
+        }
 
-       [Route("/Properties")]
+        [Route("/Properties")]
         public ActionResult Properties()
         {
             var username = HttpContext.User.Identity.Name;
@@ -44,10 +44,11 @@ namespace LIMSWebApp.Controllers
                 .Select(a => new PropertiesViewModel
                 {
                     ParcelNum = a.ParcelNum,
-                    TenureType = a.Tenure.TenureType
+                    TenureType = a.Tenure.TenureType,
+                    Rate = a.Rate.Amount
                 }).ToList();
 
-  
+
             return View(parcelsowned);
         }
 

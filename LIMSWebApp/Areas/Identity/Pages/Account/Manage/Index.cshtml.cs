@@ -36,6 +36,9 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
         }
 
         public string Username { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public IFormFile Photo { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
@@ -68,12 +71,13 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
             }
 
             Username = user.UserName;
-            
+
 
             Input = new InputModel
             {
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber               
+                PhoneNumber = user.PhoneNumber,
+                //Photo = user.Photo
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);

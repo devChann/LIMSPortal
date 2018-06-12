@@ -42,7 +42,7 @@ namespace LIMSCore
                 ));
 
             //LIMS Database context
-            services.AddDbContext<LIMScoreContext>(options =>
+            services.AddDbContext<LIMSCoreDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LIMSCoreDbConnection"),
                 sqlServerOptionsAction: sqlOptions =>
                 {

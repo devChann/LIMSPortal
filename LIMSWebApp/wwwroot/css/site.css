@@ -10,6 +10,10 @@ body {
     margin-bottom: 60px;
 }
 
+.dropdown{
+    overflow:visible;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
