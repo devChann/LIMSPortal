@@ -6,8 +6,8 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-<form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">  
-    <ul class="navbar-nav mr-auto ">
+<form class="form-inline text-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">  
+    <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <a class="nav-link" asp-controller="Account" asp-action="UserProfile">Services</a>
         </li>
@@ -34,7 +34,7 @@
 else
 {
   
-    <ul class="navbar-nav mr-auto ">
+    <ul class="navbar-nav mr-auto">
         <li class="nav-item">
             <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>

@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Hosting;
 using LIMSInfrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LIMSWebApp.Controllers
 {
+    [Authorize]
     public class PropertiesController : Controller
     {
         private readonly LIMSCoreDbContext _limscontext;

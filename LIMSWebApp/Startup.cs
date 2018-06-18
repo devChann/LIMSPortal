@@ -56,13 +56,7 @@ namespace LIMSCore
             //Inject repository
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie(options =>
-            {             
-                options.LoginPath = "/Identity/Account/Login/";
-                options.AccessDeniedPath = "/Identity/Account/Forbidden/";
-                options.LogoutPath = "/Identity/Account/Logout/";
-            });
+            services.AddAuthentication();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -70,6 +64,13 @@ namespace LIMSCore
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
 
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -95,7 +96,7 @@ namespace LIMSCore
                
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
-            //.AddDefaultUI()
+            .AddDefaultUI()
             .AddDefaultTokenProviders();
 
            
@@ -104,8 +105,7 @@ namespace LIMSCore
             // Add application services
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-              
+            services.AddMvc();              
             
             services.AddAuthorization(options =>
             {
@@ -150,55 +150,11 @@ namespace LIMSCore
 
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{*id}");
-            });
+            app.UseStatusCodePagesWithReExecute("/HttpErrors/{0}");
+
+            app.UseMvcWithDefaultRoute();
            
         }
 
-        //public async Task CreateRoles(IServiceProvider serviceProvider)
-        //{
-        //    //adding custom roles         
-        //    var RoleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-        //    var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();     
-        //    string[] roleNames = { "Admin", "Manager", "Member","Surveyor","Physical Planner","Registrer" };
-            
-        //    IdentityResult roleResult;
-
-        //    foreach (var roleName in roleNames)
-        //    {
-        //        //creating the roles and seeding them to the database
-        //        var roleExist = await RoleManager.RoleExistsAsync(roleName);
-        //        if (!roleExist)
-        //        {
-        //            roleResult = await RoleManager.CreateAsync(new ApplicationRole(roleName));
-        //        }
-        //    }
-
-        //    //creating a admin user who could maintain the web app
-        //    var siteadmin = new ApplicationUser
-        //    {
-        //        UserName = Configuration.GetSection("AdminSettings")["AdminUserName"],
-        //        Email = Configuration.GetSection("AdminSettings")["AdminEmail"]
-        //    };
-
-        //    string userPassword = Configuration.GetSection("AdminSettings")["AdminPassword"];
-        //    var user = await UserManager.FindByEmailAsync(Configuration.GetSection("AdminSettings")["AdminEmail"]);
-
-        //    if (user == null)
-        //    {
-        //        var createSiteAdmin = await UserManager.CreateAsync(siteadmin, userPassword);
-        //        if (createSiteAdmin.Succeeded)
-        //        {
-        //            //here we tie the new user to the "Admin" role 
-        //            await UserManager.AddToRoleAsync(siteadmin, "Admin");
-
-        //        }
-        //    }
-            
-        //}
     }
 }

@@ -24,14 +24,15 @@ namespace LIMSWebApp.Areas.Identity
                         options.AllowAreas = true;
                         options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                         options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                        options.Conventions.AddPageRoute("/Identity/Account/Login", "Account/Login");
                     });
 
-                services.ConfigureApplicationCookie(options => 
-                {
-                    options.LoginPath = "/Identity/Account/Login";
-                    options.LogoutPath = "/Identity/Account/Logout";
-                    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-                });
+                //services.ConfigureApplicationCookie(options =>
+                //{
+                //    options.LoginPath = "/Identity/Account/Login";
+                //    options.LogoutPath = "/Identity/Account/Logout";
+                //    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                //});
             });
         }
     }
