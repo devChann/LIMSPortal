@@ -1,5 +1,4 @@
-﻿using LIMSInfrastructure.Data;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,36 +12,17 @@ namespace LIMSCore
     {
         public static void Main(string[] args)
         {
-            var host = BuildWebHost(args);
-
-            //database initializer/seeder
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var isDevelopment = environment == EnvironmentName.Development;
-            if (isDevelopment)
-            {
-                using (var scope = host.Services.CreateScope())
-                {
-                    var services = scope.ServiceProvider;
-                    try
-                    {
-                        //var context = services.GetRequiredService<LIMScoreContext>();
-                        //DataSeeder.InitializeAsync(context);
-                    }
-                    catch (Exception ex)
-                    {
-                        var logger = services.GetRequiredService<ILogger<Program>>();
-                        logger.LogError(ex, "An error occurred while seeding the database.");
-                    }
-                }
-            }
-            
+           
+            var host = CreateWebHostBuilder(args).Build(); 
 
             host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+                .UseStartup<Startup>();
+
     }
+
 }

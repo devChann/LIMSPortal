@@ -1,142 +1,159 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    ViewData["Title"] = "LIMS Portal";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LIMS Portal</title>
+    <title>@ViewData["Title"]</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/lib/OpenLayers/css/ol.css" />
+        <link href="~/lib/bootstrap4.0.0/css/bootstrap.css" rel="stylesheet" />      
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        
-        <link rel="stylesheet" href="~/lib/ol3-layerswitcher/src/ol3-layerswitcher.css" />
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
-
-      
-        @*<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />*@
-        <link rel="stylesheet" href="~/lib/animate/animate.min.css" />    
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="~/lib/magnific-popup/magnific-popup.css" />
-        <link rel="stylesheet" href="~/css/style.css">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/leaflet/dist/leaflet.css">
+        <link href="~/lib/openlayers/ol.css" rel="stylesheet" />
+
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"
+              asp-fallback-href="~/lib/bootstrap4.0.0/css/bootstrap.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />     
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
               asp-append-version="true" />
-        <link href="~/lib/OpenLayers/ol.css" rel="stylesheet" />
-        <link href="~/lib/ol3-layerswitcher/src/ol3-layerswitcher.css" rel="stylesheet" />
+
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+        <link href="~/lib/openlayers/ol.css" rel="stylesheet" />
     </environment>
 </head>
+
 <body>
-    <header id="header">
-        <div class="container">
-
-            <div id="logo" class="pull-left">
-                
-                <a href="#intro"><img src="~/images/logos/oakarlogo.png" alt="" title=" LIMS PORTAL"></a>
-            </div>
-
-            <nav id="nav-menu-container">
-                <ul class="nav-menu">
-                    <li class="menu-active"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a href="#about"> About Us</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                   
-                    <li><a asp-controller="Account" asp-action="Login">Log In </a></li>
-                    <li><a asp-controller="Account" asp-action="Register">Create Account</a></li>
-                    
-                </ul>
-
-            </nav>
-
-        </div>
-    </header>
-    
-    <div id="intro">
-        @RenderSection("intro", required: false)
-    </div>
-    <div id="about">
-        @RenderSection("about",required:false)
-    </div>
-    <div id="contact">
-        @RenderSection("contact",required:false)
-    </div>
    
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">LIMS Portal</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#limsNavbar" aria-controls="limsNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <section class="py-5">
-        <div class="container body-content">
-            @RenderBody()
+        <div class="collapse navbar-collapse" id="limsNavbar">
+            <ul class="navbar-nav mr-3">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                </li>          
+            </ul>
+            @await Html.PartialAsync("_LoginPartial")
+
         </div>
-    </section>
+    </nav>
 
-    <div id="footer" class="footer-content">
-        <footer class="navbar-inverse navbar-fixed-bottom text-center text-primary ">
-            <p class="footer-text">
-                &copy; @DateTime.Now.Year Land Information Management System. All Rights Reserved.
-            </p>
-            <p style="font-size:small"> Concept by: <a href="http://www.osl.co.ke" target="_blank" style="color:darkorange; text-decoration:none">Oakar <span style="color:white">Services</span></a></p>
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container">
+
+        @RenderBody()
+
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <small style="font-size:medium">
+                        Concept by: <a href="http://www.osl.co.ke" target="_blank" style="color:darkorange; text-decoration:none">
+                            Oakar Services
+                        </a>
+                    </small>
+                    <small class="d-block mb-3 text-muted">
+                        &copy; @DateTime.Now.Year Land Information Management System. All Rights Reserved.
+                    </small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Key Services</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Land Transfers</a></li>
+                        <li><a class="text-muted" href="#">Land Search</a></li>
+                        <li><a class="text-muted" href="#">Land Adjudication</a></li>
+                        <li><a class="text-muted" href="#">Land Development</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Partner Websites</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">MoLHUD</a></li>
+                        <li><a class="text-muted" href="#">Ministry of Environment</a></li>
+                        <li><a class="text-muted" href="#">Government of Kenya</a></li>
+                        <li><a class="text-muted" href="#">Council of Governors</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>About US</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Our Team</a></li>
+                        <li><a class="text-muted" href="#">Our Branches</a></li>
+                        <li><a class="text-muted" href="#">Our Privacy Policy</a></li>
+                        <li><a class="text-muted" href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
         </footer>
     </div>
 
 
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/jquery.easing/js/jquery.easing.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/lib/OpenLayers/ol.js"></script>
-        <script src="~/lib/ol3-layerswitcher/src/ol3-layerswitcher.js"></script>
-        <script src="~/lib/ol3-popup/src/ol3-popup.js"></script>
-        <script src="~/lib/maptiks-leaflet/index.js"></script>
-        <script src="~/lib/chart.js/dist/Chart.min.js"></script>
-       @* <script src="~/js/site.js" asp-append-version="true"></script>*@
-        <script src="~/js/test.js"></script>
-
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        @*<script src="~/lib/jquery.easing/js/jquery.easing.js"></script>*@
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/jquery/dist/jquery-migrate.min.js"></script>
-        <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="~/lib/easing/easing.min.js"></script>
-        <script src="~/lib/wow/wow.min.js"></script>
-        <script src="~/lib/superfish/hoverIntent.js"></script>
-        <script src="~/lib/superfish/superfish.min.js"></script>
-        <script src="~/lib/magnific-popup/magnific-popup.min.js"></script>
 
-       
-       
+        <script src="~/lib/bootstrap4.0.0/js/bootstrap.min.js"></script>
 
-        <!-- Template Main Javascript File -->
-        <script src="~/js/main.js"></script>
+        <script src="~/lib/leaflet/dist/leaflet.js"></script>
+        <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
 
+        <script src="~/lib/openlayers/ol.js"></script>
+
+        <script src="~/js/map.js" asp-append-version="true"></script>
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/ie10-viewport-bug-workaround.js"></script>
 
     </environment>
+
     <environment exclude="Development">
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        @*<script src="~/lib/jquery.easing/js/jquery.easing.js"></script>*@
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
-        <script src="~/lib/jquery.easing/js/jquery.easing.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap4.0.0/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+                crossorigin="anonymous">
         </script>
-        <script src="~/lib/OpenLayers/ol.js"></script>
-        <script src="~/lib/ol3-layerswitcher/src/ol3-layerswitcher.js"></script>
-        <script src="~/lib/ol3-popup/src/ol3-popup.js"></script>
-        <script src="~/lib/maptiks-leaflet/index.js"></script>
-        <script src="~/lib/chart.js/dist/Chart.min.js"></script>
 
+        <script src="~/lib/openlayers/ol.js"></script>
+        <script src="~/js/map.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-
-
+        <script src="~/js/ie10-viewport-bug-workaround.js"></script>
     </environment>
+
 
     @RenderSection("Scripts", required: false)
 

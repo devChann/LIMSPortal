@@ -8,6 +8,7 @@ namespace LIMSCore.Entities
         public Parcel()
         {
             Operation = new HashSet<Operation>();
+            Payments = new HashSet<Payments>();
         }
 
         public int Id { get; set; }
@@ -15,21 +16,21 @@ namespace LIMSCore.Entities
         public double? Area { get; set; }
         public int LandUseId { get; set; }
         public int OwnerId { get; set; }
+        public int OwnershipRights { get; set; }
         public string ParcelNum { get; set; }
         public int RegistrationId { get; set; }
+        public int Responsibilities { get; set; }
+        public int Restrictions { get; set; }
         public int SpatialUnitId { get; set; }
         public int TenureId { get; set; }
         public int ValuationId { get; set; }
-        public int OwnershipRights { get; set; }
-        public int Responsibilities { get; set; }
-        public int Restrictions { get; set; }
+        public int? RateId { get; set; }
 
         public Administration Administration { get; set; }
-        public Rates Id1 { get; set; }
-        public BuruParcels IdNavigation { get; set; }
         public LandUse LandUse { get; set; }
         public Owner Owner { get; set; }
         public OwnershiRights OwnershipRightsNavigation { get; set; }
+        public Rates Rate { get; set; }
         public Registration Registration { get; set; }
         public Responsibility ResponsibilitiesNavigation { get; set; }
         public Restriction RestrictionsNavigation { get; set; }
@@ -37,5 +38,6 @@ namespace LIMSCore.Entities
         public Tenure Tenure { get; set; }
         public Valution Valuation { get; set; }
         public ICollection<Operation> Operation { get; set; }
+        public ICollection<Payments> Payments { get; set; }
     }
 }

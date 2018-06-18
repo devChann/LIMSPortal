@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+
+    <nav id="cookieConsent" class="navbar navbar-expand navbar-light bg-light cookieConsent" role="alert">
+
+        <div class="collapse navbar-collapse justify-content-md-center" id="cookieconsent">
+
+            <div style="padding-right:5px;">
+                <span class="navbar-text text-info">
+                    <i class="fa fa-info-circle"></i>
+                    This site uses cookies to improve your user experience.
+                </span>
+            </div>
+            <div class="" style="padding-left:5px;">
+                <a asp-controller="Home" asp-action="Privacy" class="btn btn-outline-info navbar-btn btn-sm">View Cookie Policy</a>
+                <button id="acceptcookie" type="button" class="btn btn-outline-warning navbar-btn btn-sm" data-cookie-string="@cookieString">Accept Cookie Policy</button>
+            </div>
+
+        </div>
+    </nav>
+
+    @*@section Scripts {
+        @await Html.PartialAsync("_CookieScript")
+    }*@
+
+    <script>
+        (function () {
+            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
+                console.log("Cookie Accepted" + el);
+                document.cookie = el.target.dataset.cookieString;
+               // document.querySelector("#cookieConsent").classList.add("hidden");
+                document.querySelector('.cookieConsent').style.display = 'none';
+            }, false);
+
+       
+            })();
+    </script>
+
+}

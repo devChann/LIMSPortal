@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using LIMSInfrastructure.Identity
+
+@model IEnumerable<LIMSWebApp.ViewModels.PropertiesViewModesl.PropertiesViewModel>
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "PropertiesView";
+}
+
+<h2>Property Owned by @UserManager.GetUserName(User)</h2>
+
+<p>
+    <a asp-controller="Account" asp-action="UserProfile">Go to Services</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ParcelNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenureType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rate)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ParcelNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenureType)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.Rate)
+            </th>
+
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>*@
+        </tr>
+        }
+    </tbody>
+</table>

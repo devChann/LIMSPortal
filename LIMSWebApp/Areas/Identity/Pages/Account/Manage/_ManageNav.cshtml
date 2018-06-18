@@ -1,0 +1,25 @@
+﻿@using LIMSInfrastructure.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
+    <li class="nav-item @ManageNavPages.IndexNavClass(ViewContext)">
+        <a class="nav-link" role="tab" asp-page="./Index">Profile</a>
+    </li>
+    <li class="nav-item @ManageNavPages.ChangePasswordNavClass(ViewContext)" >
+        <a class="nav-link" role="tab" asp-page="./ChangePassword">Password</a>
+    </li>
+    @if (hasExternalLogins)
+    {
+        <li class="nav-item @ManageNavPages.ExternalLoginsNavClass(ViewContext)">
+            <a class="nav-link"  role="tab" asp-page="./ExternalLogins">External logins</a>
+        </li>
+    }
+    <li class="nav-item @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)">
+        <a class="nav-link" role="tab" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+    </li>
+    <li class="nav-item @ManageNavPages.PersonalDataNavClass(ViewContext)">
+        <a class="nav-link" role="tab" asp-page="./PersonalData">Personal data</a>
+    </li>
+</ul>
