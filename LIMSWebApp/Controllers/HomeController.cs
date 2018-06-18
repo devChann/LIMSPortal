@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LIMSCore.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using LIMSWebApp.ViewModels;
 
 namespace LIMSWebApp.Controllers
 {
@@ -43,11 +44,19 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
+        [Route("/Error")]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
         public IActionResult Profile()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
         {
             return View();
         }

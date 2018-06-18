@@ -1,20 +1,19 @@
 ﻿using LIMSInfrastructure.Data;
 using LIMSInfrastructure.Identity;
-using LIMSInfrastructure.Repository;
 using LIMSInfrastructure.Services;
 using LIMSInfrastructure.Services.Payment;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Rotativa.AspNetCore;
 using Stripe;
 using System;
-using System.Threading.Tasks;
 
 namespace LIMSCore
 {
@@ -29,7 +28,7 @@ namespace LIMSCore
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {                               
             //Application Db context - users database
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LIMSUserDbConnection"),
@@ -43,7 +42,7 @@ namespace LIMSCore
                 ));
 
             //LIMS Database context
-            services.AddDbContext<LIMScoreContext>(options =>
+            services.AddDbContext<LIMSCoreDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LIMSCoreDbConnection"),
                 sqlServerOptionsAction: sqlOptions =>
                 {
@@ -57,31 +56,68 @@ namespace LIMSCore
             //Inject repository
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>(config=> 
-                {    
-                    // Password settings
-                    config.Password.RequireDigit = true;
-                    config.Password.RequiredLength = 8;
-                    config.Password.RequireNonAlphanumeric = true;
-                    config.Password.RequireUppercase = false;
-                    config.Password.RequireLowercase = true;
-                    config.Password.RequiredUniqueChars = 1;
+            
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
 
-                    // Lockout settings
-                    config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    config.Lockout.MaxFailedAccessAttempts = 5;
-                    config.Lockout.AllowedForNewUsers = true;
+            });
 
-                    //sign in settings
-                    config.SignIn.RequireConfirmedEmail = false;
-                    config.SignIn.RequireConfirmedPhoneNumber = false;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                options.Stores.MaxLengthForKeys = 128;
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = true;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                //sign in settings
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+
+               
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultUI()
+            .AddDefaultTokenProviders();
+
+
+            services.AddAuthentication()
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                });
+
+            //wait for Microsoft.AspNetCore.Authentication.MicrosoftAccount package upgrade to 2.1.1
+            //.AddMicrosoftAccount(microsoftOptions => 
+            //{
+            //    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+            //    microsoftOptions.ClientSecret = Configuration["Authentication:Miscrosoft:Password"];
+            //});
 
             // Add application services
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddMvc();
+
+            services.AddMvc();              
+            
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
@@ -91,7 +127,7 @@ namespace LIMSCore
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             //Configure SendGrid 
-            services.Configure<AuthMessageSenderOptions>(Configuration);
+            //services.Configure<AuthMessageSenderOptions>(Configuration.GetSection(""));
 
             //Configure Stripe
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
@@ -101,80 +137,35 @@ namespace LIMSCore
        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             //stripe configuration
-            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);           
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();            
+               
                 app.UseDatabaseErrorPage();              
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error");              
+                app.UseHsts();
             }
 
+            app.UseStatusCodePages();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
-            //app.UseIdentity();
 
+            app.UseStatusCodePagesWithReExecute("/HttpErrors/{0}");
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{*id}");
-            });
-            //RotativaConfiguration.Setup(env);
-            //create roles here
-            //var serviceProvider = app.ApplicationServices.GetService<IServiceProvider>();
-            //CreateRoles(serviceProvider).Wait();
+            app.UseMvcWithDefaultRoute();
+           
         }
 
-        //public async Task CreateRoles(IServiceProvider serviceProvider)
-        //{
-        //    //adding custom roles         
-        //    var RoleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-        //    var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();     
-        //    string[] roleNames = { "Admin", "Manager", "Member","Surveyor","Physical Planner","Registrer" };
-            
-        //    IdentityResult roleResult;
-
-        //    foreach (var roleName in roleNames)
-        //    {
-        //        //creating the roles and seeding them to the database
-        //        var roleExist = await RoleManager.RoleExistsAsync(roleName);
-        //        if (!roleExist)
-        //        {
-        //            roleResult = await RoleManager.CreateAsync(new ApplicationRole(roleName));
-        //        }
-        //    }
-
-        //    //creating a admin user who could maintain the web app
-        //    var siteadmin = new ApplicationUser
-        //    {
-        //        UserName = Configuration.GetSection("AdminSettings")["AdminUserName"],
-        //        Email = Configuration.GetSection("AdminSettings")["AdminEmail"]
-        //    };
-
-        //    string userPassword = Configuration.GetSection("AdminSettings")["AdminPassword"];
-        //    var user = await UserManager.FindByEmailAsync(Configuration.GetSection("AdminSettings")["AdminEmail"]);
-
-        //    if (user == null)
-        //    {
-        //        var createSiteAdmin = await UserManager.CreateAsync(siteadmin, userPassword);
-        //        if (createSiteAdmin.Succeeded)
-        //        {
-        //            //here we tie the new user to the "Admin" role 
-        //            await UserManager.AddToRoleAsync(siteadmin, "Admin");
-
-        //        }
-        //    }
-            
-        //}
     }
 }

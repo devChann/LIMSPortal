@@ -15,7 +15,7 @@ namespace LIMSCore.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string OwnerType { get; set; }
-        public string Pin { get; set; }
+        public string PIN { get; set; }
         public string PostalAddress { get; set; }
         public string TelephoneAddress { get; set; }
 

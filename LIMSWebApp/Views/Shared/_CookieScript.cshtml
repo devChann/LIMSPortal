@@ -1,0 +1,18 @@
+﻿<script>
+    //(function () {
+    //    //document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
+    //    //    document.cookie = el.target.dataset.cookieString;
+    //    //    document.querySelector("#cookieConsent").classList.add("hidden");
+    //    //}, false);
+
+    function removeCookieBanner() {
+        console.log("Cookie Accepted");
+        document.cookie = el.target.dataset.cookieString;
+        //document.querySelector("#cookieConsent").classList.add("hidden");
+        document.querySelector('.cookieConsent').style.display = 'none';
+
+    }
+        //})();
+</script>
+
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
