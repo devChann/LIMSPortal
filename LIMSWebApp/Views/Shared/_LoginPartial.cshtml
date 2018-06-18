@@ -6,42 +6,41 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-<form class="form-inline text-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">  
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Account" asp-action="UserProfile">Services</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Properties" asp-action="Properties">My Properties</a>
-        </li>
+<form class="form-inline ml-auto" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
 
-        <li>
+    <div class="nav-item">
+        <a class="nav-link text-light" asp-controller="Account" asp-action="UserProfile">Services</a>
+    </div>
+    <div class="nav-item">
+        <a class="nav-link text-light" asp-controller="Properties" asp-action="Properties">My Properties</a>
+    </div>
+    @*<div class="nav-item">
+        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)</a>
+    </div>*@
+    <div class="nav-item">
+        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Account</a>
+    </div>
+    <div class="nav-item">
+        <button type="submit" class="btn btn-outline-info nav-link" >Logout</button>
+    </div>
+
+
+    @*<li>
             <img src="~/Photo" />
-        </li>
+        </li>*@
 
-        <li class="nav-item dropdown">                       
-            <a class="nav-link dropdown-toggle" asp-area="Identity" asp-page="/Account/Manage/Index" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Account</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown04">
-                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)</a>
-                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Account</a>
-                <button type="submit" class="dropdown-item">Logout</button>
-            </div>
-        </li>
-    </ul>
- 
 </form>
 }
 else
 {
-  
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
-    </ul>
-
+<form class="form-inline ml-auto">
+    <div class="nav-item">
+        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </div>
+    <div class="nav-item">
+        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </div>
+</form>
+   
 
 }

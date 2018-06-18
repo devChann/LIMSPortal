@@ -56,8 +56,7 @@ namespace LIMSCore
             //Inject repository
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
 
-            services.AddAuthentication();
-
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -99,8 +98,20 @@ namespace LIMSCore
             .AddDefaultUI()
             .AddDefaultTokenProviders();
 
-           
 
+            services.AddAuthentication()
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                });
+
+            //wait for Microsoft.AspNetCore.Authentication.MicrosoftAccount package upgrade to 2.1.1
+            //.AddMicrosoftAccount(microsoftOptions => 
+            //{
+            //    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+            //    microsoftOptions.ClientSecret = Configuration["Authentication:Miscrosoft:Password"];
+            //});
 
             // Add application services
             services.AddTransient<IEmailSender, EmailSender>();

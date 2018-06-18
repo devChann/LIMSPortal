@@ -142,8 +142,13 @@
         </table>
     </div>
     <div class="col-md-6">
-        @*@await Html.PartialAsync("MapView")*@
-        <div id="map" style="height: 300px;width:500px"></div>
+        <div id="map" style="height: 300px;width:auto">
+            <div id="throbber">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif"
+                     alt="Spinning wheel">
+            </div>
+
+        </div>
     </div>
 </div>
 <hr />
