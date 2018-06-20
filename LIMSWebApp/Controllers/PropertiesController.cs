@@ -41,7 +41,11 @@ namespace LIMSWebApp.Controllers
 
             var owner = _limscontext.Owner.SingleOrDefault(o => o.PIN == user.KRAPIN);
 
-            var parcelsowned = _limscontext.Parcel
+            var parcelsowned = new List<PropertiesViewModel>();
+
+            if (owner != null)
+            {
+                parcelsowned = _limscontext.Parcel
                 .Where(i => i.OwnerId == owner.Id)
                 .Select(a => new PropertiesViewModel
                 {
@@ -49,7 +53,11 @@ namespace LIMSWebApp.Controllers
                     TenureType = a.Tenure.TenureType,
                     Rate = a.Rate.Amount
                 }).ToList();
-
+            }
+            else
+            {
+                return View(new List<PropertiesViewModel>());
+            }
 
             return View(parcelsowned);
         }

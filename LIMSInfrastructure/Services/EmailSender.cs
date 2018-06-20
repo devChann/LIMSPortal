@@ -1,4 +1,5 @@
 ﻿using LIMSInfrastructure.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -11,42 +12,75 @@ namespace LIMSInfrastructure.Services
 {
     // This class is used by the application to send email for account confirmation and password reset.
     // For more details see https://go.microsoft.com/fwlink/?LinkID=532713
-    public class EmailSender:IEmailSender
+    public class EmailSender: IEmailSender
     {
-        //public Task SendEmailAsync(string email, string subject, string message)
+        ////public Task SendEmailAsync(string email, string subject, string message)
+        ////{
+        ////    return Task.CompletedTask;
+        ////}
+
+        //public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
         //{
-        //    return Task.CompletedTask;
+        //    Options = optionsAccessor.Value;
         //}
 
-        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
+        //public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
+
+        //public Task SendEmailAsync(string email, string subject, string message)
+        //{
+        //    return Execute(Options.SendGridKey, subject, message, email);
+        //}
+
+        //public Task Execute(string apiKey, string subject, string message, string email)
+        //{
+        //    var client = new SendGridClient(apiKey);
+        //    var msg = new SendGridMessage()
+        //    {
+        //        From = new EmailAddress("ayiembaelvis@gmail.com", "LIMS Portal"),
+        //        Subject = subject,
+        //        PlainTextContent = message,
+        //        HtmlContent = message
+        //    };
+        //    msg.AddTo(new EmailAddress(email));
+        //    return client.SendEmailAsync(msg);
+        //}
+
+        //public Task SendEmailConfirmationAsyn(string email, string callbackUrl)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        private IConfiguration _configuration;
+
+        public EmailSender(IConfiguration configuration)
         {
-            Options = optionsAccessor.Value;
+            _configuration = configuration;
         }
 
-        public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
-
-        public Task SendEmailAsync(string email, string subject, string message)
+        public async Task SendEmailAsync(string recipientEmail, string subject, string body)
         {
-            return Execute(Options.SendGridKey, subject, message, email);
-        }
 
-        public Task Execute(string apiKey, string subject, string message, string email)
-        {
+            // Don't do anything if SendGrid isn't configured
+            if (string.IsNullOrEmpty(_configuration["SendGridKey"])) return;
+
+            var msg = new SendGridMessage();
+
+            msg.SetFrom(new EmailAddress("ayiembaelvis@gmail.com", "No Reply"));
+
+            var recipient = new EmailAddress(recipientEmail);
+
+            msg.AddTo(recipient);
+            msg.SetSubject(subject);
+
+            // TODO: Permalink to comment
+            msg.AddContent(MimeType.Html, body);
+
+            var apiKey = _configuration["SendGridKey"];
             var client = new SendGridClient(apiKey);
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress("ayiembaelvis@gmail.com", "LIMS Portal"),
-                Subject = subject,
-                PlainTextContent = message,
-                HtmlContent = message
-            };
-            msg.AddTo(new EmailAddress(email));
-            return client.SendEmailAsync(msg);
+
+            var response = await client.SendEmailAsync(msg);
+
         }
 
-        public Task SendEmailConfirmationAsyn(string email, string callbackUrl)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
