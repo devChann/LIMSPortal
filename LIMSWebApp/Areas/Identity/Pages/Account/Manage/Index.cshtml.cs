@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 //using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
 {
@@ -18,18 +21,24 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IMemoryCache _cache;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+             IMemoryCache cache)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _cache = cache;
         }
 
         public string Username { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public IFormFile Photo { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
@@ -48,6 +57,9 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            public IFormFile Photo { get; set; }
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -60,10 +72,12 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
 
             Username = user.UserName;
 
+
             Input = new InputModel
             {
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                //Photo = user.Photo
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -102,9 +116,27 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            if (Input.Photo.Length > 0)
+            {
+                using (var memorystream = new MemoryStream())
+                {
+                    await Input.Photo.CopyToAsync(memorystream);
+                    try
+                    {
+                        user.Photo = DbImageAPI.Imaging.ScaleImage(memorystream.ToArray(), 50, 50, System.Drawing.Imaging.ImageFormat.Png);
+                        await _userManager.UpdateAsync(user);
+                        _cache.Set(user.Id, user.Photo);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
         {
             if (!ModelState.IsValid)
@@ -120,7 +152,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
+                "Identity/Account/ConfirmEmail",
                 pageHandler: null,
                 values: new { user.Id, code },
                 protocol: Request.Scheme);

@@ -7,59 +7,65 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    @*<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">*@
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
 
     <environment include="Development">
-
-        <link href="~/lib/bootstrap4.0.0/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap4.0.0/css/bootstrap.css" rel="stylesheet" />      
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/lib/leaflet/dist/leaflet.css">
-        <link href="~/lib/openlayers/ol.css" rel="stylesheet" />   
+        <link href="~/lib/openlayers/ol.css" rel="stylesheet" />
 
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"
               asp-fallback-href="~/lib/bootstrap4.0.0/css/bootstrap.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />     
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
               asp-append-version="true" />
 
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/lib/leaflet/dist/leaflet.css">
+
         <link href="~/lib/openlayers/ol.css" rel="stylesheet" />
     </environment>
 </head>
 
 <body>
+   
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" >
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">LIMS Portal</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#limsNavbar" aria-controls="limsNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-        <h5 class="my-0 mr-md-auto font-weight-normal">
-            <a asp-controller="Home" asp-action="Index" class="navbar-brand">LIMS Portal</a>
-        </h5>
-        <nav class="my-1 my-md-0 mr-md-2">
-            <a class="p-2 text-dark" asp-controller="Home" asp-action="Index">Home</a>
-            <a class="p-2 text-dark" asp-controller="Home" asp-action="Index">About</a>
-        </nav>
+        <div class="collapse navbar-collapse" id="limsNavbar">
+            <ul class="navbar-nav mr-3">
+                <li class="nav-item active">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                </li>          
+            </ul>
+            @await Html.PartialAsync("_LoginPartial")
 
-        @await Html.PartialAsync("_LoginPartial")
-    </div>
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
 
     <div class="container">
+
         @RenderBody()
 
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
                 <div class="col-12 col-md">
-                    <img class="mb-2" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-                    <small style="font-size:small">
-                     Concept by: <a href="http://www.osl.co.ke" target="_blank" style="color:darkorange; text-decoration:none">
+                    <small style="font-size:medium">
+                        Concept by: <a href="http://www.osl.co.ke" target="_blank" style="color:darkorange; text-decoration:none">
                             Oakar Services
                         </a>
                     </small>
@@ -68,32 +74,30 @@
                     </small>
                 </div>
                 <div class="col-6 col-md">
-                    <h5>Features</h5>
+                    <h5>Key Services</h5>
                     <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Cool stuff</a></li>
-                        <li><a class="text-muted" href="#">Random feature</a></li>
-                        <li><a class="text-muted" href="#">Team feature</a></li>
-                        <li><a class="text-muted" href="#">Stuff for developers</a></li>
-                        <li><a class="text-muted" href="#">Another one</a></li>
-                        <li><a class="text-muted" href="#">Last time</a></li>
+                        <li><a class="text-muted" href="#">Land Transfers</a></li>
+                        <li><a class="text-muted" href="#">Land Search</a></li>
+                        <li><a class="text-muted" href="#">Land Adjudication</a></li>
+                        <li><a class="text-muted" href="#">Land Development</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-md">
-                    <h5>Resources</h5>
+                    <h5>Partner Websites</h5>
                     <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Resource</a></li>
-                        <li><a class="text-muted" href="#">Resource name</a></li>
-                        <li><a class="text-muted" href="#">Another resource</a></li>
-                        <li><a class="text-muted" href="#">Final resource</a></li>
+                        <li><a class="text-muted" href="#">MoLHUD</a></li>
+                        <li><a class="text-muted" href="#">Ministry of Environment</a></li>
+                        <li><a class="text-muted" href="#">Government of Kenya</a></li>
+                        <li><a class="text-muted" href="#">Council of Governors</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-md">
-                    <h5>About</h5>
+                    <h5>About US</h5>
                     <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Team</a></li>
-                        <li><a class="text-muted" href="#">Locations</a></li>
-                        <li><a class="text-muted" href="#">Privacy</a></li>
-                        <li><a class="text-muted" href="#">Terms</a></li>
+                        <li><a class="text-muted" href="#">Our Team</a></li>
+                        <li><a class="text-muted" href="#">Our Branches</a></li>
+                        <li><a class="text-muted" href="#">Our Privacy Policy</a></li>
+                        <li><a class="text-muted" href="#">Terms & Conditions</a></li>
                     </ul>
                 </div>
             </div>
@@ -101,11 +105,13 @@
     </div>
 
 
+
     <environment include="Development">
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="~/lib/jquery.easing/js/jquery.easing.js"></script>
+        @*<script src="~/lib/jquery.easing/js/jquery.easing.js"></script>*@
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/jquery/dist/jquery-migrate.min.js"></script>
 
@@ -124,10 +130,11 @@
     </environment>
 
     <environment exclude="Development">
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="~/lib/jquery.easing/js/jquery.easing.js"></script>
+        @*<script src="~/lib/jquery.easing/js/jquery.easing.js"></script>*@
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
@@ -135,16 +142,14 @@
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
 
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap4.0.0/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+                crossorigin="anonymous">
         </script>
 
-        <script src="~/lib/leaflet/dist/leaflet.js"></script>
         <script src="~/lib/openlayers/ol.js"></script>
-        <script src="~/js/map.js" asp-append-version="true"></script>
+        <script src="~/js/map.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/js/ie10-viewport-bug-workaround.js"></script>
     </environment>

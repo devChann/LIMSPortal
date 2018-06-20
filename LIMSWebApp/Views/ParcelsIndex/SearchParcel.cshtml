@@ -5,89 +5,160 @@
 }
 <script> var routeId = @ViewData["MyRouteId"] </script>
 <div class="row">
-    <div class="col-md-6">
-        <a style="font-size:smaller;color:black"> @Html.ActionLink("Rates Payment", "payments", "ParcelsIndex", new { id = Model.ID }) </a>|
-        <a style="font-size:smaller;color:black"><span class="fa fa-download"> @Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </span></a>|
-        <a style="font-size:smaller;color:black"> @Html.ActionLink("View On Map", "MapView", "ParcelsIndex", new { id = Model.ID })</a>
+    <div class="col-md-6 col-md-offset-3">
+        <a style="font-size:smaller;color:black"> @Html.ActionLink("Rates Payment", "Payments", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </a>|
+        <a style="font-size:smaller;color:black">@Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }) </a>|
+        @*<a style="font-size:smaller;color:black"> @Html.ActionLink("View On Map", "MapView", "ParcelsIndex", new { id = Model.ID })</a>*@
+        <a asp-controller="ParcelsIndex" asp-action="Search"> Perform Another Search</a>
     </div>
-</div>
 
+</div>
+<hr />
 
 <div class="row">
-    
-    <div class="col-md-8" id="=intro">
+    <div class="col-md-6">
+        <table>
+            <thead style="color:brown"><tr><th>Parcel Details</th></tr></thead>
+            <tbody>
+                <tr>
+                    <th>Parcel Number:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.ParcelNumber)</td>
 
-        <div class="row">
+                </tr>
+                <tr>
+                    <th>Area of Parcel:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.Area) ha.</td>
 
-            <div class="col-md-6">
-                <div class="panel panel-default" id="info">
-                    <div class="panel-heading">
+                </tr>
+                <tr>
+                    <th>District:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.AdministrationArea)</td>
 
-                        <h3 class="panel-title">
-                            Parcel Details
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>Parcel Number: @Html.DisplayFor(modelItem => Model.ParcelNumber)</p>
-                        <p>Area of Parcel: @Html.DisplayFor(modelItem => Model.Area)</p>
-                        <p>District: @Html.DisplayFor(modelItem => Model.AdministrationArea)</p>
-                        <p>LandUse : @Html.DisplayFor(modelItem => Model.landUse)</p>
-                    </div>
+                </tr>
+                <tr>
+                    <th>Land Use:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.landUse)</td>
 
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Owners Details
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>Name: @Html.DisplayFor(modelItem => Model.Name)</p>
-                        <p>PIN: @Html.DisplayFor(modelItem => Model.PIN)</p>
-                        <p>Postal Adress: @Html.DisplayFor(modelItem => Model.Adress)</p>
-                        <p>Phone: @Html.DisplayFor(modelItem => Model.Phone)</p>
-                    </div>
+                </tr>
 
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Other Parcel Details
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>Tenure Type: @Html.DisplayFor(modelItem => Model.Tenure)</p>
-                        <p>Spatial Unit Type: @Html.DisplayFor(modelItem => Model.SpatialUnitType)</p>
-                        <p>Valuation Remarks: @Html.DisplayFor(modelItem => Model.ValuationRemarks)</p>
-                        <p>Valuer: @Html.DisplayFor(modelItem => Model.Valuer)</p>
-                        <p>Registration Type: @Html.DisplayFor(modelItem => Model.RegistrationType)</p>
-                        <p>Registration Section: @Html.DisplayFor(modelItem => Model.RegistrationSection)</p>
-                        <p>Registration Date: @Html.DisplayFor(modelItem => Model.RegistrationDate)</p>
-                        <p>Morgage: @Html.DisplayFor(modelItem => Model.MAmount)</p>
-                        <p>Lender: @Html.DisplayFor(modelItem => Model.Lender)</p>
-                        <p>Charge Amount: @Html.DisplayFor(modelItem => Model.amount)</p>
-                        <p>Charge Lender: @Html.DisplayFor(modelItem => Model.ChargeLender)</p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-6">
-                @*@await Html.PartialAsync("MapView")*@
-                <div id="map" style="height: 400px;width:500px"></div>
-            </div>
-           
-        </div>
-       
+            </tbody>
+        </table>
     </div>
-   
+
+    <div class="col-md-6">
+        <table>
+            <thead style="color:brown"><tr><th>Owner Details</th></tr></thead>
+            <tbody>
+                <tr>
+                    <th>Owner Name:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.Name)</td>
+
+                </tr>
+                <tr>
+                    <th>Owner PIN:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.PIN)</td>
+
+                </tr>
+                <tr>
+                    <th>Postal Address:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.Adress)</td>
+
+                </tr>
+                <tr>
+                    <th>Phone Number:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.Phone)</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>   
 </div>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <table>
+            <thead style="color:brown"><tr><th>Other Details</th></tr></thead>
+            <tbody>
+                <tr>
+                    <th>Land Tenure Type:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.Tenure)</td>
+
+                </tr>
+                <tr>
+                    <th>Spatial Unit Type:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.SpatialUnitType)</td>
+
+                </tr>
+                <tr>
+                    <th>Valuation Remarks:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.ValuationRemarks)</td>
+
+                </tr>
+                <tr>
+                    <th>Land Valuer:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.Valuer)</td>
+
+                </tr>
+                <tr>
+                    <th>Registration Type:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.RegistrationType)</td>
+
+                </tr>
+                <tr>
+                    <th>Registration Section:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.RegistrationSection)</td>
+
+                </tr>
+                <tr>
+                    <th>Registration Date:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.RegistrationDate)</td>
+
+                </tr>
+                <tr>
+                    <th>Mortgage:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.MAmount)</td>
+
+                </tr>
+                <tr>
+                    <th>Mortgage Lender:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.Lender)</td>
+
+                </tr>
+                <tr>
+                    <th>Charge Amount:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.amount)</td>
+
+                </tr>
+                <tr>
+                    <th>Charge Lender:</th>
+                    <td>@Html.DisplayFor(modelItem => Model.ChargeLender)</td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <div id="map" style="height: 300px;width:auto">
+            <div id="throbber">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif"
+                     alt="Spinning wheel">
+            </div>
+
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <a asp-controller="ParcelsIndex" asp-action="Search">Perform Another Search</a>
+    </div>
+</div>
+
+
 
 
 

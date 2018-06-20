@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -11,5 +12,9 @@ namespace LIMSInfrastructure.Identity
     public class ApplicationUser : IdentityUser
     {
        public string Name { get; set; }
+       //public IFormFile Photo { get; set; }
+       public byte[] Photo { get; set; }
+       public string KRAPIN { get; set; }
+
     }
 }

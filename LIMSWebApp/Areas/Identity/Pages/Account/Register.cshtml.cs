@@ -45,6 +45,11 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             public string UserName { get; set; }
 
             [Required]
+            [StringLength(11)]
+            [Display(Name = "KRA PIN")]
+            public string KRAPIN { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -71,7 +76,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email, KRAPIN = Input.KRAPIN };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -87,7 +92,10 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+
+
+                    // await _signInManager.SignInAsync(user, isPersistent: false);
+                   
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

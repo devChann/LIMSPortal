@@ -13,7 +13,7 @@ namespace LIMSCore.Entities
 
         public int Id { get; set; }
         public string Jurisdiction { get; set; }
-        public DateTime? RegistrationDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
         public string RegistrationSection { get; set; }
         public string RegistrationType { get; set; }
         public string TitleNo { get; set; }
