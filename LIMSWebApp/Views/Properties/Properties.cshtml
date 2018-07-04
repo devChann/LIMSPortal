@@ -12,71 +12,68 @@
 <h2>Property Owned</h2>
 
 @*<div>
-    <span class="text-lg-left">Owner:</span> <span class="text-lg-right">@UserManager.GetUserName(User)</span>
-</div>*@
+        <span class="text-lg-left">Owner:</span> <span class="text-lg-right">@UserManager.GetUserName(User)</span>
+    </div>*@
 
 
 
 @if (Model.Any())
 {
-<div class="table-responsive">
-    <table class="table table-hover table-light">
-        <thead>
-            <tr>
-
-                <th>
-                    @Html.DisplayNameFor(model => model.ParcelNum)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TenureType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rate)
-                </th>
-
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-hover table-light">
+            <thead>
                 <tr>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ParcelNum)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TenureType)
-                    </td>
                     <th>
-                        @Html.DisplayFor(modelItem => item.Rate)
+                        @Html.DisplayNameFor(model => model.ParcelNum)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TenureType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Rate)
                     </th>
 
-                    @*<td>
-                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                        </td>*@
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
-    
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ParcelNum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenureType)
+                        </td>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.Rate)
+                        </th>
+
+                        <td>
+                            @Html.ActionLink("View Details", "SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 
 }
 else
 {
     <p class="alert-info"></p>
     <div class="alert alert-info">
-        <strong>You do not own any property.</strong> 
+        <strong>You do not own any property.</strong>
     </div>
 
 }
 
-   
-    
+
+
 <a class="btn btn-outline-info" role="button" asp-controller="Account" asp-action="UserProfile">Go to Services</a>
-    
-   
+
 
