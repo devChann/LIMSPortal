@@ -104,9 +104,13 @@ var requestBody = new XMLSerializer().serializeToString(featureRequest);
 // then post the request and add the received features to a layer
 fetch('https://demo.osl.co.ke:7575/LIMSParcels/service.svc/post', {
     method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
     body: requestBody,
     headers: new Headers({
-        'Content-Type': 'application/xml'
+        'Content-Type': 'application/xml',
+        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Origin':'*'
     })
 }).then(function (response) {
     var contentType = response.headers.get("content-type");

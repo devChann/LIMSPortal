@@ -22,7 +22,7 @@
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="MpesaLib" Version="1.0.8-CI00053" />
+    <PackageReference Include="MpesaLib" Version="1.0.8.1" />
   </ItemGroup>
   
   <ItemGroup>

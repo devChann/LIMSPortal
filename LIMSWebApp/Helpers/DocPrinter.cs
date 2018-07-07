@@ -74,8 +74,6 @@ namespace LIMSWebApp.Helpers
 
             // pull data returned by search parcel action
 
-
-
             //file will created in this path  
             string strAttachment = Path.Combine(_hostingEnvironment.WebRootPath, "~/Downloads/" + strPDFFileName);
             var path = Path.Combine(_hostingEnvironment.WebRootPath, "images/logos/kenyalogo.png");

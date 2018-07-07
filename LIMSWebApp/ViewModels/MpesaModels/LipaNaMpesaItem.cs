@@ -10,15 +10,15 @@ namespace LIMSWebApp.ViewModels.MpesaModels
     {
         public LipaNaMpesaOnline lipaonline = new LipaNaMpesaOnline
         {
-            AccountReference = "ref",
+            AccountReference = "account",
             Amount = "1",
             PartyA = "254708374149",
             PartyB = "174379",
             BusinessShortCode = "174379",
-            CallBackURL = "http://mockbin.org/bin/7e613f32-e00a-48d3-86e4-9088e4f96ffa",
-            Password = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTgwNzAzMTc1MTA4",
+            CallBackURL = "https://demo.osl.co.ke:7575/lims/api/callback",
+            Password = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTgwNzA1MTI0MjMy",
             PhoneNumber = "254708374149",
-            Timestamp = DateTime.Now.ToString("yyyyMMddHHmmss"), // new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
+            Timestamp = "20180705124232", //DateTime.Now.ToString("yyyyMMddHHmmss"),
             TransactionDesc = "test"
         };
     }

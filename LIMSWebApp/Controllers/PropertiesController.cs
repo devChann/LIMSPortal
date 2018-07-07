@@ -30,7 +30,7 @@ namespace LIMSWebApp.Controllers
 
         }
 
-        [Route("/Properties")]
+        [Route("/my-properties")]
         public ActionResult Properties()
         {
             var username = HttpContext.User.Identity.Name;

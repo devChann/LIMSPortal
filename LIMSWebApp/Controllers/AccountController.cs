@@ -19,7 +19,7 @@ namespace LIMSWebApp.Controllers
        
         
         [Authorize]
-        [Route("/Home/Services")]
+        [Route("/services")]
         public IActionResult UserProfile()
         {
             return View();

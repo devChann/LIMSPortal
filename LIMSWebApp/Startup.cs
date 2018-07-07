@@ -43,6 +43,8 @@ namespace LIMSCore
                 }
                 ));
 
+            services.AddCors();
+
             //Inject repository
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
 
@@ -104,6 +106,12 @@ namespace LIMSCore
                 app.UseExceptionHandler("/Home/Error");              
                 app.UseHsts();
             }
+
+            app.UseCors(builder => 
+                builder.WithOrigins("https://demo.osl.co.ke:7575")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+            );
 
             app.UseStatusCodePages();
             app.UseHttpsRedirection();

@@ -30,32 +30,16 @@ namespace LIMSWebApp.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var viewModel = new ParcelsIndexViewModel
-            {
-                Parcels = await _context.Parcel
-                .Include(i => i.Administration)
-                .Include(i => i.LandUse)
-                .Include(i => i.SpatialUnit)
-                .Include(i => i.Tenure)
-                .Include(i => i.Valuation)
-                .Include(i => i.Owner)
-                 .AsNoTracking()
-                .OrderBy(i => i.ParcelNum)
-                .ToListAsync()
-            };
-
-
-            return View(viewModel);
-        }
-
+        //Renders the search page
+        [Route("/parcel-search")]
         public IActionResult Search()
         {
             return View();
         }
 
+        //Renders the search results
         [HttpGet]
+        [Route("/parcel-details")]
         public IActionResult SearchParcel(string parcelnum)
         {
             if (parcelnum == null)
@@ -63,7 +47,8 @@ namespace LIMSWebApp.Controllers
                 return BadRequest();
             }
 
-            var parcelviewmodel = new ParcelSearchViewModel(); // instance variable
+            var parcelviewmodel = new ParcelSearchViewModel(); 
+
             var parcel = _context.Parcel
                 .Include(i => i.Administration)
                 .Include(i => i.LandUse)
@@ -72,11 +57,10 @@ namespace LIMSWebApp.Controllers
                 .Include(i => i.RestrictionsNavigation.Morgage)
                 .Include(i => i.SpatialUnit)
                 .Include(i => i.Tenure)
+                .Include(p => p.Payments)
                 .Include(i => i.Valuation)
                 .Include(i => i.Owner)
                 .Where(a => a.ParcelNum == parcelnum).SingleOrDefault();
-
-
 
             if (parcel == null)
             {
@@ -105,110 +89,23 @@ namespace LIMSWebApp.Controllers
                 parcelviewmodel.Lender = parcel.RestrictionsNavigation.Morgage.Lender;
                 parcelviewmodel.amount = parcel.RestrictionsNavigation.Chrage.Amount;
                 parcelviewmodel.ChargeLender = parcel.RestrictionsNavigation.Chrage.Lender;
-
+                parcelviewmodel.Payments = parcel.Payments;
                 parcelviewmodel.RegistrationDate = parcel.Registration.RegistrationDate;
-
 
             }
 
             return View(parcelviewmodel);
         }
 
-        public IActionResult Details()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DetailsView(int? ID)
-
-        {
-            if (ID == null)
-            {
-                return NotFound();
-            }
-            var parcels = await _context.Parcel
-                .Include(c => c.Administration)
-                .Include(c => c.Area)
-                .Include(c => c.Owner)
-                .Include(c => c.Tenure)
-                  .ThenInclude(s => s.Leasehold)
-                  .ThenInclude(s => s.LeasePeriod)
-                .Include(c => c.Valuation)
-                .Include(c => c.SpatialUnit)
-                    .ThenInclude(n => n.MapIndex)
-
-                .Include(c => c.Owner)
-
-                .Include(c => c.Registration)
-                .Include(c => c.LandUse)
-                    .ThenInclude(d => d.Zone)
-                .AsNoTracking()
-                .SingleOrDefaultAsync(m => m.Id == ID);
-
-            var model = new ParcelSearchViewModel
-            {
-                ParcelNumber = parcels.ParcelNum,
-                AdministrationArea = parcels.Administration.DistrictName,
-                Area = parcels.Area,
-                landUse = parcels.LandUse.LandUseType,
-                Tenure = parcels.Tenure.TenureType
-            };
-
-
-            if (parcels == null)
-            {
-                return NotFound();
-            }
-
-
-            return View(model);
-        }
-
+        //Prints the search certificate
         public FileResult CreatePdf(string parcelnum)
         {
             DocPrinter pdfprinter = new DocPrinter(_context, _hostingEnvironment);
             return pdfprinter.CreatePdf(parcelnum);
-        }
+        }     
 
-       
+    
 
-        //[HttpGet("/mapview/{id}")]
-        public IActionResult MapView(int id)
-        {
-            ViewBag.MyRouteId = id;
-
-            return View();
-        }
-
-        public async Task<IActionResult> Payments(string parcelnum)
-        {
-            var ratesmodel = new RatesPaymentViewModel();
-
-            var payments = await _context.Parcel
-                .Include(a => a.LandUse)
-                .Include(p => p.Administration)
-                .Include(p => p.Owner)
-                .Include(a => a.Payments)
-                .Include(b => b.Rate)
-                .SingleOrDefaultAsync(a => a.ParcelNum == parcelnum);
-                
-
-            ratesmodel.ParcelNumber = payments.ParcelNum;
-            ratesmodel.AdministrationArea = payments.Administration.DistrictName;
-            ratesmodel.Area = payments.Area;
-            ratesmodel.Id = payments.Id;
-            ratesmodel.Name = payments.Owner.Name;
-            ratesmodel.Phone = payments.Owner.TelephoneAddress;
-            ratesmodel.Adress = payments.Owner.PostalAddress;
-            ratesmodel.DateSearched = DateTime.Now;
-            ratesmodel.PIN = payments.Owner.PIN;
-            ratesmodel.Payments = payments.Payments;
-            ratesmodel.LandUse = payments.LandUse.LandUseType;
-            ratesmodel.Rate = payments.Rate.Amount;
-
-            return View(ratesmodel);
-        }
 
 
 

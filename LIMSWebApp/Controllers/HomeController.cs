@@ -23,10 +23,9 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
+       
         public IActionResult Services()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 

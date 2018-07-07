@@ -32,7 +32,7 @@ namespace LIMSWebApp.Controllers
 
             var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
 
-            var accesstoken = await _auth.GetData(consumerKey,consumerSecret);
+            var accesstoken = "eFmCUwG2IkfbLDLGf1BK4DPZ3Oqp";// await _auth.GetData(consumerKey,consumerSecret);
 
             var paymentitems = new LipaNaMpesaItem();
 
