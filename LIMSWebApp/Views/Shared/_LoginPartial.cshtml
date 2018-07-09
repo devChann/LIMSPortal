@@ -7,21 +7,21 @@
 @if (SignInManager.IsSignedIn(User))
 {
 <form class="form-inline ml-auto" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
-
+    <div class="nav-item">
+        <marquee><span class="text-info">You are logged in as @UserManager.GetUserName(User)</span></marquee>
+    </div>
     <div class="nav-item">
         <a class="nav-link text-light" asp-controller="Account" asp-action="UserProfile">Services</a>
     </div>
     <div class="nav-item">
         <a class="nav-link text-light" asp-controller="Properties" asp-action="Properties">My Properties</a>
     </div>
-    @*<div class="nav-item">
-        <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)</a>
-    </div>*@
+    
     <div class="nav-item">
         <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index">Manage Account</a>
     </div>
     <div class="nav-item">
-        <button type="submit" class="btn btn-outline-info nav-link" >Logout</button>
+        <button type="submit" class="btn btn-outline-danger nav-link" >Logout</button>
     </div>
 
 

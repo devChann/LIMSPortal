@@ -5,18 +5,17 @@
 }
 <script> var routeId = @ViewData["MyRouteId"] </script>
 
-<div class="row top5">
-    <div class="col-md-12">
+<div class="row">
+    <div class="col-md-12 top5" style="display:inline-block">
         <span>@Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }, new { @class = "btn btn-outline-info" }) </span>
-        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModalCenter">Rates Payment History</button>
+        <span><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#ratesModal">Rates Payment History</button></span>
         <span><a asp-controller="ParcelsIndex" asp-action="Search" class="btn btn-outline-info"> Perform Another Search</a></span>
-
     </div>
 
 </div>
 
-<div class="row top10">
-    <div class="col-md-6">
+<div class="row">
+    <div class="col-md-6 top10">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
@@ -49,7 +48,7 @@
        
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 top10">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
@@ -82,8 +81,8 @@
     </div>
 </div>
 
-<div class="row top10">
-    <div class="col-md-6">
+<div class="row">
+    <div class="col-md-6 top10">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">
@@ -139,13 +138,11 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-       
+        </div>       
     </div>
 
-    <div class="col-md-6">
-        <div class="card">
-            
+    <div class="col-md-6 top10">
+        <div class="card">           
             <div class="card-body">
                 <div class="card-title">
                     <h5 class="text-primary">Parcel Location on Map</h5>
@@ -161,19 +158,18 @@
                     <div id="popup-content"></div>
                 </div>
             </div>
-        </div>
-        
+        </div>       
     </div>
 </div>
 
-<div class="row top5">
-    <div class="col-md-6">
+<div class="row">
+    <div class="col-md-6 top10 bottom10">
         <a asp-controller="ParcelsIndex" asp-action="Search" class="btn btn-outline-info">Perform Another Search</a>
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ratesModal" tabindex="-1" role="dialog" aria-labelledby="rates Modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
