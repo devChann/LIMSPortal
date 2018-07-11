@@ -2,7 +2,7 @@
 @using LIMSInfrastructure.Services.Payment
 @inject IOptions<StripeSettings> Stripe
 
-<form action="/Payments/Charge" method="POST">
+<form asp-controller="Payments" asp-action="Charge" method="POST">
     <div>
         <h3>Make Payment</h3>
     </div>

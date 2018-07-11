@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="ChartJSCore" Version="1.2.4" />
-    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.3" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="MpesaLib" Version="1.0.8.1" />
