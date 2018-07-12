@@ -14,9 +14,9 @@ namespace LIMSWebApp.Controllers
     [Authorize]
     public class PaymentsController : Controller
     {
-        private AuthClient _auth;
+        private readonly AuthClient _auth;
         private LipaNaMpesaOnlineClient _lipaNaMpesa;
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
 
         public PaymentsController(AuthClient auth, LipaNaMpesaOnlineClient lipaNampesa, IConfiguration configuration)
         {
