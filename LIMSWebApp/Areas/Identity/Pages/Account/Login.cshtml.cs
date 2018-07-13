@@ -46,7 +46,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             //public string IDNumber { get; set; }
 
             [Required]
-            [StringLength(20)]
+            [StringLength(30)]
             [Display(Name ="User Name")]
             public string UserName { get; set; }
 
@@ -83,37 +83,40 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 //Require the user to have a confirmed email before they can log on.
-                var user = await _userManager.FindByNameAsync(Input.UserName);
+                //var user = await _userManager.FindByNameAsync(Input.UserName);
+                //var roles = await _userManager.GetRolesAsync(user);
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-                var roles = await _userManager.GetRolesAsync(user);
-                //if (result.Succeeded)
-                //{
-                //    _logger.LogInformation("User logged in.");
-                //    return LocalRedirect(returnUrl);
-                //}
-
-                if (result.Succeeded && roles.Contains("Admin"))
-                {
-                    _logger.LogInformation("User logged in.");
-
-                    return RedirectToAction("AdminDashboard", "Account");
-                }
-
-                if (result.Succeeded && roles.Contains("Surveyor"))
-                {
-                    _logger.LogInformation("User logged in.");
-
-                    return RedirectToAction("Index", "Surveyor");
-                }
+                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+               
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToAction("UserProfile", "Account");
+                    return LocalRedirect(returnUrl);
                 }
+
+               
+                //if (result.Succeeded && roles.Contains("Admin"))
+                //{
+                //    _logger.LogInformation("User logged in.");
+
+                //    return RedirectToAction("AdminDashboard", "Account");
+                //}
+
+                //if (result.Succeeded && roles.Contains("Surveyor"))
+                //{
+                //    _logger.LogInformation("User logged in.");
+
+                //    return RedirectToAction("Index", "Surveyor");
+                //}
+
+                //if (result.Succeeded)
+                //{
+                //    _logger.LogInformation("User logged in.");
+                //    return RedirectToAction("UserProfile", "Account");
+                //}
 
                 if (result.RequiresTwoFactor)
                 {

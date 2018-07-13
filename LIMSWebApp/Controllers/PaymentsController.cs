@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LIMSWebApp.ViewModels.MpesaModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using MpesaLib.Clients;
 using Stripe;
 
 namespace LIMSWebApp.Controllers
@@ -11,9 +14,34 @@ namespace LIMSWebApp.Controllers
     [Authorize]
     public class PaymentsController : Controller
     {
-        // GET: /<controller>/
-        public IActionResult Index()
+        private readonly AuthClient _auth;
+        private LipaNaMpesaOnlineClient _lipaNaMpesa;
+        private readonly IConfiguration _config;
+
+        public PaymentsController(AuthClient auth, LipaNaMpesaOnlineClient lipaNampesa, IConfiguration configuration)
         {
+            _auth = auth;
+            _lipaNaMpesa = lipaNampesa;
+            _config = configuration;
+        }
+
+        // GET: /<controller>/
+        public async Task<IActionResult> Index()
+        {
+            var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
+
+            var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
+
+            var accesstoken = "eFmCUwG2IkfbLDLGf1BK4DPZ3Oqp";// await _auth.GetData(consumerKey,consumerSecret);
+
+            var paymentitems = new LipaNaMpesaItem();
+
+            var paymentdata = await _lipaNaMpesa.MakePayment(paymentitems.lipaonline, accesstoken);
+
+            ViewData["Timestamp"] = paymentitems.lipaonline.Timestamp;
+
+            ViewData["Payment"] = paymentdata;
+
             return View();
         }
 

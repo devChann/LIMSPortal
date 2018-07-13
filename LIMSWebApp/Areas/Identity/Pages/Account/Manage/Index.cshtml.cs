@@ -136,6 +136,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }
+
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
         {
             if (!ModelState.IsValid)
@@ -151,7 +152,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
+                "Identity/Account/ConfirmEmail",
                 pageHandler: null,
                 values: new { user.Id, code },
                 protocol: Request.Scheme);

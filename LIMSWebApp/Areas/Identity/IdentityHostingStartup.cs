@@ -17,22 +17,62 @@ namespace LIMSWebApp.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
 
-                services.AddScoped<UserManager<ApplicationUser>, UserManager<ApplicationUser>>();
-                services.AddMvc()
-                    .AddRazorPagesOptions(options =>
+                //Application Db context - users database
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(context.Configuration.GetConnectionString("LIMSUserDbConnection"),
+                    sqlServerOptionsAction: sqlOptions =>
                     {
-                        options.AllowAreas = true;
-                        options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
-                        options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-                        options.Conventions.AddPageRoute("/Identity/Account/Login", "Account/Login");
-                    });
+                        sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null);
+                    }
+                    ));
 
-                //services.ConfigureApplicationCookie(options =>
+                services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+                {
+                    options.Stores.MaxLengthForKeys = 128;
+                    // Password settings
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 8;
+                    options.Password.RequireNonAlphanumeric = true;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequiredUniqueChars = 1;
+
+                    // Lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.AllowedForNewUsers = true;
+
+                    //sign in settings
+                    options.SignIn.RequireConfirmedEmail = true;
+                    options.SignIn.RequireConfirmedPhoneNumber = false;
+                })
+                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                 .AddDefaultUI()
+                 .AddDefaultTokenProviders();
+
+                services.AddAuthentication()
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = context.Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = context.Configuration["Authentication:Google:ClientSecret"];
+                });
+
+                //wait for Microsoft.AspNetCore.Authentication.MicrosoftAccount package upgrade to 2.1.1
+                //.AddMicrosoftAccount(microsoftOptions => 
                 //{
-                //    options.LoginPath = "/Identity/Account/Login";
-                //    options.LogoutPath = "/Identity/Account/Logout";
-                //    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                //    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+                //    microsoftOptions.ClientSecret = Configuration["Authentication:Miscrosoft:Password"];
                 //});
+
+                services.AddAuthorization(AuthorizationPolicy.Execute);
+
+
+                //services.AddScoped<UserManager<ApplicationUser>, UserManager<ApplicationUser>>();
+
+
             });
         }
     }

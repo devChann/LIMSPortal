@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MpesaLib.Clients;
 using Stripe;
 using System;
 
@@ -29,17 +30,6 @@ namespace LIMSCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {                               
-            //Application Db context - users database
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("LIMSUserDbConnection"),
-                sqlServerOptionsAction: sqlOptions =>
-                {
-                    sqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null);
-                }
-                ));
 
             //LIMS Database context
             services.AddDbContext<LIMSCoreDbContext>(options =>
@@ -53,8 +43,14 @@ namespace LIMSCore
                 }
                 ));
 
+            services.AddCors();
+
             //Inject repository
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
+
+            //Add Lipa na Mpesa Client
+            services.AddHttpClient<AuthClient>();
+            services.AddHttpClient<LipaNaMpesaOnlineClient>();
 
             
             services.Configure<CookiePolicyOptions>(options =>
@@ -72,62 +68,19 @@ namespace LIMSCore
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-            {
-                options.Stores.MaxLengthForKeys = 128;
-                // Password settings
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = true;
-                options.Password.RequiredUniqueChars = 1;
-
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
-
-                //sign in settings
-                options.SignIn.RequireConfirmedEmail = false;
-                options.SignIn.RequireConfirmedPhoneNumber = false;
-
-               
-            })
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultUI()
-            .AddDefaultTokenProviders();
-
-
-            services.AddAuthentication()
-                .AddGoogle(googleOptions =>
-                {
-                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                });
-
-            //wait for Microsoft.AspNetCore.Authentication.MicrosoftAccount package upgrade to 2.1.1
-            //.AddMicrosoftAccount(microsoftOptions => 
-            //{
-            //    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
-            //    microsoftOptions.ClientSecret = Configuration["Authentication:Miscrosoft:Password"];
-            //});
-
             // Add application services
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<IEmailSender, EmailSender>();
 
-            services.AddMvc();              
-            
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-            });
-
-            //SendGrid 
-            services.Configure<AuthMessageSenderOptions>(Configuration);
-
-            //Configure SendGrid 
-            //services.Configure<AuthMessageSenderOptions>(Configuration.GetSection(""));
+            //services.AddMvc();
+            services.AddMvc()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.AllowAreas = true;
+                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                    options.Conventions.AddPageRoute("/Identity/Account/Login", "Account/Login");
+                    //options.Conventions.AddPageRoute("/Identity/Account/ConfirmEmail", "/Account/ConfirmEmail");
+                });
 
             //Configure Stripe
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
@@ -153,6 +106,12 @@ namespace LIMSCore
                 app.UseExceptionHandler("/Home/Error");              
                 app.UseHsts();
             }
+
+            app.UseCors(builder => 
+                builder.WithOrigins("https://demo.osl.co.ke:7575")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+            );
 
             app.UseStatusCodePages();
             app.UseHttpsRedirection();

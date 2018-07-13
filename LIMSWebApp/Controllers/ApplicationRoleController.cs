@@ -20,7 +20,6 @@ namespace LIMSWebApp.Controllers
         }
 
         [HttpGet]
-
         public IActionResult Index()
         {
             List<ApplicationRoleListViewModel> model = new List<ApplicationRoleListViewModel>();
