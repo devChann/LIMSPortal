@@ -17,7 +17,7 @@ namespace LIMSWebApp.ViewModels.MpesaModels
             BusinessShortCode = "174379",
             CallBackURL = "https://demo.osl.co.ke:7575/lims/api/callback",
             Password = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTgwNzE2MTI0OTE2",
-            PhoneNumber = "254708374149",
+            PhoneNumber = "254725589166", //254708374149
             Timestamp = "20180716124916",//DateTime.Now.ToString("yyyyMMddHHmmss"),
             TransactionDesc = "test"
             //TransactionType = "CustomerPayBillOnline"

@@ -13,8 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MpesaLib.Clients;
+using Serilog;
 using Stripe;
 using System;
+using System.IO;
 
 namespace LIMSCore
 {
@@ -23,6 +25,9 @@ namespace LIMSCore
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //Log.Logger = new LoggerConfiguration()
+            //    .MinimumLevel.Debug().WriteTo.RollingFile(Path.Combine(env.ContentRootPath, "log-{Date}.txt"))
+            //    .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -94,6 +99,8 @@ namespace LIMSCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            
+
             //stripe configuration
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);           
 
@@ -105,6 +112,8 @@ namespace LIMSCore
             }
             else
             {
+                //loggerFactory.AddSerilog();
+                loggerFactory.AddFile(Path.Combine(env.ContentRootPath, "/logs/myapp-{Date}.txt"));
                 app.UseExceptionHandler("/Home/Error");              
                 app.UseHsts();
             }
