@@ -16,12 +16,12 @@ namespace LIMSWebApp.Controllers
     {
         private readonly AuthClient _auth;
         private LipaNaMpesaOnlineClient _lipaNaMpesa;
-        private C2BRegisterClient _c2bregister;
-        private readonly C2BSimulateClient _c2bSimulate;
+        private C2BRegisterUrlClient _c2bregister;
+        private readonly C2BClient _c2bSimulate;
         private readonly IConfiguration _config;
 
-        public PaymentsController(AuthClient auth, LipaNaMpesaOnlineClient lipaNampesa, C2BRegisterClient c2bregister,
-           C2BSimulateClient c2bsim, IConfiguration configuration)
+        public PaymentsController(AuthClient auth, LipaNaMpesaOnlineClient lipaNampesa, C2BRegisterUrlClient c2bregister,
+           C2BClient c2bsim, IConfiguration configuration)
         {
             _auth = auth;
             _lipaNaMpesa = lipaNampesa;
@@ -29,23 +29,25 @@ namespace LIMSWebApp.Controllers
             _c2bSimulate = c2bsim;
             _config = configuration;
         }
+        
 
         // GET: /<controller>/
         public async Task<IActionResult> Index()
-        {
+        {          
+
             var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
 
             var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
 
-            var accesstoken = await _auth.GetData(consumerKey,consumerSecret);
+            var accesstoken = await _auth.GetToken(consumerKey,consumerSecret);
 
             var paymentitems = new MpesaItems();
 
             var paymentdata = await _lipaNaMpesa.MakePayment(paymentitems.lipaonline, accesstoken);
 
-            var c2bregister = await _c2bregister.GetData(paymentitems.c2bregisterUrl, accesstoken);
+            var c2bregister = await _c2bregister.RegisterUrl(paymentitems.c2bregisterUrl, accesstoken);
 
-            var c2bsimulator = await _c2bSimulate.PostData(paymentitems.c2b, accesstoken);
+            var c2bsimulator = await _c2bSimulate.MakeC2BPayment(paymentitems.c2b, accesstoken);
 
             ViewData["Payment"] = paymentdata;
             ViewData["C2bRegister"] = c2bregister;

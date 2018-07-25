@@ -56,8 +56,8 @@ namespace LIMSCore
             //Add Lipa na Mpesa Client
             services.AddHttpClient<AuthClient>();
             services.AddHttpClient<LipaNaMpesaOnlineClient>();
-            services.AddHttpClient<C2BRegisterClient>();
-            services.AddHttpClient<C2BSimulateClient>();
+            services.AddHttpClient<C2BRegisterUrlClient>();
+            services.AddHttpClient<C2BClient>();
 
             
             services.Configure<CookiePolicyOptions>(options =>

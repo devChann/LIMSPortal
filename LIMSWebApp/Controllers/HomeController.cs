@@ -36,6 +36,13 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
+        public IActionResult Terms()
+        {
+            ViewData["Message"] = "FAQs Coming soon...";
+
+            return View();
+        }
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

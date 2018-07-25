@@ -27,11 +27,10 @@ namespace LIMSWebApp.Controllers
 
             Console.WriteLine($"This is the callback from mpesa daraja api: {result.ToString()}");
 
-            return result; 
-            //return CreatedAtRoute("GetCallback", result).ToString(); 
+            return result;             
         }
 
-        [HttpGet(Name ="GetCallback")]
+        [HttpGet]
         public JToken Get(JToken item)
         {        
             return item;
