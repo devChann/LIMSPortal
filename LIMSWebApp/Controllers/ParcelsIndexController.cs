@@ -60,6 +60,7 @@ namespace LIMSWebApp.Controllers
                 .Include(p => p.Payments)
                 .Include(i => i.Valuation)
                 .Include(i => i.Owner)
+                
                 .Where(a => a.ParcelNum == parcelnum).SingleOrDefault();
 
             if (parcel == null)
