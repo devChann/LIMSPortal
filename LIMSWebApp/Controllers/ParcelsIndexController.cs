@@ -73,6 +73,7 @@ namespace LIMSWebApp.Controllers
                 .Include(i => i.Tenure)
                 .Include(i => i.Valuation)
                 .Include(i => i.Owner)
+                
                 .Where(a => a.ParcelNum == parcelnum).SingleOrDefault();
 
 
@@ -104,7 +105,6 @@ namespace LIMSWebApp.Controllers
                 parcelviewmodel.Lender = parcel.RestrictionsNavigation.Morgage.Lender;
                 parcelviewmodel.amount = parcel.RestrictionsNavigation.Chrage.Amount;
                 parcelviewmodel.ChargeLender = parcel.RestrictionsNavigation.Chrage.Lender;
-
                 parcelviewmodel.RegistrationDate = parcel.Registration.RegistrationDate;
 
 
