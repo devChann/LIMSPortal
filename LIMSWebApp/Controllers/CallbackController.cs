@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LIMSWebApp.ViewModels.MpesaModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace LIMSWebApp.Controllers
@@ -23,7 +25,12 @@ namespace LIMSWebApp.Controllers
         [HttpPost]
         public JToken Post([FromBody]JToken result)
         {
-            _log.LogInformation(result.ToString());
+            _log.LogInformation(result.ToString());          
+
+            var response = JsonConvert.DeserializeObject<STKResponse>(result.ToString());
+
+
+            Console.WriteLine($"This What chann wants to see: {response.Body.stkCallback.CheckoutRequestID}");
 
             Console.WriteLine($"This is the callback from mpesa daraja api: {result.ToString()}");
 
