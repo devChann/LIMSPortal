@@ -46,7 +46,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             //public string IDNumber { get; set; }
 
             [Required]
-            [StringLength(20)]
+            [StringLength(30)]
             [Display(Name ="User Name")]
             public string UserName { get; set; }
 

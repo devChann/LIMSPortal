@@ -34,14 +34,9 @@ namespace LIMSWebApp.ViewModels.LIMSViewModels
         public DateTime RegistrationDate { get; set; }
         public double MAmount { get; set; }
         public string MorgageLender { get; set; }
-
-
-
-        public int RRRscount { get; set; }
-        
+        public int RRRscount { get; set; }        
         public string Leahold { get; set; }
         public DateTime LeasePeriod { get; set; }
-
         public string Name { get; set; }
         public string Adress { get; set; }
         public string Phone { get; set; }
@@ -56,7 +51,7 @@ namespace LIMSWebApp.ViewModels.LIMSViewModels
         public int Rateid { get; set; }
         public string ReceiptNo { get; set; }
 
-        public IEnumerable<Payments> Payment { get; set; }
+        public ICollection<Payments> Payments { get; set; }
 
     }
 }

@@ -53,12 +53,14 @@
                         </th>
 
                         <td>
+
                             
                             @Html.ActionLink("Details", "SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }) |
                             @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
                             @Html.ActionLink("Rates Payment", "Payments", "ParcelsIndex", new { parcelnum = item.ParcelNum }) |
                             @*@Html.ActionLink("New Payment", "#", new { @data_toggle = "modal", @data_target = "#Paymentnortification" })*@
                            
+
                         </td>
                     </tr>
                 }
@@ -76,6 +78,7 @@ else
     </div>
 
 }
+
 <a class="btn btn-outline-info" role="button" asp-controller="Account" asp-action="UserProfile">Go to Services</a>
 @*Modal dialog*@
 <div class="modal fade" id="Paymentnortification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -98,5 +101,6 @@ else
         </div>
     </div>
 </div>
+
 
 

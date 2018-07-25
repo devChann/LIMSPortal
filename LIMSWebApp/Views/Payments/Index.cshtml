@@ -2,7 +2,7 @@
 @using LIMSInfrastructure.Services.Payment
 @inject IOptions<StripeSettings> Stripe
 
-<form action="/Payments/Charge" method="POST">
+<form asp-controller="Payments" asp-action="Charge" method="POST">
     <div>
         <h3>Make Payment</h3>
     </div>
@@ -22,4 +22,10 @@
 <div style="margin-top:20px">
     <a asp-controller="Payments" asp-action="PaywithMpesa" class="btn btn-outline-success">Pay With M-Pesa</a>
 </div>
+
+<hr />
+
+<h4>@ViewData["Payment"]</h4>
+<h4>@ViewData["C2bRegister"]</h4>
+<h4>@ViewData["C2bSimulate"]</h4>
 

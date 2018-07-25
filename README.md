@@ -1,6 +1,6 @@
 # LIMS
 
-Application review site https://limsportal.azurewebsites.net
+Application review site https://demo.osl.co.ke:7575/lims
 ## Land Information Management System
 This project is about a unified land Information Management web and mobile portal. Land Administrators, organizations and
 citizens will have roles and functions in the system. All users are authenticated and authorized. The following modules are 
