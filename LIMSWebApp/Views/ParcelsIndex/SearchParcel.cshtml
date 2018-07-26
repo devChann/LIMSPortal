@@ -13,7 +13,9 @@
 
 <div class="row">
     <div class="col-md-12 top5" style="display:inline-block">
+        
         <span>@Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }, new { @class = "btn btn-outline-info" }) </span>
+
         @if (ViewData["UserPIN"].ToString() == Model.PIN)
         {
             <span><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#ratesModal">Rates Payment History</button></span>

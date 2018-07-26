@@ -25,12 +25,28 @@ namespace LIMSWebApp.Controllers
         [HttpPost]
         public JToken Post([FromBody]JToken result)
         {
-            _log.LogInformation(result.ToString());          
 
-            var response = JsonConvert.DeserializeObject<STKResponse>(result.ToString());
+            var stkresult = result.ToString();
 
+            //_log.LogInformation(stkresult);
 
-            Console.WriteLine($"This What chann wants to see: {response.Body.stkCallback.CheckoutRequestID}");
+            STKResponse response = JsonConvert.DeserializeObject<STKResponse>(stkresult);
+
+            Console.WriteLine($"This is What chann wants to see: {response.Body.StkCallback.CheckoutRequestID}");
+
+            List<Item> list = response.Body.StkCallback.CallbackMetadata.Item.ToList();
+
+            string AmountPaid = "";
+
+            foreach(Item item in list)
+            {
+                if(item.Name == "Amount")
+                {
+                    AmountPaid = item.Value.ToString();
+                }
+            }
+
+            Console.WriteLine($"This is the Amount Paid by the Customer:Ksh. {AmountPaid}");
 
             Console.WriteLine($"This is the callback from mpesa daraja api: {result.ToString()}");
 

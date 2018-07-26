@@ -28,25 +28,51 @@
 {
     <div class="row">
         <div class="col-md-4">
-            <a asp-controller="ParcelsIndex" asp-action="SearchParcel">
-                <span class='glyphicon glyphicon-user'></span> Search Land Parcel
-            </a><br />
-            <p>Click here to create account <br />All you needs is your<br /> National ID</p>
+            
+            <div>
+                <a asp-controller="ParcelsIndex" asp-action="SearchParcel" class="text-info">                    
+                   
+                    <div class="card text-center card-padding">
+                        <span class="card-title"><span class='fa fa-search fa-3x text-center'></span></span>
+                        <div class="card-body">
+                            <h4 class="card-title">Property Search</h4>
+                            <p class="card-text">Search Land Parcel</p>
+                            
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
         <div class="col-md-4">
-            <a asp-controller="Properties" asp-action="Properties">
-                <span class='glyphicon glyphicon-log-in'></span> Go to My Dashboard
+           
+            <a asp-controller="Properties" asp-action="Properties" class="text-info" >
+               
+                <div class="card text-center card-padding">
+                    <span class="card-title"><span class='fa fa-bar-chart fa-3x mx-auto'></span></span>
+                    <div class="card-body">
+                        <h4 class="card-title">Dashboard</h4>
+                        <p class="card-text">Go to My Dashboard</p>
+
+                    </div>
+                </div>
             </a>
-            <p>
-                Click here to Log into your Account<br />And get all services like:Title registration
-                <br />Application for Land Subdivision e.t.c
-            </p>
+           
         </div>
         <div class="col-md-4">
-            <a asp-controller="Payments" asp-action="Index">
-                <span class='glyphicon glyphicon-shopping-cart'></span> Pay Land Rates
+
+            <a asp-controller="Payments" asp-action="Index" class="text-info">               
+             
+                <div class="card text-center card-padding">
+                    <span class="card-title"><span class='fa fa-shopping-cart fa-3x text-center'></span></span>
+                    <div class="card-body">
+                        <h4 class="card-title">Payments</h4>
+                        <p class="card-text">Pay Land Rates</p>
+
+                    </div>
+                </div>
             </a>
-            <p>Avoid long queues at the County Halls<br />And Make your payments online<br /> Click here to learn more</p>
+           
+           
         </div>
     </div>
 }
@@ -54,24 +80,38 @@ else
 {
     <div class="row">
         <div class="col-md-4">
-            <a asp-area="Identity" asp-page="/Account/Register">
-                <span class='glyphicon glyphicon-user'></span> Create Account
-            </a><br />
-            <p>Click here to create account <br />All you needs is your<br /> National ID</p>
+            <a asp-area="Identity" asp-page="/Account/Register" class="text-info">
+                <div class="card text-center card-padding">
+                    <span class="card-title"><span class='fa fa-user-circle fa-3x'></span></span>
+                    <div class="card-body">
+                        <h4 class="card-title">Create Account</h4>
+                        <p class="card-text">Create a new user account</p>
+                    </div>
+                </div>
+            </a>
         </div>
         <div class="col-md-4">
-            <a asp-area="Identity" asp-page="/Account/Login">
-                <span class='glyphicon glyphicon-log-in'></span> Sign In
+            <a asp-area="Identity" asp-page="/Account/Login" class="text-info">               
+                <div class="card text-center card-padding">
+                    <span class="card-title"><span class='fa fa-sign-in fa-3x'></span></span>
+                    <div class="card-body">
+                        <h4 class="card-title">Sign In</h4>
+                        <p class="card-text">Sign into your account</p>
+                    </div>
+                </div>
             </a>
-            <p>
-                Click here to Log into your Account<br />And get access to available land services.
-            </p>
+           
         </div>
         <div class="col-md-4">
-            <a asp-controller="Home" asp-action="Terms">
-                <span class='glyphicon glyphicon-shopping-cart'></span> Read Terms and Conditions
+            <a asp-controller="Home" asp-action="Terms" class="text-info">
+                <div class="card text-center card-padding">
+                    <span class="card-title"><span class='fa fa-exclamation-circle fa-3x'></span></span>
+                    <div class="card-body">
+                        <h4 class="card-title">Terms & Conditions</h4>
+                        <p class="card-text">Read our terms and conditions</p>
+                    </div>
+                </div>
             </a>
-            <p>Avoid long queues at the County Halls<br />And Make your payments online<br /> Click here to learn more</p>
         </div>
 
     </div>

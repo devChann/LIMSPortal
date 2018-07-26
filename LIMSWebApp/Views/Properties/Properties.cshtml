@@ -55,9 +55,9 @@
                         <td>
 
                             
-                            @Html.ActionLink("Details", "SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }) |
+                            @Html.ActionLink("Details", "SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" }) 
                             @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                            @Html.ActionLink("Rates Payment", "Payments", "ParcelsIndex", new { parcelnum = item.ParcelNum }) |
+                            @Html.ActionLink("Rates Payment", "Payments", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" }) 
                             @*@Html.ActionLink("New Payment", "#", new { @data_toggle = "modal", @data_target = "#Paymentnortification" })*@
                            
 

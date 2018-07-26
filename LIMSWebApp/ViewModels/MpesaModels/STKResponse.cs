@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,11 +15,19 @@ namespace LIMSWebApp.ViewModels.MpesaModels
 
     public class CallbackMetadata
     {
+        public CallbackMetadata()
+        {
+            Item = new List<Item>();
+        }
         public List<Item> Item { get; set; }
     }
 
     public class StkCallback
     {
+        public StkCallback()
+        {
+            CallbackMetadata = new CallbackMetadata();
+        }
         public string MerchantRequestID { get; set; }
         public string CheckoutRequestID { get; set; }
         public int ResultCode { get; set; }
@@ -29,7 +38,13 @@ namespace LIMSWebApp.ViewModels.MpesaModels
 
     public class Body
     {
-        public StkCallback stkCallback { get; set; }
+        public Body()
+        {
+            StkCallback = new StkCallback();
+        }
+
+        [JsonProperty("stkCallBack")]
+        public StkCallback StkCallback { get; set; }
     }
 
     public class STKResponse
