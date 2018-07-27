@@ -50,6 +50,11 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             public string KRAPIN { get; set; }
 
             [Required]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public int PhoneNumber { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }

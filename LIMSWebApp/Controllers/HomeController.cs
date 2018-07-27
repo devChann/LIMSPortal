@@ -36,6 +36,7 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
+        [Route("/terms-and-conditions")]
         public IActionResult Terms()
         {
             ViewData["Message"] = "FAQs Coming soon...";
