@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using LIMSInfrastructure.Identity;
 using Microsoft.AspNetCore.Authentication;
@@ -38,17 +39,17 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
         public class InputModel
         {
 
-            //[EmailAddress]
-            //public string Email { get; set; }
+            [Display(Name = "UserName/Email")]
+            public string Email { get; set; }
 
             //[IDNumber]
             //[Display(Name="National ID Number"]
             //public string IDNumber { get; set; }
 
-            [Required]
-            [StringLength(30)]
-            [Display(Name ="User Name")]
-            public string UserName { get; set; }
+            //[Required]
+            //[StringLength(30)]
+            //[Display(Name ="User Name")]
+            //public string UserName { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -80,6 +81,29 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
+            if (Input.Email.IndexOf('@') > -1)
+            {
+                //Validate email format
+                string emailRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                                       @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                                          @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+                Regex re = new Regex(emailRegex);
+                if (!re.IsMatch(Input.Email))
+                {
+                    ModelState.AddModelError("Email", "Email is not valid");
+                }
+            }
+            else
+            {
+                //validate Username format
+                string emailRegex = @"^[a-zA-Z0-9]*$";
+                Regex re = new Regex(emailRegex);
+                if (!re.IsMatch(Input.Email))
+                {
+                    ModelState.AddModelError("Email", "Username is not valid");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 //Require the user to have a confirmed email before they can log on.
@@ -88,7 +112,27 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+
+                //User can sign in by UserName or email
+                var userName = Input.Email;
+
+                if (userName.IndexOf('@') > -1)
+                {
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if (user == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return Page();
+                    }
+                    else
+                    {
+                        userName = user.UserName;
+                    }
+                }
+
+                //Attempt to sign in user
+                var result = await _signInManager.PasswordSignInAsync(userName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                
 
                 if (result.Succeeded)
