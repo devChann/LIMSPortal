@@ -57,9 +57,9 @@
                             
                             @Html.ActionLink("Details", "SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" }) 
                             @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                            @Html.ActionLink("Rates Payment", "Payments", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" }) 
-                            @*@Html.ActionLink("New Payment", "#", new { @data_toggle = "modal", @data_target = "#Paymentnortification" })*@
-                           
+                            @*@Html.ActionLink("Rates Payment", "Payments", "Index", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" })*@ 
+                            @*@Html.ActionLink("New Payment", "", new { @data_toggle = "modal", @data_target = "#PaymentNotification" }, new { @class = "btn btn-outline-info" })*@
+                            <span><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#PaymentNotification">Make New Payment</button></span>
 
                         </td>
                     </tr>
@@ -81,7 +81,7 @@ else
 
 <a class="btn btn-outline-info" role="button" asp-controller="Account" asp-action="UserProfile">Go to Services</a>
 @*Modal dialog*@
-<div class="modal fade" id="Paymentnortification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="PaymentNotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
