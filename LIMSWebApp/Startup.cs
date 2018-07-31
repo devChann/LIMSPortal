@@ -48,6 +48,18 @@ namespace LIMSCore
                 }
                 ));
 
+            //Billing Database context
+            services.AddDbContext<BillingDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("LIMSBillingDbConnection"),
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+                }
+                ));
+
             services.AddCors();
 
             //Inject repository
