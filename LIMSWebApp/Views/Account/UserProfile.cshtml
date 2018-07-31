@@ -9,19 +9,14 @@
         </div>
         <div class="card-body">
             <h1 class="card-title pricing-card-title"><small class="text-muted">Requirements</small></h1>
-            @*<span><i class="fa fa-search-plus"></i></span>*@
+            
             <ul class="list-unstyled mt-3 mb-4">
                 <li>Parcel Number</li>
                 <li>Your National ID</li>
                 <li>Your KRA PIN</li>
             </ul>
-            @*<button type="button" id="btnShowModal"
-                    class="btn btn-lg btn-block btn-outline-primary">
-                Land Search
-            </button>*@
-            @*<button type="button" onclick="location.href='@Url.Action("Search", "ParcelsIndex")'" class="btn btn-lg btn-block btn-outline-primary">Land Search
-        </button>*@
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary" data-toggle="modal" data-target="#nortification">
+           
+            <button type="button" class="btn btn-lg btn-block btn-outline-info" data-toggle="modal" data-target="#nortification">
                 Land Search
             </button>
         </div>
@@ -38,7 +33,7 @@
                 <li>Your KRA PIN</li>
 
             </ul>
-            <button type="button" class="btn btn-lg btn-block btn-primary">Land Transfer</button>
+            <button type="button" class="btn btn-lg btn-block btn-outline-info">Land Transfer</button>
         </div>
     </div>
     <div class="card mb-4 box-shadow">
@@ -53,10 +48,11 @@
                 <li>Your KRA PIN</li>
 
             </ul>
-            <button type="button" class="btn btn-lg btn-block btn-primary">Other Services</button>
+            <button type="button" class="btn btn-lg btn-block btn-outline-info">Other Services</button>
         </div>
     </div>
 </div>
+
 @*Modal dialog*@
 <div class="modal fade" id="nortification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
