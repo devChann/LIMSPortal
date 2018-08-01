@@ -2,8 +2,10 @@
 using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
 using LIMSInfrastructure.Services.Payment;
+using LIMSWebApp.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,8 +15,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MpesaLib.Clients;
+using Serilog;
 using Stripe;
 using System;
+using System.IO;
 
 namespace LIMSCore
 {
@@ -23,6 +27,9 @@ namespace LIMSCore
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //Log.Logger = new LoggerConfiguration()
+            //    .MinimumLevel.Debug().WriteTo.RollingFile(Path.Combine(env.ContentRootPath, "log-{Date}.txt"))
+            //    .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -43,6 +50,18 @@ namespace LIMSCore
                 }
                 ));
 
+            //Billing Database context
+            services.AddDbContext<BillingDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("LIMSBillingDbConnection"),
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+                }
+                ));
+
             services.AddCors();
 
             //Inject repository
@@ -51,6 +70,8 @@ namespace LIMSCore
             //Add Lipa na Mpesa Client
             services.AddHttpClient<AuthClient>();
             services.AddHttpClient<LipaNaMpesaOnlineClient>();
+            services.AddHttpClient<C2BRegisterUrlClient>();
+            services.AddHttpClient<C2BClient>();
 
             
             services.Configure<CookiePolicyOptions>(options =>
@@ -91,8 +112,9 @@ namespace LIMSCore
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            //stripe configuration
+        {           
+
+            //Stripe configuration
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);           
 
             if (env.IsDevelopment())
@@ -103,24 +125,27 @@ namespace LIMSCore
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");              
+                //loggerFactory.AddSerilog();
+                loggerFactory.AddFile(Path.Combine(env.ContentRootPath, "/logs/myapp-{Date}.txt"));
+                app.UseExceptionHandler("/Home/Error");               
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");
 
             app.UseCors(builder => 
                 builder.WithOrigins("https://demo.osl.co.ke:7575")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
             );
-
-            app.UseStatusCodePages();
+          
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();            
 
-            app.UseAuthentication();
-
-            app.UseStatusCodePagesWithReExecute("/HttpErrors/{0}");
+            
+            
 
             app.UseMvcWithDefaultRoute();
            

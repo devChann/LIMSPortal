@@ -15,6 +15,7 @@ using iTextSharp.text.pdf;
 using LIMSWebApp.Extensions;
 using System.Collections.Generic;
 using LIMSWebApp.Helpers;
+using LIMSInfrastructure.Identity;
 
 namespace LIMSWebApp.Controllers
 {
@@ -23,11 +24,13 @@ namespace LIMSWebApp.Controllers
     {
         private readonly LIMSCoreDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ApplicationDbContext _usercontext;
 
-        public ParcelsIndexController(LIMSCoreDbContext context, IHostingEnvironment hostingEnvironment)
+        public ParcelsIndexController(LIMSCoreDbContext context, ApplicationDbContext usercontext, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
+            _usercontext = usercontext;
         }
 
         //Renders the search page
@@ -42,6 +45,12 @@ namespace LIMSWebApp.Controllers
         [Route("/parcel-details")]
         public IActionResult SearchParcel(string parcelnum)
         {
+            var username = HttpContext.User.Identity.Name;
+
+            var user = _usercontext.Users.SingleOrDefault(p => p.UserName == username);
+
+            ViewData["UserPIN"] = user.KRAPIN;
+
             if (parcelnum == null)
             {
                 return BadRequest();
@@ -60,6 +69,7 @@ namespace LIMSWebApp.Controllers
                 .Include(p => p.Payments)
                 .Include(i => i.Valuation)
                 .Include(i => i.Owner)
+                
                 .Where(a => a.ParcelNum == parcelnum).SingleOrDefault();
 
             if (parcel == null)

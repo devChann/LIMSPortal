@@ -36,6 +36,14 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
+        [Route("/terms-and-conditions")]
+        public IActionResult Terms()
+        {
+            ViewData["Message"] = "FAQs Coming soon...";
+
+            return View();
+        }
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -44,8 +52,20 @@ namespace LIMSWebApp.Controllers
         }
 
         [Route("/Error")]
-        public IActionResult Error()
+        public IActionResult Error(int? statusCode = null)
         {
+            
+            if (statusCode.HasValue)
+            {
+                if (statusCode.Value == 404 || statusCode.Value == 500)
+                {
+                    var viewName = statusCode.ToString();
+                    return View(viewName);
+                }
+            }
+            //return View();
+            
+
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 

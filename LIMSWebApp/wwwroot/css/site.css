@@ -148,3 +148,14 @@ code {
 .bottom10{
     margin-bottom:10px;
 }
+
+a {
+    text-decoration: none !important;
+}
+
+.card-padding{
+    padding-top:10px;
+}
+
+
+

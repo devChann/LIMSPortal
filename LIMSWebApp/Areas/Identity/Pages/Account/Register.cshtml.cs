@@ -41,8 +41,28 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
         {
             [Required]
             [StringLength(20)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(20)]
+            [Display(Name = "Middle Name")]
+            public string MiddleName { get; set; }
+
+            [Required]
+            [StringLength(20)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [StringLength(20)]
             [Display(Name = "User Name")]
             public string UserName { get; set; }
+
+            [Required]
+            [StringLength(15)]
+            [Display(Name = "ID/Passport Number")]
+            public string IDNumber { get; set; }
 
             [Required]
             [StringLength(11)]
@@ -50,8 +70,13 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             public string KRAPIN { get; set; }
 
             [Required]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+
+            [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Email Address")]
             public string Email { get; set; }
 
             [Required]
@@ -76,8 +101,12 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email, KRAPIN = Input.KRAPIN };
+                var user = new ApplicationUser {UserName =Input.UserName, FirstName = Input.FirstName, MiddleName = Input.MiddleName,
+                    LastName = Input.LastName, IDNumber = Input.IDNumber, Email = Input.Email, KRAPIN = Input.KRAPIN,
+                    PhoneNumber = Input.PhoneNumber };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
