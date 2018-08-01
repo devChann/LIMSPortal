@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MpesaLib.Clients;
+using MpesaLib.Models;
 using Stripe;
 
 namespace LIMSWebApp.Controllers
@@ -83,8 +84,42 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("/make-payment")]
         public IActionResult PayWithMpesa()
         {
+            return View("MpesaExpress");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PayWithMpesa(MpesaExpressViewModel Payment)
+        {
+            var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
+
+            var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
+
+            var accesstoken = await _auth.GetToken(consumerKey, consumerSecret);
+
+            var MpesaExpressObject = new LipaNaMpesaOnline
+            {
+                AccountReference = "ref",
+                Amount = Payment.Amount,
+                PartyA = Payment.PhoneNumber,
+                PartyB = "174379",
+                BusinessShortCode = "174379",
+                CallBackURL = "https://demo.osl.co.ke:7575/lims/api/callback",
+                Password = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTgwNzE2MTI0OTE2",
+                //Password = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(PartyB + Passkey + Timestamp)),    
+                PhoneNumber = Payment.PhoneNumber, //254708374149
+                Timestamp = "20180716124916",//DateTime.Now.ToString("yyyyMMddHHmmss"),
+                TransactionDesc = "test"
+                //TransactionType = "CustomerPayBillOnline"
+            };
+
+            var paymentrequest = await _lipaNaMpesa.MakePayment(MpesaExpressObject, accesstoken);
+
+            ViewData["Payment"] = paymentrequest;
+
             return View();
         }
     }

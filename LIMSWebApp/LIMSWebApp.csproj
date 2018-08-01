@@ -44,6 +44,15 @@
   <Content Update="Views\Home\Terms.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
+  <Content Update="Views\Payments\MpesaExpress.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
+  <Content Update="Views\Shared\404.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
+  <Content Update="Views\Shared\500.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
 </ItemGroup>
   
 

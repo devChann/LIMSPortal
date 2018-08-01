@@ -2,8 +2,10 @@
 using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
 using LIMSInfrastructure.Services.Payment;
+using LIMSWebApp.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -110,10 +112,9 @@ namespace LIMSCore
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            
+        {           
 
-            //stripe configuration
+            //Stripe configuration
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);           
 
             if (env.IsDevelopment())
@@ -126,24 +127,25 @@ namespace LIMSCore
             {
                 //loggerFactory.AddSerilog();
                 loggerFactory.AddFile(Path.Combine(env.ContentRootPath, "/logs/myapp-{Date}.txt"));
-                app.UseExceptionHandler("/Home/Error");              
+                app.UseExceptionHandler("/Home/Error");               
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");
 
             app.UseCors(builder => 
                 builder.WithOrigins("https://demo.osl.co.ke:7575")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
             );
-
-            app.UseStatusCodePages();
+          
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();            
 
-            app.UseAuthentication();
-
-            app.UseStatusCodePagesWithReExecute("/HttpErrors/{0}");
+            
+            
 
             app.UseMvcWithDefaultRoute();
            
