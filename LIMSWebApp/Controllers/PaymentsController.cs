@@ -92,6 +92,7 @@ namespace LIMSWebApp.Controllers
         }
 
         [HttpPost]
+        [Route("/make-payment")]
         public async Task<IActionResult> PayWithMpesa(MpesaExpressViewModel Payment)
         {
             var consumerKey = _config["MpesaConfiguration:ConsumerKey"];

@@ -1,0 +1,47 @@
+@using Microsoft.AspNetCore.Identity
+@using LIMSInfrastructure.Identity
+@model LIMSWebApp.ViewModels.MpesaModels.MpesaExpressViewModel
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-8">
+            <form id="expenseForm" asp-controller="Payments" asp-action="PayWithMpesa" method="post">
+               
+                <div class="form-group">
+                    <label asp-for="CustomerName" class="control-label"></label>
+                    <input disabled asp-for="CustomerName" value="@UserManager.GetUserName(User)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <select asp-for="Amount" class="form-control">
+                        <option value="">-- Select Amount --</option>
+                        <option value="1">KSh 1</option>
+                        <option value="5">KSh 5</option>
+                        <option value="10">KSh 10</option>
+                        <option value="20">KSh 20</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" id="btnSubmit" class="btn btn-block btn-info">Make Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+<div>
+    <h2>Sorry, you have to be logged in to make payments</h2>
+</div>
+
+
+}
