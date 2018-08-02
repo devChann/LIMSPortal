@@ -152,7 +152,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Page(
-                "Identity/Account/ConfirmEmail",
+                "account/confirmed-email",
                 pageHandler: null,
                 values: new { user.Id, code },
                 protocol: Request.Scheme);

@@ -3,23 +3,23 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<ul class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
-    <li class="nav-item @ManageNavPages.IndexNavClass(ViewContext)">
-        <a class="nav-link" role="tab" asp-page="./Index">Profile</a>
+<ul class="nav nav-pills flex-column" aria-orientation="vertical">
+    <li class="nav-item active ">
+        <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" asp-page="./Index">Profile</a>
     </li>
-    <li class="nav-item @ManageNavPages.ChangePasswordNavClass(ViewContext)" >
-        <a class="nav-link" role="tab" asp-page="./ChangePassword">Password</a>
+    <li class="nav-item " >
+        <a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" asp-page="./ChangePassword">Password</a>
     </li>
     @if (hasExternalLogins)
     {
-        <li class="nav-item @ManageNavPages.ExternalLoginsNavClass(ViewContext)">
-            <a class="nav-link"  role="tab" asp-page="./ExternalLogins">External logins</a>
+        <li class="nav-item ">
+            <a class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)"  asp-page="./ExternalLogins">External logins</a>
         </li>
     }
-    <li class="nav-item @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)">
-        <a class="nav-link" role="tab" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
+    <li class="nav-item ">
+        <a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" asp-page="./TwoFactorAuthentication">Two-factor authentication</a>
     </li>
-    <li class="nav-item @ManageNavPages.PersonalDataNavClass(ViewContext)">
-        <a class="nav-link" role="tab" asp-page="./PersonalData">Personal data</a>
+    <li class="nav-item ">
+        <a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" asp-page="./PersonalData">Personal data</a>
     </li>
 </ul>

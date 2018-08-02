@@ -50,7 +50,7 @@ namespace LIMSWebApp.Areas.Identity
                     options.SignIn.RequireConfirmedPhoneNumber = false;
                 })
                  .AddEntityFrameworkStores<ApplicationDbContext>()
-                 //.AddDefaultUI()
+                 .AddDefaultUI()
                  .AddDefaultTokenProviders();
 
                 services.AddAuthentication()
