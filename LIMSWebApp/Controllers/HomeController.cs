@@ -23,11 +23,12 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
-       
+        [Authorize]
+        [Route("/services")]
         public IActionResult Services()
         {
             return View();
-        }
+        }        
 
         public IActionResult FAQs()
         {
@@ -62,13 +63,10 @@ namespace LIMSWebApp.Controllers
                     var viewName = statusCode.ToString();
                     return View(viewName);
                 }
-            }
-            //return View();
-            
+            }            
 
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
 
         public IActionResult Profile()
         {

@@ -2,30 +2,37 @@
 @using LIMSInfrastructure.Services.Payment
 @inject IOptions<StripeSettings> Stripe
 
-<form asp-controller="Payments" asp-action="Charge" method="POST">
-    <div>
-        <h3>Make Payment</h3>
-    </div>
-    <article>
-        <label>Amount: $ 5.00</label>
-    </article>
-    <script src="//checkout.stripe.com/v2/checkout.js"
-            class="stripe-button"
-            data-key="@Stripe.Value.StripePublishableKey"
-            data-locale="auto"
-            data-description="Sample Charge"
-            data-amount="500">
-    </script>
+<div class="row">
+    <form asp-controller="Payments" asp-action="Charge" method="POST">
+        <div>
+            <h3>Choose Payment Method</h3>
+        </div>
+        @*<article>
+            <label>Amount: $ 5.00</label>
+        </article>*@
 
-</form>
+        <script src="//checkout.stripe.com/v2/checkout.js"
+                class="stripe-button"
+                data-key="@Stripe.Value.StripePublishableKey"
+                data-locale="auto"
+                data-description="Sample Charge"
+                data-amount="500">
+        </script>
 
-<div style="margin-top:20px">
-    <a asp-controller="Payments" asp-action="PaywithMpesa" class="btn btn-outline-success">Pay With M-Pesa</a>
+    </form>
+
+    
+
 </div>
+
+<div class="row">
+    <div style="margin-top:20px">
+        <a asp-controller="Payments" asp-action="PaywithMpesa"><img src="~/images/icons/mpesa.png" style="width:120px;height:40px" /></a>
+    </div>
+</div>
+
+
 
 <hr />
 
-<h4>@ViewData["Payment"]</h4>
-<h4>@ViewData["C2bRegister"]</h4>
-<h4>@ViewData["C2bSimulate"]</h4>
 

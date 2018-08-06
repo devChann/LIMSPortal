@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LIMSInfrastructure.Data;
 using LIMSWebApp.ViewModels.MpesaModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MpesaLib.Clients;
 using MpesaLib.Models;
@@ -20,40 +22,24 @@ namespace LIMSWebApp.Controllers
         private C2BRegisterUrlClient _c2bregister;
         private readonly C2BClient _c2bSimulate;
         private readonly IConfiguration _config;
+        private readonly BillingDbContext _payments;
 
         public PaymentsController(AuthClient auth, LipaNaMpesaOnlineClient lipaNampesa, C2BRegisterUrlClient c2bregister,
-           C2BClient c2bsim, IConfiguration configuration)
+           C2BClient c2bsim, IConfiguration configuration, BillingDbContext payments)
         {
             _auth = auth;
             _lipaNaMpesa = lipaNampesa;
             _c2bregister = c2bregister;
             _c2bSimulate = c2bsim;
             _config = configuration;
+            _payments = payments;
         }
-        
 
-        // GET: /<controller>/
-        public async Task<IActionResult> Index()
-        {          
-
-            var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
-
-            var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
-
-            var accesstoken = await _auth.GetToken(consumerKey,consumerSecret);
-
-            var paymentitems = new MpesaItems();
-
-            var paymentdata = await _lipaNaMpesa.MakePayment(paymentitems.lipaonline, accesstoken);
-
-            var c2bregister = await _c2bregister.RegisterUrl(paymentitems.c2bregisterUrl, accesstoken);
-
-            var c2bsimulator = await _c2bSimulate.MakeC2BPayment(paymentitems.c2b, accesstoken);
-
-            ViewData["Payment"] = paymentdata;
-            ViewData["C2bRegister"] = c2bregister;
-            ViewData["C2bSimulate"] = c2bsimulator;
-
+        //TO DO: implement payment method selection (card/mpesa)
+        [HttpGet]
+        [Route("/payment-method")]
+        public IActionResult Index()
+        {         
             return View();
         }
 
@@ -79,9 +65,29 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
-        public IActionResult Error()
+        [HttpGet]
+        public IActionResult PaymentsList()
         {
-            return View();
+            var paymentsmade = _payments.MpesaTransaction.ToList();
+
+            List<PaymentsListViewModel> paymentList = new List<PaymentsListViewModel>();
+
+            if(paymentsmade != null)
+            {
+                paymentList = paymentsmade.Select(a => new PaymentsListViewModel
+                {
+                    Amount = a.Amount,
+                    ReceiptNumber =a.ReceiptNumber,
+                    CheckOutID = a.CheckoutRequestID,
+                    CustomerName = "Elvis Ayiemba", //TO DO: Get customer name from parcels db
+                    PaymentDate = a.TransactionDate,
+                    PhoneNumber = a.PhoneNumber
+
+                }).ToList();
+                
+            }          
+            
+            return View(paymentList);
         }
 
         [HttpGet]
@@ -121,6 +127,11 @@ namespace LIMSWebApp.Controllers
 
             ViewData["Payment"] = paymentrequest;
 
+            return View();
+        }
+
+        public IActionResult Error()
+        {
             return View();
         }
     }

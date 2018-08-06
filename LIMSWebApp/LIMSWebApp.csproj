@@ -44,6 +44,9 @@
   <Content Update="Views\Home\Terms.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
+  <Content Update="Views\Payments\PaymentsList.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
   <Content Update="Views\Payments\MpesaExpress.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>

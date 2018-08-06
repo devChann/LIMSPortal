@@ -34,14 +34,14 @@ namespace LIMSWebApp.Controllers
         }
 
         //Renders the search page
+        [HttpGet]
         [Route("/parcel-search")]
         public IActionResult Search()
         {
             return View();
         }
 
-        //Renders the search results
-        [HttpGet]
+        //Renders the search results        
         [Route("/parcel-details")]
         public IActionResult SearchParcel(string parcelnum)
         {

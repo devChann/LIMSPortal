@@ -55,7 +55,7 @@
                         <td>
 
                             
-                            @Html.ActionLink("Details", "SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" }) 
+                            @Html.ActionLink("Details","SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" }) 
                             @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
                             @*@Html.ActionLink("Rates Payment", "Payments", "Index", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" })*@ 
                             @*@Html.ActionLink("New Payment", "", new { @data_toggle = "modal", @data_target = "#PaymentNotification" }, new { @class = "btn btn-outline-info" })*@
@@ -95,7 +95,7 @@ else
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>               
-                <a class="btn btn-info" asp-controller="Payments" asp-action="PayWithMpesa">Continue</a>
+                <a class="btn btn-info" asp-controller="Payments" asp-action="Index">Continue</a>
             </div>
         </div>
     </div>

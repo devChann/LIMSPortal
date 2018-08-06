@@ -3,6 +3,7 @@ using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
 using LIMSInfrastructure.Services.Payment;
 using LIMSWebApp.Extensions;
+using LIMSWebApp.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -106,6 +107,9 @@ namespace LIMSCore
             //Configure Stripe
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
+            //Add SignalR
+            services.AddSignalR();
+
         }
 
        
@@ -142,7 +146,12 @@ namespace LIMSCore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseAuthentication();              
+            app.UseAuthentication();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<PaymentsHub>("/hubs/payments");
+            });
 
             app.UseMvcWithDefaultRoute();
            
