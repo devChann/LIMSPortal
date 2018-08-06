@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MpesaLib.Clients;
+using MpesaLib.Interfaces;
 using Serilog;
 using Stripe;
 using System;
@@ -69,10 +70,10 @@ namespace LIMSCore
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
 
             //Add Lipa na Mpesa Client
-            services.AddHttpClient<AuthClient>();
+            services.AddHttpClient<IAuthClient, AuthClient>();
             services.AddHttpClient<LipaNaMpesaOnlineClient>();
-            services.AddHttpClient<C2BRegisterUrlClient>();
-            services.AddHttpClient<C2BClient>();
+            //services.AddHttpClient<C2BRegisterUrlClient>();
+            //services.AddHttpClient<C2BClient>();
 
             
             services.Configure<CookiePolicyOptions>(options =>

@@ -83,10 +83,6 @@ namespace LIMSWebApp.Controllers
             
             _billing.SaveChanges();
 
-            //logging stuff to stdout - to remove these after adding error handling and proper logging
-            Console.WriteLine($"This is the Amount Paid by the Customer:Ksh. {AmountPaid}");
-            Console.WriteLine($"This is the callback from mpesa daraja api: {result.ToString()}");
-
             return result;             
         }
 

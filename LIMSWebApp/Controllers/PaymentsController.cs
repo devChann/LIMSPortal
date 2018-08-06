@@ -18,19 +18,15 @@ namespace LIMSWebApp.Controllers
     public class PaymentsController : Controller
     {
         private readonly AuthClient _auth;
-        private LipaNaMpesaOnlineClient _lipaNaMpesa;
-        private C2BRegisterUrlClient _c2bregister;
-        private readonly C2BClient _c2bSimulate;
+        private LipaNaMpesaOnlineClient _lipaNaMpesa;       
         private readonly IConfiguration _config;
         private readonly BillingDbContext _payments;
 
-        public PaymentsController(AuthClient auth, LipaNaMpesaOnlineClient lipaNampesa, C2BRegisterUrlClient c2bregister,
-           C2BClient c2bsim, IConfiguration configuration, BillingDbContext payments)
+        public PaymentsController(AuthClient auth, LipaNaMpesaOnlineClient lipaNampesa, 
+            IConfiguration configuration, BillingDbContext payments)
         {
             _auth = auth;
-            _lipaNaMpesa = lipaNampesa;
-            _c2bregister = c2bregister;
-            _c2bSimulate = c2bsim;
+            _lipaNaMpesa = lipaNampesa;            
             _config = configuration;
             _payments = payments;
         }
