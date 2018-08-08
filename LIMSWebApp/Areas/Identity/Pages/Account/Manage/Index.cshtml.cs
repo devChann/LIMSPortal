@@ -9,7 +9,6 @@ using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
@@ -58,6 +57,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
+            [Display(Name ="Upload New Profile Picture")]
             public IFormFile Photo { get; set; }
 
         }
@@ -72,12 +72,10 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
 
             Username = user.UserName;
 
-
             Input = new InputModel
             {
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                //Photo = user.Photo
+                PhoneNumber = user.PhoneNumber                
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -116,13 +114,23 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (Input.Photo.Length > 0)
-            {
+
+            // Convert the user uploaded Photo as Byte Array before save to DB
+            var Image = Input.Photo;
+
+            if (Image.Length > 0)
+            {                                  
+
+                byte[] PhotoByte = null;
+                using (var filestream = Image.OpenReadStream())
                 using (var memorystream = new MemoryStream())
                 {
-                    await Input.Photo.CopyToAsync(memorystream);
+                    await filestream.CopyToAsync(memorystream);
+                    PhotoByte = memorystream.ToArray();
+
+                    user.Photo = PhotoByte;                   
                     try
-                    {
+                    {                       
                         user.Photo = DbImageAPI.Imaging.ScaleImage(memorystream.ToArray(), 50, 50, System.Drawing.Imaging.ImageFormat.Png);
                         await _userManager.UpdateAsync(user);
                         _cache.Set(user.Id, user.Photo);

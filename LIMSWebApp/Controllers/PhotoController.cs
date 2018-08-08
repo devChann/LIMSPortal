@@ -17,6 +17,7 @@ namespace AuthWithPhoto.Controllers
             _userManager = usermanager;
         }
 
+        [Route("/Photo")]
         public async Task<IActionResult> Index()
         {
             var id = _userManager.GetUserId(User);
@@ -24,7 +25,7 @@ namespace AuthWithPhoto.Controllers
             if (!string.IsNullOrEmpty(id) && !_cache.TryGetValue(id, out photo))
             {
                 var user = await _userManager.GetUserAsync(User);
-                if (user != null && user.Photo.Length > 0)
+                if (user != null && user.Photo != null && user.Photo.Length > 0)
                 {
                     photo = user.Photo;
                     _cache.Set(id, photo);

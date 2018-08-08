@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LIMSInfrastructure.Data;
 using LIMSWebApp.ViewModels.MpesaModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MpesaLib.Clients;
+using MpesaLib.Interfaces;
 using MpesaLib.Models;
 using Stripe;
 
@@ -17,12 +15,12 @@ namespace LIMSWebApp.Controllers
     [Authorize]
     public class PaymentsController : Controller
     {
-        private readonly AuthClient _auth;
-        private LipaNaMpesaOnlineClient _lipaNaMpesa;       
+        private readonly IAuthClient _auth;
+        private ILipaNaMpesaOnlineClient _lipaNaMpesa;       
         private readonly IConfiguration _config;
         private readonly BillingDbContext _payments;
 
-        public PaymentsController(AuthClient auth, LipaNaMpesaOnlineClient lipaNampesa, 
+        public PaymentsController(IAuthClient auth, ILipaNaMpesaOnlineClient lipaNampesa, 
             IConfiguration configuration, BillingDbContext payments)
         {
             _auth = auth;

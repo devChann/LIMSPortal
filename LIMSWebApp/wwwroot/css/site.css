@@ -161,5 +161,19 @@ a {
     padding-top:10px;
 }
 
+.user-img-circular {
+    width: 22px;
+    height: 22px;
+    background-size: cover;
+    display: block;
+    border-radius:11px;
+    float:left;
+}
+
+.user-name{
+    padding-left:3px;
+}
+
+
 
 

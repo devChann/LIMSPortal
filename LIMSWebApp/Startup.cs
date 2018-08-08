@@ -1,5 +1,4 @@
 ﻿using LIMSInfrastructure.Data;
-using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
 using LIMSInfrastructure.Services.Payment;
 using LIMSWebApp.Extensions;
@@ -71,10 +70,8 @@ namespace LIMSCore
 
             //Add Lipa na Mpesa Client
             services.AddHttpClient<IAuthClient, AuthClient>();
-            services.AddHttpClient<LipaNaMpesaOnlineClient>();
-            //services.AddHttpClient<C2BRegisterUrlClient>();
-            //services.AddHttpClient<C2BClient>();
-
+            services.AddHttpClient<ILipaNaMpesaOnlineClient, LipaNaMpesaOnlineClient>();
+           
             
             services.Configure<CookiePolicyOptions>(options =>
             {

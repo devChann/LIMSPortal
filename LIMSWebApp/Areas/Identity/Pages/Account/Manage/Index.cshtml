@@ -1,7 +1,7 @@
 ﻿@page "/account/manage/"
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "User Profile";
 }
 
 <h4>@ViewData["Title"]</h4>
@@ -10,7 +10,10 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form method="post">
+        <div>
+            <img src="/Photo" />
+        </div>
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Username"></label>
