@@ -2,13 +2,17 @@
 using System.Linq;
 using System.Threading.Tasks;
 using LIMSInfrastructure.Data;
+using LIMSInfrastructure.Identity;
+using LIMSInfrastructure.Services;
 using LIMSWebApp.ViewModels.MpesaModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MpesaLib.Interfaces;
 using MpesaLib.Models;
 using Stripe;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace LIMSWebApp.Controllers
 {
@@ -16,17 +20,21 @@ namespace LIMSWebApp.Controllers
     public class PaymentsController : Controller
     {
         private readonly IAuthClient _auth;
-        private ILipaNaMpesaOnlineClient _lipaNaMpesa;       
+        private readonly ILipaNaMpesaOnlineClient _lipaNaMpesa;       
         private readonly IConfiguration _config;
         private readonly BillingDbContext _payments;
+        private readonly UserManager<ApplicationUser> _userManger;
+        private readonly ISmsSender _smsSender;
 
         public PaymentsController(IAuthClient auth, ILipaNaMpesaOnlineClient lipaNampesa, 
-            IConfiguration configuration, BillingDbContext payments)
+            IConfiguration configuration, BillingDbContext payments, UserManager<ApplicationUser> userManager, ISmsSender smsSender)
         {
             _auth = auth;
             _lipaNaMpesa = lipaNampesa;            
             _config = configuration;
             _payments = payments;
+            _userManger = userManager;
+            _smsSender = smsSender;
         }
 
         //TO DO: implement payment method selection (card/mpesa)
@@ -60,6 +68,7 @@ namespace LIMSWebApp.Controllers
         }
 
         [HttpGet]
+        //[Authorize(Roles ="Administrator")]
         public IActionResult PaymentsList()
         {
             var paymentsmade = _payments.MpesaTransaction.ToList();
@@ -67,13 +76,14 @@ namespace LIMSWebApp.Controllers
             List<PaymentsListViewModel> paymentList = new List<PaymentsListViewModel>();
 
             if(paymentsmade != null)
-            {
+            {                
+                
                 paymentList = paymentsmade.Select(a => new PaymentsListViewModel
                 {
                     Amount = a.Amount,
                     ReceiptNumber =a.ReceiptNumber,
                     CheckOutID = a.CheckoutRequestID,
-                    CustomerName = "Elvis Ayiemba", //TO DO: Get customer name from parcels db
+                    CustomerName = a.PhoneNumber ,//?? HttpContext.User?.Identity.Name, TO DO: Get customer name from parcels db
                     PaymentDate = a.TransactionDate,
                     PhoneNumber = a.PhoneNumber
 
@@ -118,6 +128,9 @@ namespace LIMSWebApp.Controllers
             };
 
             var paymentrequest = await _lipaNaMpesa.MakePayment(MpesaExpressObject, accesstoken);
+
+            _smsSender.SendSms("+254725589166", $"New Payment Request has been made.");
+
 
             ViewData["Payment"] = paymentrequest;
 

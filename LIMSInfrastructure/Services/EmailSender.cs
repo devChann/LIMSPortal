@@ -76,6 +76,7 @@ namespace LIMSInfrastructure.Services
             msg.AddContent(MimeType.Html, body);
 
             var apiKey = _configuration["SendGridKey"];
+
             var client = new SendGridClient(apiKey);
 
             var response = await client.SendEmailAsync(msg);

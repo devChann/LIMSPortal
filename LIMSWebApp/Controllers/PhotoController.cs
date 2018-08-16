@@ -17,7 +17,7 @@ namespace AuthWithPhoto.Controllers
             _userManager = usermanager;
         }
 
-        [Route("/Photo")]
+        [Route("/photo")]
         public async Task<IActionResult> Index()
         {
             var id = _userManager.GetUserId(User);

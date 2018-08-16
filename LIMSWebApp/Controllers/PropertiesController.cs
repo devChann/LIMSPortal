@@ -65,8 +65,17 @@ namespace LIMSWebApp.Controllers
 
 
         // GET: Properties
-        public ActionResult Index()
+        public ActionResult AllProperties()
         {
+            var parcels = _limscontext.Parcel
+                .Include(a => a.Administration)
+                .Include(b => b.LandUse)
+                .Include(c => c.Owner)
+                .Include(d => d.Restrictions)
+                .Include(d => d.Responsibilities)
+                .Include(d => d.Valuation)
+                .ToList();
+
             return View();
         }
 
@@ -91,7 +100,7 @@ namespace LIMSWebApp.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllProperties));
             }
             catch
             {
@@ -114,7 +123,7 @@ namespace LIMSWebApp.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllProperties));
             }
             catch
             {
@@ -137,7 +146,7 @@ namespace LIMSWebApp.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(AllProperties));
             }
             catch
             {

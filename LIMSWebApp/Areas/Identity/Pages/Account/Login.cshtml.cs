@@ -127,9 +127,11 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        userName = user.UserName;
+                       userName = user.UserName;
                     }
                 }
+
+                
 
                 //Attempt to sign in user
                 var result = await _signInManager.PasswordSignInAsync(userName, Input.Password, Input.RememberMe, lockoutOnFailure: false);

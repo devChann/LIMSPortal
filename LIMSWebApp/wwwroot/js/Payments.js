@@ -10,7 +10,7 @@ const connection = new signalR.HubConnectionBuilder()
     .withUrl("/hubs/payments")
     .build();
 
-connection.on("ReceiveMessage", (user, message) => {
+connection.on("ReceiveMessage", (user, message) => { 
     const msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     const encodedMsg = user + " says " + msg;
     const li = document.createElement("li");

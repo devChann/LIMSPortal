@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using LIMSCore.Billing;
 using LIMSInfrastructure.Data;
+using LIMSInfrastructure.Services;
 using LIMSWebApp.ViewModels.MpesaModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -19,11 +21,13 @@ namespace LIMSWebApp.Controllers
     {
         private readonly ILogger<CallbackController> _log;
         private readonly BillingDbContext _billing;
+        private readonly ISmsSender _smsSender;
 
-        public CallbackController(ILogger<CallbackController> log, BillingDbContext billing)
+        public CallbackController(ILogger<CallbackController> log, BillingDbContext billing, ISmsSender smsSender)
         {
             _log = log;
             _billing = billing;
+            _smsSender = smsSender;
         }
 
         [HttpPost]
@@ -81,7 +85,9 @@ namespace LIMSWebApp.Controllers
 
             _billing.Add(Payment);
             
-            _billing.SaveChanges();
+            _billing.SaveChanges();            
+
+            _smsSender.SendSms("+254725589166", $"New Payment Made: {Payment.Amount}, {Payment.ReceiptNumber}, {Payment.PhoneNumber}");
 
             return result;             
         }

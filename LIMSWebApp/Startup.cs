@@ -81,24 +81,26 @@ namespace LIMSCore
 
             });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Identity/Account/Login";
-                options.LogoutPath = "/Identity/Account/Logout";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath = "/Identity/Account/Login";
+            //    options.LogoutPath = "/Identity/Account/Logout";
+            //    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            //});
 
             // Add application services
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddTransient<ISmsSender, SmsSender>();
+            services.Configure<SMSoptions>(Configuration);
 
             //services.AddMvc();
             services.AddMvc()
                 .AddRazorPagesOptions(options =>
                 {
-                    options.AllowAreas = true;
-                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
-                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-                    options.Conventions.AddPageRoute("/Identity/Account/Login", "Account/Login");
+                    //options.AllowAreas = true;
+                    //options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                    //options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                    //options.Conventions.AddPageRoute("/Identity/Account/Login", "Account/Login");
                     //options.Conventions.AddPageRoute("/Identity/Account/ConfirmEmail", "/Account/ConfirmEmail");
                 });
 
@@ -106,7 +108,7 @@ namespace LIMSCore
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             //Add SignalR
-            services.AddSignalR();
+            services.AddSignalR().AddAzureSignalR(Configuration.GetSection("Azure__SignalR__ConnectionString").Value);
 
         }
 
@@ -146,7 +148,8 @@ namespace LIMSCore
             app.UseCookiePolicy();
             app.UseAuthentication();
 
-            app.UseSignalR(routes =>
+            app.UseFileServer();
+            app.UseAzureSignalR(routes =>
             {
                 routes.MapHub<PaymentsHub>("/hubs/payments");
             });

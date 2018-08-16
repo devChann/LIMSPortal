@@ -10,7 +10,9 @@ namespace LIMSWebApp.Hubs
     {
         public async Task UpdatePaymentList(string user, string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            var userx = Context.User?.Identity.Name ?? "Anonymous";
+
+            await Clients.All.SendAsync("ReceiveMessage", userx, message);
         }
     }
 }

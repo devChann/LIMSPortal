@@ -1,0 +1,103 @@
+﻿@model IEnumerable<LIMSWebApp.ViewModels.MpesaModels.PaymentsListViewModel>
+
+
+<div class="row">
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-light">
+                <thead class="thead-dark">
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.PaymentDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CustomerName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CheckOutID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ReceiptNumber)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymentDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CheckOutID)
+                        </td>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.ReceiptNumber)
+                        </th>
+
+                        <td>                            
+
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+    }
+    else
+    {
+        <p class="alert-info"></p>
+        <div class="alert alert-info">
+            <strong>There are no payment records</strong>
+        </div>
+
+    }
+
+</div>
+
+@*<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-6">&nbsp;</div>
+    <div class="col-6">
+        User..........<input type="text" id="userInput" />
+        <br />
+        Message...<input type="text" id="messageInput" />
+        <input type="button" id="sendButton" value="Send Message" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">&nbsp;</div>
+    <div class="col-6">
+        <ul id="messagesList"></ul>
+    </div>
+</div>*@
+
+
+
+
