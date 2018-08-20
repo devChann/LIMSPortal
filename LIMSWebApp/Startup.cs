@@ -3,20 +3,13 @@ using LIMSInfrastructure.Services;
 using LIMSInfrastructure.Services.Payment;
 using LIMSWebApp.Extensions;
 using LIMSWebApp.Hubs;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MpesaLib.Clients;
-using MpesaLib.Interfaces;
-using Serilog;
 using Stripe;
 using System;
 using System.IO;
@@ -68,9 +61,8 @@ namespace LIMSCore
             //Inject repository
             //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
 
-            //Add Lipa na Mpesa Client
-            services.AddHttpClient<IAuthClient, AuthClient>();
-            services.AddHttpClient<ILipaNaMpesaOnlineClient, LipaNaMpesaOnlineClient>();
+            //Add Mpesa Support
+            services.AddMpesaSupport();
            
             
             services.Configure<CookiePolicyOptions>(options =>
