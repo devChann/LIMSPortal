@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LIMSCore.Billing;
 using LIMSInfrastructure.Data;
 using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
+using LIMSWebApp.Helpers;
 using LIMSWebApp.ViewModels.MpesaModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MpesaLib.Interfaces;
 using MpesaLib.Models;
 using Stripe;
+using X.PagedList;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace LIMSWebApp.Controllers
@@ -45,6 +49,12 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
+       
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
         public IActionResult Charge(string stripeEmail, string stripeToken)
         {
             var customers = new StripeCustomerService();
@@ -69,29 +79,35 @@ namespace LIMSWebApp.Controllers
 
         [HttpGet]
         //[Authorize(Roles ="Administrator")]
-        public IActionResult PaymentsList()
+        public async Task<IActionResult> PaymentsList(int? page)
         {
-            var paymentsmade = _payments.MpesaTransaction.ToList();
+            var paymentsmade = await _payments.MpesaTransaction.ToListAsync();          
 
             List<PaymentsListViewModel> paymentList = new List<PaymentsListViewModel>();
 
-            if(paymentsmade != null)
-            {                
-                
+            var pageNumber = page ?? 1;
+
+            if (paymentsmade != null)
+            {
+
                 paymentList = paymentsmade.Select(a => new PaymentsListViewModel
                 {
                     Amount = a.Amount,
-                    ReceiptNumber =a.ReceiptNumber,
+                    ReceiptNumber = a.ReceiptNumber,
                     CheckOutID = a.CheckoutRequestID,
-                    CustomerName = a.PhoneNumber ,//?? HttpContext.User?.Identity.Name, TO DO: Get customer name from parcels db
+                    CustomerName = a.PhoneNumber,//?? HttpContext.User?.Identity.Name, TO DO: Get customer name from parcels db
                     PaymentDate = a.TransactionDate,
                     PhoneNumber = a.PhoneNumber
 
                 }).ToList();
-                
-            }          
-            
-            return View(paymentList);
+
+            }
+
+            var queryablePayments = paymentList.AsQueryable(); //convert list to IQueryable
+
+            var pageOfPayments = queryablePayments.ToPagedList(pageNumber, 10); //create pagelist
+
+            return View(pageOfPayments);
         }
 
         [HttpGet]

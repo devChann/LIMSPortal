@@ -1,4 +1,6 @@
-﻿@model IEnumerable<LIMSWebApp.ViewModels.MpesaModels.PaymentsListViewModel>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<LIMSWebApp.ViewModels.MpesaModels.PaymentsListViewModel>
 
 
 <div class="row">
@@ -10,22 +12,28 @@
                     <tr>
 
                         <th>
-                            @Html.DisplayNameFor(model => model.PaymentDate)
+                            @*@Html.DisplayNameFor(model => model.PaymentDate)*@
+                            Payment Date
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.CustomerName)
+                            @*@Html.DisplayNameFor(model => model.CustomerName)*@
+                            Customer Name
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                            @*@Html.DisplayNameFor(model => model.PhoneNumber)*@
+                            Phone Number
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Amount)
+                            @*@Html.DisplayNameFor(model => model.Amount)*@
+                            Amount
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.CheckOutID)
+                            @*@Html.DisplayNameFor(model => model.CheckOutID)*@
+                            Checkout ID
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.ReceiptNumber)
+                            @*@Html.DisplayNameFor(model => model.ReceiptNumber)*@
+                            Receipt Number
                         </th>
 
                         <th></th>
@@ -34,30 +42,28 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PaymentDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CustomerName)
-                        </td>
-                        <th>
-                            @Html.DisplayFor(modelItem => item.PhoneNumber)
-                        </th>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Amount)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CheckOutID)
-                        </td>
-                        <th>
-                            @Html.DisplayFor(modelItem => item.ReceiptNumber)
-                        </th>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PaymentDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CustomerName)
+                            </td>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            </th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CheckOutID)
+                            </td>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.ReceiptNumber)
+                            </th>
 
-                        <td>                            
-
-                        </td>
-                    </tr>
+                            <td></td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -76,27 +82,29 @@
 
 </div>
 
+@Html.PagedListPager(Model, page => Url.Action("PaymentsList", new { page }))
+
 @*<div class="row">&nbsp;</div>
-<div class="row">
-    <div class="col-6">&nbsp;</div>
-    <div class="col-6">
-        User..........<input type="text" id="userInput" />
-        <br />
-        Message...<input type="text" id="messageInput" />
-        <input type="button" id="sendButton" value="Send Message" />
+    <div class="row">
+        <div class="col-6">&nbsp;</div>
+        <div class="col-6">
+            User..........<input type="text" id="userInput" />
+            <br />
+            Message...<input type="text" id="messageInput" />
+            <input type="button" id="sendButton" value="Send Message" />
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <hr />
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-6">&nbsp;</div>
-    <div class="col-6">
-        <ul id="messagesList"></ul>
-    </div>
-</div>*@
+    <div class="row">
+        <div class="col-6">&nbsp;</div>
+        <div class="col-6">
+            <ul id="messagesList"></ul>
+        </div>
+    </div>*@
 
 
 

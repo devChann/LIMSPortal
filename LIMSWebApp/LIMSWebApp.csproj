@@ -22,12 +22,13 @@
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
     <PackageReference Include="Microsoft.Azure.SignalR" Version="1.0.0-preview1-10015" />
-    <PackageReference Include="MpesaLib" Version="1.1.4" />
+    <PackageReference Include="MpesaLib" Version="1.1.8.1" />
     <PackageReference Include="Serilog" Version="2.7.1" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0-dev-00024" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="7.5.0" />
 
   </ItemGroup>
   
@@ -45,6 +46,9 @@
   <Content Update="Views\Home\Terms.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
+  <Content Update="Views\Payments\Checkout.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
   <Content Update="Views\Payments\PaymentsList.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
@@ -58,6 +62,9 @@
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
   <Content Update="Views\Shared\500.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
+  <Content Update="Views\Shared\_SidebarNav.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
 </ItemGroup>

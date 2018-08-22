@@ -6,46 +6,26 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-<form class="form-inline ml-auto" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
-    
-    <div class="nav-item">
-        <a class="nav-link text-light" asp-controller="Home" asp-action="Services">Services</a>
-    </div>
-    <div class="nav-item">
-        <a class="nav-link text-light" asp-controller="Properties" asp-action="Properties">My Properties</a>
-    </div>
+    <form class="form-inline ml-auto" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
 
-    <div class="nav-item">
-        @*<div class="nav navbar-nav navbar-right" style="z-index:1000">*@
-            <div class="dropdown">
-                <div class="text-light" data-toggle="dropdown">
-                    <div class="nav-item">
-                        <span><img class="user-img-circular" asp-controller="Photo" asp-action="Index" src="~/photo" /></span>
-                        <strong class="user-name text-left">@UserManager.GetUserName(User)</strong>
-                        <span class="fa fa-chevron-circle-down"></span>
-                    </div>                     
-                </div>
-                <ul class="dropdown-menu" style="padding:3px">
-                    <li style="padding:5px">
-                        <div class="navbar-login">                           
-                            <span class="text-left">
-                                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="btn btn-info btn-block">Manage Account</a>
-                            </span>
-                        </div>
-                    </li>
-                   
-                    <li style="padding:5px">
-                        <div class="navbar-login navbar-login-session">
-                            <div class="nav-item">
-                                <button type="submit" class="btn btn-sm btn-block btn-warning nav-link"><i class="fa fa-sign-out-alt"></i></button>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        @*</div>*@
-    </div>
-</form>
+        <div class="nav-item">
+            <a class="nav-link text-light" asp-controller="Home" asp-action="Services">Services</a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link text-light" asp-controller="Properties" asp-action="Properties">My Properties</a>
+        </div>
+       
+        <div class="nav-item">
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link text-light" data-toggle="tooltip" title="Manage Account">
+                <span><img class="user-img-circular" asp-controller="Photo" asp-action="Index" src="~/photo" /></span>
+                <strong class="user-name text-left">@UserManager.GetUserName(User)</strong>
+            </a>
+        </div>
+        <div class="nav-item">
+            <button type="submit" data-toggle="tooltip" title="Log Out" class="btn btn-sm btn-outline-danger nav-link"><i class="fa fa-sign-out-alt"></i></button>
+        </div>
+
+    </form>
 }
 else
 {
