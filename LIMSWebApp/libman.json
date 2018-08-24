@@ -13,6 +13,10 @@
     {
       "library": "popper.js@1.14.4",
       "destination": "wwwroot/lib/popperjs"
+    },
+    {
+      "library": "Chart.js@2.7.2",
+      "destination": "wwwroot/lib/chartJs"
     }
   ]
 }
