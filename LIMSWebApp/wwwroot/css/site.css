@@ -162,16 +162,29 @@ a {
 }
 
 .user-img-circular {
-    width: 22px;
-    height: 22px;
+    width: 30px;
+    height: 30px;
     background-size: cover;
     display: block;
-    border-radius:11px;
+    border-radius:15px;
     float:left;
 }
+.profile-photo {
+    width: 80px;
+    height: 80px;
+}
 
-.user-name{
-    padding-left:3px;
+.user-name {
+    padding-left: 3px;
+}
+
+.custom-card-header{
+   
+    background-color:aquamarine;
+}
+
+.register-form{
+    display:inline-block
 }
 
 

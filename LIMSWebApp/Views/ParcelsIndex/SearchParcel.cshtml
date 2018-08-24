@@ -9,25 +9,33 @@
     Layout = "_Layout";
 }
 
-<script> var routeId = @ViewData["MyRouteId"] </script>
+<script> var routeId = '@ViewData["MyRouteId"]'; </script>
 
 <div class="row">
     <div class="col-md-12 top5" style="display:inline-block">
-        
-        <span>@Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }, new { @class = "btn btn-outline-info" }) </span>
+
+        @*<span>@Html.ActionLink("Download Search Certificate", "CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber }, new { @class = "btn btn-outline-info" }) </span>*@
+        <span>
+            <a href="@Url.Action("CreatePdf", "ParcelsIndex", new { parcelnum = Model.ParcelNumber })" class="btn btn-sm btn-outline-info">
+                <i class="fa fa-download"></i>
+                <span>
+                    <strong>Search Certificate</strong>
+                </span>
+            </a>
+        </span>
 
         @if (ViewData["UserPIN"].ToString() == Model.PIN)
         {
-            <span><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#ratesModal">Rates Payment History</button></span>
+            <span><button type="button" class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#ratesModal">Rates History</button></span>
         }
         else
         {
-           <span></span> @*<span><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#ratesModal">You dont have rights here</button></span>*@
+            <span></span> @*<span><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#ratesModal">You dont have rights here</button></span>*@
         }
 
 
 
-        <span><a asp-controller="ParcelsIndex" asp-action="Search" class="btn btn-outline-info"> Perform Another Search</a></span>
+        <span><a asp-controller="ParcelsIndex" asp-action="Search" class="btn btn-sm btn-outline-info">Perform Another Search</a></span>
     </div>
 
 </div>
@@ -180,11 +188,11 @@
     </div>
 </div>
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-6 top10 bottom10">
         <a asp-controller="ParcelsIndex" asp-action="Search" class="btn btn-outline-info">Perform Another Search</a>
     </div>
-</div>
+</div>*@
 
 <!-- Modal -->
 <div class="modal fade" id="ratesModal" tabindex="-1" role="dialog" aria-labelledby="rates Modal" aria-hidden="true">
@@ -199,7 +207,7 @@
             <div class="modal-body">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table table-sm table-responsive">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Receipt Number</th>
