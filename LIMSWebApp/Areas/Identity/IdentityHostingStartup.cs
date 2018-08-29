@@ -47,11 +47,11 @@ namespace LIMSWebApp.Areas.Identity
 
                     //sign in settings
                     options.SignIn.RequireConfirmedEmail = true;
-                    options.SignIn.RequireConfirmedPhoneNumber = false;
-                })
-                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                 .AddDefaultUI()
-                 .AddDefaultTokenProviders();
+                    options.SignIn.RequireConfirmedPhoneNumber = false;})
+                    .AddRoles<ApplicationRole>()
+                    .AddRoleManager<RoleManager<ApplicationRole>>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()                 
+                    .AddDefaultTokenProviders();
 
                 services.AddAuthentication()
                 .AddGoogle(googleOptions =>
@@ -70,7 +70,7 @@ namespace LIMSWebApp.Areas.Identity
                 services.AddAuthorization(AuthorizationPolicy.Execute);
 
 
-                //services.AddScoped<UserManager<ApplicationUser>, UserManager<ApplicationUser>>();
+                
 
 
             });

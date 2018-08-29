@@ -1,11 +1,14 @@
 ﻿using LIMSInfrastructure.Data;
+using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
 using LIMSInfrastructure.Services.Payment;
+using LIMSWebApp.Configuration.Startup;
 using LIMSWebApp.Extensions;
 using LIMSWebApp.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,17 +17,15 @@ using Microsoft.Extensions.Logging;
 using Stripe;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace LIMSCore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
-            Configuration = configuration;
-            //Log.Logger = new LoggerConfiguration()
-            //    .MinimumLevel.Debug().WriteTo.RollingFile(Path.Combine(env.ContentRootPath, "log-{Date}.txt"))
-            //    .CreateLogger();
+            Configuration = configuration;            
         }
 
         public IConfiguration Configuration { get; }
@@ -32,7 +33,6 @@ namespace LIMSCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {                               
-
             //LIMS Database context
             services.AddDbContext<LIMSCoreDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("LIMSCoreDbConnection"),
@@ -60,42 +60,28 @@ namespace LIMSCore
             services.AddCors();
 
             //Inject repository
-            //services.AddScoped(typeof(IRepository<>), typeof(LIMSRepository<>));
+            //services.AddScoped(IRepository, LIMSRepository);
 
-            //Add Mpesa Support
             services.AddMpesaSupport();
-           
-            
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
 
+            services.ConfigureSecurityAndAuthentication();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/account/sign-in";
+                options.LogoutPath = "/account/logged-out";
+                options.AccessDeniedPath = "/access-denied";
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             });
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = "/Identity/Account/Login";
-            //    options.LogoutPath = "/Identity/Account/Logout";
-            //    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-            //});
-
-            // Add application services
+            //Add notification services
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddTransient<ISmsSender, SmsSender>();
             services.Configure<SMSoptions>(Configuration);
 
-            //services.AddMvc();
-            services.AddMvc()
-                .AddRazorPagesOptions(options =>
-                {
-                    //options.AllowAreas = true;
-                    //options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
-                    //options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-                    //options.Conventions.AddPageRoute("/Identity/Account/Login", "Account/Login");
-                    //options.Conventions.AddPageRoute("/Identity/Account/ConfirmEmail", "/Account/ConfirmEmail");
-                });
+            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);            
 
             //Configure Stripe
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
@@ -108,7 +94,7 @@ namespace LIMSCore
        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void  Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {           
 
             //Stripe configuration
@@ -138,8 +124,11 @@ namespace LIMSCore
           
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             app.UseCookiePolicy();
             app.UseAuthentication();
+
+            //await app.ConfigureAuthentication(userManager, roleManager);
 
             app.UseFileServer();
             app.UseAzureSignalR(routes =>

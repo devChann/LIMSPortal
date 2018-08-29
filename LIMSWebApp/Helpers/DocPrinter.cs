@@ -59,7 +59,7 @@ namespace LIMSWebApp.Helpers
             parcelviewmodel.MorgageLender = parcel.RestrictionsNavigation.Morgage.Lender;
 
             Random generator = new Random();
-            String r = generator.Next(0, 1000000).ToString("D6");
+            string r = generator.Next(0, 1000000).ToString("D6");
 
 
 

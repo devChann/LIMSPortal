@@ -22,6 +22,8 @@
     <Compile Include="Migrations\ApplicationDb\20180608132457_V1.Designer.cs" />
     <Compile Include="Migrations\ApplicationDb\20180728071721_V2.cs" />
     <Compile Include="Migrations\ApplicationDb\20180728071721_V2.Designer.cs" />
+    <Compile Include="Migrations\ApplicationDb\20180829052250_V3.cs" />
+    <Compile Include="Migrations\ApplicationDb\20180829052250_V3.Designer.cs" />
     <Compile Include="Migrations\ApplicationDb\ApplicationDbContextModelSnapshot.cs" />
     <Compile Include="Migrations\BillingDbContextModelSnapshot.cs" />
   </ItemGroup>

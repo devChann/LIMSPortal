@@ -78,7 +78,7 @@ namespace LIMSWebApp.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles ="Administrator")]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> PaymentsList(int? page)
         {
             var paymentsmade = await _payments.MpesaTransaction.ToListAsync();          
