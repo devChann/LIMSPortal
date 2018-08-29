@@ -22,7 +22,7 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 bottom10">
 
                 <div>
                     <a asp-controller="Payments" asp-action="Index" class="text-info">
@@ -38,7 +38,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 bottom10">
 
                 <a asp-controller="Properties" asp-action="Properties" class="text-info">
 
@@ -53,7 +53,7 @@
                 </a>
 
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 bottom10">
 
                 <a asp-controller="Payments" asp-action="PayWithMpesa" class="text-info">
 
@@ -74,7 +74,7 @@
     else
     {
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 bottom10">
                 <a asp-area="Identity" asp-page="/Account/Register" class="text-info">
                     <div class="card text-center card-padding">
                         <span class="card-title"><i class='fa fa-user-circle fa-3x'></i></span>
@@ -85,7 +85,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 bottom10">
                 <a asp-area="Identity" asp-page="/Account/Login" class="text-info">
                     <div class="card text-center card-padding">
                         <span class="card-title"><i class='fa fa-sign-in-alt fa-3x'></i></span>
@@ -97,7 +97,7 @@
                 </a>
 
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 bottom10">
                 <a asp-controller="Home" asp-action="Terms" class="text-info">
                     <div class="card text-center card-padding">
                         <span class="card-title"><i class='fa fa-exclamation-circle fa-3x'></i></span>
