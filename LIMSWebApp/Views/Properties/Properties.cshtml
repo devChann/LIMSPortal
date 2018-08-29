@@ -13,17 +13,11 @@
 }
 
 <div class="row">
-    <div class="col-md-8">
-        <h4>My Properties</h4>
 
-        @*<div>
-                <span class="text-lg-left">Owner:</span> <span class="text-lg-right">@UserManager.GetUserName(User)</span>
-            </div>*@
-
-
-
-        @if (Model.Any())
-        {
+    @if (Model.Any())
+    {
+        <div class="col-md-8">
+            <h4>My Properties</h4>
             <div class="table-responsive table-sm">
                 <table class="table table-hover table-light">
                     <thead class="thead-dark">
@@ -95,53 +89,51 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <div class="col-md-4">
 
-
-        }
-        else
-        {
-            <p class="alert-info"></p>
-            <div class="alert alert-info">
-                <strong>You do not own any property.</strong>
+            <div class="chart-container">
+                <canvas id="chart" style="width:100%; height:250px"></canvas>
             </div>
-
-        }
-
-        @*<a class="btn btn-outline-info" role="button" asp-controller="Account" asp-action="UserProfile">Go to Services</a>*@
+        </div>
+    }
+    else
+    {
+        <div class="col-md-12">        
+            <div class="alert alert-warning text-center font-weight-bold">
+                <i class="fa fa-info-circle"></i>
+                <strong>Sorry, you currently don't own any property in the system.</strong>
+            </div>
+        </div>
+    }
     </div>
 
-    <div class="col-md-4">
+    @*<a class="btn btn-outline-info" role="button" asp-controller="Account" asp-action="UserProfile">Go to Services</a>*@
 
-        <div class="chart-container">
-            <canvas id="chart" style="width:100%; height:250px"></canvas>
+
+    @*Modal dialog*@
+    <div class="modal fade" id="PaymentNotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">LIMS Portal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Your About to be re-directed to an external payment link do you wish to continue?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-info" asp-controller="Payments" asp-action="Index">Continue</a>
+                </div>
+            </div>
         </div>
     </div>
 
-</div>
-
-@*Modal dialog*@
-<div class="modal fade" id="PaymentNotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">LIMS Portal</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Your About to be re-directed to an external payment link do you wish to continue?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-info" asp-controller="Payments" asp-action="Index">Continue</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts{
-    <script>
+    @section Scripts{
+        <script>
         function getRandomColor() {
             var letters = '0123456789ABCDEF';
             var color = '#';
@@ -211,7 +203,7 @@
         },
         title: {
             display: true,
-            text: 'Land Rates Chart ' 
+            text: 'Land Rates Chart '
         }
 
     };
@@ -223,8 +215,8 @@
 
         });
 
-    </script>
-}
+        </script>
+    }
 
 
 
