@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LIMSCore.Billing;
@@ -7,6 +8,7 @@ using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
 using LIMSWebApp.Helpers;
 using LIMSWebApp.ViewModels.MpesaModels;
+using LIMSWebApp.ViewModels.PropertiesViewModesl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -49,10 +51,20 @@ namespace LIMSWebApp.Controllers
             return View();
         }
 
-       
-        public IActionResult Checkout()
-        {
-            return View();
+        [HttpGet]
+        public IActionResult Checkout(string property)
+        {          
+            var ratesmodel = new RateViewModel {
+
+                ParcelNumber = property,
+                PendingRate = "10",
+                OwnerName = "Elvis Ayiemba",
+                FinancialYear = DateTime.Now.AddYears(-1).Year+"/"+DateTime.Now.Year,
+                OwnerId = "28350087",
+                OwnerPIN ="A65434343Z"              
+
+            };
+            return View(ratesmodel);
         }
 
         public IActionResult Charge(string stripeEmail, string stripeToken)
@@ -103,11 +115,11 @@ namespace LIMSWebApp.Controllers
 
             }
 
-            var queryablePayments = paymentList.AsQueryable(); //convert list to IQueryable
+            //var queryablePayments = paymentList.AsQueryable(); //convert list to IQueryable
 
-            var pageOfPayments = queryablePayments.ToPagedList(pageNumber, 10); //create pagelist
+            //var pageOfPayments = queryablePayments.ToPagedList(pageNumber, 10); //create pagelist
 
-            return View(pageOfPayments);
+            return View(paymentList);
         }
 
         [HttpGet]
@@ -119,7 +131,7 @@ namespace LIMSWebApp.Controllers
 
         [HttpPost]
         [Route("/make-payment")]
-        public async Task<IActionResult> PayWithMpesa(MpesaExpressViewModel Payment)
+        public async Task<IActionResult> PayWithMpesa(RateViewModel Payment)
         {
             var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
 
@@ -130,7 +142,7 @@ namespace LIMSWebApp.Controllers
             var MpesaExpressObject = new LipaNaMpesaOnline
             {
                 AccountReference = "ref",
-                Amount = Payment.Amount,
+                Amount = Payment.PendingRate,
                 PartyA = Payment.PhoneNumber,
                 PartyB = "174379",
                 BusinessShortCode = "174379",

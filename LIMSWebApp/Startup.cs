@@ -120,6 +120,8 @@ namespace LIMSCore
                 builder.WithOrigins("https://demo.osl.co.ke:7575")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
+                .AllowCredentials()
+                
             );
           
             app.UseHttpsRedirection();

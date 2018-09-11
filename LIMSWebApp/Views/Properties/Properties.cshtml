@@ -16,10 +16,10 @@
 
     @if (Model.Any())
     {
-        <div class="col-md-8">
+        <div class="col-md-9">
             <h4>My Properties</h4>
             <div class="table-responsive table-sm">
-                <table class="table table-hover table-light">
+                <table id="properties_table" class="table table-hover table-light">
                     <thead class="thead-dark">
                         <tr>
 
@@ -31,6 +31,9 @@
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Rate)
+                            </th>
+                            <th>
+                                Financial Year
                             </th>
 
                             <th>
@@ -55,11 +58,24 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Rate)
                                 </td>
+                                <td>
+                                    @DateTime.Now.AddYears(-1).Year/@DateTime.Now.Year
+                                </td>
+
 
                                 @if (item.Rate > 20000)
                                 {
                                     <td>
                                         <span class="btn btn-sm btn-info"><i class="fa fa-check-circle"></i> Paid</span>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("SearchParcel", "Parcels", new { parcelnum = item.ParcelNum })" class="btn btn-sm btn-outline-primary">
+                                            <i class="fa fa-info-circle"></i>
+                                            <span>
+                                                <strong>Details</strong>
+                                            </span>
+                                        </a>
+                                        <span class="btn btn-sm btn-outline-info disabled" data-toggle="tooltip" title="All Paid Up"><i class="fa fa-handshake"></i> All Paid Up</span>
                                     </td>
                                 }
                                 else
@@ -67,73 +83,88 @@
                                     <td>
                                         <span class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i> Not Paid</span>
                                     </td>
+                                    <td>
+                                        <a href="@Url.Action("SearchParcel", "Parcels", new { parcelnum = item.ParcelNum })" class="btn btn-sm btn-outline-primary">
+                                            <i class="fa fa-info-circle"></i>
+                                            <span>
+                                                <strong>Details</strong>
+                                            </span>
+                                        </a>
+                                        <a href="@Url.Action("checkout", "Payments", new { property = item.ParcelNum })" class="btn btn-sm btn-warning">
+                                                <i class="fa fa-money-bill-alt"></i>
+                                                <span>
+                                                    <strong>Make Payment</strong>
+                                                </span>
+                                            </a>
+                                        @*<span class="btn btn-sm btn-warning" data-toggle="modal" data-target="#PaymentNotification"><i class="fa fa-money-bill-alt"></i> <strong>Make Payment</strong></span>*@
+                                    </td>
                                 }
 
 
-                                <td>
-                                    @*@Html.ActionLink("Details", "SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-sm btn-outline-info" })*@
-                                    <a href="@Url.Action("SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum })" class="btn btn-sm btn-outline-primary">
-                                        <i class="fa fa-info-circle"></i>
-                                        <span>
-                                            <strong>Details</strong>
-                                        </span>
-                                    </a>
-                                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                                    @*@Html.ActionLink("Rates Payment", "Payments", "Index", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" })*@
-                                    @*@Html.ActionLink("New Payment", "", new { @data_toggle = "modal", @data_target = "#PaymentNotification" }, new { @class = "btn btn-outline-info" })*@
-                                    <span class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#PaymentNotification"><i class="fa fa-money-bill-alt"></i> New Payment</span>
+                                @*@Html.ActionLink("Details", "SearchParcel", "ParcelsIndex", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-sm btn-outline-info" })*@
+                                @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                                @*@Html.ActionLink("Rates Payment", "Payments", "Index", new { parcelnum = item.ParcelNum }, new { @class = "btn btn-outline-info" })*@
+                                @*@Html.ActionLink("New Payment", "", new { @data_toggle = "modal", @data_target = "#PaymentNotification" }, new { @class = "btn btn-outline-info" })*@
 
-                                </td>
+
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
 
             <div class="chart-container">
                 <canvas id="chart" style="width:100%; height:250px"></canvas>
             </div>
         </div>
+
+        @*Modal dialog*@
+        <div class="modal fade" id="PaymentNotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Payment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        Yopu are about to be redirected to the payment form.
+                       
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-info" asp-controller="Payments" asp-action="Index">Continue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
     else
     {
-        <div class="col-md-12">        
+        <div class="col-md-12">
             <div class="alert alert-warning text-center font-weight-bold">
                 <i class="fa fa-info-circle"></i>
                 <strong>Sorry, you currently don't own any property in the system.</strong>
             </div>
         </div>
     }
-    </div>
-
-    @*<a class="btn btn-outline-info" role="button" asp-controller="Account" asp-action="UserProfile">Go to Services</a>*@
+</div>
 
 
-    @*Modal dialog*@
-    <div class="modal fade" id="PaymentNotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">LIMS Portal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Your About to be re-directed to an external payment link do you wish to continue?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-info" asp-controller="Payments" asp-action="Index">Continue</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    @section Scripts{
-        <script>
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $('#properties_table').DataTable();
+        });  
+
         function getRandomColor() {
             var letters = '0123456789ABCDEF';
             var color = '#';
@@ -152,71 +183,40 @@
             return colors;
         }
 
-    var chartName = "chart";
+        var color = setRandomColor();
+
+        var chartName = "chart";
         var ctx = document.getElementById(chartName).getContext('2d');
         var data = {
                 labels: @Html.Raw(XLabels),
                 datasets: [{
                     label: "Rates Chart",
-                    backgroundColor: setRandomColor(),
-                    borderColor: [
-                        //'rgba(255,99,132,1)',
-                        //'rgba(54, 162, 235, 1)',
-                        //'rgba(255, 206, 86, 1)',
-                        //'rgba(75, 192, 192, 1)',
-                        //'rgba(153, 102, 255, 1)',
-                        //'rgba(255, 159, 64, 1)',
-                        //'rgba(255, 0, 0)',
-                        //'rgba(0, 255, 0)',
-                        //'rgba(0, 0, 255)',
-                        //'rgba(192, 192, 192)',
-                        //'rgba(255, 255, 0)',
-                        //'rgba(255, 0, 255)'
-                    ],
+                    backgroundColor: color,
+                    borderColor: '#FFFFFF',
                     borderWidth: 1,
                     data: @Html.Raw(YValues)
                     }]
                 };
 
-    var options = {
-        maintainAspectRatio: false,
-        scales: {
-            //yAxes: [{
-            //    ticks: {
-            //        min: 0,
-            //        beginAtZero: true
-            //    },
-            //    gridLines: {
-            //        display: false,
-            //        color: "rgba(255,99,164,0.2)"
-            //    }
-            //}],
-            //xAxes: [{
-            //    ticks: {
-            //        min: 0,
-            //        beginAtZero: true
-            //    },
-            //    gridLines: {
-            //        display: false
-            //    }
-            //}]
-        },
-        title: {
-            display: true,
-            text: 'Land Rates Chart '
-        }
+        var options = {
+            maintainAspectRatio: false,
+            scales: { },
+            title: {
+                display: true,
+                text: 'Compare Rates by Property'
+            },
+            responsive: true
+        };
 
-    };
-
-    var myChart = new  Chart(ctx, {
+        var myChart = new  Chart(ctx, {
             options: options,
             data: data,
-            type:'pie'
+            type:'pie' //can use doughnut
 
         });
 
-        </script>
-    }
+    </script>
+}
 
 
 

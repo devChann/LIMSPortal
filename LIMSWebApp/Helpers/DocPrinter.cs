@@ -85,13 +85,13 @@ namespace LIMSWebApp.Helpers
 
             doc.Open();
 
-            var logo = iTextSharp.text.Image.GetInstance(path);
+            var logo = Image.GetInstance(path);
             logo.Alignment = Element.ALIGN_CENTER;
             logo.ScaleAbsoluteHeight(70);
             logo.ScaleAbsoluteWidth(70);
             doc.Add(logo);
 
-            var footerlogo = iTextSharp.text.Image.GetInstance(footer);
+            var footerlogo = Image.GetInstance(footer);
             footerlogo.Alignment = Element.ALIGN_CENTER;
             footerlogo.ScaleAbsoluteHeight(20);
             footerlogo.ScaleAbsoluteWidth(70);

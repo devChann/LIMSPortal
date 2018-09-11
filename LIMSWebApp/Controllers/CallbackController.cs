@@ -33,7 +33,6 @@ namespace LIMSWebApp.Controllers
         [HttpPost]
         public JToken Post([FromBody]JToken result)
         {
-
             //convert jtoken to String
             var stkresult = result.ToString();
 

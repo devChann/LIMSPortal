@@ -76,7 +76,7 @@ code {
 .ol-popup {
     position: absolute;
     background-color: white;
-    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    /*-webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));*/
     filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
     padding: 15px;
     border-radius: 10px;
@@ -187,11 +187,14 @@ a {
     display:inline-block
 }
 
-/*.table td.fit,
-.table th.fit {
-    white-space: nowrap;
-    width: 1%;
-}*/
+/*Overites bootstrap 4 default input field behavior*/
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 1px 1px #80bdff;
+}
 
 
 
