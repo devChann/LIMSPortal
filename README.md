@@ -1,6 +1,6 @@
 # LIMS
 
-Application review site https://demo.osl.co.ke:7575/lims
+Application demo site https://demo.osl.co.ke:7575/lims
 ## Land Information Management System
 This project is about a unified land Information Management web and mobile portal. Land Administrators, organizations and
 citizens will have roles and functions in the system. All users are authenticated and authorized. The following modules are 
@@ -35,5 +35,7 @@ available:
 * Business Intelligence Module:
 
    Is the sub-system that allows for generation of the various required reports from the system.
+## Database Model
 
+![LIMS database model](https://github.com/ayiemba/LIMSPortal/blob/dev/Docs/LIMDbModel.png)
 
