@@ -135,7 +135,7 @@ namespace LIMSWebApp.Controllers
         {
             var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
 
-            var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
+            var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];                    
 
             var accesstoken = await _auth.GetToken(consumerKey, consumerSecret);
 
@@ -157,7 +157,7 @@ namespace LIMSWebApp.Controllers
 
             var paymentrequest = await _lipaNaMpesa.MakePayment(MpesaExpressObject, accesstoken);
 
-            _smsSender.SendSms("+254725589166", $"New Payment Request has been made.");
+            _smsSender.SendSms("+254725589166", $"New Payment Attempt has been made.");
 
 
             ViewData["Payment"] = paymentrequest;

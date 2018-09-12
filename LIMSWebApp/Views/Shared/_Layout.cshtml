@@ -77,8 +77,36 @@
 
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
-                <div class="col-12 col-md">
-                    <small >
+
+                <div class="col-3 col-md">
+                    <h5>Key Services</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Land Transfers</a></li>
+                        <li><a class="text-muted" href="#">Land Search</a></li>
+                        <li><a class="text-muted" href="#">Land Adjudication</a></li>
+                        <li><a class="text-muted" href="#">Land Development</a></li>
+                    </ul>
+                </div>
+                <div class="col-3 col-md">
+                    <h5>Partner Websites</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">MoLHUD</a></li>
+                        <li><a class="text-muted" href="#">Ministry of Environment</a></li>
+                        <li><a class="text-muted" href="#">Government of Kenya</a></li>
+                        <li><a class="text-muted" href="#">Council of Governors</a></li>
+                    </ul>
+                </div>
+                <div class="col-3 col-md">
+                    <h5>About Us</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Our Team</a></li>
+                        <li><a class="text-muted" href="#">Our Branches</a></li>
+                        <li><a class="text-muted" asp-controller="Home" asp-action="Privacy">Our Privacy Policy</a></li>
+                        <li><a class="text-muted" asp-controller="Home" asp-action="Terms">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="col-3 col-md">
+                    <small>
                         Designed & Developed by <a href="http://www.osl.co.ke" target="_blank" style="text-decoration:none">
                             <span style="color:darkorange; ">Oakar</span>
                             <span style="color:black;">Services Ltd.</span>
@@ -88,33 +116,6 @@
                         &copy; @DateTime.Now.Year Land Information Management System.<br />
                         All Rights Reserved.
                     </small>
-                </div>
-                <div class="col-6 col-md">
-                    <h5>Key Services</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Land Transfers</a></li>
-                        <li><a class="text-muted" href="#">Land Search</a></li>
-                        <li><a class="text-muted" href="#">Land Adjudication</a></li>
-                        <li><a class="text-muted" href="#">Land Development</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md">
-                    <h5>Partner Websites</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">MoLHUD</a></li>
-                        <li><a class="text-muted" href="#">Ministry of Environment</a></li>
-                        <li><a class="text-muted" href="#">Government of Kenya</a></li>
-                        <li><a class="text-muted" href="#">Council of Governors</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md">
-                    <h5>About US</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Our Team</a></li>
-                        <li><a class="text-muted" href="#">Our Branches</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Privacy">Our Privacy Policy</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Terms">Terms & Conditions</a></li>
-                    </ul>
                 </div>
             </div>
         </footer>
@@ -126,9 +127,9 @@
         <script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>
         <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
         <script src="~/lib/Datatables/js/dataTables.bootstrap4.min.js"></script>
-        <script src="~/lib/jquery/dist/jquery-migrate.min.js"></script>
+        @*<script src="~/lib/jquery/dist/jquery-migrate.min.js"></script>*@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>*@
 
 
         <script src="~/lib/popperjs/popper.min.js"></script>
@@ -149,7 +150,8 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>*@
+        <script src="~/lib/popperjs/popper.min.js"></script>
 
         <script src="~/lib/jquery/jquery.min.js"></script>
         <script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>
@@ -158,9 +160,9 @@
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous">
         </script>
-        <script src="~/lib/Datatables/js/dataTables.bootstrap4.min.js"></script>>
+        <script src="~/lib/Datatables/js/dataTables.bootstrap4.min.js"></script>
         <script src="~/lib/jquery.easing/jquery.easing.min.js"></script>
-        <script src="~/lib/popperjs/popper.min.js"></script>
+
 
 
 
