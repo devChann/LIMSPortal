@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LIMSWebApp.Controllers
@@ -34,7 +35,7 @@ namespace LIMSWebApp.Controllers
 
         //Renders the search results        
         [Route("/parcel-details")]
-        public IActionResult SearchParcel(string parcelnum)
+        public IActionResult ParcelDetails(string parcelnum)
         {
             var username = HttpContext.User.Identity.Name;
 
@@ -69,7 +70,7 @@ namespace LIMSWebApp.Controllers
             }
             else
             {
-                ViewBag.MyRouteId = parcel.Id;
+                ViewBag.MyRouteId = parcel.ParcelNum;
 
                 parcelviewmodel.ID = parcel.Id;
                 parcelviewmodel.ParcelNumber = parcel.ParcelNum;
@@ -97,20 +98,66 @@ namespace LIMSWebApp.Controllers
             return View(parcelviewmodel);
         }
 
-        //Prints the search certificate
+
+		[Route("/edit-parcel")]
+		public IActionResult EditParcel(string parcelnum)
+		{
+
+			var parcel = new ParcelSearchViewModel
+			{
+				ParcelNumber = "12121"
+			};
+
+			return View(parcel);
+		}
+
+		[Route("/delete-parcel")]
+		public IActionResult DeleteParcel(string parcelnum)
+		{			
+
+			return RedirectToAction("ListParcels");
+		}
+
+		[Route("/parcels")]
+		public IActionResult ListParcels()
+		{
+			var parcels = new List<ParcelSearchViewModel> {
+
+			
+			};
+
+			return View(parcels);
+		}
+
+
+		[HttpGet]
+		[Route("/add-parcel")]
+		public IActionResult AddParcel()
+		{
+			// add parcels to database
+
+			return View();
+		}
+
+
+		[HttpPost]
+		[Route("/add-parcel")]
+		public IActionResult AddParcel([Bind]ParcelSearchViewModel parcel)
+		{
+			// add parcels to database
+
+			return View();
+		}
+
+
+		//Prints the search certificate
         public FileResult CreatePdf(string parcelnum)
         {
-            DocPrinter pdfprinter = new DocPrinter(_context, _hostingEnvironment);
+            var pdfprinter = new DocPrinter(_context, _hostingEnvironment);
             return pdfprinter.CreatePdf(parcelnum);
         }     
 
-    
-
-
-
-
-
-
+ 
     }
 
 }

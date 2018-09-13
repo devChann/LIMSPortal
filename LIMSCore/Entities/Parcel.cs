@@ -29,7 +29,7 @@ namespace LIMSCore.Entities
         public Administration Administration { get; set; }
         public LandUse LandUse { get; set; }
         public Owner Owner { get; set; }
-        public OwnershiRights OwnershipRightsNavigation { get; set; }
+        public OwnershipRights OwnershipRightsNavigation { get; set; }
         public Rates Rate { get; set; }
         public Registration Registration { get; set; }
         public Responsibility ResponsibilitiesNavigation { get; set; }

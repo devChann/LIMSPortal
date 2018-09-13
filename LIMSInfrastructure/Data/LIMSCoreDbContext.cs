@@ -41,7 +41,7 @@ namespace LIMSInfrastructure.Data
         public virtual DbSet<Mortgage> Mortgage { get; set; }
         public virtual DbSet<Operation> Operation { get; set; }
         public virtual DbSet<Owner> Owner { get; set; }
-        public virtual DbSet<OwnershiRights> OwnershiRights { get; set; }
+        public virtual DbSet<OwnershipRights> OwnershiRights { get; set; }
         public virtual DbSet<Parcel> Parcel { get; set; }
         public virtual DbSet<Payments> Payments { get; set; }
         public virtual DbSet<Person> Person { get; set; }

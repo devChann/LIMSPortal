@@ -1,25 +1,37 @@
-﻿/* Sticky footer styles
--------------------------------------------------- */
+﻿
+/*To add custom fonts later*/
+@font-face {
+	font-family: "myFont";
+	src: url("myFont.ttf");
+}
+
 html {
     position: relative;
     min-height: 100%;
 }
 
 body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-    font-family:'Bell MT';
+	/* Margin bottom by footer height */
+	margin-bottom: 60px;
+	font-family: Ubuntu;
+	font-size: 14px;
+}
+
+.jumbotron {	
+	background-image: url('../images/land.jpg');
+}
+
+.customLable{
+	width:150px;
+	text-align:right
 }
 
 
 .navbar {
-    padding-right: 100px;
-    padding-left: 100px;
+	padding-right: 100px;
+	padding-left: 100px;
 }
 
-/*.nav-link:hover, .navlink:focus{
-    color:cornflowerblue
-}*/
 
 .footer {
     position: absolute;
@@ -45,9 +57,9 @@ body > .container {
     padding-left: 15px;
 }
 
-code {
+/*code {
     font-size: 80%;
-}
+}*/
 
 #throbber {
     display: none;
@@ -87,29 +99,29 @@ code {
     min-width: 280px;
 }
 
-    .ol-popup:after, .ol-popup:before {
-        top: 100%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-    }
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
 
-    .ol-popup:after {
-        border-top-color: white;
-        border-width: 10px;
-        left: 48px;
-        margin-left: -10px;
-    }
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
 
-    .ol-popup:before {
-        border-top-color: #cccccc;
-        border-width: 11px;
-        left: 48px;
-        margin-left: -11px;
-    }
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
 
 .ol-popup-closer {
     text-decoration: none;
@@ -118,9 +130,9 @@ code {
     right: 8px;
 }
 
-    .ol-popup-closer:after {
-        content: "✖";
-    }
+.ol-popup-closer:after {
+    content: "✖";
+}
 
 #popup{
     font-size:10px;

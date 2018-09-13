@@ -86,8 +86,12 @@ namespace LIMSCore
             //Configure Stripe
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
-            //Add SignalR
-            services.AddSignalR().AddAzureSignalR(Configuration.GetSection("Azure__SignalR__ConnectionString").Value);
+			//Add SignalR
+			//local SignalR service
+			services.AddSignalR(); 
+
+			//Azure SignalR service
+			//services.AddSignalR().AddAzureSignalR(Configuration.GetSection("Azure__SignalR__ConnectionString").Value);
 
         }
 
@@ -111,7 +115,8 @@ namespace LIMSCore
                 //loggerFactory.AddSerilog();
                 loggerFactory.AddFile(Path.Combine(env.ContentRootPath, "/logs/myapp-{Date}.txt"));
                 app.UseExceptionHandler("/Home/Error");               
-                app.UseHsts();
+                //app.UseHsts();
+				app.ConfigureSecurityHeaders();
             }
 
             app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");
@@ -127,16 +132,26 @@ namespace LIMSCore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseCookiePolicy();
-            app.UseAuthentication();
+            //app.UseCookiePolicy();
+            //app.UseAuthentication();
 
-            //await app.ConfigureAuthentication(userManager, roleManager);
+			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager);
+			authenticationTask.GetAwaiter().GetResult();
 
             app.UseFileServer();
-            app.UseAzureSignalR(routes =>
-            {
-                routes.MapHub<PaymentsHub>("/hubs/payments");
-            });
+
+
+			//use local signalR service
+			app.UseSignalR(routes =>
+			{
+				routes.MapHub<PaymentsHub>("/hubs/payments");
+			});
+
+			//Use Azure signalR service
+			//app.UseAzureSignalR(routes =>
+   //         {
+   //             routes.MapHub<PaymentsHub>("/hubs/payments");
+   //         });
 
             app.UseMvcWithDefaultRoute();
            
