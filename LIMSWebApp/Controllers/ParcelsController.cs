@@ -45,8 +45,9 @@ namespace LIMSWebApp.Controllers
 
             if (parcelnum == null)
             {
-                return BadRequest();
-            }
+				Response.StatusCode = 404;
+				return View("ProductNotFound");
+			}
 
             var parcelviewmodel = new ParcelSearchViewModel(); 
 
@@ -66,8 +67,9 @@ namespace LIMSWebApp.Controllers
 
             if (parcel == null)
             {
-                return BadRequest();
-            }
+				Response.StatusCode = 404;
+				return View("ProductNotFound");
+			}
             else
             {
                 ViewBag.MyRouteId = parcel.ParcelNum;
@@ -97,7 +99,6 @@ namespace LIMSWebApp.Controllers
 
             return View(parcelviewmodel);
         }
-
 
 		[Route("/edit-parcel")]
 		public IActionResult EditParcel(string parcelnum)
@@ -129,7 +130,6 @@ namespace LIMSWebApp.Controllers
 			return View(parcels);
 		}
 
-
 		[HttpGet]
 		[Route("/add-parcel")]
 		public IActionResult AddParcel()
@@ -139,7 +139,6 @@ namespace LIMSWebApp.Controllers
 			return View();
 		}
 
-
 		[HttpPost]
 		[Route("/add-parcel")]
 		public IActionResult AddParcel([Bind]ParcelSearchViewModel parcel)
@@ -148,7 +147,6 @@ namespace LIMSWebApp.Controllers
 
 			return View();
 		}
-
 
 		//Prints the search certificate
         public FileResult CreatePdf(string parcelnum)

@@ -72,6 +72,9 @@
   <Content Update="Views\Properties\AllProperties.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
+  <Content Update="Views\Shared\ProductNotFound.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
   <Content Update="Views\Shared\404.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
