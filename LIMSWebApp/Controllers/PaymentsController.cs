@@ -168,7 +168,7 @@ namespace LIMSWebApp.Controllers
 
 			var paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject2, accesstoken, "mpesa/stkpush/v1/processrequest");
 
-            _smsSender.SendSms("+254725589166", $"New Payment Attempt has been made.");
+            _smsSender.SendSms($"+{Payment.PhoneNumber}", $"Please Enter your Mpesa password on the Open Mpesa Menu to Complete Your Pending land rate payment of Ksh {Payment.PendingRate}");
 
 
             ViewData["Payment"] = paymentrequest;
