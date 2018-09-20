@@ -18,6 +18,8 @@ using Stripe;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using MpesaLib.Interfaces;
+using MpesaLib.Clients;
 
 namespace LIMSCore
 {
@@ -59,10 +61,12 @@ namespace LIMSCore
 
             services.AddCors();
 
-            //Inject repository
-            //services.AddScoped(IRepository, LIMSRepository);
+			//Inject repository
+			//services.AddScoped(IRepository, LIMSRepository);
 
-            services.AddMpesaSupport();
+			//services.AddMpesaSupport();
+
+			services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = new Uri("https://sandbox.safaricom.co.ke/"));
 
             services.ConfigureSecurityAndAuthentication();
 

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LIMSCore.Billing;
-using LIMSInfrastructure.Data;
+﻿using LIMSInfrastructure.Data;
 using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
-using LIMSWebApp.Helpers;
 using LIMSWebApp.ViewModels.MpesaModels;
 using LIMSWebApp.ViewModels.PropertiesViewModesl;
 using Microsoft.AspNetCore.Authorization;
@@ -17,30 +11,32 @@ using Microsoft.Extensions.Configuration;
 using MpesaLib.Interfaces;
 using MpesaLib.Models;
 using Stripe;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using X.PagedList;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace LIMSWebApp.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class PaymentsController : Controller
-    {
-        private readonly IAuthClient _auth;
-        private readonly ILipaNaMpesaOnlineClient _lipaNaMpesa;       
+    {          
         private readonly IConfiguration _config;
         private readonly BillingDbContext _payments;
         private readonly UserManager<ApplicationUser> _userManger;
         private readonly ISmsSender _smsSender;
+		private readonly IMpesaClient _mpesaClient;
 
-        public PaymentsController(IAuthClient auth, ILipaNaMpesaOnlineClient lipaNampesa, 
-            IConfiguration configuration, BillingDbContext payments, UserManager<ApplicationUser> userManager, ISmsSender smsSender)
+		public PaymentsController(IMpesaClient mpesaClient,IConfiguration configuration, BillingDbContext payments,
+			UserManager<ApplicationUser> userManager, ISmsSender smsSender)
         {
-            _auth = auth;
-            _lipaNaMpesa = lipaNampesa;            
-            _config = configuration;
+			_mpesaClient = mpesaClient;
+			_config = configuration;
             _payments = payments;
             _userManger = userManager;
             _smsSender = smsSender;
+			
         }
 
         //TO DO: implement payment method selection (card/mpesa)
@@ -95,7 +91,7 @@ namespace LIMSWebApp.Controllers
         {
             var paymentsmade = await _payments.MpesaTransaction.ToListAsync();          
 
-            List<PaymentsListViewModel> paymentList = new List<PaymentsListViewModel>();
+            var paymentList = new List<PaymentsListViewModel>();
 
             var pageNumber = page ?? 1;
 
@@ -135,27 +131,42 @@ namespace LIMSWebApp.Controllers
         {
             var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
 
-            var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];                    
+            var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
 
-            var accesstoken = await _auth.GetToken(consumerKey, consumerSecret);
+			var passKey = _config["MpesaConfiguration:PassKey"];
 
-            var MpesaExpressObject = new LipaNaMpesaOnline
-            {
-                AccountReference = "ref",
-                Amount = Payment.PendingRate,
-                PartyA = Payment.PhoneNumber,
-                PartyB = "174379",
-                BusinessShortCode = "174379",
-                CallBackURL = "https://demo.osl.co.ke:7575/lims/api/callback",
-                Password = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTgwNzE2MTI0OTE2",
-                //Password = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(PartyB + Passkey + Timestamp)),    
-                PhoneNumber = Payment.PhoneNumber, //254708374149
-                Timestamp = "20180716124916",//DateTime.Now.ToString("yyyyMMddHHmmss"),
-                TransactionDesc = "test"
-                //TransactionType = "CustomerPayBillOnline"
-            };
+            var accesstoken = await _mpesaClient.GetAuthTokenAsync(consumerKey, consumerSecret, "oauth/v1/generate?grant_type=client_credentials");
 
-            var paymentrequest = await _lipaNaMpesa.MakePayment(MpesaExpressObject, accesstoken);
+            //var MpesaExpressObject = new LipaNaMpesaOnline
+            //{
+            //    AccountReference = "ref",
+            //    Amount = Payment.PendingRate,
+            //    PartyA = Payment.PhoneNumber,
+            //    PartyB = "174379",
+            //    BusinessShortCode = "174379",
+            //    CallBackURL = "https://demo.osl.co.ke:7575/lims/api/callback",
+            //    Password = "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMTgwNzE2MTI0OTE2",
+            //    //Password = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(PartyB + Passkey + Timestamp)),    
+            //    PhoneNumber = Payment.PhoneNumber, //254708374149
+            //    Timestamp = "20180716124916",//DateTime.Now.ToString("yyyyMMddHHmmss"),
+            //    TransactionDesc = "test"
+            //    //TransactionType = "CustomerPayBillOnline"
+            //};
+
+			var MpesaExpressObject2 = new LipaNaMpesaOnline
+			{
+				AccountReference = "ref",
+				Amount = Payment.PendingRate,
+				PartyA = Payment.PhoneNumber,
+				PartyB = "174379",
+				BusinessShortCode = "174379",
+				CallBackURL = "https://demo.osl.co.ke:7575/lims/api/callback",
+				Passkey = passKey,				  
+				PhoneNumber = Payment.PhoneNumber, 				
+				TransactionDesc = "test"					
+			};
+
+			var paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject2, accesstoken, "mpesa/stkpush/v1/processrequest");
 
             _smsSender.SendSms("+254725589166", $"New Payment Attempt has been made.");
 

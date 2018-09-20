@@ -1,17 +1,17 @@
 ﻿
 @{
-    ViewData["Title"] = "LIMS Portal";
+	ViewData["Title"] = "LIMS Portal";
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"]</title>
 
 	<environment include="Development">
 		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
@@ -49,81 +49,78 @@
 </head>
 
 <body>
-   
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark font-weight-bold" >
-        <a class="navbar-brand" asp-controller="Home" asp-action="Index">LIMS</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#limsNavbar" aria-controls="limsNavbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <nav class="collapse navbar-collapse" id="limsNavbar">
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top font-weight-bold">
+		<a class="navbar-brand" asp-controller="Home" asp-action="Index">LIMS</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#limsNavbar" aria-controls="limsNavbar" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-            <div class="navbar-nav mr-3">
-                <div class="nav-item">
-                    <a class="nav-link text-light" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
-                </div>
+		<div class="collapse navbar-collapse " id="limsNavbar">
 
-            </div>
-            @await Html.PartialAsync("_LoginPartial")
+			<div class="navbar-nav mr-3">
+				<a class="nav-item nav-link text-light" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+			</div>
+			
+				@await Html.PartialAsync("_LoginPartial")
+			
+		</div>
+	</nav>
+
+	<partial name="_CookieConsentPartial" />
+
+	<div class="container">
+		@*<div class="row">
+				@await Html.PartialAsync("_SidebarNav")
+			</div>*@
 
 
-        </nav>
-    </nav>
+		@RenderBody()
 
-    <partial name="_CookieConsentPartial" />
+		<footer class="pt-4 my-md-5 pt-md-5 border-top top10">
+			<div class="row">
 
-    <div class="container">
-        @*<div class="row">
-            @await Html.PartialAsync("_SidebarNav")
-        </div>*@
-       
-
-        @RenderBody()
-
-        <footer class="pt-4 my-md-5 pt-md-5 border-top top10">
-            <div class="row">
-
-                <div class="col-3 col-md">
-                    <h5>Key Services</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Land Transfers</a></li>
-                        <li><a class="text-muted" href="#">Land Search</a></li>
-                        <li><a class="text-muted" href="#">Land Adjudication</a></li>
-                        <li><a class="text-muted" href="#">Land Development</a></li>
-                    </ul>
-                </div>
-                <div class="col-3 col-md">
-                    <h5>Partner Websites</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">MoLHUD</a></li>
-                        <li><a class="text-muted" href="#">Ministry of Environment</a></li>
-                        <li><a class="text-muted" href="#">Government of Kenya</a></li>
-                        <li><a class="text-muted" href="#">Council of Governors</a></li>
-                    </ul>
-                </div>
-                <div class="col-3 col-md">
-                    <h5>About Us</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Our Team</a></li>
-                        <li><a class="text-muted" href="#">Our Branches</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Privacy">Our Privacy Policy</a></li>
-                        <li><a class="text-muted" asp-controller="Home" asp-action="Terms">Terms & Conditions</a></li>
-                    </ul>
-                </div>
-                <div class="col-3 col-md">
-                    <small>
-							<a href="http://www.osl.co.ke" target="_blank" style="text-decoration:none">
-                            <span style="color:darkorange; ">Oakar</span>
-                            <span style="color:black;">Services Ltd.</span>
-                        </a>
-                    </small>
-                    <small class="d-block mb-3 text-muted">
-                        &copy; @DateTime.Now.Year Land Information Management System. - All Rights Reserved.
-                    </small>
-                </div>
-            </div>
-        </footer>
-    </div>
+				<div class="col-3 col-md">
+					<h5>Key Services</h5>
+					<ul class="list-unstyled text-small">
+						<li><a class="text-muted" href="#">Land Transfers</a></li>
+						<li><a class="text-muted" href="#">Land Search</a></li>
+						<li><a class="text-muted" href="#">Land Adjudication</a></li>
+						<li><a class="text-muted" href="#">Land Development</a></li>
+					</ul>
+				</div>
+				<div class="col-3 col-md">
+					<h5>Partner Websites</h5>
+					<ul class="list-unstyled text-small">
+						<li><a class="text-muted" href="#">MoLHUD</a></li>
+						<li><a class="text-muted" href="#">Ministry of Environment</a></li>
+						<li><a class="text-muted" href="#">Government of Kenya</a></li>
+						<li><a class="text-muted" href="#">Council of Governors</a></li>
+					</ul>
+				</div>
+				<div class="col-3 col-md">
+					<h5>About Us</h5>
+					<ul class="list-unstyled text-small">
+						<li><a class="text-muted" href="#">Our Team</a></li>
+						<li><a class="text-muted" href="#">Our Branches</a></li>
+						<li><a class="text-muted" asp-controller="Home" asp-action="Privacy">Our Privacy Policy</a></li>
+						<li><a class="text-muted" asp-controller="Home" asp-action="Terms">Terms & Conditions</a></li>
+					</ul>
+				</div>
+				<div class="col-3 col-md">
+					<small>
+						<a href="http://www.osl.co.ke" target="_blank" style="text-decoration:none">
+							<span style="color:darkorange; ">Oakar</span>
+							<span style="color:black;">Services Ltd.</span>
+						</a>
+					</small>
+					<small class="d-block mb-3 text-muted">
+						&copy; @DateTime.Now.Year Land Information Management System. - All Rights Reserved.
+					</small>
+				</div>
+			</div>
+		</footer>
+	</div>
 
 	<environment include="Development">
 		<script src="~/lib/jquery/jquery.min.js"></script>
@@ -183,7 +180,7 @@
 	</environment>
 
 
-    @RenderSection("Scripts", required: false)
+	@RenderSection("Scripts", required: false)
 
 </body>
 </html>
