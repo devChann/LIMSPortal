@@ -12,7 +12,14 @@
     ViewData["Title"] = "PropertiesView";
 }
 
-
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a asp-controller="Home" asp-action="Index">Home</a>
+		</li>
+		<li class="breadcrumb-item active">My Properties</li>
+	</ol>
+</div>
 
 	@if (Model.Any())
 	{

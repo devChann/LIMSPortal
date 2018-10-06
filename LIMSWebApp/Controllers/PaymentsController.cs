@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MpesaLib.Interfaces;
 using MpesaLib.Models;
+using MpesaLib.Helpers;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -26,16 +27,19 @@ namespace LIMSWebApp.Controllers
         private readonly BillingDbContext _payments;
         private readonly UserManager<ApplicationUser> _userManger;
         private readonly ISmsSender _smsSender;
+		private readonly LIMSCoreDbContext _limsDbcontext;
 		private readonly IMpesaClient _mpesaClient;
 
 		public PaymentsController(IMpesaClient mpesaClient,IConfiguration configuration, BillingDbContext payments,
-			UserManager<ApplicationUser> userManager, ISmsSender smsSender)
+			UserManager<ApplicationUser> userManager, ISmsSender smsSender, LIMSCoreDbContext limscontext)
         {
 			_mpesaClient = mpesaClient;
 			_config = configuration;
             _payments = payments;
             _userManger = userManager;
             _smsSender = smsSender;
+			_limsDbcontext = limscontext;
+			
 			
         }
 
@@ -49,17 +53,26 @@ namespace LIMSWebApp.Controllers
 
         [HttpGet]
         public IActionResult Checkout(string property)
-        {          
-            var ratesmodel = new RateViewModel {
+        {
+			var parcel = _limsDbcontext.Parcel
+				.Include(i => i.Rate)				
+				.Include(p => p.Payments)				
+				.Include(i => i.Owner)
+				.Where(a => a.ParcelNum == property).SingleOrDefault();
 
-                ParcelNumber = property,
-                PendingRate = "10",
-                OwnerName = "Elvis Ayiemba",
-                FinancialYear = DateTime.Now.AddYears(-1).Year+"/"+DateTime.Now.Year,
-                OwnerId = "28350087",
-                OwnerPIN ="A65434343Z"              
+			var pendingRate = parcel.Rate.Amount.ToString();
+
+			var ratesmodel = new RateViewModel {
+
+				ParcelNumber = property,
+				PendingRate = pendingRate,
+				OwnerName = parcel.Owner.Name,
+				FinancialYear = DateTime.Now.AddYears(-1).Year + "/" + DateTime.Now.Year,
+				//OwnerId = parcel.Owner.Id.ToString(),
+				OwnerPIN = parcel.Owner.PIN              
 
             };
+
             return View(ratesmodel);
         }
 
@@ -120,15 +133,39 @@ namespace LIMSWebApp.Controllers
 
         [HttpGet]
         [Route("/make-payment")]
-        public IActionResult PayWithMpesa()
+        public IActionResult PayWithMpesa(string apiresult)
         {
-            return View("MpesaExpress");
+			//var owner = _limsDbcontext.Owner
+			//	.Where(o => o.TelephoneAddress == "254725589166").Single();
+
+			////get property
+			//var parcel = _limsDbcontext.Parcel
+			//	.Include(r => r.Rate).Where(o => o.OwnerId == owner.Id).FirstOrDefault();
+
+			//var currentRate = parcel.Rate.Amount;
+
+			////deduct payment made from rates database
+			//var ratepaid = 15;
+
+			//var balance = currentRate -ratepaid;
+
+			//currentRate = balance;
+
+			//parcel.Rate.Amount = currentRate;
+
+			//_limsDbcontext.SaveChanges();
+
+			//ViewData["Balance"] = currentRate;
+			//ViewData["Name"] = owner.Name;
+			ViewData["Result"] = apiresult;
+
+			return View();
         }
 
-        [HttpPost]
-        [Route("/make-payment")]
-        public async Task<IActionResult> PayWithMpesa(RateViewModel Payment)
+        [HttpPost]       
+        public async Task<IActionResult> MpesaPay(RateViewModel Payment)
         {
+
             var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
 
             var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
@@ -136,6 +173,11 @@ namespace LIMSWebApp.Controllers
 			var passKey = _config["MpesaConfiguration:PassKey"];
 
             var accesstoken = await _mpesaClient.GetAuthTokenAsync(consumerKey, consumerSecret, "oauth/v1/generate?grant_type=client_credentials");
+
+
+			var certificate = @"C:\Dev\Work\MpesaIntegration\MpesaLibSamples\WebApplication1\WebApplication1\Certificate\prod.cer";
+
+			var securityCredential = Credentials.EncryptPassword(certificate, "971796");
 
             //var MpesaExpressObject = new LipaNaMpesaOnline
             //{
@@ -167,13 +209,19 @@ namespace LIMSWebApp.Controllers
 			};
 
 			var paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject2, accesstoken, "mpesa/stkpush/v1/processrequest");
+			
+            await _smsSender.SendSmsAsync($"+{Payment.PhoneNumber}", $"Please Enter your Mpesa password on your phone to Complete Your Pending land rate payment of Ksh: {Payment.PendingRate}");
 
-            _smsSender.SendSms($"+{Payment.PhoneNumber}", $"Please Enter your Mpesa password on the Open Mpesa Menu to Complete Your Pending land rate payment of Ksh {Payment.PendingRate}");
+			//await _smsSender.SendSmsAsync($"+{Payment.PhoneNumber}", $"Security Credential: {securityCredential}");
+
+			//await _smsSender.SendSmsAsync("+254713928142", "Chann, you need to look into this billing thing for LIMS!!");
 
 
-            ViewData["Payment"] = paymentrequest;
+			ViewData["Payment"] = paymentrequest;
 
-            return View();
+			var apiresult = ViewData["Payment"].ToString();
+
+			return Redirect("~/my-properties");
         }
 
         public IActionResult Error()

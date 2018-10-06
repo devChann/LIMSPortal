@@ -119,7 +119,7 @@ namespace LIMSCore
                 //loggerFactory.AddSerilog();
                 loggerFactory.AddFile(Path.Combine(env.ContentRootPath, "/logs/myapp-{Date}.txt"));
                 app.UseExceptionHandler("/Home/Error");               
-                //app.UseHsts();
+                app.UseHsts();
 				app.ConfigureSecurityHeaders();
             }
 

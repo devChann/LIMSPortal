@@ -1,33 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using LIMSCore.Billing;
 using LIMSInfrastructure.Data;
+using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
 using LIMSWebApp.ViewModels.MpesaModels;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace LIMSWebApp.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
     [ApiController]
     public class CallbackController : ControllerBase
     {
         private readonly ILogger<CallbackController> _log;
         private readonly BillingDbContext _billing;
         private readonly ISmsSender _smsSender;
+		private readonly LIMSCoreDbContext _limsDbcontext;
+		private readonly UserManager<ApplicationUser> _userManager;
 
-        public CallbackController(ILogger<CallbackController> log, BillingDbContext billing, ISmsSender smsSender)
+		public CallbackController(ILogger<CallbackController> log, BillingDbContext billing,
+			ISmsSender smsSender, LIMSCoreDbContext limscontext, UserManager<ApplicationUser> userManager)
         {
             _log = log;
             _billing = billing;
             _smsSender = smsSender;
+			_limsDbcontext = limscontext;
+			_userManager = userManager;
         }
 
         [HttpPost]
@@ -37,18 +41,17 @@ namespace LIMSWebApp.Controllers
             var stkresult = result.ToString();
 
             //_log.LogInformation(stkresult);
+			var response = JsonConvert.DeserializeObject<STKResponse>(stkresult);
+			
+            var MetaData = response.Body.StkCallback.CallbackMetadata.Item.ToList();
 
-            STKResponse response = JsonConvert.DeserializeObject<STKResponse>(stkresult);
-
-            List<Item> MetaData = response.Body.StkCallback.CallbackMetadata.Item.ToList();
-
-            string AmountPaid = "";
-            string ReceiptNum = "";
-            string DateOfTransaction = "";
-            string PhoneNumber = "";
+            var AmountPaid = "";
+            var ReceiptNum = "";
+            var DateOfTransaction = "";
+            var PhoneNumber = "";
 
             //Handle CallbackMetadata
-            foreach (Item item in MetaData)
+            foreach (var item in MetaData)
             {
                 if(item.Name == "Amount")
                 {
@@ -83,10 +86,30 @@ namespace LIMSWebApp.Controllers
             };
 
             _billing.Add(Payment);
-            
-            _billing.SaveChanges();            
+			_billing.SaveChanges();
 
-            _smsSender.SendSms("+254725589166", $"New Payment Made: {Payment.Amount}, {Payment.ReceiptNumber}, {Payment.PhoneNumber}");
+			//get owner from database
+			var owner = _limsDbcontext.Owner
+				.Where(o => o.TelephoneAddress == PhoneNumber).Single();
+
+			//get property
+			var parcel = _limsDbcontext.Parcel
+				.Include(r => r.Rate).Where(o => o.OwnerId == owner.Id).FirstOrDefault();
+
+			var currentRate = parcel.Rate.Amount;
+
+			//deduct payment made from rates database
+			var ratepaid = AmountPaid;
+
+			var balance = currentRate - int.Parse(ratepaid);
+
+			currentRate = balance;
+
+			parcel.Rate.Amount = currentRate;			
+			
+			_limsDbcontext.SaveChanges();
+
+			_smsSender.SendSms("+254725589166", $"New Payment Made, Amount: {Payment.Amount}, Receipt No: {Payment.ReceiptNumber}, Phone No {Payment.PhoneNumber}");
 
             return result;             
         }
