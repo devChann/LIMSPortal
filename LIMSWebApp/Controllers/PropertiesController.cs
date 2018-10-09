@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using LIMSWebApp.ViewModels.PropertiesViewModesl;
+using LIMSWebApp.ViewModels.PropertiesViewModels;
 using LIMSInfrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
 using LIMSInfrastructure.Identity;

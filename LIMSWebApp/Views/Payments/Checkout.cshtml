@@ -4,7 +4,7 @@
 @using Microsoft.Extensions.Options
 @using LIMSInfrastructure.Services.Payment
 
-@model LIMSWebApp.ViewModels.PropertiesViewModesl.RateViewModel
+@model LIMSWebApp.ViewModels.PropertiesViewModels.RateViewModel
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -80,13 +80,8 @@
                         <span class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#PaymentNotification">
                             <img src="~/images/icons/mpesa.png" style="width:120px;height:30px" />
                         </span>
-
                     </div>
-
                 </div>
-
-
-
             </div>
 
         </div>
@@ -114,7 +109,7 @@ else
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="expenseForm" asp-controller="Payments" asp-action="MpesaPay" method="post">
+					<form id="expenseForm" asp-controller="Payments" asp-action="PayWithMpesa" method="post">
 
 						<div class="form-group">
 							<label asp-for="OwnerName" class="control-label"></label>

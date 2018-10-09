@@ -2,7 +2,7 @@
 @using LIMSInfrastructure.Identity;
 @using System.Linq;
 
-@model IEnumerable<LIMSWebApp.ViewModels.PropertiesViewModesl.PropertiesViewModel>
+@model IEnumerable<LIMSWebApp.ViewModels.PropertiesViewModels.PropertiesViewModel>
 
 @inject UserManager<ApplicationUser> UserManager
 
@@ -228,16 +228,18 @@
 		var piectx = document.getElementById(piechartName).getContext('2d');
 		var barctx = document.getElementById(barchartName).getContext('2d');
 
-        var data = {
-                labels: @Html.Raw(XLabels),
-                datasets: [{
-                    //label: "Rates Chart",
-                    backgroundColor: color,
-                    borderColor: '#FFFFFF',
-                    borderWidth: 1,
-                    data: @Html.Raw(YValues)
-                    }]
-                };
+		var data = {
+			labels: @Html.Raw(XLabels),
+			datasets: [
+				{
+					//label: "Rates Chart",
+					backgroundColor: color,
+					borderColor: '#FFFFFF',
+					borderWidth: 1,
+					data: @Html.Raw(YValues)
+                }
+			]
+        };
 
         var options = {
             maintainAspectRatio: false,

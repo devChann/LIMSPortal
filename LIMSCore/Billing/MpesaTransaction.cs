@@ -12,6 +12,6 @@ namespace LIMSCore.Billing
         public string CheckoutRequestID { get; set; }
         public string MerchantRequestId { get; set; }
         public string ReceiptNumber { get; set; }
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }		
     }
 }

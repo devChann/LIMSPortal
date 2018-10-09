@@ -20,6 +20,8 @@ using System.IO;
 using System.Threading.Tasks;
 using MpesaLib.Interfaces;
 using MpesaLib.Clients;
+using Serilog;
+
 
 namespace LIMSCore
 {
@@ -61,16 +63,17 @@ namespace LIMSCore
 
             services.AddCors();
 
-			//Inject repository
-			//services.AddScoped(IRepository, LIMSRepository);
-
-			//services.AddMpesaSupport();
-
 			services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = new Uri("https://sandbox.safaricom.co.ke/"));
 
             services.ConfigureSecurityAndAuthentication();
 
-            services.ConfigureApplicationCookie(options =>
+			services.Configure<IISOptions>(options =>
+			{
+				options.ForwardClientCertificate = false;
+				options.AutomaticAuthentication = true;
+			});
+
+			services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/account/sign-in";
                 options.LogoutPath = "/account/logged-out";
@@ -94,8 +97,7 @@ namespace LIMSCore
 			//local SignalR service
 			services.AddSignalR(); 
 
-			//Azure SignalR service
-			//services.AddSignalR().AddAzureSignalR(Configuration.GetSection("Azure__SignalR__ConnectionString").Value);
+			
 
         }
 
@@ -106,7 +108,7 @@ namespace LIMSCore
         {           
 
             //Stripe configuration
-            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);           
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);			
 
             if (env.IsDevelopment())
             {
@@ -115,9 +117,7 @@ namespace LIMSCore
                 app.UseDatabaseErrorPage();              
             }
             else
-            {
-                //loggerFactory.AddSerilog();
-                loggerFactory.AddFile(Path.Combine(env.ContentRootPath, "/logs/myapp-{Date}.txt"));
+            {              				
                 app.UseExceptionHandler("/Home/Error");               
                 app.UseHsts();
 				app.ConfigureSecurityHeaders();
@@ -148,7 +148,7 @@ namespace LIMSCore
 			//use local signalR service
 			app.UseSignalR(routes =>
 			{
-				routes.MapHub<PaymentsHub>("/hubs/payments");
+				routes.MapHub<PaymentsHub>("/Payments");
 			});
 
 			//Use Azure signalR service

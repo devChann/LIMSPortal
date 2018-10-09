@@ -4,14 +4,16 @@ using LIMSInfrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(BillingDbContext))]
-    partial class BillingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181008141718_V3")]
+    partial class V3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +23,7 @@ namespace LIMSInfrastructure.Migrations
 
             modelBuilder.Entity("LIMSCore.Billing.Invoice", b =>
                 {
-                    b.Property<Guid>("InvoiceId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Created");
@@ -32,7 +34,7 @@ namespace LIMSInfrastructure.Migrations
 
                     b.Property<string>("Type");
 
-                    b.HasKey("InvoiceId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
@@ -63,7 +65,7 @@ namespace LIMSInfrastructure.Migrations
 
             modelBuilder.Entity("LIMSCore.Billing.Payment", b =>
                 {
-                    b.Property<Guid>("PaymentId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("Amount");
@@ -72,22 +74,22 @@ namespace LIMSInfrastructure.Migrations
 
                     b.Property<Guid>("InvoiceId");
 
-                    b.Property<Guid?>("MpesaTransactionId");
+                    b.Property<Guid?>("MyPropertyId");
 
                     b.Property<string>("Type");
 
-                    b.HasKey("PaymentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
 
-                    b.HasIndex("MpesaTransactionId");
+                    b.HasIndex("MyPropertyId");
 
                     b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("LIMSCore.Billing.Product", b =>
                 {
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
@@ -98,7 +100,7 @@ namespace LIMSInfrastructure.Migrations
 
                     b.Property<double>("Price");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.ToTable("Product");
                 });
@@ -118,9 +120,9 @@ namespace LIMSInfrastructure.Migrations
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Billing.MpesaTransaction", "MpesaTransaction")
+                    b.HasOne("LIMSCore.Billing.MpesaTransaction", "MyProperty")
                         .WithMany()
-                        .HasForeignKey("MpesaTransactionId");
+                        .HasForeignKey("MyPropertyId");
                 });
 #pragma warning restore 612, 618
         }

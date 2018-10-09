@@ -18,6 +18,10 @@
     <Compile Include="Migrations\20180731043840_V1.Designer.cs" />
     <Compile Include="Migrations\20180731044603_V2.cs" />
     <Compile Include="Migrations\20180731044603_V2.Designer.cs" />
+    <Compile Include="Migrations\20181008141718_V3.cs" />
+    <Compile Include="Migrations\20181008141718_V3.Designer.cs" />
+    <Compile Include="Migrations\20181008144522_V4.cs" />
+    <Compile Include="Migrations\20181008144522_V4.Designer.cs" />
     <Compile Include="Migrations\ApplicationDb\20180608132457_V1.cs" />
     <Compile Include="Migrations\ApplicationDb\20180608132457_V1.Designer.cs" />
     <Compile Include="Migrations\ApplicationDb\20180728071721_V2.cs" />

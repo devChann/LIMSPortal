@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace LIMSWebApp.Controllers
 {
-	[Route("api/[controller]")]
+	//[Route("api/[controller]")]
     [ApiController]
     public class CallbackController : ControllerBase
     {
@@ -35,12 +35,14 @@ namespace LIMSWebApp.Controllers
         }
 
         [HttpPost]
-        public JToken Post([FromBody]JToken result)
+		[Route("api/results")]
+        public JToken Results([FromBody]JToken result)
         {
             //convert jtoken to String
             var stkresult = result.ToString();
 
-            //_log.LogInformation(stkresult);
+            _log.LogWarning(LoggingEvents.UpdateItem, $"STK Callback: {stkresult}");
+
 			var response = JsonConvert.DeserializeObject<STKResponse>(stkresult);
 			
             var MetaData = response.Body.StkCallback.CallbackMetadata.Item.ToList();
@@ -114,10 +116,26 @@ namespace LIMSWebApp.Controllers
             return result;             
         }
 
-        [HttpGet]
-        public JToken Get(JToken item)
-        {        
-            return item;
-        }
-    }
+
+
+		[HttpPost]
+		[Route("api/validate")]
+		public JToken Validate([FromBody]JToken result)
+		{
+			_log.LogWarning($"Validation Request:{result}");
+
+			return result.ToString();
+		}
+
+		[HttpPost]
+		[Route("api/confirm")]
+		public JToken Confirm([FromBody]JToken result)
+		{			
+			_log.LogWarning($"Confirmation Request:{result}");
+
+			return result.ToString();
+		}
+
+
+	}
 }

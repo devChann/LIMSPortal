@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LIMSWebApp.ViewModels.PropertiesViewModesl
+namespace LIMSWebApp.ViewModels.PropertiesViewModels
 {
     public class RateViewModel
     {

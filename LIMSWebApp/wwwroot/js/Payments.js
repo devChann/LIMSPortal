@@ -7,7 +7,7 @@
 // See Es5-chat.js for a Babel transpiled version of the following code:
 $(function () {
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/hubs/payments")
+        .withUrl("/Payments")
         .build();
 
     connection.on("ReceiveMessage", (user, message) => {

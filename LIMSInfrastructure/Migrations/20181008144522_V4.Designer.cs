@@ -4,14 +4,16 @@ using LIMSInfrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(BillingDbContext))]
-    partial class BillingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181008144522_V4")]
+    partial class V4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
