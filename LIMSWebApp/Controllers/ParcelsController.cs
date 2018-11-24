@@ -16,9 +16,9 @@ namespace LIMSWebApp.Controllers
     {
         private readonly LIMSCoreDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly ApplicationDbContext _usercontext;
+        private readonly LIMSCoreDbContext _usercontext;
 
-        public ParcelsController(LIMSCoreDbContext context, ApplicationDbContext usercontext, IHostingEnvironment hostingEnvironment)
+        public ParcelsController(LIMSCoreDbContext context, LIMSCoreDbContext usercontext, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;

@@ -22,7 +22,7 @@ namespace LIMSWebApp.Configuration.Startup
 
 		public static IApplicationBuilder ConfigureSecurityHeaders(this IApplicationBuilder app)
 		{
-			app.UseHsts(options => options.MaxAge(days: 365).IncludeSubdomains());
+			//app.UseHsts(options => options.MaxAge(days: 365).IncludeSubdomains());
 			app.UseXContentTypeOptions();
 			app.UseReferrerPolicy(options => options.NoReferrer());
 			app.UseXXssProtection(options => options.EnabledWithBlockMode());

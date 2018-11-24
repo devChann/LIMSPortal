@@ -1,5 +1,7 @@
 ﻿using System;
+using LIMSInfrastructure.Data;
 using LIMSInfrastructure.Identity;
+using LIMSWebApp.Configuration.Startup;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -17,9 +19,9 @@ namespace LIMSWebApp.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
 
-                //Application Db context - users database
-                services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(context.Configuration.GetConnectionString("LIMSUserDbConnection"),
+				//Application Db context - users database
+				services.AddDbContext<LIMSCoreDbContext>(options =>
+                    options.UseSqlServer(context.Configuration.GetConnectionString("LIMSCoreDbConnection"),
                     sqlServerOptionsAction: sqlOptions =>
                     {
                         sqlOptions.EnableRetryOnFailure(
@@ -29,7 +31,9 @@ namespace LIMSWebApp.Areas.Identity
                     }
                     ));
 
-                services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+				//services.ConfigureDatabase(context.Configuration.GetConnectionString("LIMSCoreDbConnection"));
+
+				services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
                 {
                     options.Stores.MaxLengthForKeys = 128;
                     // Password settings
@@ -50,8 +54,8 @@ namespace LIMSWebApp.Areas.Identity
                     options.SignIn.RequireConfirmedPhoneNumber = false;})
                     .AddRoles<ApplicationRole>()
                     .AddRoleManager<RoleManager<ApplicationRole>>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>()  
-                    //.AddDefaultUI()
+                    .AddEntityFrameworkStores<LIMSCoreDbContext>()  
+                    .AddDefaultUI()
                     .AddDefaultTokenProviders();
 
                 services.AddAuthentication()

@@ -36,36 +36,17 @@ namespace LIMSCore
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {                               
-            //LIMS Database context
-            services.AddDbContext<LIMSCoreDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("LIMSCoreDbConnection"),
-                sqlServerOptionsAction: sqlOptions =>
-                {
-                    sqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null);
-                }
-                ));
+        {
 
-            //Billing Database context
-            services.AddDbContext<BillingDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("LIMSBillingDbConnection"),
-                sqlServerOptionsAction: sqlOptions =>
-                {
-                    sqlOptions.EnableRetryOnFailure(
-                    maxRetryCount: 5,
-                    maxRetryDelay: TimeSpan.FromSeconds(30),
-                    errorNumbersToAdd: null);
-                }
-                ));
+			services.ConfigureDatabase(Configuration);
 
-            services.AddCors();
+			services.AddCors();
 
+			//change this to use https://api.safaricom.co.ke/ when deploying to proction
 			services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = new Uri("https://sandbox.safaricom.co.ke/"));
 
             services.ConfigureSecurityAndAuthentication();
+			
 
 			services.Configure<IISOptions>(options =>
 			{
