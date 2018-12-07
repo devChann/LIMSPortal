@@ -20,9 +20,9 @@ namespace LIMSWebApp.Controllers
     {
         private readonly LIMSCoreDbContext _limscontext;
         private readonly IHostingEnvironment _hostingEnv;
-        private readonly ApplicationDbContext _usercontext;
+        private readonly LIMSCoreDbContext _usercontext;
 
-        public PropertiesController(LIMSCoreDbContext limscontext, ApplicationDbContext usercontext, IHostingEnvironment hostingEnv)
+        public PropertiesController(LIMSCoreDbContext limscontext, LIMSCoreDbContext usercontext, IHostingEnvironment hostingEnv)
         {
             _limscontext = limscontext;
             _hostingEnv = hostingEnv;

@@ -26,7 +26,7 @@ namespace LIMSWebApp.Controllers
     public class PaymentsController : Controller
     {          
         private readonly IConfiguration _config;
-        private readonly BillingDbContext _payments;
+        private readonly LIMSCoreDbContext _payments;
         private readonly UserManager<ApplicationUser> _userManger;
         private readonly ISmsSender _smsSender;
 		private readonly ILogger _logger;
@@ -34,7 +34,7 @@ namespace LIMSWebApp.Controllers
 		private readonly IMpesaClient _mpesaClient;
 		private readonly IHostingEnvironment _hostingEnvironment;
 
-		public PaymentsController(IMpesaClient mpesaClient,IConfiguration configuration, BillingDbContext payments,
+		public PaymentsController(IMpesaClient mpesaClient,IConfiguration configuration, LIMSCoreDbContext payments,
 			UserManager<ApplicationUser> userManager, ISmsSender smsSender, ILogger<PaymentsController> logger,
 			LIMSCoreDbContext limscontext, IHostingEnvironment hostingEnvironment)
         {
@@ -106,7 +106,7 @@ namespace LIMSWebApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrators")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PaymentsList(int? page)
         {
             var paymentsmade = await _payments.MpesaTransaction.ToListAsync();          

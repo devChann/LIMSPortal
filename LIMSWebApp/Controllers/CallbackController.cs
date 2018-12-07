@@ -19,12 +19,12 @@ namespace LIMSWebApp.Controllers
     public class CallbackController : ControllerBase
     {
         private readonly ILogger<CallbackController> _log;
-        private readonly BillingDbContext _billing;
+        private readonly LIMSCoreDbContext _billing;
         private readonly ISmsSender _smsSender;
 		private readonly LIMSCoreDbContext _limsDbcontext;
 		private readonly UserManager<ApplicationUser> _userManager;
 
-		public CallbackController(ILogger<CallbackController> log, BillingDbContext billing,
+		public CallbackController(ILogger<CallbackController> log, LIMSCoreDbContext billing,
 			ISmsSender smsSender, LIMSCoreDbContext limscontext, UserManager<ApplicationUser> userManager)
         {
             _log = log;

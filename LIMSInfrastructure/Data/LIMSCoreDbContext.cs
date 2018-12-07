@@ -1,12 +1,15 @@
 ﻿using System;
+using LIMSCore.Billing;
 using LIMSCore.Entities;
+using LIMSInfrastructure.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LIMSInfrastructure.Data
 {
-    public partial class LIMSCoreDbContext : DbContext
-    {
+    public partial class LIMSCoreDbContext : IdentityDbContext<ApplicationUser>
+	{
         public LIMSCoreDbContext()
         {
         }
@@ -16,7 +19,16 @@ namespace LIMSInfrastructure.Data
         {
         }
 
-        public virtual DbSet<Administration> Administration { get; set; }
+		//Identity DbSets provide by IdentityDbContext class that this class inherits from
+
+		//Billing DbSets
+		public virtual DbSet<MpesaTransaction> MpesaTransaction { get; set; }
+		public virtual DbSet<Payment> Payment { get; set; }
+		public virtual DbSet<Product> Product { get; set; }
+		public virtual DbSet<Invoice> Invoice { get; set; }
+
+		//LIMS DbSets
+		public virtual DbSet<Administration> Administration { get; set; }
         public virtual DbSet<Apartment> Apartment { get; set; }
         public virtual DbSet<Beacon> Beacon { get; set; }
         public virtual DbSet<Boundary> Boundary { get; set; }
@@ -74,7 +86,52 @@ namespace LIMSInfrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Beacon>(entity =>
+			base.OnModelCreating(modelBuilder);
+
+			//identity stuff
+			modelBuilder.Entity<ApplicationRole>().HasData(new[]
+		   {
+				new ApplicationRole
+				{
+					Name = "Authors",
+					NormalizedName = "Authors".ToUpper()
+				},
+				new ApplicationRole
+				{
+					Name = "Editors",
+					NormalizedName = "Editors".ToUpper()
+				},
+				new ApplicationRole
+				{
+					Name = "Administrators",
+					NormalizedName = "Administrators".ToUpper()
+				}
+			});
+			//end of identity stuff
+
+			//BIlling Entities configuration
+			modelBuilder.Entity<MpesaTransaction>(entity =>
+			{
+				entity.HasKey(k => k.Id);
+			});
+
+			modelBuilder.Entity<Payment>(entity =>
+			{
+				entity.HasOne(m => m.MpesaTransaction);
+			});
+
+
+			modelBuilder.Entity<Invoice>(entity =>
+			{
+				entity.HasOne(k => k.Product);
+				entity.HasMany(p => p.Payments);
+
+			});
+			//End of billing entity configutation
+
+
+			//LIMS Entity configuration
+			modelBuilder.Entity<Beacon>(entity =>
             {
                 entity.Property(e => e.DateSet).HasDefaultValueSql("(getdate())");               
             });
@@ -526,5 +583,10 @@ namespace LIMSInfrastructure.Data
                 entity.Property(e => e.ValuationDate).HasDefaultValueSql("(getdate())");
             });
         }
-    }
+
+		public static void SeedData(LIMSCoreDbContext context)
+		{
+			context.Database.Migrate();
+		}
+	}
 }
