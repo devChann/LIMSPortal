@@ -154,31 +154,33 @@
     // then post the request and add the received features to a layer
     fetch('https://demo.osl.co.ke:7575/LIMSParcels2/service.svc/post', {
         method: 'POST',
-        mode: 'cors',
-        credentials: 'same-origin',
         body: requestBody,
         headers: new Headers({
-            'Content-Type': 'application/xml',
-            'Access-Control-Allow-Credentials': true,
-            'Access-Control-Allow-Origin': '*'
+            'Content-Type': 'application/xml'            
         })
     }).then(function (response) {
         var contentType = response.headers.get("content-type");
-        //console.log(contentType); //remove later
+        console.log(contentType); //remove later
         if (contentType && contentType.includes("application/vnd.geo+json")) {
             var result = response.json();
             return result;
         }
         throw new TypeError("Oops, we haven't got JSON!");
-		}).then(function (json) {
-			var features = (new ol.format.GeoJSON()).readFeatures(json);   //new ol.format.GeoJSON().readFeatures(json);
+	}).then(function (json) {
 
-        var props = features[0].getProperties();
+		console.log(json);
+		var features = (new ol.format.GeoJSON()).readFeatures(json);
+
+		var props = features[0].getProperties();
+
         featureprops.push(props);
 
         vectorSource.addFeatures(features);
-        map.getView().fit(vectorSource.getExtent());
-		});
+		map.getView().fit(vectorSource.getExtent());
+
+	}).catch(function (error) {
+		console.log(`An error occured while processing one of the datasets! \n ${error}`);
+	});
 
 	function displayPopUp(evt) {
 

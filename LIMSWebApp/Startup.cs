@@ -29,13 +29,15 @@ namespace LIMSCore
     {
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
-            Configuration = configuration;            
+            Configuration = configuration;
+			HostingEnvironment = hostingEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+		public IHostingEnvironment HostingEnvironment { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
         {                               
             //LIMS Database context
             services.AddDbContext<LIMSCoreDbContext>(options =>
@@ -47,7 +49,7 @@ namespace LIMSCore
                     maxRetryDelay: TimeSpan.FromSeconds(30),
                     errorNumbersToAdd: null);
                 }
-                ));
+            ));
 
             //Billing Database context
             services.AddDbContext<BillingDbContext>(options =>
@@ -59,11 +61,20 @@ namespace LIMSCore
                     maxRetryDelay: TimeSpan.FromSeconds(30),
                     errorNumbersToAdd: null);
                 }
-                ));
+            ));
 
-            services.AddCors();
+            //services.AddCors();
 
-			services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = new Uri("https://sandbox.safaricom.co.ke/"));
+			if (HostingEnvironment.IsDevelopment())
+			{
+				services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = new Uri("https://sandbox.safaricom.co.ke/"));
+			}
+			else
+			{
+				services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = new Uri("https://api.safaricom.co.ke/"));
+			}
+
+			
 
             services.ConfigureSecurityAndAuthentication();
 
@@ -88,13 +99,12 @@ namespace LIMSCore
             services.Configure<SMSoptions>(Configuration);
 
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
 
             //Configure Stripe
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
-			//Add SignalR
-			//local SignalR service
+			
 			services.AddSignalR(); 
 
 			
@@ -104,13 +114,13 @@ namespace LIMSCore
        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void  Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public void  Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {           
 
             //Stripe configuration
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);			
 
-            if (env.IsDevelopment())
+            if (HostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();            
                
@@ -119,19 +129,19 @@ namespace LIMSCore
             else
             {              				
                 app.UseExceptionHandler("/Home/Error");               
-                app.UseHsts();
+              
 				app.ConfigureSecurityHeaders();
             }
 
             app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");
 
-            app.UseCors(builder => 
-                builder.WithOrigins("https://demo.osl.co.ke:7575")
+           /* app.UseCors(builder => 
+                builder.WithOrigins("https://demo.osl.co.ke:7574")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
                 
-            );
+            );*/
           
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -140,6 +150,7 @@ namespace LIMSCore
             //app.UseAuthentication();
 
 			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager);
+
 			authenticationTask.GetAwaiter().GetResult();
 
             app.UseFileServer();
