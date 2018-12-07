@@ -140,32 +140,8 @@ namespace LIMSWebApp.Controllers
 
         [HttpGet]
         [Route("/make-payment")]
-        public IActionResult PayWithMpesa(string apiresult)
+        public IActionResult PayWithMpesa()
         {
-			//var owner = _limsDbcontext.Owner
-			//	.Where(o => o.TelephoneAddress == "254725589166").Single();
-
-			////get property
-			//var parcel = _limsDbcontext.Parcel
-			//	.Include(r => r.Rate).Where(o => o.OwnerId == owner.Id).FirstOrDefault();
-
-			//var currentRate = parcel.Rate.Amount;
-
-			////deduct payment made from rates database
-			//var ratepaid = 15;
-
-			//var balance = currentRate -ratepaid;
-
-			//currentRate = balance;
-
-			//parcel.Rate.Amount = currentRate;
-
-			//_limsDbcontext.SaveChanges();
-
-			//ViewData["Balance"] = currentRate;
-			//ViewData["Name"] = owner.Name;
-			ViewData["Result"] = apiresult;
-
 			return View();
         }
 
