@@ -53,7 +53,11 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
             [EmailAddress]
             public string Email { get; set; }
 
-            [Phone]
+			
+			[Display(Name = "KRA PIN")]
+			public string KRAPIN { get; set; }
+
+			[Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
@@ -75,7 +79,8 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber                
+                PhoneNumber = user.PhoneNumber,
+				KRAPIN = user.KRAPIN
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -105,7 +110,19 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (Input.PhoneNumber != user.PhoneNumber)
+			if (Input.KRAPIN != user.KRAPIN)
+			{
+				user.KRAPIN = Input.KRAPIN;
+
+				var updatekrapin =  await _userManager.UpdateAsync(user);
+
+				if (!updatekrapin.Succeeded)
+				{
+					throw new InvalidOperationException($"Unexpected error occurred while updating KRA PIN for user with ID '{user.Id}'.");
+				}
+			}
+
+			if (Input.PhoneNumber != user.PhoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)

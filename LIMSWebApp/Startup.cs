@@ -18,8 +18,7 @@ using Stripe;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using MpesaLib.Interfaces;
-using MpesaLib.Clients;
+using MpesaLib;
 using Serilog;
 
 

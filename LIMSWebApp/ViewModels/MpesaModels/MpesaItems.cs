@@ -1,4 +1,4 @@
-﻿using MpesaLib.Models;
+﻿using MpesaLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace LIMSWebApp.ViewModels.MpesaModels
 {
     public class MpesaItems
     {
-        public LipaNaMpesaOnline lipaonline = new LipaNaMpesaOnline
+        public LipaNaMpesaOnlineDto lipaonline = new LipaNaMpesaOnlineDto
         {
             AccountReference = "ref",
             Amount = "1",
@@ -25,15 +25,15 @@ namespace LIMSWebApp.ViewModels.MpesaModels
             //TransactionType = "CustomerPayBillOnline"
         };
 
-        public CustomerToBusinessRegister c2bregisterUrl = new CustomerToBusinessRegister
+        public CustomerToBusinessRegisterUrlDto c2bregisterUrl = new CustomerToBusinessRegisterUrlDto
         {
             ResponseType = "Cancelled",
             ShortCode = "600157",
-            ConfirmationURL = "https://demo.osl.co.ke:7575/lims/api/callback",
-            ValidationURL = "https://demo.osl.co.ke:7575/lims/api/callback",
+            ConfirmationURL = "https://demo.osl.co.ke:7574/api/callback",
+            ValidationURL = "https://demo.osl.co.ke:7574/api/callback",
         };
 
-        public CustomerToBusinessSimulate c2b = new CustomerToBusinessSimulate
+        public CustomerToBusinessSimulateDto c2b = new CustomerToBusinessSimulateDto
         {
             ShortCode = "600157",
             Amount = "1",

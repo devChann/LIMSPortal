@@ -11,8 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MpesaLib.Helpers;
-using MpesaLib.Interfaces;
-using MpesaLib.Models;
+using MpesaLib;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -187,7 +186,7 @@ namespace LIMSWebApp.Controllers
 
 			var securityCredential = Credentials.EncryptPassword(certificate, "971796"); //for B2B, B2C, Reversal, TransactionStatus APIs
 
-			var registerMpesaUrl = new CustomerToBusinessRegister
+			var registerMpesaUrl = new CustomerToBusinessRegisterUrlDto
 			{
 				ConfirmationURL = "https://demo.osl.co.ke:7574/api/confirm",
 				ValidationURL = "https://demo.osl.co.ke:7574/api/validate",
@@ -211,7 +210,7 @@ namespace LIMSWebApp.Controllers
 
 			
 
-			var MpesaExpressObject2 = new LipaNaMpesaOnline
+			var MpesaExpressObject2 = new LipaNaMpesaOnlineDto
 			{
 				AccountReference = "ref",
 				Amount = Payment.PendingRate,
