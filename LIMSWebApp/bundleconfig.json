@@ -20,5 +20,11 @@
     "inputFiles": [
       "wwwroot/css/PagedList.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/maps.min.js",
+    "inputFiles": [
+      "wwwroot/js/maps.js"
+    ]
   }
 ]

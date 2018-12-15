@@ -41,6 +41,11 @@ namespace LIMSWebApp.Controllers
             //convert jtoken to String
             var stkresult = result.ToString();
 
+			if (!stkresult.Contains("\"CallbackMetadata\""))
+			{
+				Console.WriteLine("Request Cancelled by user");
+			}
+
             _log.LogWarning(LoggingEvents.UpdateItem, $"STK Callback: {stkresult}");
 
 			var response = JsonConvert.DeserializeObject<STKResponse>(stkresult);

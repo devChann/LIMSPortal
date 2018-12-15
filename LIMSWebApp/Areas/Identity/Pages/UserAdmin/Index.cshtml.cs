@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 {
-    [Authorize(Roles = "Administrators")]
+    [Authorize(Roles = "Administrator")]
     public class IndexModel : PageModel
 	{
-		private readonly UserManager<ApplicationUser> UserManager;
-		private readonly RoleManager<ApplicationRole> RoleManager;
+		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly RoleManager<ApplicationRole> _roleManager;
 
 		public List<SelectListItem> Roles { get; } = new List<SelectListItem>();
 
@@ -26,13 +26,13 @@ namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 
 		public IndexModel(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
 		{
-			UserManager = userManager;
-			RoleManager = roleManager;
+			_userManager = userManager;
+			_roleManager = roleManager;
 
 			var currentRoles = roleManager.Roles.ToList();
 
 			RolesList = currentRoles;
-			UsersList = UserManager.Users.ToList();
+			UsersList = _userManager.Users.ToList();
 
 			foreach (var role in currentRoles)
 			{
@@ -61,14 +61,14 @@ namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 			}
 
             //consider checking if user is logged in by userName or by email
-            var user = await UserManager.FindByNameAsync(UsernameToAddRoleTo);
+            var user = await _userManager.FindByNameAsync(UsernameToAddRoleTo);
 
 			if (user == null)
 			{
 				return Page();
 			}
 
-			var roleToUserResult = await UserManager.AddToRoleAsync(user, RoleToAdd);
+			var roleToUserResult = await _userManager.AddToRoleAsync(user, RoleToAdd);
 			if (!roleToUserResult.Succeeded)
 			{
 				return StatusCode(500);
@@ -79,7 +79,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 		public async Task<IActionResult> OnPostAddAllRolesToUserAsync()
 		{
             //consider checking if user is logged in by userName or by email
-            var user = await UserManager.FindByNameAsync(UsernameToAddRoleTo);
+            var user = await _userManager.FindByNameAsync(UsernameToAddRoleTo);
 
 			if (user == null)
 			{
@@ -88,7 +88,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 
 			foreach (var role in RoleNames)
 			{
-				await UserManager.AddToRoleAsync(user, role);
+				await _userManager.AddToRoleAsync(user, role);
 			}
 
 			return RedirectToPage("Index");
@@ -105,20 +105,20 @@ namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 
 		public async Task<IActionResult> OnPostRemoveRoleFromUserAsync()
 		{
-			var user = await UserManager.FindByEmailAsync(UsernameToRemoveRoleFrom);
+			var user = await _userManager.FindByEmailAsync(UsernameToRemoveRoleFrom);
 
 			if (user == null)
 			{
 				return Page();
 			}
 
-			await UserManager.RemoveFromRoleAsync(user, RoleToRemove);
+			await _userManager.RemoveFromRoleAsync(user, RoleToRemove);
 
 			return RedirectToPage("Index");
 		}
 		public async Task<IActionResult> OnPostRemoveAllRolesFromUserAsync()
 		{
-			var user = await UserManager.FindByEmailAsync(UsernameToRemoveRoleFrom);
+			var user = await _userManager.FindByEmailAsync(UsernameToRemoveRoleFrom);
 
 			if (user == null)
 			{
@@ -127,7 +127,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 
 			foreach (var role in RoleNames)
 			{
-				await UserManager.RemoveFromRoleAsync(user, role);
+				await _userManager.RemoveFromRoleAsync(user, role);
 			}
 
 			return RedirectToPage("Index");
@@ -136,8 +136,8 @@ namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 
 		public async Task<IActionResult> OnPostDeleteRoleAsync()
 		{
-			var role = await RoleManager.FindByNameAsync(RoleToRemove);
-			var result = await RoleManager.DeleteAsync(role);
+			var role = await _roleManager.FindByNameAsync(RoleToRemove);
+			var result = await _roleManager.DeleteAsync(role);
 			if (result.Succeeded)
 			{
 				return RedirectToPage();
