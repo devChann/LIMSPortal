@@ -26,66 +26,36 @@
 @if (SignInManager.IsSignedIn(User))
 {
 
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h4 class="d-flex justify-content-center align-items-center mb-3">
-                <span class="text-muted">Payment Details</span>
-              
-            </h4>
-            <ul class="list-group mb-3">
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6 class="my-0">User Details</h6>
+<div class="row">
+	@await Component.InvokeAsync("PaymentMethod")
+	<div class="col-md-6">
+		<h5 class="d-flex justify-content-center align-items-center mb-3">
+			<span class="text-muted">Payment Details</span>
+		</h5>
+		<ul class="list-group mb-3">
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-md-6">
+						<h6 class="my-0">Owner Details</h6>
 
-                            <small class="text-muted">Name: @Model.OwnerName</small> <br />
-                            <small class="text-muted">Identity Number: @Model.OwnerId</small> <br />
-                            <small class="text-muted">KRA PIN: @Model.OwnerPIN</small>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 class="my-0">Property Details</h6>
-                            <small class="text-muted">Property Number: @Model.ParcelNumber</small> <br />
-                            <small class="text-muted">Rate Year: @Model.FinancialYear</small>
-                        </div>
-                    </div>
-
-                </li>
-
-                <li class="list-group-item d-flex justify-content-center">
-                    <span>Total Rate (KSH): </span>
-                    <strong>@Model.PendingRate</strong>
-                </li>
-            </ul>
-
-            <h4 class="mb-3 text-center align-items-center text-muted">Choose Payment Method</h4>
-
-            <div class="justify-content-center">
-                <div class="flex-row d-md-flex justify-content-center">
-
-                    <div class="">
-                        <span class="btn btn-sm btn-outline-info">
-                            <script src="//checkout.stripe.com/v2/checkout.js"
-                                    class="stripe-button"
-                                    data-key="@Stripe.Value.StripePublishableKey"
-                                    data-locale="auto"
-                                    data-description="Sample Charge"
-                                    data-amount="@Model.PendingRate">
-                            </script>
-                        </span>
-
-                    </div>
-
-
-                    <div class="ml-2">
-                        <span class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#PaymentNotification">
-                            <img src="~/images/icons/mpesa.png" style="width:120px;height:30px" />
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
+						<small class="text-muted">Name: @Model.OwnerName</small> <br />
+						<small class="text-muted">Identity Number: @Model.OwnerId</small> <br />
+						<small class="text-muted">KRA PIN: @Model.OwnerPIN</small>
+					</div>
+					<div class="col-md-6">
+						<h6 class="my-0">Property Details</h6>
+						<small class="text-muted">Property Number: @Model.ParcelNumber</small> <br />
+						<small class="text-muted">Rate Year: @Model.FinancialYear</small>
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item d-flex justify-content-center">
+				<span>Total Pending Rate (KSH): </span>
+				<strong>@Model.PendingRate</strong>
+			</li>
+		</ul>
+	</div>
+</div>
 
 }
 else
@@ -97,85 +67,3 @@ else
         </div>
     </div>
 }
-
-@*Modal dialog*@
-	<div class="modal fade" id="PaymentNotification" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Make Payment</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="expenseForm" asp-controller="Payments" asp-action="PayWithMpesa" method="post">
-
-						<div class="form-group">
-							<label asp-for="OwnerName" class="control-label"></label>
-							<input disabled asp-for="OwnerName" class="form-control" />
-						</div>
-						<div class="form-group">
-							<label asp-for="PhoneNumber" class="control-label"></label><span>  (Use format: 254725123456)</span>
-							<input asp-for="PhoneNumber" value="@phone" placeholder="2547XXXXXXXX" class="form-control" />
-						</div>
-						<div class="form-group">
-							<label asp-for="PendingRate" class="control-label"></label>
-							<input asp-for="PendingRate" value="@pendingrate" class="form-control" />
-						</div>
-
-						<div class="form-group row">
-							<div class="col-sm-6">
-								<button type="submit" id="btnSubmit" class="btn btn-block btn-info">Make Payment</button>
-							</div>
-							<div class="col-sm-6">
-								<button type="button" class="btn btn-block btn-danger" data-dismiss="modal">Cancel</button>
-							</div>
-						</div>
-					</form>
-
-				</div>
-
-				
-			</div>
-		</div>
-
-		@section Scripts{
-			@*<script>
-				$(function () {
-
-					$('#loaddata').click(function () {
-
-						$('#loading-div-background').show();
-
-						Promise.resolve($.ajax({
-							type: "GET",
-							url: '/Home/GetData',
-							contentType: false,
-							processData: false
-						})).then(function (result) {
-							if (result) {
-								$('#loading-div-background').hide();
-								$("#tableheader").show()
-								var row = "";
-								$.each(result, function (index, item) {
-									row += "<tr><td><input type='checkbox'id='chk_"
-										+ item + "'/></td><td>" + item + "</td><td>"
-										+ item + "</td><td>" + item + "</td><td>" + item
-										+ "</td><td>" + item + "</td></tr> ";
-								});
-								$("#tablebody").html(row);
-							}
-						}).catch(function (e) {
-							console.log(e);
-						});
-					});
-
-				});
-			</script>*@
-
-		}
-
-	</div>
-
-

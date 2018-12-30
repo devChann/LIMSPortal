@@ -1,0 +1,77 @@
+﻿@model IEnumerable<LIMSCore.Entities.Beacon>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BeaconNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BeaconType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateSet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hcoordinate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorizontalDatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VerticalDatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Xcoordinate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ycoordinate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeaconNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BeaconType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateSet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hcoordinate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorizontalDatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VerticalDatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Xcoordinate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ycoordinate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

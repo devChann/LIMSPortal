@@ -2,17 +2,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using LIMSWebApp.ViewModels;
+using LIMSInfrastructure.Services.Payment;
 
 namespace LIMSWebApp.Controllers
 {
 	public class HomeController : Controller
-    {
+    {		
+
         public IActionResult Index()
         {
             return View();
         }
-        
-        [Authorize]
+
+		public IActionResult About()
+		{
+			return View();
+		}
+
+		[Authorize]
         public IActionResult Maps()
         {
             return View();
@@ -22,6 +29,7 @@ namespace LIMSWebApp.Controllers
         [Route("/services")]
         public IActionResult Services()
         {
+			
             return View();
         }        
 

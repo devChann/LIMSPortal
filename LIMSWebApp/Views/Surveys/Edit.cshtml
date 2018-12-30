@@ -1,0 +1,64 @@
+﻿@model LIMSCore.Entities.Survey
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Survey</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="CompsNo" class="control-label"></label>
+                <input asp-for="CompsNo" class="form-control" />
+                <span asp-validation-for="CompsNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfEntry" class="control-label"></label>
+                <input asp-for="DateOfEntry" class="form-control" />
+                <span asp-validation-for="DateOfEntry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParcelId" class="control-label"></label>
+                <input asp-for="ParcelId" class="form-control" />
+                <span asp-validation-for="ParcelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PdprefNo" class="control-label"></label>
+                <input asp-for="PdprefNo" class="form-control" />
+                <span asp-validation-for="PdprefNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlansNo" class="control-label"></label>
+                <input asp-for="PlansNo" class="form-control" />
+                <span asp-validation-for="PlansNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SurveyorsName" class="control-label"></label>
+                <input asp-for="SurveyorsName" class="form-control" />
+                <span asp-validation-for="SurveyorsName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TypeOfSurvey" class="control-label"></label>
+                <input asp-for="TypeOfSurvey" class="form-control" />
+                <span asp-validation-for="TypeOfSurvey" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

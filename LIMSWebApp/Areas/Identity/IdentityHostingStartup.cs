@@ -54,29 +54,34 @@ namespace LIMSWebApp.Areas.Identity
                     options.SignIn.RequireConfirmedPhoneNumber = false;})
                     .AddRoles<ApplicationRole>()
                     .AddRoleManager<RoleManager<ApplicationRole>>()
-                    .AddEntityFrameworkStores<LIMSCoreDbContext>()  
-                    .AddDefaultUI()
-                    .AddDefaultTokenProviders();
+                    .AddEntityFrameworkStores<LIMSCoreDbContext>()
+					.AddDefaultUI()
+					.AddDefaultTokenProviders();
 
-                services.AddAuthentication()
+				services.ConfigureApplicationCookie(options =>
+				{
+					options.LoginPath = "/account/login";
+					options.LogoutPath = "/account/logged-out";
+					options.AccessDeniedPath = "/access-denied";
+					options.SlidingExpiration = true;
+					options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+				});
+
+				services.AddAuthentication()
                 .AddGoogle(googleOptions =>
                 {
                     googleOptions.ClientId = context.Configuration["Authentication:Google:ClientId"];
                     googleOptions.ClientSecret = context.Configuration["Authentication:Google:ClientSecret"];
                 });
 
-                //wait for Microsoft.AspNetCore.Authentication.MicrosoftAccount package upgrade to 2.1.1
-                //.AddMicrosoftAccount(microsoftOptions => 
-                //{
-                //    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
-                //    microsoftOptions.ClientSecret = Configuration["Authentication:Miscrosoft:Password"];
-                //});
+				//wait for Microsoft.AspNetCore.Authentication.MicrosoftAccount package upgrade to 2.1.1
+				//.AddMicrosoftAccount(microsoftOptions => 
+				//{
+				//    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+				//    microsoftOptions.ClientSecret = Configuration["Authentication:Miscrosoft:Password"];
+				//});
 
-                services.AddAuthorization(AuthorizationPolicy.Execute);
-
-
-                
-
+				services.AddAuthorization(AuthorizationPolicy.Execute);
 
             });
         }

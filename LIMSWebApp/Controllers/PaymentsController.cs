@@ -18,6 +18,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
+using Braintree;
+using Microsoft.AspNetCore.Http;
+using LIMSInfrastructure.Services.Payment;
 
 namespace LIMSWebApp.Controllers
 {
@@ -32,10 +35,11 @@ namespace LIMSWebApp.Controllers
 		private readonly LIMSCoreDbContext _limsDbcontext;
 		private readonly IMpesaClient _mpesaClient;
 		private readonly IHostingEnvironment _hostingEnvironment;
+		private readonly IBraintreeService _braintreeService;
 
 		public PaymentsController(IMpesaClient mpesaClient,IConfiguration configuration, LIMSCoreDbContext payments,
 			UserManager<ApplicationUser> userManager, ISmsSender smsSender, ILogger<PaymentsController> logger,
-			LIMSCoreDbContext limscontext, IHostingEnvironment hostingEnvironment)
+			LIMSCoreDbContext limscontext, IHostingEnvironment hostingEnvironment, IBraintreeService braintreeService)
         {
 			_mpesaClient = mpesaClient;
 			_config = configuration;
@@ -45,9 +49,8 @@ namespace LIMSWebApp.Controllers
 			_logger = logger;
 			_limsDbcontext = limscontext;
 			_hostingEnvironment = hostingEnvironment;
-			
-			
-        }
+			_braintreeService = braintreeService;
+		}
 
         //TO DO: implement payment method selection (card/mpesa)
         [HttpGet]
@@ -170,7 +173,7 @@ namespace LIMSWebApp.Controllers
 
         [HttpPost]
 		[Route("/make-payment")]
-		public async Task<IActionResult> PayWithMpesa(RateViewModel Payment)
+		public async Task<IActionResult> PayWithMpesa(IFormCollection collection)
         {
             var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
 
@@ -182,16 +185,16 @@ namespace LIMSWebApp.Controllers
 
 
 			//var certificate =  _hostingEnvironment.ContentRootPath + "\\Certificates\\prod.cer";
-			var certificate = @"C:\Certificates\prod.cer";
+			var certificate = @"E:\Dev\Github\LIMSPortal\LIMSWebApp\Certificates\prod.cer";
 
-			var securityCredential = Credentials.EncryptPassword(certificate, "971796"); //for B2B, B2C, Reversal, TransactionStatus APIs
+			var securityCredential = Credentials.EncryptPassword(certificate, "313reset"); //for B2B, B2C, Reversal, TransactionStatus APIs
 
 			var registerMpesaUrl = new CustomerToBusinessRegisterUrlDto
 			{
-				ConfirmationURL = "https://demo.osl.co.ke:7574/api/confirm",
-				ValidationURL = "https://demo.osl.co.ke:7574/api/validate",
+				ConfirmationURL = "https://wachit.azurewebsites.net/api/confirm",
+				ValidationURL = "https://wachit.azurewebsites.net/api/validate",
 				ResponseType = "Cancelled",
-				ShortCode = "603047"
+				ShortCode = "601313"
 			};
 
 			try
@@ -206,26 +209,23 @@ namespace LIMSWebApp.Controllers
 				_logger.LogError($"An Error Occured:{e.Message}");
 			}
 
-			
-
-			
-
 			var MpesaExpressObject2 = new LipaNaMpesaOnlineDto
 			{
-				AccountReference = "ref",
-				Amount = Payment.PendingRate,
-				PartyA = Payment.PhoneNumber,
+				AccountReference = "bill",
+				Amount = collection["amount"],
+				PartyA = collection["phone_number"],
 				PartyB = "174379",
 				BusinessShortCode = "174379",
 				CallBackURL = "https://demo.osl.co.ke:7574/api/results",
 				Passkey = passKey,				  
-				PhoneNumber = Payment.PhoneNumber, 				
-				TransactionDesc = "test"					
+				PhoneNumber = collection["phone_number"], 				
+				TransactionDesc = "test",
+				TransactionType = TransactType.CustomerPayBillOnline
 			};
 
 			var paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject2, accesstoken, "mpesa/stkpush/v1/processrequest");
 			
-            await _smsSender.SendSmsAsync($"+{Payment.PhoneNumber}", $"Please enter Mpesa PIN on your phone to complete payment of Ksh: {Payment.PendingRate}");
+            await _smsSender.SendSmsAsync($"+{collection["phone_number"]}", $"Please enter Mpesa PIN on your phone to complete payment of Ksh: {collection["amount"]}");
 
 			//await _smsSender.SendSmsAsync($"+{Payment.PhoneNumber}", $"Security Credential: {securityCredential}");
 
@@ -241,5 +241,93 @@ namespace LIMSWebApp.Controllers
         {
             return View();
         }
-    }
+
+
+
+		public static readonly TransactionStatus[] transactionSuccessStatuses =
+		{
+			TransactionStatus.AUTHORIZED,
+			TransactionStatus.AUTHORIZING,
+			TransactionStatus.SETTLED,
+			TransactionStatus.SETTLING,
+			TransactionStatus.SETTLEMENT_CONFIRMED,
+			TransactionStatus.SETTLEMENT_PENDING,
+			TransactionStatus.SUBMITTED_FOR_SETTLEMENT
+		};
+
+		[HttpPost]
+		[Route("/braintreecheckout")]
+		public IActionResult BrainTreeCheckout(IFormCollection collection)
+		{
+			string nonceFromTheClient = collection["payment_method_nonce"];
+			var amount = decimal.Parse(collection["amount"]);
+
+
+			var request = new TransactionRequest
+			{
+				Amount = amount, //10.00M,				
+				PaymentMethodNonce = nonceFromTheClient,
+				Options = new TransactionOptionsRequest
+				{
+					SubmitForSettlement = true					
+				},
+				MerchantAccountId = "limsportaltests"
+			};
+
+			var gateway = _braintreeService.GetGateway();
+
+			var result = gateway.Transaction.Sale(request);
+
+			if (result.IsSuccess())
+			{
+				var transaction = result.Target;
+				return RedirectToAction("Show", new { id = transaction.Id });
+			}
+			else if (result.Transaction != null)
+			{
+				return RedirectToAction("Show", new { id = result.Transaction.Id });
+			}
+			else
+			{
+				var errorMessages = "";
+				foreach (var error in result.Errors.DeepAll())
+				{
+					errorMessages += "Error: " + (int)error.Code + " - " + error.Message + "\n";
+				}
+				TempData["Flash"] = errorMessages;
+				return RedirectToAction("New");
+			}
+		}
+
+		public ActionResult New()
+		{
+			var gateway = _braintreeService.GetGateway();
+			var clientToken = gateway.ClientToken.Generate();
+			ViewBag.ClientToken = clientToken;
+			return View();
+		}
+
+		public ActionResult Show(String id)
+		{
+			var gateway = _braintreeService.GetGateway();
+			var transaction = gateway.Transaction.Find(id);
+
+			if (transactionSuccessStatuses.Contains(transaction.Status))
+			{
+				TempData["header"] = "Sweet Success!";
+				TempData["icon"] = "success";
+				TempData["message"] = "Your test transaction has been successfully processed. See the Braintree API response and try again.";
+			}
+			else
+			{
+				TempData["header"] = "Transaction Failed";
+				TempData["icon"] = "fail";
+				TempData["message"] = "Your test transaction has a status of " + transaction.Status + ". See the Braintree API response and try again.";
+			};
+
+			ViewBag.Transaction = transaction;
+			return View();
+		}
+
+	}
 }

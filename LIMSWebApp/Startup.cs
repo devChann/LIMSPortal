@@ -55,14 +55,7 @@ namespace LIMSCore
 				options.AutomaticAuthentication = true;
 			});
 
-			services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/account/sign-in";
-                options.LogoutPath = "/account/logged-out";
-                options.AccessDeniedPath = "/access-denied";
-                options.SlidingExpiration = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-            });
+			
 
             //Add notification services
             services.AddSingleton<IEmailSender, EmailSender>();
@@ -70,11 +63,12 @@ namespace LIMSCore
             services.Configure<SMSoptions>(Configuration);
 
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //Configure Stripe
-            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+			//Configure Stripe
+			services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
+			services.AddSingleton<IBraintreeService, BraintreeService>();
 			
 			services.AddSignalR(); 
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace LIMSCore.Entities
+﻿namespace LIMSCore.Entities
 {
-    public partial class GroupOw
+	public partial class GroupOw
     {
         public int Id { get; set; }
         public string County { get; set; }

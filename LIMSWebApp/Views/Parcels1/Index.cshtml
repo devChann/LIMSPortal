@@ -1,0 +1,107 @@
+﻿@model IEnumerable<LIMSCore.Entities.Parcel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParcelNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Administration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LandUse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Owner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnershipRightsNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResponsibilitiesNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RestrictionsNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpatialUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tenure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valuation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParcelNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Administration.DistrictName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LandUse.LandUseType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnershipRightsNavigation.RightType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rate.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Registration.RegistrationType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResponsibilitiesNavigation.ResponsibilityType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RestrictionsNavigation.RestrictionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpatialUnit.SpatialUnitType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tenure.TenureType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valuation.ValuationBookNo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

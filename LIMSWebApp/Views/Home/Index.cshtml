@@ -6,14 +6,14 @@
 
 
 <div class="jumbotron text-center">
-    <h3>Land Information Management System</h3>
-    <p class="lead">LIMS portal is an integrated platform that provides access to land information and
-	makes it easy to manage land rent and land rates for property owners and County Governements.
+    <h3>County Land Information Management System</h3>
+    <p class="lead">An integrated platform that provides access to land information and
+	makes it easy for County Governments and property owners to manage rateable property.
 	</p>
     <hr class="my-4">
 
     <p class="lead">
-        <a class="btn btn-info btn-lg" href="#" role="button">Learn more</a>
+        <a class="btn btn-info btn-lg" asp-controller="Home" asp-action="About" role="button">Learn more</a>
     </p>
 </div>
 
@@ -24,7 +24,7 @@
             <div class="col-md-4 bottom10">
 
                 <div>
-                    <a asp-controller="Payments" asp-action="Index" class="text-info">
+                    <a asp-controller="Parcels" asp-action="Search" class="text-info">
 
                         <div class="card text-center card-padding">
                             <span class="card-title"><i class='fa fa-search fa-3x text-center'></i></span>
@@ -45,7 +45,7 @@
                         <span class="card-title"><i class='fa fa-chart-bar fa-3x mx-auto'></i></span>
                         <div class="card-body">
                             <h4 class="card-title">Dashboard</h4>
-                            <p class="card-text">Go to My Dashboard</p>
+                            <p class="card-text">Go to Dashboard</p>
 
                         </div>
                     </div>
@@ -54,13 +54,13 @@
             </div>
             <div class="col-md-4 bottom10">
 
-                <a asp-controller="Payments" asp-action="PayWithMpesa" class="text-info">
+                <a asp-controller="Home" asp-action="Services" class="text-info">
 
                     <div class="card text-center card-padding">
-                        <span class="card-title"><i class='fa fa-money-bill-alt fa-3x text-center'></i></span>
+                        <span class="card-title"><i class='fa fa-cog fa-3x text-center'></i></span>
                         <div class="card-body">
-                            <h4 class="card-title">Payments</h4>
-                            <p class="card-text">Pay Land Rates</p>
+                            <h4 class="card-title">County Services</h4>
+                            <p class="card-text">View Available Services</p>
 
                         </div>
                     </div>

@@ -26,6 +26,9 @@
 		<link href="~/lib/ol-layerswitcher/ol-layerswitcher.css" rel="stylesheet" />
 		<link rel="stylesheet" href="~/css/site.css" />
 
+		<link href="~/css/braintree/normalize.css" rel="stylesheet" />
+		<link href="~/css/braintree/overrides.css" rel="stylesheet" />
+
 
 	</environment>
 	<environment exclude="Development">
@@ -50,7 +53,7 @@
 
 <body>
 
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top font-weight-bold">
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top font-weight-normal">
 		<a class="navbar-brand" asp-controller="Home" asp-action="Index">LIMS</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#limsNavbar" aria-controls="limsNavbar" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -62,9 +65,9 @@
 				<a class="nav-item nav-link text-light" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
 				<a class="nav-item nav-link text-light" asp-controller="Home" asp-action="Contact">Contact<span class="sr-only">(current)</span></a>
 			</div>
-			
-				@await Html.PartialAsync("_LoginPartial")
-			
+
+			@await Html.PartialAsync("_LoginPartial")
+
 		</div>
 	</nav>
 
@@ -72,17 +75,16 @@
 
 	<div class="container">
 		@*<div class="row">
-				@await Html.PartialAsync("_SidebarNav")
-			</div>*@
+			@await Html.PartialAsync("_SidebarNav")
+		</div>*@
 
 
 		@RenderBody()
 
-		<footer class="pt-4 my-md-5 pt-md-5 border-top top10">
-			<div class="row">
-
-				<div class="col-3 col-md">
-					<h5>Key Services</h5>
+		<footer class="pl-2 pr-2 pt-4 my-md-5 pt-md-4 border-top top10 bg-white" >
+			<div class="row pb-4 text-dark font-weight-light ">
+				<div class="col-4 col-md">
+					<h5>Useful Links</h5>
 					<ul class="list-unstyled text-small">
 						<li><a class="text-muted" href="#">Land Transfers</a></li>
 						<li><a class="text-muted" href="#">Land Search</a></li>
@@ -90,7 +92,7 @@
 						<li><a class="text-muted" href="#">Land Development</a></li>
 					</ul>
 				</div>
-				<div class="col-3 col-md">
+				<div class="col-4 col-md">
 					<h5>Partner Websites</h5>
 					<ul class="list-unstyled text-small">
 						<li><a class="text-muted" href="#">MoLHUD</a></li>
@@ -99,28 +101,35 @@
 						<li><a class="text-muted" href="#">Council of Governors</a></li>
 					</ul>
 				</div>
-				<div class="col-3 col-md">
-					<h5>About Us</h5>
+				<div class="col-4 col-md">
+					<h5>Contact Us</h5>
 					<ul class="list-unstyled text-small">
-						<li><a class="text-muted" href="#">Our Team</a></li>
+						<li><a class="text-muted" href="#">Our Team </a></li>
 						<li><a class="text-muted" href="#">Our Branches</a></li>
 						<li><a class="text-muted" asp-controller="Home" asp-action="Privacy">Our Privacy Policy</a></li>
 						<li><a class="text-muted" asp-controller="Home" asp-action="Terms">Terms & Conditions</a></li>
 					</ul>
 				</div>
-				<div class="col-3 col-md">
+
+			</div>
+			<div class="row pb-md-4 border-top justify-content-center">
+				<div class="col-md-12  text-center text-small">
 					<small>
-						<a href="http://www.osl.co.ke" target="_blank" style="text-decoration:none">
-							<span style="color:darkorange; ">Oakar</span>
-							<span style="color:black;">Services Ltd.</span>
-						</a>
-					</small>
-					<small class="d-block mb-3 text-muted">
-						&copy; @DateTime.Now.Year Land Information Management System. - All Rights Reserved.
+						<span>
+							County Land Information Management System&nbsp;|&nbsp;
+						</span>
+						<span>
+							<span>&copy; @DateTime.Now.Year </span>
+							<a href="http://www.osl.co.ke" target="_blank" class="text-muted" style="text-decoration:none">
+								Oakar Services Limited
+							</a>&nbsp;|&nbsp;All Rights Reserved
+						</span>
 					</small>
 				</div>
 			</div>
+
 		</footer>
+		
 	</div>
 
 	<environment include="Development">
@@ -129,7 +138,7 @@
 		<script src="~/lib/jquery-migrate/jquery-migrate.min.js"></script>
 		<script src="~/lib/jquery.easing/jquery.easing.min.js"></script>
 		<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
-		<script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>		
+		<script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>
 
 		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 

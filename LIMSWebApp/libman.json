@@ -41,7 +41,11 @@
 		{
 			"library": "jquery-migrate@3.0.1",
 			"destination": "wwwroot/lib/jquery-migrate/"
+		},
+		{
+			"library": "vue@2.5.21",
+			"destination": "wwwroot/lib/vue-js/"
 		}
-		
+
 	]
 }
