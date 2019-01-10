@@ -3,14 +3,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using LIMSWebApp.ViewModels;
 using LIMSInfrastructure.Services.Payment;
+using System;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace LIMSWebApp.Controllers
 {
 	public class HomeController : Controller
-    {		
+    {
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public HomeController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
 
         public IActionResult Index()
         {
+			var file = Path.Combine(_hostingEnvironment.ContentRootPath,"Certificates", "prod.cer");
+
+			Console.WriteLine($"This is the file:{file}");
+
             return View();
         }
 

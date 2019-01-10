@@ -70,11 +70,11 @@ namespace LIMSCore
 
 			services.AddSingleton<IBraintreeService, BraintreeService>();
 			
-			services.AddSignalR(); 
+			services.AddSignalR();	
 
-			
 
-        }
+
+		}
 
        
 

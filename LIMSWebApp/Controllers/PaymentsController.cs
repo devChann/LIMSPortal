@@ -21,6 +21,7 @@ using X.PagedList;
 using Braintree;
 using Microsoft.AspNetCore.Http;
 using LIMSInfrastructure.Services.Payment;
+using System.IO;
 
 namespace LIMSWebApp.Controllers
 {
@@ -52,8 +53,15 @@ namespace LIMSWebApp.Controllers
 			_braintreeService = braintreeService;
 		}
 
-        //TO DO: implement payment method selection (card/mpesa)
-        [HttpGet]
+		public string MpesaCertificate {
+			get
+			{
+				return Path.Combine(_hostingEnvironment.ContentRootPath, "Certificates", "prod.cer");
+			}
+		}
+
+		//TO DO: implement payment method selection (card/mpesa)
+		[HttpGet]
         [Route("/payment-method")]
         public IActionResult Index()
         {         
@@ -185,9 +193,9 @@ namespace LIMSWebApp.Controllers
 
 
 			//var certificate =  _hostingEnvironment.ContentRootPath + "\\Certificates\\prod.cer";
-			var certificate = @"E:\Dev\Github\LIMSPortal\LIMSWebApp\Certificates\prod.cer";
+			//var certificate = @"E:\Dev\Github\LIMSPortal\LIMSWebApp\Certificates\prod.cer";
 
-			var securityCredential = Credentials.EncryptPassword(certificate, "313reset"); //for B2B, B2C, Reversal, TransactionStatus APIs
+			var securityCredential = Credentials.EncryptPassword(MpesaCertificate, "313reset"); //for B2B, B2C, Reversal, TransactionStatus APIs
 
 			var registerMpesaUrl = new CustomerToBusinessRegisterUrlDto
 			{
