@@ -7,10 +7,10 @@ namespace LIMSCore.Entities
     {
         public Beacon()
         {
-            BoundaryBeacon = new HashSet<BoundaryBeacon>();
+            BoundaryBeacons = new HashSet<BoundaryBeacon>();
         }
 
-        public int Id { get; set; }
+        public int BeaconId { get; set; }
         public string BeaconNum { get; set; }
         public string BeaconType { get; set; }
         public DateTime DateSet { get; set; }
@@ -20,6 +20,6 @@ namespace LIMSCore.Entities
         public double Xcoordinate { get; set; }
         public double Ycoordinate { get; set; }
 
-        public ICollection<BoundaryBeacon> BoundaryBeacon { get; set; }
+        public ICollection<BoundaryBeacon> BoundaryBeacons { get; set; }
     }
 }

@@ -5,12 +5,12 @@ namespace LIMSCore.Entities
 {
     public partial class Service
     {
-        public int Id { get; set; }
-        public DateTime? Date { get; set; }
-        public bool IsComplete { get; set; }
-        public int Opid { get; set; }
+        public int ServiceId { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public bool IsComplete { get; set; }        
         public int? Progress { get; set; }
 
-        public Operation Op { get; set; }
+		public int OperationId { get; set; }
+		public Operation Operation { get; set; }
     }
 }

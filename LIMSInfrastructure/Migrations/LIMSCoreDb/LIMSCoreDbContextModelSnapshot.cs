@@ -15,7 +15,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-preview3-35497")
+                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -105,7 +105,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.Administration", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AdministrationId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -115,27 +115,27 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("LocationName");
 
-                    b.HasKey("Id");
+                    b.HasKey("AdministrationId");
 
                     b.ToTable("Administration");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Apartment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ApartmentId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApartmentName");
 
-                    b.HasKey("Id");
+                    b.HasKey("ApartmentId");
 
                     b.ToTable("Apartment");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Beacon", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BeaconId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -157,20 +157,20 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<double>("Ycoordinate");
 
-                    b.HasKey("Id");
+                    b.HasKey("BeaconId");
 
                     b.ToTable("Beacon");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Boundary", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BoundaryId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("BoundaryType");
 
-                    b.HasKey("Id");
+                    b.HasKey("BoundaryId");
 
                     b.ToTable("Boundary");
                 });
@@ -190,7 +190,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.Building", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BuildingId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -200,7 +200,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("StreetAddress");
 
-                    b.HasKey("Id");
+                    b.HasKey("BuildingId");
 
                     b.HasIndex("ApartmentId");
 
@@ -209,28 +209,28 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.ToTable("Building");
                 });
 
-            modelBuilder.Entity("LIMSCore.Entities.BuildingRegulations", b =>
+            modelBuilder.Entity("LIMSCore.Entities.BuildingRegulation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BuildingRegulationId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Gcr")
+                    b.Property<double>("GCR")
                         .HasColumnName("GCR");
 
-                    b.Property<double>("Pcr")
+                    b.Property<double>("PCR")
                         .HasColumnName("PCR");
 
                     b.Property<double>("PlotFrontage");
 
-                    b.HasKey("Id");
+                    b.HasKey("BuildingRegulationId");
 
-                    b.ToTable("BuildingRegulations");
+                    b.ToTable("BuildingRegulation");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Charge", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ChargeId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -245,20 +245,20 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("RepaymentTerm");
 
-                    b.HasKey("Id");
+                    b.HasKey("ChargeId");
 
                     b.ToTable("Charge");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Freehold", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("FreeholdId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("TenureId");
 
-                    b.HasKey("Id");
+                    b.HasKey("FreeholdId");
 
                     b.HasIndex("TenureId")
                         .IsUnique();
@@ -266,11 +266,32 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.ToTable("Freehold");
                 });
 
+            modelBuilder.Entity("LIMSCore.Entities.Group", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("County");
+
+                    b.Property<string>("GroupType");
+
+                    b.Property<int>("OwnerId");
+
+                    b.HasKey("GroupId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Group");
+                });
+
             modelBuilder.Entity("LIMSCore.Entities.GroupGroupLeadership", b =>
                 {
                     b.Property<int>("GroupId");
 
                     b.Property<int>("GroupLeadershipId");
+
+                    b.Property<int>("GroupGroupLeadershipId");
 
                     b.HasKey("GroupId", "GroupLeadershipId");
 
@@ -281,20 +302,26 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.GroupGroupMembership", b =>
                 {
-                    b.Property<int>("GroupMembershipId");
+                    b.Property<int>("GroupGroupMembershipId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("GroupId");
 
-                    b.HasKey("GroupMembershipId", "GroupId");
+                    b.Property<int>("GroupMembershipId");
+
+                    b.HasKey("GroupGroupMembershipId");
 
                     b.HasIndex("GroupId");
+
+                    b.HasIndex("GroupMembershipId");
 
                     b.ToTable("GroupGroupMembership");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.GroupLeadership", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GroupLeadershipId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -311,24 +338,11 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         .HasDefaultValueSql("(getdate())");
 
                     b.Property<int>("PersonId")
-                        .HasColumnName("PersonID");
+                        .HasColumnName("PersonId");
 
-                    b.HasKey("Id");
+                    b.HasKey("GroupLeadershipId");
 
                     b.ToTable("GroupLeadership");
-                });
-
-            modelBuilder.Entity("LIMSCore.Entities.GroupLeadershipPerson", b =>
-                {
-                    b.Property<int>("GroupLeadershipId");
-
-                    b.Property<int>("PersonId");
-
-                    b.HasKey("GroupLeadershipId", "PersonId");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("GroupLeadershipPerson");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.GroupMembership", b =>
@@ -352,25 +366,6 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.HasKey("Id");
 
                     b.ToTable("GroupMembership");
-                });
-
-            modelBuilder.Entity("LIMSCore.Entities.GroupOw", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("County");
-
-                    b.Property<string>("GroupType");
-
-                    b.Property<int>("OwnerId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("GroupOW");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.InsitutionLeadership", b =>
@@ -398,13 +393,13 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.Institution", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("InstitutionId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("InstitutionType");
 
-                    b.HasKey("Id");
+                    b.HasKey("InstitutionId");
 
                     b.ToTable("Institution");
                 });
@@ -415,6 +410,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("InstitutionId");
 
+                    b.Property<int>("InstitutionInstitutionLeadershipId");
+
                     b.HasKey("InstitutionLeadershipId", "InstitutionId");
 
                     b.HasIndex("InstitutionId");
@@ -422,26 +419,13 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.ToTable("InstitutionInstitutionLeadership");
                 });
 
-            modelBuilder.Entity("LIMSCore.Entities.InstitutionLeadershipPerson", b =>
-                {
-                    b.Property<int>("InstitutionLeadershipId");
-
-                    b.Property<int>("PersonId");
-
-                    b.HasKey("InstitutionLeadershipId", "PersonId");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("InstitutionLeadershipPerson");
-                });
-
             modelBuilder.Entity("LIMSCore.Entities.LandUse", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("LandUseId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BuildingRegulationsId");
+                    b.Property<int>("BuildingRegulationId");
 
                     b.Property<DateTime?>("EndDate")
                         .ValueGeneratedOnAdd()
@@ -459,9 +443,9 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("ZoneId");
 
-                    b.HasKey("Id");
+                    b.HasKey("LandUseId");
 
-                    b.HasIndex("BuildingRegulationsId");
+                    b.HasIndex("BuildingRegulationId");
 
                     b.HasIndex("ZoneId");
 
@@ -470,7 +454,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.Leasehold", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("LeaseholdId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -482,7 +466,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("TenureId");
 
-                    b.HasKey("Id");
+                    b.HasKey("LeaseholdId");
 
                     b.HasIndex("TenureId");
 
@@ -491,28 +475,24 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.MapIndex", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MapIndexId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("MapSheetNum");
 
-                    b.Property<int>("ParcelId");
-
-                    b.HasKey("Id");
+                    b.HasKey("MapIndexId");
 
                     b.ToTable("MapIndex");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Mortgage", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MortgageId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double>("Amount");
-
-                    b.Property<string>("BuildingId");
 
                     b.Property<double>("InterestRate");
 
@@ -522,29 +502,29 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("RepaymentTerm");
 
-                    b.HasKey("Id");
+                    b.HasKey("MortgageId");
 
                     b.ToTable("Mortgage");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Operation", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("OperationId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("OperationName");
 
-                    b.Property<int?>("Parcelid");
+                    b.Property<int?>("ParcelId");
 
-                    b.HasKey("Id");
+                    b.HasKey("OperationId");
 
-                    b.HasIndex("Parcelid");
+                    b.HasIndex("ParcelId");
 
                     b.ToTable("Operation");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Owner", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OwnerId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -559,31 +539,31 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("TelephoneAddress");
 
-                    b.HasKey("Id");
+                    b.HasKey("OwnerId");
 
                     b.ToTable("Owner");
                 });
 
-            modelBuilder.Entity("LIMSCore.Entities.OwnershipRights", b =>
+            modelBuilder.Entity("LIMSCore.Entities.OwnershipRight", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OwnershipRightId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("RightType");
 
-                    b.HasKey("Id");
+                    b.HasKey("OwnershipRightId");
 
-                    b.ToTable("OwnershiRights");
+                    b.ToTable("OwnershipRight");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Parcel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ParcelId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Administrationid");
+                    b.Property<int>("AdministrationId");
 
                     b.Property<double?>("Area");
 
@@ -591,7 +571,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("OwnerId");
 
-                    b.Property<int>("OwnershipRights");
+                    b.Property<int>("OwnershipRightId");
 
                     b.Property<string>("ParcelNum")
                         .IsRequired();
@@ -600,9 +580,9 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("RegistrationId");
 
-                    b.Property<int>("Responsibilities");
+                    b.Property<int>("ResponsibilityId");
 
-                    b.Property<int>("Restrictions");
+                    b.Property<int>("RestrictionId");
 
                     b.Property<int>("SpatialUnitId");
 
@@ -610,23 +590,23 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("ValuationId");
 
-                    b.HasKey("Id");
+                    b.HasKey("ParcelId");
 
-                    b.HasIndex("Administrationid");
+                    b.HasIndex("AdministrationId");
 
                     b.HasIndex("LandUseId");
 
                     b.HasIndex("OwnerId");
 
-                    b.HasIndex("OwnershipRights");
+                    b.HasIndex("OwnershipRightId");
 
                     b.HasIndex("RateId");
 
                     b.HasIndex("RegistrationId");
 
-                    b.HasIndex("Responsibilities");
+                    b.HasIndex("ResponsibilityId");
 
-                    b.HasIndex("Restrictions");
+                    b.HasIndex("RestrictionId");
 
                     b.HasIndex("SpatialUnitId");
 
@@ -639,28 +619,21 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.Payments", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PaymentsId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal?>("Amount")
-                        .HasColumnType("money");
+                    b.Property<decimal?>("Amount");
 
-                    b.Property<string>("ModeOfPayment")
-                        .HasMaxLength(10);
+                    b.Property<string>("ModeOfPayment");
 
                     b.Property<int?>("ParcelId");
 
-                    b.Property<DateTime?>("PaymentDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime?>("PaymentDate");
 
-                    b.Property<string>("ReceiptNo")
-                        .HasColumnType("text");
+                    b.Property<string>("ReceiptNo");
 
-                    b.HasKey("Id");
+                    b.HasKey("PaymentsId");
 
                     b.HasIndex("ParcelId");
 
@@ -669,7 +642,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.Person", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PersonId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -679,49 +652,83 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("OwnerId");
 
+                    b.Property<string>("PIN");
+
                     b.Property<string>("PersonType");
 
                     b.Property<string>("Phone");
 
-                    b.Property<string>("Pin")
-                        .HasColumnName("PIN");
-
-                    b.HasKey("Id");
+                    b.HasKey("PersonId");
 
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Person");
                 });
 
+            modelBuilder.Entity("LIMSCore.Entities.PersonGroupLeadership", b =>
+                {
+                    b.Property<int>("GroupLeadershipId");
+
+                    b.Property<int>("PersonId");
+
+                    b.Property<int>("PersonGroupLeadershipId");
+
+                    b.HasKey("GroupLeadershipId", "PersonId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("PersonGroupLeadership");
+                });
+
             modelBuilder.Entity("LIMSCore.Entities.PersonGroupMembership", b =>
                 {
+                    b.Property<int>("PersonGroupMembershipId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("GroupMembershipId");
 
                     b.Property<int>("PersonId");
 
-                    b.HasKey("GroupMembershipId", "PersonId");
+                    b.HasKey("PersonGroupMembershipId");
+
+                    b.HasIndex("GroupMembershipId");
 
                     b.HasIndex("PersonId");
 
                     b.ToTable("PersonGroupMembership");
                 });
 
-            modelBuilder.Entity("LIMSCore.Entities.Rates", b =>
+            modelBuilder.Entity("LIMSCore.Entities.PersonInstitutionLeadership", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnName("id");
+                    b.Property<int>("InstitutionLeadershipId");
+
+                    b.Property<int>("PersonId");
+
+                    b.Property<int>("PersonInstitutionLeadershipId");
+
+                    b.HasKey("InstitutionLeadershipId", "PersonId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("PersonInstitutionLeadership");
+                });
+
+            modelBuilder.Entity("LIMSCore.Entities.Rate", b =>
+                {
+                    b.Property<int>("RateId");
 
                     b.Property<decimal?>("Amount")
                         .HasColumnType("money");
 
-                    b.HasKey("Id");
+                    b.HasKey("RateId");
 
-                    b.ToTable("Rates");
+                    b.ToTable("Rate");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Registration", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RegistrationId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -737,14 +744,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("TitleNo");
 
-                    b.HasKey("Id");
+                    b.HasKey("RegistrationId");
 
                     b.ToTable("Registration");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Reserve", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ReserveId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -754,14 +761,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("ReserveType");
 
-                    b.HasKey("Id");
+                    b.HasKey("ReserveId");
 
                     b.ToTable("Reserve");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Responsibility", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ResponsibilityId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -769,70 +776,67 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("ResponsibilityType");
 
-                    b.HasKey("Id");
+                    b.HasKey("ResponsibilityId");
 
                     b.ToTable("Responsibility");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Restriction", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RestrictionId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ChrageId")
-                        .HasColumnName("chrageId");
+                    b.Property<int?>("ChargeId")
+                        .HasColumnName("ChargeId");
 
-                    b.Property<int?>("LandUseId")
-                        .HasColumnName("landUseId");
-
-                    b.Property<int?>("Morgageid")
-                        .HasColumnName("morgageid");
+                    b.Property<int?>("MortgageId")
+                        .HasColumnName("MortgageId");
 
                     b.Property<int?>("ReserveId")
-                        .HasColumnName("ReserveID");
+                        .HasColumnName("ReserveId");
 
                     b.Property<string>("RestrictionType");
 
-                    b.Property<int?>("Statutoryid");
+                    b.Property<int?>("StatutoryRestrictionId");
 
-                    b.HasKey("Id");
+                    b.HasKey("RestrictionId");
 
-                    b.HasIndex("ChrageId");
+                    b.HasIndex("ChargeId");
 
-                    b.HasIndex("Morgageid");
+                    b.HasIndex("MortgageId");
 
                     b.HasIndex("ReserveId");
 
-                    b.HasIndex("Statutoryid");
+                    b.HasIndex("StatutoryRestrictionId");
 
                     b.ToTable("Restriction");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Service", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("ServiceId");
 
-                    b.Property<DateTime?>("Date")
+                    b.Property<DateTime?>("DateCreated")
                         .HasColumnType("datetime");
 
                     b.Property<bool>("IsComplete");
 
-                    b.Property<int>("Opid")
-                        .HasColumnName("OPid");
+                    b.Property<int>("OperationId")
+                        .HasColumnName("OperationId");
 
                     b.Property<int?>("Progress");
 
-                    b.HasKey("Id");
+                    b.HasKey("ServiceId");
 
-                    b.HasIndex("Opid");
+                    b.HasIndex("OperationId");
 
                     b.ToTable("Service");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.SpatialUnit", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SpatialUnitId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -856,11 +860,11 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("SpatialUnitType");
 
-                    b.Property<int>("SurveyClassId");
+                    b.Property<int>("SurveyId");
 
                     b.Property<double?>("Volume");
 
-                    b.HasKey("Id");
+                    b.HasKey("SpatialUnitId");
 
                     b.HasIndex("BoundaryId")
                         .IsUnique();
@@ -869,20 +873,20 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.HasIndex("SpatialUnitSetId");
 
-                    b.HasIndex("SurveyClassId");
+                    b.HasIndex("SurveyId");
 
                     b.ToTable("SpatialUnit");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.SpatialUnitSet", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SpatialUnitSetId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Label");
 
-                    b.HasKey("Id");
+                    b.HasKey("SpatialUnitSetId");
 
                     b.ToTable("SpatialUnitSet");
                 });
@@ -900,9 +904,9 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.ToTable("SpatialUnitSetRegistration");
                 });
 
-            modelBuilder.Entity("LIMSCore.Entities.StaturtoryRestriction", b =>
+            modelBuilder.Entity("LIMSCore.Entities.StatutoryRestriction", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("StatutoryRestrictionId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -910,14 +914,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("RestrictingAuthority");
 
-                    b.HasKey("Id");
+                    b.HasKey("StatutoryRestrictionId");
 
-                    b.ToTable("StaturtoryRestriction");
+                    b.ToTable("StatutoryRestriction");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Survey", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SurveyId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -929,7 +933,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("ParcelId");
 
-                    b.Property<int>("PdprefNo")
+                    b.Property<int>("PdpRefNo")
                         .HasColumnName("PDPRefNo");
 
                     b.Property<string>("PlansNo");
@@ -938,27 +942,27 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("TypeOfSurvey");
 
-                    b.HasKey("Id");
+                    b.HasKey("SurveyId");
 
                     b.ToTable("Survey");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Tenure", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TenureId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("TenureType");
 
-                    b.HasKey("Id");
+                    b.HasKey("TenureId");
 
                     b.ToTable("Tenure");
                 });
 
-            modelBuilder.Entity("LIMSCore.Entities.Valution", b =>
+            modelBuilder.Entity("LIMSCore.Entities.Valuation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ValuationId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -976,22 +980,20 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<string>("Valuer");
 
-                    b.HasKey("Id");
+                    b.HasKey("ValuationId");
 
-                    b.ToTable("Valution");
+                    b.ToTable("Valuation");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Zone", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ZoneId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("RegulationId");
-
                     b.Property<string>("ZoneType");
 
-                    b.HasKey("Id");
+                    b.HasKey("ZoneId");
 
                     b.ToTable("Zone");
                 });
@@ -1195,8 +1197,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.HasData(
                         new
                         {
-                            Id = "2b37b32d-26a9-4aa5-a869-7de6db6f4e23",
-                            ConcurrencyStamp = "f9223225-3c28-42cf-812c-da5f0caffdc4",
+                            Id = "39c53c55-b17e-4766-826e-f8518ea4e4ff",
+                            ConcurrencyStamp = "3a2fc33d-b4ea-46cb-a253-027c78bbcc16",
                             Name = "Authors",
                             NormalizedName = "AUTHORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1204,8 +1206,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         },
                         new
                         {
-                            Id = "3acc021c-6073-45ee-a32a-5b368e777cec",
-                            ConcurrencyStamp = "29374409-38c9-4ba6-ba55-ef8061ae363b",
+                            Id = "cf4ce666-2410-4293-9672-9af2e55a57c6",
+                            ConcurrencyStamp = "f1c75dff-1d2e-450d-9449-3a0fdb37173b",
                             Name = "Editors",
                             NormalizedName = "EDITORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1213,8 +1215,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         },
                         new
                         {
-                            Id = "c6252fb0-3b13-42fb-8d4a-d3d35a21d631",
-                            ConcurrencyStamp = "3db2c288-7dca-4c06-b02c-dd5e75b7686d",
+                            Id = "8b4f5751-875a-4978-a3c0-c3b4499fa2e3",
+                            ConcurrencyStamp = "dbb17230-0b45-4999-916c-84629c4437ca",
                             Name = "Administrators",
                             NormalizedName = "ADMINISTRATORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1245,12 +1247,12 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
             modelBuilder.Entity("LIMSCore.Entities.BoundaryBeacon", b =>
                 {
                     b.HasOne("LIMSCore.Entities.Beacon", "Beacon")
-                        .WithMany("BoundaryBeacon")
+                        .WithMany("BoundaryBeacons")
                         .HasForeignKey("BeaconId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.Boundary", "Boundary")
-                        .WithMany("BoundaryBeacon")
+                        .WithMany("BoundaryBeacons")
                         .HasForeignKey("BoundaryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -1263,7 +1265,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.SpatialUnit", "SpatialUnit")
-                        .WithMany("Building")
+                        .WithMany("Buildings")
                         .HasForeignKey("SpatialUnitId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -1271,13 +1273,26 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
             modelBuilder.Entity("LIMSCore.Entities.Freehold", b =>
                 {
                     b.HasOne("LIMSCore.Entities.Tenure", "Tenure")
-                        .WithOne("Freehold")
-                        .HasForeignKey("LIMSCore.Entities.Freehold", "TenureId")
+                        .WithMany("Freeholds")
+                        .HasForeignKey("TenureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("LIMSCore.Entities.Group", b =>
+                {
+                    b.HasOne("LIMSCore.Entities.Owner", "Owner")
+                        .WithMany("Groups")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.GroupGroupLeadership", b =>
                 {
+                    b.HasOne("LIMSCore.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("LIMSCore.Entities.GroupLeadership", "GroupLeadership")
                         .WithMany("GroupGroupLeadership")
                         .HasForeignKey("GroupLeadershipId")
@@ -1286,30 +1301,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.GroupGroupMembership", b =>
                 {
+                    b.HasOne("LIMSCore.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("LIMSCore.Entities.GroupMembership", "GroupMembership")
-                        .WithMany("GroupGroupMembership")
+                        .WithMany("GroupGroupMemberships")
                         .HasForeignKey("GroupMembershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("LIMSCore.Entities.GroupLeadershipPerson", b =>
-                {
-                    b.HasOne("LIMSCore.Entities.GroupLeadership", "GroupLeadership")
-                        .WithMany("GroupLeadershipPerson")
-                        .HasForeignKey("GroupLeadershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("LIMSCore.Entities.Person", "Person")
-                        .WithMany("GroupLeadershipPerson")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("LIMSCore.Entities.GroupOw", b =>
-                {
-                    b.HasOne("LIMSCore.Entities.Owner", "Owner")
-                        .WithMany("GroupOw")
-                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -1326,28 +1325,15 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("LIMSCore.Entities.InstitutionLeadershipPerson", b =>
-                {
-                    b.HasOne("LIMSCore.Entities.InsitutionLeadership", "InstitutionLeadership")
-                        .WithMany("InstitutionLeadershipPerson")
-                        .HasForeignKey("InstitutionLeadershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("LIMSCore.Entities.Person", "Person")
-                        .WithMany("InstitutionLeadershipPerson")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("LIMSCore.Entities.LandUse", b =>
                 {
-                    b.HasOne("LIMSCore.Entities.BuildingRegulations", "BuildingRegulations")
-                        .WithMany("LandUse")
-                        .HasForeignKey("BuildingRegulationsId")
+                    b.HasOne("LIMSCore.Entities.BuildingRegulation", "BuildingRegulation")
+                        .WithMany("LandUses")
+                        .HasForeignKey("BuildingRegulationId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.Zone", "Zone")
-                        .WithMany("LandUse")
+                        .WithMany("LandUses")
                         .HasForeignKey("ZoneId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -1355,7 +1341,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
             modelBuilder.Entity("LIMSCore.Entities.Leasehold", b =>
                 {
                     b.HasOne("LIMSCore.Entities.Tenure", "Tenure")
-                        .WithMany("Leasehold")
+                        .WithMany("Leaseholds")
                         .HasForeignKey("TenureId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -1363,8 +1349,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
             modelBuilder.Entity("LIMSCore.Entities.Operation", b =>
                 {
                     b.HasOne("LIMSCore.Entities.Parcel", "Parcel")
-                        .WithMany("Operation")
-                        .HasForeignKey("Parcelid")
+                        .WithMany("Operations")
+                        .HasForeignKey("ParcelId")
                         .HasConstraintName("FK_Operation_Parcel")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -1372,62 +1358,56 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
             modelBuilder.Entity("LIMSCore.Entities.Parcel", b =>
                 {
                     b.HasOne("LIMSCore.Entities.Administration", "Administration")
-                        .WithMany("Parcel")
-                        .HasForeignKey("Administrationid")
-                        .HasConstraintName("FK_Parcel_Administration")
+                        .WithMany("Parcels")
+                        .HasForeignKey("AdministrationId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.LandUse", "LandUse")
-                        .WithMany("Parcel")
+                        .WithMany("Parcels")
                         .HasForeignKey("LandUseId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.Owner", "Owner")
-                        .WithMany("Parcel")
+                        .WithMany("Parcels")
                         .HasForeignKey("OwnerId")
-                        .HasConstraintName("FK_Parcel_Owners")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Entities.OwnershipRights", "OwnershipRightsNavigation")
-                        .WithMany("Parcel")
-                        .HasForeignKey("OwnershipRights")
-                        .HasConstraintName("FK_Parcel_OwnershiRights")
+                    b.HasOne("LIMSCore.Entities.OwnershipRight", "OwnershipRight")
+                        .WithMany("Parcels")
+                        .HasForeignKey("OwnershipRightId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Entities.Rates", "Rate")
-                        .WithMany("Parcel")
-                        .HasForeignKey("RateId")
-                        .HasConstraintName("FK_Parcel_Rates");
+                    b.HasOne("LIMSCore.Entities.Rate", "Rate")
+                        .WithMany("Parcels")
+                        .HasForeignKey("RateId");
 
                     b.HasOne("LIMSCore.Entities.Registration", "Registration")
-                        .WithMany("Parcel")
+                        .WithMany("Parcels")
                         .HasForeignKey("RegistrationId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Entities.Responsibility", "ResponsibilitiesNavigation")
-                        .WithMany("Parcel")
-                        .HasForeignKey("Responsibilities")
-                        .HasConstraintName("FK_Parcel_Responsibility")
+                    b.HasOne("LIMSCore.Entities.Responsibility", "Responsibility")
+                        .WithMany("Parcels")
+                        .HasForeignKey("ResponsibilityId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Entities.Restriction", "RestrictionsNavigation")
-                        .WithMany("Parcel")
-                        .HasForeignKey("Restrictions")
-                        .HasConstraintName("FK_Parcel_Restriction")
+                    b.HasOne("LIMSCore.Entities.Restriction", "Restriction")
+                        .WithMany("Parcels")
+                        .HasForeignKey("RestrictionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.SpatialUnit", "SpatialUnit")
-                        .WithMany("Parcel")
+                        .WithMany("Parcels")
                         .HasForeignKey("SpatialUnitId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.Tenure", "Tenure")
-                        .WithMany("Parcel")
+                        .WithMany("Parcels")
                         .HasForeignKey("TenureId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Entities.Valution", "Valuation")
-                        .WithMany("Parcel")
+                    b.HasOne("LIMSCore.Entities.Valuation", "Valuation")
+                        .WithMany("Parcels")
                         .HasForeignKey("ValuationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -1436,59 +1416,84 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 {
                     b.HasOne("LIMSCore.Entities.Parcel", "Parcel")
                         .WithMany("Payments")
-                        .HasForeignKey("ParcelId")
-                        .HasConstraintName("FK_Payments_Parcel");
+                        .HasForeignKey("ParcelId");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Person", b =>
                 {
                     b.HasOne("LIMSCore.Entities.Owner", "Owner")
-                        .WithMany("Person")
+                        .WithMany("Persons")
                         .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("LIMSCore.Entities.PersonGroupLeadership", b =>
+                {
+                    b.HasOne("LIMSCore.Entities.GroupLeadership", "GroupLeadership")
+                        .WithMany("PersonGroupLeaderships")
+                        .HasForeignKey("GroupLeadershipId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LIMSCore.Entities.Person", "Person")
+                        .WithMany("PersonGroupLeaderships")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.PersonGroupMembership", b =>
                 {
                     b.HasOne("LIMSCore.Entities.GroupMembership", "GroupMembership")
-                        .WithMany("PersonGroupMembership")
+                        .WithMany("PersonGroupMemberships")
                         .HasForeignKey("GroupMembershipId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.Person", "Person")
-                        .WithMany("PersonGroupMembership")
+                        .WithMany("PersonGroupMemberships")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("LIMSCore.Entities.PersonInstitutionLeadership", b =>
+                {
+                    b.HasOne("LIMSCore.Entities.InsitutionLeadership", "InstitutionLeadership")
+                        .WithMany("PersonInstitutionLeaderships")
+                        .HasForeignKey("InstitutionLeadershipId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LIMSCore.Entities.Person", "Person")
+                        .WithMany("PersonInstitutionLeaderships")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Restriction", b =>
                 {
-                    b.HasOne("LIMSCore.Entities.Charge", "Chrage")
-                        .WithMany("Restriction")
-                        .HasForeignKey("ChrageId")
+                    b.HasOne("LIMSCore.Entities.Charge", "Charge")
+                        .WithMany("Restrictions")
+                        .HasForeignKey("ChargeId")
                         .HasConstraintName("FK_Restriction_Charge");
 
-                    b.HasOne("LIMSCore.Entities.Mortgage", "Morgage")
-                        .WithMany("Restriction")
-                        .HasForeignKey("Morgageid")
+                    b.HasOne("LIMSCore.Entities.Mortgage", "Mortgage")
+                        .WithMany("Restrictions")
+                        .HasForeignKey("MortgageId")
                         .HasConstraintName("FK_Restriction_Mortgage");
 
                     b.HasOne("LIMSCore.Entities.Reserve", "Reserve")
-                        .WithMany("Restriction")
+                        .WithMany("Restrictions")
                         .HasForeignKey("ReserveId")
                         .HasConstraintName("FK_Restriction_Reserve");
 
-                    b.HasOne("LIMSCore.Entities.StaturtoryRestriction", "Statutory")
-                        .WithMany("Restriction")
-                        .HasForeignKey("Statutoryid")
-                        .HasConstraintName("FK_Restriction_StaturtoryRestriction");
+                    b.HasOne("LIMSCore.Entities.StatutoryRestriction", "StatutoryRestriction")
+                        .WithMany("Restrictions")
+                        .HasForeignKey("StatutoryRestrictionId")
+                        .HasConstraintName("FK_Restriction_StatutoryRestriction");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Service", b =>
                 {
-                    b.HasOne("LIMSCore.Entities.Operation", "Op")
-                        .WithMany("Service")
-                        .HasForeignKey("Opid")
+                    b.HasOne("LIMSCore.Entities.Operation", "Operation")
+                        .WithMany("Services")
+                        .HasForeignKey("OperationId")
                         .HasConstraintName("FK_Service_Operation");
                 });
 
@@ -1500,30 +1505,30 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.MapIndex", "MapIndex")
-                        .WithMany("SpatialUnit")
+                        .WithMany("SpatialUnits")
                         .HasForeignKey("MapIndexId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.SpatialUnitSet", "SpatialUnitSet")
-                        .WithMany("SpatialUnit")
+                        .WithMany("SpatialUnits")
                         .HasForeignKey("SpatialUnitSetId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LIMSCore.Entities.Survey", "SurveyClass")
-                        .WithMany("SpatialUnit")
-                        .HasForeignKey("SurveyClassId")
+                    b.HasOne("LIMSCore.Entities.Survey", "Survey")
+                        .WithMany("SpatialUnits")
+                        .HasForeignKey("SurveyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.SpatialUnitSetRegistration", b =>
                 {
                     b.HasOne("LIMSCore.Entities.Registration", "Registration")
-                        .WithMany("SpatialUnitSetRegistration")
+                        .WithMany("SpatialUnitSetRegistrations")
                         .HasForeignKey("RegistrationId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LIMSCore.Entities.SpatialUnitSet", "SpatialUnitSet")
-                        .WithMany("SpatialUnitSetRegistration")
+                        .WithMany("SpatialUnitSetRegistrations")
                         .HasForeignKey("SpatialUnitSetId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -7,8 +7,8 @@ namespace LIMSCore.Entities
     {
         public GroupMembership()
         {
-            GroupGroupMembership = new HashSet<GroupGroupMembership>();
-            PersonGroupMembership = new HashSet<PersonGroupMembership>();
+            GroupGroupMemberships = new HashSet<GroupGroupMembership>();
+            PersonGroupMemberships = new HashSet<PersonGroupMembership>();
         }
 
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace LIMSCore.Entities
         public string MembershipStatus { get; set; }
         public DateTime MembershipUntil { get; set; }
 
-        public ICollection<GroupGroupMembership> GroupGroupMembership { get; set; }
-        public ICollection<PersonGroupMembership> PersonGroupMembership { get; set; }
+        public ICollection<GroupGroupMembership> GroupGroupMemberships { get; set; }
+        public ICollection<PersonGroupMembership> PersonGroupMemberships { get; set; }
     }
 }

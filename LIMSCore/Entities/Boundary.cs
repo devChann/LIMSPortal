@@ -7,13 +7,13 @@ namespace LIMSCore.Entities
     {
         public Boundary()
         {
-            BoundaryBeacon = new HashSet<BoundaryBeacon>();
+            BoundaryBeacons = new HashSet<BoundaryBeacon>();
         }
 
-        public int Id { get; set; }
+        public int BoundaryId { get; set; }
         public string BoundaryType { get; set; }
 
         public SpatialUnit SpatialUnit { get; set; }
-        public ICollection<BoundaryBeacon> BoundaryBeacon { get; set; }
+        public ICollection<BoundaryBeacon> BoundaryBeacons { get; set; }
     }
 }

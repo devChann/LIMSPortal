@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace LIMSCore.Entities
 {
-    public partial class Rates
+    public partial class Rate
     {
-        public Rates()
+        public Rate()
         {
-            Parcel = new HashSet<Parcel>();
+            Parcels = new HashSet<Parcel>();
         }
 
-        public int Id { get; set; }
+        public int RateId { get; set; }
         public decimal? Amount { get; set; }
 
-        public ICollection<Parcel> Parcel { get; set; }
+        public ICollection<Parcel> Parcels { get; set; }
     }
 }

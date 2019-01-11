@@ -7,14 +7,14 @@ namespace LIMSCore.Entities
     {
         public Reserve()
         {
-            Restriction = new HashSet<Restriction>();
+            Restrictions = new HashSet<Restriction>();
         }
 
-        public int Id { get; set; }
+        public int ReserveId { get; set; }
         public string ComplianceStatus { get; set; }
         public string EnforcingAuthority { get; set; }
         public string ReserveType { get; set; }
 
-        public ICollection<Restriction> Restriction { get; set; }
+        public ICollection<Restriction> Restrictions { get; set; }
     }
 }

@@ -7,14 +7,14 @@ namespace LIMSCore.Entities
     {
         public SpatialUnitSet()
         {
-            SpatialUnit = new HashSet<SpatialUnit>();
-            SpatialUnitSetRegistration = new HashSet<SpatialUnitSetRegistration>();
+            SpatialUnits = new HashSet<SpatialUnit>();
+            SpatialUnitSetRegistrations = new HashSet<SpatialUnitSetRegistration>();
         }
 
-        public int Id { get; set; }
+        public int SpatialUnitSetId { get; set; }
         public string Label { get; set; }
 
-        public ICollection<SpatialUnit> SpatialUnit { get; set; }
-        public ICollection<SpatialUnitSetRegistration> SpatialUnitSetRegistration { get; set; }
+        public ICollection<SpatialUnit> SpatialUnits { get; set; }
+        public ICollection<SpatialUnitSetRegistration> SpatialUnitSetRegistrations { get; set; }
     }
 }

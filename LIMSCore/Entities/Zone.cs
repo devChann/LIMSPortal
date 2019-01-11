@@ -7,13 +7,12 @@ namespace LIMSCore.Entities
     {
         public Zone()
         {
-            LandUse = new HashSet<LandUse>();
+            LandUses = new HashSet<LandUse>();
         }
 
-        public int Id { get; set; }
-        public int RegulationId { get; set; }
-        public string ZoneType { get; set; }
+        public int ZoneId { get; set; }        
+        public string ZoneType { get; set; }		
 
-        public ICollection<LandUse> LandUse { get; set; }
+		public ICollection<LandUse> LandUses { get; set; }
     }
 }

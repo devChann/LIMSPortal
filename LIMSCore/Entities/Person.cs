@@ -7,22 +7,23 @@ namespace LIMSCore.Entities
     {
         public Person()
         {
-            GroupLeadershipPerson = new HashSet<GroupLeadershipPerson>();
-            InstitutionLeadershipPerson = new HashSet<InstitutionLeadershipPerson>();
-            PersonGroupMembership = new HashSet<PersonGroupMembership>();
+			PersonGroupLeaderships = new HashSet<PersonGroupLeadership>();
+			PersonInstitutionLeaderships = new HashSet<PersonInstitutionLeadership>();
+            PersonGroupMemberships = new HashSet<PersonGroupMembership>();
         }
 
-        public int Id { get; set; }
+        public int PersonId { get; set; }
         public string Email { get; set; }
-        public string Mobile { get; set; }
-        public int OwnerId { get; set; }
+        public string Mobile { get; set; }       
         public string PersonType { get; set; }
         public string Phone { get; set; }
-        public string Pin { get; set; }
+        public string PIN { get; set; }
 
-        public Owner Owner { get; set; }
-        public ICollection<GroupLeadershipPerson> GroupLeadershipPerson { get; set; }
-        public ICollection<InstitutionLeadershipPerson> InstitutionLeadershipPerson { get; set; }
-        public ICollection<PersonGroupMembership> PersonGroupMembership { get; set; }
+		public int OwnerId { get; set; }
+		public Owner Owner { get; set; }
+
+        public ICollection<PersonGroupLeadership> PersonGroupLeaderships { get; set; }
+        public ICollection<PersonInstitutionLeadership> PersonInstitutionLeaderships { get; set; }
+        public ICollection<PersonGroupMembership> PersonGroupMemberships { get; set; }
     }
 }

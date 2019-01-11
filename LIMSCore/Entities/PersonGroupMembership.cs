@@ -5,10 +5,12 @@ namespace LIMSCore.Entities
 {
     public partial class PersonGroupMembership
     {
-        public int GroupMembershipId { get; set; }
-        public int PersonId { get; set; }
+		public int PersonGroupMembershipId { get; set; }
 
+		public int GroupMembershipId { get; set; }     
         public GroupMembership GroupMembership { get; set; }
-        public Person Person { get; set; }
+
+		public int PersonId { get; set; }
+		public Person Person { get; set; }
     }
 }

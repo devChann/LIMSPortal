@@ -7,14 +7,14 @@ namespace LIMSCore.Entities
     {
         public Administration()
         {
-            Parcel = new HashSet<Parcel>();
+            Parcels = new HashSet<Parcel>();
         }
 
-        public int Id { get; set; }
+        public int AdministrationId { get; set; }
         public string BlockName { get; set; }
         public string DistrictName { get; set; }
         public string LocationName { get; set; }
 
-        public ICollection<Parcel> Parcel { get; set; }
+        public ICollection<Parcel> Parcels { get; set; }
     }
 }

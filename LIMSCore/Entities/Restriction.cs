@@ -7,21 +7,24 @@ namespace LIMSCore.Entities
     {
         public Restriction()
         {
-            Parcel = new HashSet<Parcel>();
+            Parcels = new HashSet<Parcel>();
         }
 
-        public int Id { get; set; }
-        public int? ChrageId { get; set; }
-        public int? LandUseId { get; set; }
-        public int? Morgageid { get; set; }
-        public int? ReserveId { get; set; }
-        public string RestrictionType { get; set; }
-        public int? Statutoryid { get; set; }
+        public int RestrictionId { get; set; }                       
+        public string RestrictionType { get; set; }       
 
-        public Charge Chrage { get; set; }
-        public Mortgage Morgage { get; set; }
-        public Reserve Reserve { get; set; }
-        public StaturtoryRestriction Statutory { get; set; }
-        public ICollection<Parcel> Parcel { get; set; }
+		public int? ChargeId { get; set; }
+		public Charge Charge { get; set; }
+
+		public int? MortgageId { get; set; }
+		public Mortgage Mortgage { get; set; }
+
+		public int? ReserveId { get; set; }
+		public Reserve Reserve { get; set; }
+
+		public int? StatutoryRestrictionId { get; set; }
+		public StatutoryRestriction StatutoryRestriction { get; set; }
+
+        public ICollection<Parcel> Parcels { get; set; }
     }
 }

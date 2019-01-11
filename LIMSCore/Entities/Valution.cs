@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace LIMSCore.Entities
 {
-    public partial class Valution
+    public partial class Valuation
     {
-        public Valution()
+        public Valuation()
         {
-            Parcel = new HashSet<Parcel>();
+            Parcels = new HashSet<Parcel>();
         }
 
-        public int Id { get; set; }
+        public int ValuationId { get; set; }
         public string Remarks { get; set; }
         public string SerialNo { get; set; }
         public string ValuationBookNo { get; set; }
@@ -18,6 +18,6 @@ namespace LIMSCore.Entities
         public double? Value { get; set; }
         public string Valuer { get; set; }
 
-        public ICollection<Parcel> Parcel { get; set; }
+        public ICollection<Parcel> Parcels { get; set; }
     }
 }

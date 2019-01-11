@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using LIMSWebApp.ViewModels.PropertiesViewModels;
 using LIMSInfrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
-using LIMSInfrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LIMSWebApp.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class PropertiesController : Controller
     {
         private readonly LIMSCoreDbContext _limscontext;
@@ -46,7 +42,7 @@ namespace LIMSWebApp.Controllers
             if (owner != null)
             {
                 parcelsowned = _limscontext.Parcel
-                .Where(i => i.OwnerId == owner.Id)
+                .Where(i => i.OwnerId == owner.OwnerId)
                 .Select(a => new PropertiesViewModel
                 {
                     ParcelNum = a.ParcelNum,
@@ -71,8 +67,8 @@ namespace LIMSWebApp.Controllers
                 .Include(a => a.Administration)
                 .Include(b => b.LandUse)
                 .Include(c => c.Owner)
-                .Include(d => d.Restrictions)
-                .Include(d => d.Responsibilities)
+                .Include(d => d.Restriction)
+				.Include(d => d.Responsibility)
                 .Include(d => d.Valuation)
                 .ToList();
 

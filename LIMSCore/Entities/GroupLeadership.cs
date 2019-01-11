@@ -8,10 +8,10 @@ namespace LIMSCore.Entities
         public GroupLeadership()
         {
             GroupGroupLeadership = new HashSet<GroupGroupLeadership>();
-            GroupLeadershipPerson = new HashSet<GroupLeadershipPerson>();
+			PersonGroupLeaderships = new HashSet<PersonGroupLeadership>();
         }
 
-        public int Id { get; set; }
+        public int GroupLeadershipId { get; set; }
         public string LeadershipRole { get; set; }
         public DateTime LeadershipSince { get; set; }
         public string LeadershipStatus { get; set; }
@@ -19,6 +19,6 @@ namespace LIMSCore.Entities
         public int PersonId { get; set; }
 
         public ICollection<GroupGroupLeadership> GroupGroupLeadership { get; set; }
-        public ICollection<GroupLeadershipPerson> GroupLeadershipPerson { get; set; }
+        public ICollection<PersonGroupLeadership> PersonGroupLeaderships { get; set; }
     }
 }

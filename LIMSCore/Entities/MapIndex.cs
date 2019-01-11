@@ -7,13 +7,13 @@ namespace LIMSCore.Entities
     {
         public MapIndex()
         {
-            SpatialUnit = new HashSet<SpatialUnit>();
+            SpatialUnits = new HashSet<SpatialUnit>();
         }
 
-        public int Id { get; set; }
+        public int MapIndexId { get; set; }
         public string MapSheetNum { get; set; }
-        public int ParcelId { get; set; }
+       
 
-        public ICollection<SpatialUnit> SpatialUnit { get; set; }
+        public ICollection<SpatialUnit> SpatialUnits { get; set; }
     }
 }

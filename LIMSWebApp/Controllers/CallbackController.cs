@@ -101,7 +101,7 @@ namespace LIMSWebApp.Controllers
 
 			//get property
 			var parcel = _limsDbcontext.Parcel
-				.Include(r => r.Rate).Where(o => o.OwnerId == owner.Id).FirstOrDefault();
+				.Include(r => r.Rate).Where(o => o.OwnerId == owner.OwnerId).FirstOrDefault();
 
 			var currentRate = parcel.Rate.Amount;
 

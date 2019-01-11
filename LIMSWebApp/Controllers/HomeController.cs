@@ -19,11 +19,7 @@ namespace LIMSWebApp.Controllers
         }
 
         public IActionResult Index()
-        {
-			var file = Path.Combine(_hostingEnvironment.ContentRootPath,"Certificates", "prod.cer");
-
-			Console.WriteLine($"This is the file:{file}");
-
+        {		
             return View();
         }
 
@@ -41,8 +37,7 @@ namespace LIMSWebApp.Controllers
         [Authorize]
         [Route("/services")]
         public IActionResult Services()
-        {
-			
+        {		
             return View();
         }        
 

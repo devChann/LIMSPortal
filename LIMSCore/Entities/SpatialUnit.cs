@@ -7,29 +7,33 @@ namespace LIMSCore.Entities
     {
         public SpatialUnit()
         {
-            Building = new HashSet<Building>();
-            Parcel = new HashSet<Parcel>();
+            Buildings = new HashSet<Building>();
+            Parcels = new HashSet<Parcel>();
         }
 
-        public int Id { get; set; }
-        public double? Area { get; set; }
-        public int BoundaryId { get; set; }
+        public int SpatialUnitId { get; set; }
+        public double? Area { get; set; }       
         public string Label { get; set; }
         public string Layer { get; set; }
-        public double? Length { get; set; }
-        public int MapIndexId { get; set; }
+        public double? Length { get; set; }       
         public int PreliminaryUnitId { get; set; }
-        public string ReferencePoint { get; set; }
-        public int SpatialUnitSetId { get; set; }
-        public string SpatialUnitType { get; set; }
-        public int SurveyClassId { get; set; }
+        public string ReferencePoint { get; set; }       
+        public string SpatialUnitType { get; set; }      
         public double? Volume { get; set; }
 
-        public Boundary Boundary { get; set; }
-        public MapIndex MapIndex { get; set; }
-        public SpatialUnitSet SpatialUnitSet { get; set; }
-        public Survey SurveyClass { get; set; }
-        public ICollection<Building> Building { get; set; }
-        public ICollection<Parcel> Parcel { get; set; }
+		public int BoundaryId { get; set; }
+		public Boundary Boundary { get; set; }
+
+		public int MapIndexId { get; set; }
+		public MapIndex MapIndex { get; set; }
+
+		public int SpatialUnitSetId { get; set; }
+		public SpatialUnitSet SpatialUnitSet { get; set; }
+
+		public int SurveyId { get; set; }
+		public Survey Survey { get; set; }
+
+        public ICollection<Building> Buildings { get; set; }
+        public ICollection<Parcel> Parcels { get; set; }
     }
 }

@@ -7,20 +7,20 @@ namespace LIMSCore.Entities
     {
         public Owner()
         {
-            GroupOw = new HashSet<GroupOw>();
-            Parcel = new HashSet<Parcel>();
-            Person = new HashSet<Person>();
+            Groups = new HashSet<Group>();
+            Parcels = new HashSet<Parcel>();
+            Persons = new HashSet<Person>();
         }
 
-        public int Id { get; set; }
+        public int OwnerId { get; set; }
         public string Name { get; set; }
         public string OwnerType { get; set; }
         public string PIN { get; set; }
         public string PostalAddress { get; set; }
         public string TelephoneAddress { get; set; }
 
-        public ICollection<GroupOw> GroupOw { get; set; }
-        public ICollection<Parcel> Parcel { get; set; }
-        public ICollection<Person> Person { get; set; }
+        public ICollection<Group> Groups { get; set; }
+        public ICollection<Parcel> Parcels { get; set; }
+        public ICollection<Person> Persons { get; set; }
     }
 }

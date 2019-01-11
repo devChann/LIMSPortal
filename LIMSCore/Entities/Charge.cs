@@ -7,16 +7,16 @@ namespace LIMSCore.Entities
     {
         public Charge()
         {
-            Restriction = new HashSet<Restriction>();
+            Restrictions = new HashSet<Restriction>();
         }
 
-        public int Id { get; set; }
+        public int ChargeId { get; set; }
         public double Amount { get; set; }
         public double InterestRate { get; set; }
         public string Lender { get; set; }
         public int Ranking { get; set; }
         public int RepaymentTerm { get; set; }
 
-        public ICollection<Restriction> Restriction { get; set; }
+        public ICollection<Restriction> Restrictions { get; set; }
     }
 }

@@ -7,13 +7,13 @@ namespace LIMSCore.Entities
     {
         public Responsibility()
         {
-            Parcel = new HashSet<Parcel>();
+            Parcels = new HashSet<Parcel>();
         }
 
-        public int Id { get; set; }
+        public int ResponsibilityId { get; set; }
         public string PerformanceRequirement { get; set; }
         public string ResponsibilityType { get; set; }
 
-        public ICollection<Parcel> Parcel { get; set; }
+        public ICollection<Parcel> Parcels { get; set; }
     }
 }

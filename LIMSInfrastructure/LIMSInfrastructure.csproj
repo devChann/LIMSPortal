@@ -16,6 +16,14 @@
   <ItemGroup>
     <Compile Include="Migrations\LIMSCoreDb\20181124110434_Merged_Contexts_V1.cs" />
     <Compile Include="Migrations\LIMSCoreDb\20181124110434_Merged_Contexts_V1.Designer.cs" />
+    <Compile Include="Migrations\LIMSCoreDb\20190111085019_v2.cs" />
+    <Compile Include="Migrations\LIMSCoreDb\20190111085019_v2.designer.cs">
+      <DependentUpon>20190111085019_v2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\LIMSCoreDb\20190111093144_v3.cs" />
+    <Compile Include="Migrations\LIMSCoreDb\20190111093144_v3.designer.cs">
+      <DependentUpon>20190111093144_v3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\LIMSCoreDb\LIMSCoreDbContextModelSnapshot.cs" />
   </ItemGroup>
 

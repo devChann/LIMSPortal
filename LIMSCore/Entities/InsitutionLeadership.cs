@@ -8,7 +8,7 @@ namespace LIMSCore.Entities
         public InsitutionLeadership()
         {
             InstitutionInstitutionLeadership = new HashSet<InstitutionInstitutionLeadership>();
-            InstitutionLeadershipPerson = new HashSet<InstitutionLeadershipPerson>();
+			PersonInstitutionLeaderships = new HashSet<PersonInstitutionLeadership>();
         }
 
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace LIMSCore.Entities
         public string MembershipStatus { get; set; }
 
         public ICollection<InstitutionInstitutionLeadership> InstitutionInstitutionLeadership { get; set; }
-        public ICollection<InstitutionLeadershipPerson> InstitutionLeadershipPerson { get; set; }
+        public ICollection<PersonInstitutionLeadership> PersonInstitutionLeaderships { get; set; }
     }
 }

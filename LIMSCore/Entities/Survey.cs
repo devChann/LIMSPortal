@@ -7,18 +7,18 @@ namespace LIMSCore.Entities
     {
         public Survey()
         {
-            SpatialUnit = new HashSet<SpatialUnit>();
+            SpatialUnits = new HashSet<SpatialUnit>();
         }
 
-        public int Id { get; set; }
+        public int SurveyId { get; set; }
         public string CompsNo { get; set; }
         public DateTime? DateOfEntry { get; set; }
         public int ParcelId { get; set; }
-        public int PdprefNo { get; set; }
+        public int PdpRefNo { get; set; }
         public string PlansNo { get; set; }
         public string SurveyorsName { get; set; }
         public string TypeOfSurvey { get; set; }
 
-        public ICollection<SpatialUnit> SpatialUnit { get; set; }
+        public ICollection<SpatialUnit> SpatialUnits { get; set; }
     }
 }
