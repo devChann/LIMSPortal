@@ -1,0 +1,36 @@
+﻿@model LIMSCore.Entities.BuildingRegulation
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BuildingRegulation</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GCR)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GCR)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PCR)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PCR)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlotFrontage)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlotFrontage)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.BuildingRegulationId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

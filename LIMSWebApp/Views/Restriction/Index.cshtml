@@ -1,0 +1,59 @@
+﻿@model IEnumerable<LIMSCore.Entities.Restriction>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RestrictionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Charge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mortgage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reserve)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatutoryRestriction)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RestrictionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Charge.ChargeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mortgage.MortgageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reserve.ReserveId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatutoryRestriction.StatutoryRestrictionId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RestrictionId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RestrictionId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RestrictionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

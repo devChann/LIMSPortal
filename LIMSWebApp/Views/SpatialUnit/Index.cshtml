@@ -1,0 +1,101 @@
+﻿@model IEnumerable<LIMSCore.Entities.SpatialUnit>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Label)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Layer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Length)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PreliminaryUnitId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReferencePoint)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpatialUnitType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Volume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Boundary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MapIndex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpatialUnitSet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Survey)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Layer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreliminaryUnitId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReferencePoint)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpatialUnitType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Boundary.BoundaryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MapIndex.MapIndexId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpatialUnitSet.SpatialUnitSetId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Survey.SurveyId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SpatialUnitId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SpatialUnitId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SpatialUnitId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

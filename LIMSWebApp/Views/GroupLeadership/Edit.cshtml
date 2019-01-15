@@ -1,0 +1,51 @@
+﻿@model LIMSCore.Entities.GroupLeadership
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>GroupLeadership</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="GroupLeadershipId" />
+            <div class="form-group">
+                <label asp-for="LeadershipRole" class="control-label"></label>
+                <input asp-for="LeadershipRole" class="form-control" />
+                <span asp-validation-for="LeadershipRole" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeadershipSince" class="control-label"></label>
+                <input asp-for="LeadershipSince" class="form-control" />
+                <span asp-validation-for="LeadershipSince" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeadershipStatus" class="control-label"></label>
+                <input asp-for="LeadershipStatus" class="form-control" />
+                <span asp-validation-for="LeadershipStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeadershipUntil" class="control-label"></label>
+                <input asp-for="LeadershipUntil" class="form-control" />
+                <span asp-validation-for="LeadershipUntil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonId" class="control-label"></label>
+                <input asp-for="PersonId" class="form-control" />
+                <span asp-validation-for="PersonId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

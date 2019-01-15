@@ -1,0 +1,46 @@
+﻿@model LIMSCore.Entities.InsitutionLeadership
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>InsitutionLeadership</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="MemberSince" class="control-label"></label>
+                <input asp-for="MemberSince" class="form-control" />
+                <span asp-validation-for="MemberSince" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemberUntil" class="control-label"></label>
+                <input asp-for="MemberUntil" class="form-control" />
+                <span asp-validation-for="MemberUntil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MembershipRole" class="control-label"></label>
+                <input asp-for="MembershipRole" class="form-control" />
+                <span asp-validation-for="MembershipRole" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MembershipStatus" class="control-label"></label>
+                <input asp-for="MembershipStatus" class="form-control" />
+                <span asp-validation-for="MembershipStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

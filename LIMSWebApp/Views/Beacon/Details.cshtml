@@ -1,0 +1,66 @@
+﻿@model LIMSCore.Entities.Beacon
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Beacon</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BeaconNum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BeaconNum)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BeaconType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BeaconType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateSet)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateSet)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Hcoordinate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Hcoordinate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HorizontalDatum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HorizontalDatum)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.VerticalDatum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VerticalDatum)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Xcoordinate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Xcoordinate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ycoordinate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ycoordinate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.BeaconId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
