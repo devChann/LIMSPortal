@@ -1,99 +1,115 @@
 ﻿@page "/account/register"
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+	ViewData["Title"] = "Register";
 }
 
 
-<div class="row">
-    <div class="col-md-12 text-md-center">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>@*<i class="fa fa-user"></i>*@ Register</h2>
-            <hr />
-            <div asp-validation-summary="All" class="alert-danger"></div>
-            
-                    <div class="row ml-auto">
-                        <div class="form-inline ">
-                            @*<i class="fa fa-user"></i>*@
-                            <label class="customLable" asp-for="Input.FirstName"></label>
-                            <input asp-for="Input.FirstName" class="form-control" />
-                            <span asp-validation-for="Input.FirstName" class="alert-danger"></span>
-                        </div>
-                        <div class="form-inline ">
-                            @*<i class="fa fa-user"></i>*@
-                            <label class="customLable" asp-for="Input.LastName"></label>
-                            <input asp-for="Input.LastName" class="form-control" />
-                            <span asp-validation-for="Input.LastName" class="alert-danger"></span>
-                        </div>
-                        
-                    </div>
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card bg-light">
+			<div class="card-header text-center"><h4>Register</h4></div>
+			<div class="card-body text-center">
+				<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+					<div asp-validation-summary="All" class="alert-danger"></div>
 
-                    <div class="row ml-auto top5">
-                        <div class="form-inline">
-                            @*<i class="fa fa-user"></i>*@
-                            <label class="customLable" asp-for="Input.MiddleName"></label>
-                            <input asp-for="Input.MiddleName" class="form-control" />
-                            <span asp-validation-for="Input.MiddleName" class="alert-danger"></span>
-                        </div>
-                        <div class="form-inline">
-                            @*<i class="fa fa-user"></i>*@
-                            <label class="customLable" asp-for="Input.UserName"></label>
-                            <input asp-for="Input.UserName" class="form-control" />
-                            <span asp-validation-for="Input.UserName" class="alert-danger"></span>
-                        </div>
-                    </div>
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.FirstName"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.FirstName" class="form-control" />
+							<span asp-validation-for="Input.FirstName" class="alert-danger"></span>
+						</div>
+					</div>
 
-                    <div class="row ml-auto top5">
-                        <div class="form-inline">
-                            @*<i class="fa fa-user"></i>*@
-                            <label class="customLable" asp-for="Input.IDNumber"></label>
-                            <input asp-for="Input.IDNumber" class="form-control" />
-                            <span asp-validation-for="Input.IDNumber" class="alert-danger"></span>
-                        </div>
-                        <div class="form-inline">
-                            @*<i class="fa fa-id-card"></i>*@
-                            <label class="customLable" asp-for="Input.KRAPIN"></label>
-                            <input asp-for="Input.KRAPIN" class="form-control" />
-                            <span asp-validation-for="Input.KRAPIN" class="alert-danger"></span>
-                        </div>
-                    </div>
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.LastName"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.LastName" class="form-control" />
+							<span asp-validation-for="Input.LastName" class="alert-danger"></span>
 
-                    <div class="row ml-auto top5" style="text-align:right">
-                        <div class="form-inline">
-                            @*<i class="fa fa-envelope"></i>*@
-                            <label class="customLable" asp-for="Input.Email"></label>
-                            <input asp-for="Input.Email" class="form-control" />
-                            <span asp-validation-for="Input.Email" class="alert-danger"></span>
-                        </div>
-                        <div class="form-inline">
-                            @*<i class="fa fa-phone"></i>*@
-                            <label class="customLable" asp-for="Input.PhoneNumber"></label>
-                            <input asp-for="Input.PhoneNumber" class="form-control" />
-                            <span asp-validation-for="Input.PhoneNumber" class="alert-danger"></span>
-                        </div>
-                    </div>
-                   
-                   
-                    <div class="row ml-auto top5">
-                        <div class="form-inline ">
-                            @*<i class="fa fa-lock"></i>*@
-                            <label class="customLable" asp-for="Input.Password"></label>
-                            <input asp-for="Input.Password" class="form-control" />
-                            <span asp-validation-for="Input.Password" class="alert-danger"></span>
-                        </div>
-                        <div class="form-inline">
-                            @*<i class="fa fa-lock"></i>*@
-                            <label class="customLable" asp-for="Input.ConfirmPassword"></label>
-                            <input asp-for="Input.ConfirmPassword" class="form-control" />
-                            <span asp-validation-for="Input.ConfirmPassword" class="alert-danger"></span>
-                        </div>
-                    </div>                  
-         
-            <button type="submit" class="btn btn-info top5">Register</button>
-        </form>
-    </div>
+						</div>										
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.MiddleName"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.MiddleName" class="form-control" />
+							<span asp-validation-for="Input.MiddleName" class="alert-danger"></span>
+						</div>						
+						
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.UserName"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.UserName" class="form-control" />
+							<span asp-validation-for="Input.UserName" class="alert-danger"></span>
+						</div>					
+						
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.IDNumber"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.IDNumber" class="form-control" />
+							<span asp-validation-for="Input.IDNumber" class="alert-danger"></span>
+						</div>										
+						
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.KRAPIN"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.KRAPIN" class="form-control" />
+							<span asp-validation-for="Input.KRAPIN" class="alert-danger"></span>
+						</div>						
+						
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.Email"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.Email" class="form-control" />
+							<span asp-validation-for="Input.Email" class="alert-danger"></span>
+						</div>					
+						
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.PhoneNumber"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.PhoneNumber" class="form-control" />
+							<span asp-validation-for="Input.PhoneNumber" class="alert-danger"></span>
+						</div>						
+						
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.Password"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.Password" class="form-control" />
+							<span asp-validation-for="Input.Password" class="alert-danger"></span>
+						</div>						
+						
+					</div>
+
+					<div class="form-group row">
+						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.ConfirmPassword"></label>
+						<div class="col-md-6">
+							<input asp-for="Input.ConfirmPassword" class="form-control" />
+							<span asp-validation-for="Input.ConfirmPassword" class="alert-danger"></span>
+						</div>						
+						
+					</div>
+
+					<button type="submit" class="btn btn-lg btn-info top5">Register</button>
+				</form>
+
+			</div>
+		</div>		
+	</div>
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+	<partial name="_ValidationScriptsPartial" />
 }

@@ -98,7 +98,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Page("/Account/ConfirmEmailSent", new {UserEmail = Input.Email });
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {UserName =Input.UserName, FirstName = Input.FirstName, MiddleName = Input.MiddleName,
@@ -112,6 +112,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
@@ -127,6 +128,7 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
                    
                     return LocalRedirect(returnUrl);
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

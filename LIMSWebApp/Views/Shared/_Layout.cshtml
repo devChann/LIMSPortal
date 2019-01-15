@@ -14,40 +14,37 @@
 	<title>@ViewData["Title"]</title>
 
 	<environment include="Development">
-		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-
-		@*<link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />*@
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-		@*<link href="~/lib/Datatables/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />		
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">		
 		<link href="~/lib/Datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 		<link href="~/css/PagedList.min.css" rel="stylesheet" />
-
 		<link href="~/lib/openlayers/ol.css" rel="stylesheet" />
 		<link href="~/lib/ol-popup/ol-popup.css" rel="stylesheet" />
 		<link href="~/lib/ol-layerswitcher/ol-layerswitcher.css" rel="stylesheet" />
-		<link rel="stylesheet" href="~/css/site.css" />
-
+		<link href="~/css/site.css" rel="stylesheet"/>
 		<link href="~/css/braintree/normalize.css" rel="stylesheet" />
 		<link href="~/css/braintree/overrides.css" rel="stylesheet" />
 
 
 	</environment>
 	<environment exclude="Development">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"
-			  asp-fallback-href="~/lib/bootstrap/css/bootstrap.css"
-			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+		@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"
+		asp-fallback-href="~/lib/bootstrap/css/bootstrap.css"
+		asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />*@
+
+		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 			  asp-append-version="true" />
-		@*<link href='https://fonts.googleapis.com/?family=Lato|Montserrat|Mukta|Open+Sans|Playfair+Display|Raleway|Roboto+Mono|Ubuntu' rel='stylesheet'>*@
-		<link href="~/lib/Datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+
 		<link href="~/lib/Datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 		<link href="~/css/PagedList.min.css" rel="stylesheet" />
 		<link href="~/lib/openlayers/ol.css" rel="stylesheet" />
 		<link href="~/lib/ol-popup/ol-popup.css" rel="stylesheet" />
 		<link href="~/lib/ol-layerswitcher/ol-layerswitcher.css" rel="stylesheet" />
 		<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+		<link href="~/css/braintree/normalize.css" rel="stylesheet" />
+		<link href="~/css/braintree/overrides.css" rel="stylesheet" />
 
 
 	</environment>
@@ -75,11 +72,7 @@
 
 	<partial name="_CookieConsentPartial" />
 
-	<div class="container">
-		@*<div class="row">
-			@await Html.PartialAsync("_SidebarNav")
-		</div>*@
-
+	<div class="container">	
 
 		@RenderBody()
 
@@ -171,11 +164,13 @@
 		<script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>
 		<script src="~/lib/Datatables/js/dataTables.bootstrap4.min.js"></script>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"
+		@*<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"
 				asp-fallback-src="~/lib/bootstrap/js/bootstrap.min.js"
 				asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
 				crossorigin="anonymous">
-		</script>
+		</script>*@
+		<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
 		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 
 		<script src="~/lib/signalr/signalr.min.js"></script>

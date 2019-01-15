@@ -53,12 +53,24 @@ namespace LIMSWebApp.Controllers
 			_braintreeService = braintreeService;
 		}
 
-		public string MpesaCertificate {
-			get
-			{
-				return Path.Combine(_hostingEnvironment.ContentRootPath, "Certificates", "prod.cer");
-			}
-		}
+		private string ConsumerKey => _config["MpesaConfiguration:ConsumerKey"];
+
+		private string ConsumerSecret => _config["MpesaConfiguration:ConsumerSecret"];
+
+		private string AccessToken => _mpesaClient.GetAuthToken(ConsumerKey, ConsumerSecret, "oauth/v1/generate?grant_type=client_credentials");
+
+		private string PassKey => _config["MpesaConfiguration:PassKey"];
+
+		private string MpesaCertificate => Path.Combine(_hostingEnvironment.ContentRootPath, "Certificates", "prod.cer");
+
+		private string InitiatorPassword => _config["MpesaConfiguration:InitiatorPassword"];		
+
+		private string SecurityCredential => Credentials.EncryptPassword(MpesaCertificate, InitiatorPassword);
+
+		private string C2BPayBillNumber => _config["MpesaConfiguration:BusinessShortCodeC2B"];
+		private string LNMOPayBillNumber => _config["MpesaConfiguration:BusinessShortCodeLNMO"];
+
+
 
 		//TO DO: implement payment method selection (card/mpesa)
 		[HttpGet]
@@ -183,31 +195,18 @@ namespace LIMSWebApp.Controllers
 		[Route("/make-payment")]
 		public async Task<IActionResult> PayWithMpesa(IFormCollection collection)
         {
-            var consumerKey = _config["MpesaConfiguration:ConsumerKey"];
-
-            var consumerSecret = _config["MpesaConfiguration:ConsumerSecret"];
-
-			var passKey = _config["MpesaConfiguration:PassKey"];
-
-            var accesstoken = await _mpesaClient.GetAuthTokenAsync(consumerKey, consumerSecret, "oauth/v1/generate?grant_type=client_credentials");
-
-
-			//var certificate =  _hostingEnvironment.ContentRootPath + "\\Certificates\\prod.cer";
-			//var certificate = @"E:\Dev\Github\LIMSPortal\LIMSWebApp\Certificates\prod.cer";
-
-			var securityCredential = Credentials.EncryptPassword(MpesaCertificate, "313reset"); //for B2B, B2C, Reversal, TransactionStatus APIs
-
+  
 			var registerMpesaUrl = new CustomerToBusinessRegisterUrlDto
 			{
-				ConfirmationURL = "https://wachit.azurewebsites.net/api/confirm",
-				ValidationURL = "https://wachit.azurewebsites.net/api/validate",
-				ResponseType = "Cancelled",
-				ShortCode = "601313"
+				ConfirmationURL = _config["MpesaConfiguration:ConfirmationURL"],
+				ValidationURL = _config["MpesaConfiguration:ValidationURL"],
+				ResponseType = ResponseType.Completed,
+				ShortCode = C2BPayBillNumber
 			};
 
 			try
 			{
-				var registerUrl = await _mpesaClient.RegisterC2BUrlAsync(registerMpesaUrl, accesstoken, "mpesa/c2b/v1/registerurl");
+				var registerUrl = await _mpesaClient.RegisterC2BUrlAsync(registerMpesaUrl, AccessToken, "mpesa/c2b/v1/registerurl");
 
 				_logger.LogWarning(LoggingEvents.GetItem, $"Register Url Result:{registerUrl}");
 			}
@@ -219,21 +218,33 @@ namespace LIMSWebApp.Controllers
 
 			var MpesaExpressObject2 = new LipaNaMpesaOnlineDto
 			{
-				AccountReference = "bill",
+				AccountReference = "LIMS Portal",
 				Amount = collection["amount"],
 				PartyA = collection["phone_number"],
-				PartyB = "174379",
-				BusinessShortCode = "174379",
-				CallBackURL = "https://demo.osl.co.ke:7574/api/results",
-				Passkey = passKey,				  
+				PartyB = LNMOPayBillNumber,
+				BusinessShortCode = LNMOPayBillNumber,
+				CallBackURL = _config["MpesaConfiguration:LNMOCallbackURL"],
+				Passkey = PassKey,				  
 				PhoneNumber = collection["phone_number"], 				
 				TransactionDesc = "test",
 				TransactionType = TransactType.CustomerPayBillOnline
 			};
 
-			var paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject2, accesstoken, "mpesa/stkpush/v1/processrequest");
+			var paymentrequest = "";
+
+			try
+			{
+				paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject2, AccessToken, "mpesa/stkpush/v1/processrequest");
+			}
+			catch (Exception e)
+			{
+
+				_logger.LogError($"An Error Occured while Making LipaNaMpesa payment request:{e.Message}");
+			}
+
 			
-            await _smsSender.SendSmsAsync($"+{collection["phone_number"]}", $"Please enter Mpesa PIN on your phone to complete payment of Ksh: {collection["amount"]}");
+			
+            //await _smsSender.SendSmsAsync($"+{collection["phone_number"]}", $"Please enter Mpesa PIN on your phone to complete payment of Ksh: {collection["amount"]}");
 
 			//await _smsSender.SendSmsAsync($"+{Payment.PhoneNumber}", $"Security Credential: {securityCredential}");
 
@@ -337,5 +348,11 @@ namespace LIMSWebApp.Controllers
 			return View();
 		}
 
+	}
+
+	public static class ResponseType
+	{
+		public static string Completed { get { return "Completed"; } }
+		public static string Cancelled { get { return "Cancelled"; } }
 	}
 }
