@@ -6,17 +6,20 @@ using LIMSInfrastructure.Services.Payment;
 using System;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using LIMSInfrastructure.Services.GeoServices;
 
 namespace LIMSWebApp.Controllers
 {
 	public class HomeController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
+		private readonly IGeoService _geoService;
 
-        public HomeController(IHostingEnvironment hostingEnvironment)
+		public HomeController(IHostingEnvironment hostingEnvironment, IGeoService geoService)
         {
             _hostingEnvironment = hostingEnvironment;
-        }
+			_geoService = geoService;
+		}
 
         public IActionResult Index()
         {		
@@ -25,6 +28,9 @@ namespace LIMSWebApp.Controllers
 
 		public IActionResult About()
 		{
+			var geodata = _geoService.GetLandParcel("Parcels", "Parcel_Num", "001/BY/4546");
+
+			ViewData["Parcel"] = geodata;
 			return View();
 		}
 

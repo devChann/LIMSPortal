@@ -20,7 +20,7 @@ using System.IO;
 using System.Threading.Tasks;
 using MpesaLib;
 using Serilog;
-
+using LIMSInfrastructure.Services.GeoServices;
 
 namespace LIMSCore
 {
@@ -55,10 +55,15 @@ namespace LIMSCore
 				options.AutomaticAuthentication = true;
 			});
 
-			
+			services.AddHttpClient<IGeoService, GeoService>(options =>
+			{
+				options.BaseAddress = new Uri(Configuration.GetSection("ParcelsServerBaseAddress").Value);
+			});
 
-            //Add notification services
-            services.AddSingleton<IEmailSender, EmailSender>();
+
+
+			//Add notification services
+			services.AddSingleton<IEmailSender, EmailSender>();
             services.AddTransient<ISmsSender, SmsSender>();
             services.Configure<SMSoptions>(Configuration);
 
