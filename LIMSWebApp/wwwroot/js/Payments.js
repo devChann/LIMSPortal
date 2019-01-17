@@ -5,27 +5,27 @@
 // Babel at http://babeljs.io/. 
 //
 // See Es5-chat.js for a Babel transpiled version of the following code:
-$(function () {
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/Payments")
-        .build();
+//$(function () {
+//    const connection = new signalR.HubConnectionBuilder()
+//        .withUrl("/Payments")
+//        .build();
 
-    connection.on("ReceiveMessage", (user, message) => {
-        const msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        const encodedMsg = user + " says " + msg;
-        const li = document.createElement("li");
-        li.textContent = encodedMsg;
-        document.getElementById("messagesList").appendChild(li);
-    });
+//    connection.on("ReceiveMessage", (user, message) => {
+//        const msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+//        const encodedMsg = user + " says " + msg;
+//        const li = document.createElement("li");
+//        li.textContent = encodedMsg;
+//        document.getElementById("messagesList").appendChild(li);
+//    });
 
-    connection.start().catch(err => console.error(err.toString()));
+//    connection.start().catch(err => console.error(err.toString()));
 
-    document.getElementById("sendButton").addEventListener("click", event => {
-        const user = document.getElementById("userInput").value;
-        const message = document.getElementById("messageInput").value;
-        connection.invoke("UpdatePaymentList", user, message).catch(err => console.error(err.toString()));
-        event.preventDefault();
-    });
+//    document.getElementById("sendButton").addEventListener("click", event => {
+//        const user = document.getElementById("userInput").value;
+//        const message = document.getElementById("messageInput").value;
+//        connection.invoke("UpdatePaymentList", user, message).catch(err => console.error(err.toString()));
+//        event.preventDefault();
+//    });
 
-});
+//});
 

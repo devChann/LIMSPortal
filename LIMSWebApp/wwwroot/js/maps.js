@@ -1,6 +1,8 @@
-﻿$(function () {
+﻿/*
+	This script is initialize in the ParcelDetails.cshtml view
+*/
 
-
+$(function () {
 	/* configure loading indicator*/
 	var throbberCounter = 0;
 	var increaseThrobberCounter = function () {
@@ -39,16 +41,7 @@
     const closer = document.getElementById('popup-closer');
 
 	var styles = [
-        /* We are using two different styles for the polygons:
-         *  - The first style is for the polygons themselves.
-         *  - The second style is to draw the vertices of the polygons.
-         *    In a custom `geometry` function the vertices of a polygon are
-         *    returned as `MultiPoint` geometry, which will be used to render
-         *    the style.
-         */
-
-		
-
+        
 		new ol.style.Style({
 			stroke: new ol.style.Stroke({
 				color: 'blue',
@@ -89,8 +82,6 @@
         units: 'm',
         axisOrientation: 'neu'
 	});
-
-	
 
     //Create an overlay to anchor the popup to the map.
     const overlay = new ol.Overlay({
@@ -136,40 +127,8 @@
         map.getTargetElement().style.cursor = hit ? 'pointer' : '';
     });
 
-
-    // generate a GetFeature request
-    var featureRequest = new ol.format.WFS().writeGetFeature({
-        srsName: 'EPSG:3857',
-        featureNS: 'http://www.intergraph.com/geomedia/gml',
-        featurePrefix: 'gmgml',
-        featureTypes: ['Parcels'],
-        outputFormat: 'application/vnd.geo+json',
-		filter: ol.format.filter.equalTo('Parcel_Num', routeId)
-
-    });
-
-
-    var requestBody = new XMLSerializer().serializeToString(featureRequest);
-
-    // then post the request and add the received features to a layer
-    fetch('https://demo.osl.co.ke:7575/LIMSParcels2/service.svc/post', {
-        method: 'POST',
-        body: requestBody,
-        headers: new Headers({
-            'Content-Type': 'application/xml'            
-        })
-    }).then(function (response) {
-        var contentType = response.headers.get("content-type");
-        console.log(contentType); //remove later
-        if (contentType && contentType.includes("application/vnd.geo+json")) {
-            var result = response.json();
-            return result;
-        }
-        throw new TypeError("Oops, we haven't got JSON!");
-	}).then(function (json) {
-
-		console.log(json);
-		var features = (new ol.format.GeoJSON()).readFeatures(json);
+ 
+	var features = (new ol.format.GeoJSON()).readFeatures(GeoJson);
 
 		var props = features[0].getProperties();
 
@@ -178,10 +137,7 @@
         vectorSource.addFeatures(features);
 		map.getView().fit(vectorSource.getExtent());
 
-	}).catch(function (error) {
-		console.log(`An error occured while processing one of the datasets! \n ${error}`);
-	});
-
+	
 	function displayPopUp(evt) {
 
 		//var formattedCoordinate = ol.coordinate.toStringHDMS(ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'), 2);

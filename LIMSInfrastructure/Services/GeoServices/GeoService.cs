@@ -38,9 +38,7 @@ namespace LIMSInfrastructure.Services.GeoServices
 
             var data = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
 
-            var json = DeserializeFromStream(data);
-
-            Console.WriteLine(json);
+            var json = DeserializeFromStream(data);           
 
             var output = JsonConvert.SerializeObject(json);
 

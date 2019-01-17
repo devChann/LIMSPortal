@@ -1,11 +1,13 @@
 ﻿using LIMSInfrastructure.Data;
 using LIMSInfrastructure.Identity;
+using LIMSInfrastructure.Services.GeoServices;
 using LIMSWebApp.Helpers;
 using LIMSWebApp.ViewModels.LIMSViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,13 +18,15 @@ namespace LIMSWebApp.Controllers
     {
         private readonly LIMSCoreDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly LIMSCoreDbContext _usercontext;
+		private readonly IGeoService _geoService;
+		private readonly LIMSCoreDbContext _usercontext;
 
-        public LandController(LIMSCoreDbContext context, LIMSCoreDbContext usercontext, IHostingEnvironment hostingEnvironment)
+        public LandController(LIMSCoreDbContext context, LIMSCoreDbContext usercontext, IHostingEnvironment hostingEnvironment, IGeoService geoService)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
-            _usercontext = usercontext;
+			_geoService = geoService;
+			_usercontext = usercontext;
         }
 
         //Renders the search page
@@ -97,8 +101,21 @@ namespace LIMSWebApp.Controllers
                 parcelviewmodel.RegistrationDate = parcel.Registration.RegistrationDate;
             }
 
-            return View(parcelviewmodel);
+			var geodata = _geoService.GetLandParcel("Parcels", "Parcel_Num", parcelnum);			
+
+			ViewData["Parcel"] = geodata;
+
+			return View(parcelviewmodel);
         }
+
+		//[HttpGet("[action]/{featurename}/{attribute}/{filter}")]
+		//[Route("/parcel-geometry")]
+		//public IActionResult ParcelGeometry(string featurename,string attribute,string filter)
+		//{
+		//	var geodata = _geoService.GetLandParcel(featurename, attribute, filter);
+
+		//	return Json(geodata);
+		//}
 
 		[Route("/edit-parcel")]
 		public IActionResult EditParcel(string parcelnum)

@@ -27,10 +27,7 @@ namespace LIMSWebApp.Controllers
         }
 
 		public IActionResult About()
-		{
-			var geodata = _geoService.GetLandParcel("Parcels", "Parcel_Num", "001/BY/4546");
-
-			ViewData["Parcel"] = geodata;
+		{			
 			return View();
 		}
 
