@@ -1,4 +1,4 @@
-﻿@model LIMSCore.Entities.Parcel
+﻿@model LIMSWebApp.ViewModels.ParcelViewModels.ParcelEditViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,78 +10,89 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ParcelId" />
-            <div class="form-group">
-                <label asp-for="Area" class="control-label"></label>
-                <input asp-for="Area" class="form-control" />
-                <span asp-validation-for="Area" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParcelNum" class="control-label"></label>
-                <input asp-for="ParcelNum" class="form-control" />
-                <span asp-validation-for="ParcelNum" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AdministrationId" class="control-label"></label>
-                <select asp-for="AdministrationId" class="form-control" asp-items="ViewBag.AdministrationId"></select>
-                <span asp-validation-for="AdministrationId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LandUseId" class="control-label"></label>
-                <select asp-for="LandUseId" class="form-control" asp-items="ViewBag.LandUseId"></select>
-                <span asp-validation-for="LandUseId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnerId" class="control-label"></label>
-                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerId"></select>
-                <span asp-validation-for="OwnerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OwnershipRightId" class="control-label"></label>
-                <select asp-for="OwnershipRightId" class="form-control" asp-items="ViewBag.OwnershipRightId"></select>
-                <span asp-validation-for="OwnershipRightId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RateId" class="control-label"></label>
-                <select asp-for="RateId" class="form-control" asp-items="ViewBag.RateId"></select>
-                <span asp-validation-for="RateId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RegistrationId" class="control-label"></label>
-                <select asp-for="RegistrationId" class="form-control" asp-items="ViewBag.RegistrationId"></select>
-                <span asp-validation-for="RegistrationId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ResponsibilityId" class="control-label"></label>
-                <select asp-for="ResponsibilityId" class="form-control" asp-items="ViewBag.ResponsibilityId"></select>
-                <span asp-validation-for="ResponsibilityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RestrictionId" class="control-label"></label>
-                <select asp-for="RestrictionId" class="form-control" asp-items="ViewBag.RestrictionId"></select>
-                <span asp-validation-for="RestrictionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SpatialUnitId" class="control-label"></label>
-                <select asp-for="SpatialUnitId" class="form-control" asp-items="ViewBag.SpatialUnitId"></select>
-                <span asp-validation-for="SpatialUnitId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TenureId" class="control-label"></label>
-                <select asp-for="TenureId" class="form-control" asp-items="ViewBag.TenureId"></select>
-                <span asp-validation-for="TenureId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ValuationId" class="control-label"></label>
-                <select asp-for="ValuationId" class="form-control" asp-items="ViewBag.ValuationId"></select>
-                <span asp-validation-for="ValuationId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="ParcelId" />
+
+			<div class="form-group">
+				<label asp-for="Area" class="control-label"></label>
+				<input asp-for="Area" class="form-control" />
+				<span asp-validation-for="Area" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="ParcelNumber" class="control-label"></label>
+				<input asp-for="ParcelNumber" class="form-control" />
+				<span asp-validation-for="ParcelNumber" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="SelectedBlock" class="control-label"></label>
+				<select asp-for="SelectedBlock" class="form-control" asp-items="Model.Blocks"></select>
+				<span asp-validation-for="SelectedBlock" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="SelectedLandUse" class="control-label"></label>
+				<select asp-for="SelectedLandUse" class="form-control" asp-items="Model.LandUses"></select>
+				<span asp-validation-for="SelectedLandUse" class="text-danger"></span>
+			</div>
+
+			@*<div class="form-group">
+			<label asp-for="LandUseId" class="control-label"></label>
+			<select asp-for="LandUseId" class="form-control" asp-items="ViewBag.LandUseId"></select>
+			<span asp-validation-for="LandUseId" class="text-danger"></span>
+		</div>*@
+
+			@*<div class="form-group">
+			<label asp-for="OwnerId" class="control-label"></label>
+			<select asp-for="OwnerId" class="form-control" asp-items="ViewBag.OwnerId"></select>
+			<span asp-validation-for="OwnerId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="OwnershipRightId" class="control-label"></label>
+			<select asp-for="OwnershipRightId" class="form-control" asp-items="ViewBag.OwnershipRightId"></select>
+			<span asp-validation-for="OwnershipRightId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="RateId" class="control-label"></label>
+			<select asp-for="RateId" class="form-control" asp-items="ViewBag.RateId"></select>
+			<span asp-validation-for="RateId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="RegistrationId" class="control-label"></label>
+			<select asp-for="RegistrationId" class="form-control" asp-items="ViewBag.RegistrationId"></select>
+			<span asp-validation-for="RegistrationId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="ResponsibilityId" class="control-label"></label>
+			<select asp-for="ResponsibilityId" class="form-control" asp-items="ViewBag.ResponsibilityId"></select>
+			<span asp-validation-for="ResponsibilityId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="RestrictionId" class="control-label"></label>
+			<select asp-for="RestrictionId" class="form-control" asp-items="ViewBag.RestrictionId"></select>
+			<span asp-validation-for="RestrictionId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="SpatialUnitId" class="control-label"></label>
+			<select asp-for="SpatialUnitId" class="form-control" asp-items="ViewBag.SpatialUnitId"></select>
+			<span asp-validation-for="SpatialUnitId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="TenureId" class="control-label"></label>
+			<select asp-for="TenureId" class="form-control" asp-items="ViewBag.TenureId"></select>
+			<span asp-validation-for="TenureId" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="ValuationId" class="control-label"></label>
+			<select asp-for="ValuationId" class="form-control" asp-items="ViewBag.ValuationId"></select>
+			<span asp-validation-for="ValuationId" class="text-danger"></span>
+		</div>*@
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
     </div>
 </div>
 
