@@ -36,12 +36,12 @@ $(function () {
 
 
 	//Pop-up elements for displaying attributes of clicked parcel
-    const container = document.getElementById('popup');
-    const content = document.getElementById('popup-content');
-    const closer = document.getElementById('popup-closer');
+	const container = document.getElementById('popup');
+	const content = document.getElementById('popup-content');
+	const closer = document.getElementById('popup-closer');
 
 	var styles = [
-        
+
 		new ol.style.Style({
 			stroke: new ol.style.Stroke({
 				color: 'blue',
@@ -71,109 +71,107 @@ $(function () {
 
 	var vectorSource = new ol.source.Vector();
 
-    var vector = new ol.layer.Vector({
-        source: vectorSource,
+	var vector = new ol.layer.Vector({
+		source: vectorSource,
 		style: styles
-    });
-
-    //define projection
-    var projection = new ol.proj.Projection({
-        code: 'EPSG:3857',
-        units: 'm',
-        axisOrientation: 'neu'
 	});
 
-    //Create an overlay to anchor the popup to the map.
-    const overlay = new ol.Overlay({
-        element: container,
-        autoPan: true,
-        autoPanAnimation: {
-            duration: 250
-        }
-    });
+	//define projection
+	var projection = new ol.proj.Projection({
+		code: 'EPSG:3857',
+		units: 'm',
+		axisOrientation: 'neu'
+	});
 
-    //configure view
-    var view = new ol.View({
-        center: [4098004.08, -142987.72],
-        maxZoom: 30,
-        zoom: 18,
-        projection: projection
-    });
+	//Create an overlay to anchor the popup to the map.
+	const overlay = new ol.Overlay({
+		element: container,
+		autoPan: true,
+		autoPanAnimation: {
+			duration: 250
+		}
+	});
 
-    var raster = new ol.layer.Tile({
-        source: new ol.source.OSM()
-    });
+	//configure view
+	var view = new ol.View({
+		center: [4098004.08, -142987.72],
+		maxZoom: 30,
+		zoom: 18,
+		projection: projection
+	});
 
-    var map = new ol.Map({
-        layers: [raster],
-        target: document.getElementById('map'),
-        view: view,
-        overlays: [overlay],
-    });
+	var raster = new ol.layer.Tile({
+		source: new ol.source.OSM()
+	});
+
+	var map = new ol.Map({
+		layers: [raster],
+		target: document.getElementById('map'),
+		view: view,
+		overlays: [overlay],
+	});
 
 	var popup = new Popup();
 	map.addOverlay(popup);
 
 
-    //this function changes the cursor to a pointer when cursor is on map
-    map.on('pointermove', function (evt) {
-        if (evt.dragging) {
-            return;
-        }
-        var pixel = map.getEventPixel(evt.originalEvent);
-        var hit = map.forEachLayerAtPixel(pixel, function (layer) {
-            return true;
-        });
-        map.getTargetElement().style.cursor = hit ? 'pointer' : '';
-    });
+	//this function changes the cursor to a pointer when cursor is on map
+	map.on('pointermove', function (evt) {
+		if (evt.dragging) {
+			return;
+		}
+		var pixel = map.getEventPixel(evt.originalEvent);
+		var hit = map.forEachLayerAtPixel(pixel, function (layer) {
+			return true;
+		});
+		map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+	});
 
- 
+
 	var features = (new ol.format.GeoJSON()).readFeatures(GeoJson);
 
-		var props = features[0].getProperties();
+	var props = features[0].getProperties();
 
-        featureprops.push(props);
+	featureprops.push(props);
 
-        vectorSource.addFeatures(features);
-		map.getView().fit(vectorSource.getExtent());
+	vectorSource.addFeatures(features);
+	map.getView().fit(vectorSource.getExtent());
 
-	
+
 	function displayPopUp(evt) {
 
-		//var formattedCoordinate = ol.coordinate.toStringHDMS(ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'), 2);
 
 		var pixel = map.getPixelFromCoordinate(evt.coordinate);
 
 		var info = "";
 
-		map.forEachFeatureAtPixel(pixel, function (feature) {
-			//el.innerHTML += feature.get('Parcel_Num') + '<br>';
-			if (feature.get('Parcel_Num') !== null) {
-				//console.log("This is the parcel number:" + feature.get('Parcel_Num'));
+		map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+
+			if (layer === vector) {
 
 				var featureinfo = featureprops[0];
-				
-				//info = "<b>Lon/Lat:</b><small> " + formattedCoordinate + "</small><br>";
+
 				info = "<b>Parcel Number:</b><small> " + featureinfo.Parcel_Num + "</small><br>";
 				info += "<b>Beacons:</b><small> " + featureinfo.Boundary + "</small><br>";
 				info += "<b>Date of Update:</b><small> " + featureinfo.DateUpdated + "</small><br>";
 				info += "<b>Area:</b><small> " + featureinfo.Area2 + " Acres" + "</small><br>";
 
-			} else {
-				info = "<h3>No Data Here!<h3>"
+				popup.show(evt.coordinate, "<div><h5>Parcel Details</h5><div>" + info + "</div></div>");
 			}
 			
+
 		});
+
 		
-		popup.show(evt.coordinate, "<div><h4>Parcel Details</h4><div>" + info + "</div></div>");
 	}
 
-	map.on('singleclick', displayPopUp);   
 
-    vector.on('change:visible', onChangeVisible);
+	map.on('pointermove', displayPopUp);   //pointermove, singleclick
+
+	vector.on('change:visible', onChangeVisible);
 	vector.on('render', onRender);
 
-    map.addLayer(vector);
+	map.addLayer(vector);
 
 
 });
