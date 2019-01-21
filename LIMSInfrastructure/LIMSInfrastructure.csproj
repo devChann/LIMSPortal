@@ -24,6 +24,10 @@
     <Compile Include="Migrations\LIMSCoreDb\20190111093144_v3.designer.cs">
       <DependentUpon>20190111093144_v3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\LIMSCoreDb\20190121084200_v4.cs" />
+    <Compile Include="Migrations\LIMSCoreDb\20190121084200_v4.designer.cs">
+      <DependentUpon>20190121084200_v4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\LIMSCoreDb\LIMSCoreDbContextModelSnapshot.cs" />
   </ItemGroup>
 

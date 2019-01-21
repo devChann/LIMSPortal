@@ -5,7 +5,7 @@ namespace LIMSCore.Entities
 {
     public partial class GroupGroupLeadership
     {
-		public int GroupGroupLeadershipId { get; set; }
+		//public int GroupGroupLeadershipId { get; set; }
 
 		public int GroupId { get; set; }
 		public Group Group { get; set; }

@@ -5,7 +5,7 @@ namespace LIMSCore.Entities
 {
     public partial class InstitutionInstitutionLeadership
     {
-		public int InstitutionInstitutionLeadershipId { get; set; }
+		//public int InstitutionInstitutionLeadershipId { get; set; }
 
 		public int InstitutionLeadershipId { get; set; }
         public int InstitutionId { get; set; }

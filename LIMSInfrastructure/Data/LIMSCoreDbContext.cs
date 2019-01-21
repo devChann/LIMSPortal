@@ -136,15 +136,15 @@ namespace LIMSInfrastructure.Data
                 entity.Property(e => e.DateSet).HasDefaultValueSql("(getdate())");               
             });
 
-            modelBuilder.Entity<BoundaryBeacon>(entity =>
-            {
-                entity.HasKey(e => new { e.BoundaryId, e.BeaconId });
+			modelBuilder.Entity<BoundaryBeacon>(entity =>
+			{
+				entity.HasKey(e => new { e.BoundaryId, e.BeaconId });
 
-                entity.HasIndex(e => e.BeaconId);
-               
-            });
+				entity.HasIndex(e => e.BeaconId);
 
-            modelBuilder.Entity<Building>(entity =>
+			});
+
+			modelBuilder.Entity<Building>(entity =>
             {
                 entity.HasIndex(e => e.ApartmentId);
 
@@ -176,23 +176,23 @@ namespace LIMSInfrastructure.Data
                
             });
 
-            modelBuilder.Entity<GroupGroupLeadership>(entity =>
-            {
-                entity.HasKey(e => new { e.GroupId, e.GroupLeadershipId });
+			modelBuilder.Entity<GroupGroupLeadership>(entity =>
+			{
+				entity.HasKey(e => new { e.GroupId, e.GroupLeadershipId });
 
-                entity.HasIndex(e => e.GroupLeadershipId);
+				entity.HasIndex(e => e.GroupLeadershipId);
 
-                entity.HasOne(d => d.GroupLeadership)
-                    .WithMany(p => p.GroupGroupLeadership)
-                    .HasForeignKey(d => d.GroupLeadershipId);
-            });
+				entity.HasOne(d => d.GroupLeadership)
+					.WithMany(p => p.GroupGroupLeadership)
+					.HasForeignKey(d => d.GroupLeadershipId);
+			});
 
-            modelBuilder.Entity<GroupGroupMembership>(entity =>
-            {                
-               
-            });
+			modelBuilder.Entity<GroupGroupMembership>(entity =>
+			{
+				entity.HasKey(e => new { e.GroupId, e.GroupMembershipId });
+			});
 
-            modelBuilder.Entity<GroupLeadership>(entity =>
+			modelBuilder.Entity<GroupLeadership>(entity =>
             {
                 entity.Property(e => e.LeadershipSince).HasDefaultValueSql("(getdate())");
 
@@ -201,15 +201,15 @@ namespace LIMSInfrastructure.Data
                 entity.Property(e => e.PersonId).HasColumnName("PersonId");
             });
 
-            modelBuilder.Entity<PersonGroupLeadership>(entity =>
-            {
-                entity.HasKey(e => new { e.GroupLeadershipId, e.PersonId });
+			modelBuilder.Entity<PersonGroupLeadership>(entity =>
+			{
+				entity.HasKey(e => new { e.GroupLeadershipId, e.PersonId });
 
-                entity.HasIndex(e => e.PersonId);
-               
-            });
+				entity.HasIndex(e => e.PersonId);
 
-            modelBuilder.Entity<GroupMembership>(entity =>
+			});
+
+			modelBuilder.Entity<GroupMembership>(entity =>
             {
                 entity.Property(e => e.MembershipSince).HasDefaultValueSql("(getdate())");
 
@@ -229,30 +229,30 @@ namespace LIMSInfrastructure.Data
                 entity.Property(e => e.MemberUntil).HasDefaultValueSql("(getdate())");
             });
 
-            modelBuilder.Entity<InstitutionInstitutionLeadership>(entity =>
-            {
-                entity.HasKey(e => new { e.InstitutionLeadershipId, e.InstitutionId });
+			modelBuilder.Entity<InstitutionInstitutionLeadership>(entity =>
+			{
+				entity.HasKey(e => new { e.InstitutionLeadershipId, e.InstitutionId });
 
-                entity.HasIndex(e => e.InstitutionId);
+				entity.HasIndex(e => e.InstitutionId);
 
-                entity.HasOne(d => d.Institution)
-                    .WithMany(p => p.InstitutionInstitutionLeadership)
-                    .HasForeignKey(d => d.InstitutionId);
+				entity.HasOne(d => d.Institution)
+					.WithMany(p => p.InstitutionInstitutionLeadership)
+					.HasForeignKey(d => d.InstitutionId);
 
-                entity.HasOne(d => d.InstitutionLeadership)
-                    .WithMany(p => p.InstitutionInstitutionLeadership)
-                    .HasForeignKey(d => d.InstitutionLeadershipId);
-            });
+				entity.HasOne(d => d.InstitutionLeadership)
+					.WithMany(p => p.InstitutionInstitutionLeadership)
+					.HasForeignKey(d => d.InstitutionLeadershipId);
+			});
 
-            modelBuilder.Entity<PersonInstitutionLeadership>(entity =>
-            {
-                entity.HasKey(e => new { e.InstitutionLeadershipId, e.PersonId });
+			modelBuilder.Entity<PersonInstitutionLeadership>(entity =>
+			{
+				entity.HasKey(e => new { e.InstitutionLeadershipId, e.PersonId });
 
-                entity.HasIndex(e => e.PersonId);
-               
-            });
+				entity.HasIndex(e => e.PersonId);
 
-            modelBuilder.Entity<LandUse>(entity =>
+			});
+
+			modelBuilder.Entity<LandUse>(entity =>
             {
                 entity.HasIndex(e => e.BuildingRegulationId);
 
@@ -301,8 +301,7 @@ namespace LIMSInfrastructure.Data
             });
 
             modelBuilder.Entity<Parcel>(entity =>
-            {
-                
+            {                
 
                 entity.Property(e => e.ParcelNum).IsRequired();
 
@@ -339,22 +338,22 @@ namespace LIMSInfrastructure.Data
                 //    .HasForeignKey(d => d.OwnerId);
             });
 
-            modelBuilder.Entity<PersonGroupMembership>(entity =>
-            {
-                //entity.HasKey(e => new { e.GroupMembershipId, e.PersonId });
+			modelBuilder.Entity<PersonGroupMembership>(entity =>
+			{
+				entity.HasKey(e => new { e.GroupMembershipId, e.PersonId });
 
-                //entity.HasIndex(e => e.PersonId);
+				entity.HasIndex(e => e.PersonId);
 
-                //entity.HasOne(d => d.GroupMembership)
-                //    .WithMany(p => p.PersonGroupMemberships)
-                //    .HasForeignKey(d => d.GroupMembershipId);
+				entity.HasOne(d => d.GroupMembership)
+					.WithMany(p => p.PersonGroupMemberships)
+					.HasForeignKey(d => d.GroupMembershipId);
 
-                //entity.HasOne(d => d.Person)
-                //    .WithMany(p => p.PersonGroupMemberships)
-                //    .HasForeignKey(d => d.PersonId);
-            });
+				entity.HasOne(d => d.Person)
+					.WithMany(p => p.PersonGroupMemberships)
+					.HasForeignKey(d => d.PersonId);
+			});
 
-            modelBuilder.Entity<Rate>(entity =>
+			modelBuilder.Entity<Rate>(entity =>
             {
 				entity.Property(e => e.RateId)
 					.ValueGeneratedNever();
@@ -449,22 +448,22 @@ namespace LIMSInfrastructure.Data
                     .HasForeignKey(d => d.SurveyId);
             });
 
-            modelBuilder.Entity<SpatialUnitSetRegistration>(entity =>
-            {
-                entity.HasKey(e => new { e.RegistrationId, e.SpatialUnitSetId });
+			modelBuilder.Entity<SpatialUnitSetRegistration>(entity =>
+			{
+				entity.HasKey(e => new { e.RegistrationId, e.SpatialUnitSetId });
 
-                entity.HasIndex(e => e.SpatialUnitSetId);
+				entity.HasIndex(e => e.SpatialUnitSetId);
 
-                entity.HasOne(d => d.Registration)
-                    .WithMany(p => p.SpatialUnitSetRegistrations)
-                    .HasForeignKey(d => d.RegistrationId);
+				entity.HasOne(d => d.Registration)
+					.WithMany(p => p.SpatialUnitSetRegistrations)
+					.HasForeignKey(d => d.RegistrationId);
 
-                entity.HasOne(d => d.SpatialUnitSet)
-                    .WithMany(p => p.SpatialUnitSetRegistrations)
-                    .HasForeignKey(d => d.SpatialUnitSetId);
-            });
+				entity.HasOne(d => d.SpatialUnitSet)
+					.WithMany(p => p.SpatialUnitSetRegistrations)
+					.HasForeignKey(d => d.SpatialUnitSetId);
+			});
 
-            modelBuilder.Entity<Survey>(entity =>
+			modelBuilder.Entity<Survey>(entity =>
             {
                 entity.Property(e => e.DateOfEntry).HasDefaultValueSql("(getdate())");
 
