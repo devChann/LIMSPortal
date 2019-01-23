@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LIMSCore.Billing;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace LIMSWebApp.ViewModels.PropertiesViewModels
         [DisplayName("Land Rate")]
         public decimal? Rate { get; set; }
 
-    }
+		public IEnumerable<Invoice> Invoices { get; set; }
+	}
 }

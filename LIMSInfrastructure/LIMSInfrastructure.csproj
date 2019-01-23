@@ -14,21 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\LIMSCoreDb\20181124110434_Merged_Contexts_V1.cs" />
-    <Compile Include="Migrations\LIMSCoreDb\20181124110434_Merged_Contexts_V1.Designer.cs" />
-    <Compile Include="Migrations\LIMSCoreDb\20190111085019_v2.cs" />
-    <Compile Include="Migrations\LIMSCoreDb\20190111085019_v2.designer.cs">
-      <DependentUpon>20190111085019_v2.cs</DependentUpon>
+    <Compile Include="Migrations\20190123111357_v1.cs" />
+    <Compile Include="Migrations\20190123111357_v1.designer.cs">
+      <DependentUpon>20190123111357_v1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\LIMSCoreDb\20190111093144_v3.cs" />
-    <Compile Include="Migrations\LIMSCoreDb\20190111093144_v3.designer.cs">
-      <DependentUpon>20190111093144_v3.cs</DependentUpon>
+    <Compile Include="Migrations\20190123132238_v2.cs" />
+    <Compile Include="Migrations\20190123132238_v2.designer.cs">
+      <DependentUpon>20190123132238_v2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\LIMSCoreDb\20190121084200_v4.cs" />
-    <Compile Include="Migrations\LIMSCoreDb\20190121084200_v4.designer.cs">
-      <DependentUpon>20190121084200_v4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\LIMSCoreDb\LIMSCoreDbContextModelSnapshot.cs" />
+    <Compile Include="Migrations\LIMSCoreDbContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +37,10 @@
     <PackageReference Include="Stripe.net" Version="16.16.0" />
     <PackageReference Include="Twilio" Version="5.13.7" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\LIMSCoreDb\" />
   </ItemGroup>
 
 </Project>

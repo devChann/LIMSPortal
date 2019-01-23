@@ -47,7 +47,9 @@ namespace LIMSWebApp.Controllers
                 {
                     ParcelNum = a.ParcelNum,
                     TenureType = a.Tenure.TenureType,
-                    Rate = a.Rate.Amount
+                    Rate = a.Rate.Amount,
+					Invoices = a.Invoices
+					
                 }).ToList();
             }
             else

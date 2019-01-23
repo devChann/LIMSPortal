@@ -81,24 +81,26 @@ namespace LIMSWebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Checkout(string property)
+        public IActionResult Checkout(string property, string invoicenumber)
         {
 			var parcel = _limsDbcontext.Parcel
 				.Include(i => i.Rate)				
-				.Include(p => p.Payments)				
+				.Include(p => p.Invoices)				
 				.Include(i => i.Owner)
 				.Where(a => a.ParcelNum == property).SingleOrDefault();
 
-			var pendingRate = parcel.Rate.Amount.ToString();
+			var Invoices = parcel.Invoices.ToList();
+
+			var filteredInvoice = Invoices.FirstOrDefault(a => a.InvoiceNumber == invoicenumber);
 
 			var ratesmodel = new RateViewModel {
 
 				ParcelNumber = property,
-				PendingRate = pendingRate,
+				PendingRate = filteredInvoice.InvoiceAmount.ToString(),
 				OwnerName = parcel.Owner.Name,
-				FinancialYear = DateTime.Now.AddYears(-1).Year + "/" + DateTime.Now.Year,
-				//OwnerId = parcel.Owner.Id.ToString(),
-				OwnerPIN = parcel.Owner.PIN              
+				FinancialYear = DateTime.Now.AddYears(-1).Year + "/" + DateTime.Now.Year,				
+				OwnerPIN = parcel.Owner.PIN,
+				InvoiceID = filteredInvoice.InvoiceNumber
 
             };
 
@@ -128,7 +130,7 @@ namespace LIMSWebApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrators")]
         public async Task<IActionResult> PaymentsList(int? page)
         {
             var paymentsmade = await _payments.MpesaTransaction.ToListAsync();          
@@ -218,7 +220,7 @@ namespace LIMSWebApp.Controllers
 
 			var MpesaExpressObject2 = new LipaNaMpesaOnlineDto
 			{
-				AccountReference = "LIMS Portal",
+				AccountReference = collection["invoice_number"],
 				Amount = collection["amount"],
 				PartyA = collection["phone_number"],
 				PartyB = LNMOPayBillNumber,
@@ -226,7 +228,7 @@ namespace LIMSWebApp.Controllers
 				CallBackURL = _config["MpesaConfiguration:LNMOCallbackURL"],
 				Passkey = PassKey,				  
 				PhoneNumber = collection["phone_number"], 				
-				TransactionDesc = "test",
+				TransactionDesc = "Land Rate Payment",
 				TransactionType = TransactType.CustomerPayBillOnline
 			};
 

@@ -9,7 +9,7 @@ namespace LIMSInfrastructure.Identity
 	{
 		public static async Task Seed(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
 		{
-			var administratorsRole = "Administrator";
+			var administratorsRole = "Administrators";
 			var defaultAdminUsername = "admin@lims.co.ke";
 			var defaultAdminPassword = "Admin@123";
 

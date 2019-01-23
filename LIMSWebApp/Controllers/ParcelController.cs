@@ -185,6 +185,7 @@ namespace LIMSWebApp.Controllers
 
 			parcel.LandUseId = parceledit.SelectedLandUse;
 			parcel.Area = parceledit.Area;
+			parcel.ParcelNum = parceledit.ParcelNumber;
 			parcel.AdministrationId = parceledit.SelectedBlock;			
 
 			if (ModelState.IsValid)

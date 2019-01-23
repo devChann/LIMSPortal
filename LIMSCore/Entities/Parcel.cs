@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LIMSCore.Billing;
+using System;
 using System.Collections.Generic;
 
 namespace LIMSCore.Entities
@@ -8,7 +9,7 @@ namespace LIMSCore.Entities
         public Parcel()
         {
             Operations = new HashSet<Operation>();
-            Payments = new HashSet<Payments>();
+			Invoices = new HashSet<Invoice>();
         }
 
         public int ParcelId { get; set; }        
@@ -49,6 +50,6 @@ namespace LIMSCore.Entities
 		public Valuation Valuation { get; set; }
 
         public ICollection<Operation> Operations { get; set; }
-        public ICollection<Payments> Payments { get; set; }
-    }
+		public ICollection<Invoice> Invoices { get; set; }
+	}
 }

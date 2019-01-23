@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace LIMSWebApp.Areas.Identity.Pages.UserAdmin
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrators")]
     public class RolesModel : PageModel
 	{
 		[BindProperty]

@@ -1,4 +1,5 @@
-﻿using LIMSCore.Entities;
+﻿using LIMSCore.Billing;
+using LIMSCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -51,7 +52,7 @@ namespace LIMSWebApp.ViewModels.LIMSViewModels
         public int Rateid { get; set; }
         public string ReceiptNo { get; set; }
 
-        public ICollection<Payments> Payments { get; set; }
+        public ICollection<Invoice> Invoices { get; set; }
 
     }
 }

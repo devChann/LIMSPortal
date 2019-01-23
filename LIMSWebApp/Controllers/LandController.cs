@@ -63,7 +63,7 @@ namespace LIMSWebApp.Controllers
                 .Include(i => i.Restriction.Mortgage)
                 .Include(i => i.SpatialUnit)
                 .Include(i => i.Tenure)
-                .Include(p => p.Payments)
+                .Include(p => p.Invoices)
                 .Include(i => i.Valuation)
                 .Include(i => i.Owner)
                 
@@ -97,7 +97,7 @@ namespace LIMSWebApp.Controllers
                 parcelviewmodel.Lender = parcel.Restriction.Mortgage.Lender;
                 parcelviewmodel.amount = parcel.Restriction.Charge.Amount;
                 parcelviewmodel.ChargeLender = parcel.Restriction.Charge.Lender;
-                parcelviewmodel.Payments = parcel.Payments;
+                parcelviewmodel.Invoices = parcel.Invoices;
                 parcelviewmodel.RegistrationDate = parcel.Registration.RegistrationDate;
             }
 

@@ -26,8 +26,11 @@ namespace LIMSWebApp.ViewModels.PropertiesViewModels
         [DisplayName("Financial Year")]
         public string FinancialYear { get; set; }
 
-        [DisplayName("Rate Amount")]
-        public string PendingRate { get; set; }     
+        [DisplayName("Pending Amount")]
+        public string PendingRate { get; set; }
 
-    }
+		[DisplayName("Invoice ID")]
+		public string InvoiceID { get; set; }
+
+	}
 }

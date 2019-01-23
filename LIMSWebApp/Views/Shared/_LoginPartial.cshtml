@@ -14,7 +14,7 @@
 			ApplicationUser user = await UserManager.FindByNameAsync(User.Identity.Name);
 		}
 
-		@if (await UserManager.IsInRoleAsync(user, "Administrator"))
+		@if (await UserManager.IsInRoleAsync(user, "Administrators"))
 		{
 			<a class="nav-item nav-link text-light" asp-area="Identity" asp-page="/UserAdmin/Index">Manage Users</a>
 			<a class="nav-item nav-link text-light" asp-controller="Payments" asp-action="PaymentsList">Payments History</a>

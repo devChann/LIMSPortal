@@ -28,12 +28,12 @@
 
 <div class="row">
 
-	@await Component.InvokeAsync("PaymentMethod")
+	@await Component.InvokeAsync("PaymentMethod", new { amount = Model.PendingRate, invoicenumber = Model.InvoiceID})
 
 
 	<div class="col-md-6">
 		<h5 class="d-flex justify-content-center align-items-center mb-3">
-			<span class="text-muted">Payment Details</span>
+			<span class="text-muted">Property Details</span>
 		</h5>
 		<ul class="list-group mb-3">
 			<li class="list-group-item">
@@ -48,12 +48,13 @@
 					<div class="col-md-6">
 						<h6 class="my-0">Property Details</h6>
 						<small class="text-muted">Property Number: @Model.ParcelNumber</small> <br />
-						<small class="text-muted">Rate Year: @Model.FinancialYear</small>
+						<small class="text-muted">Rate Year: @Model.FinancialYear</small> <br />
+						<small class="text-muted">Invoice Number: @Model.InvoiceID</small>
 					</div>
 				</div>
 			</li>
 			<li class="list-group-item d-flex justify-content-center">
-				<span>Total Pending Rate (KSH): </span>
+				<span>Total Pending Amount (KSH): </span>
 				<strong>@Model.PendingRate</strong>
 			</li>
 		</ul>

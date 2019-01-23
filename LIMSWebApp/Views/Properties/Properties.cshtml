@@ -12,7 +12,7 @@
     ViewData["Title"] = "PropertiesView";
 }
 
-<div>
+<div class="">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
 			<a asp-controller="Home" asp-action="Index">Home</a>
@@ -47,6 +47,7 @@
 							<th>
 								Rates Status
 							</th>
+							
 							<th>
 								Actions
 							</th>
@@ -76,11 +77,20 @@
 									<td>
 										<span class="btn btn-sm btn-info"><i class="fa fa-check-circle"></i> Paid</span>
 									</td>
+									
+										
+									
 									<td>
 										<a href="@Url.Action("SearchParcel", "Parcels", new { parcelnum = item.ParcelNum })" class="btn btn-sm btn-outline-primary">
 											<i class="fa fa-info-circle"></i>
 											<span>
 												<strong>Details</strong>
+											</span>
+										</a>
+										<a href="@Url.Action("Index", "Invoice", new { parcelnum = item.ParcelNum })" class="btn btn-sm btn-secondary">
+											<i class="fa fa-eye"></i>
+											<span>
+												<strong>View Invoices</strong>
 											</span>
 										</a>
 										<span class="btn btn-sm btn-outline-info disabled" data-toggle="tooltip" title="All Paid Up"><i class="fa fa-handshake"></i> All Paid Up</span>
@@ -98,12 +108,13 @@
 												<strong>Details</strong>
 											</span>
 										</a>
-										<a href="@Url.Action("checkout", "Payments", new { property = item.ParcelNum })" class="btn btn-sm btn-warning">
-											<i class="fa fa-money-bill-alt"></i>
+										<a href="@Url.Action("Index", "Invoice", new { parcelnum = item.ParcelNum })" class="btn btn-sm btn-secondary">
+											<i class="fa fa-eye"></i>
 											<span>
-												<strong>Make Payment</strong>
+												<strong>View Invoices</strong>
 											</span>
 										</a>
+										
 										@*<span class="btn btn-sm btn-warning" data-toggle="modal" data-target="#PaymentNotification"><i class="fa fa-money-bill-alt"></i> <strong>Make Payment</strong></span>*@
 									</td>
 								}
@@ -124,7 +135,7 @@
 		</div>
 		<div class="row top10">
 			<div class="col-md-12">
-				<h4>Property Charts</h4>
+				<h4>Insight</h4>
 			</div>			
 		</div>
 		<div class="row">
@@ -241,28 +252,48 @@
 			]
         };
 
-        var options = {
+        var pieoptions = {
             maintainAspectRatio: false,
             scales: { },
             title: {
                 display: true,
-                text: 'Compare Rates by Property'
+                text: 'Rate per Property'
             },
 			responsive: true,
 			legend: {
 				display: false
 			}
-        };
+		};
+
+		var baroptions = {
+			maintainAspectRatio: false,
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			},
+			title: {
+				display: true,
+				text: 'Rate per Property'
+			},
+			responsive: true,
+			legend: {
+				display: false
+			}
+		};
+
 
 		var mypieChart = new Chart(piectx, {
-            options: options,
+			options: pieoptions,
             data: data,
             type:'pie' //can use doughnut
 
 		});
 
 		var mybarChart = new Chart(barctx, {
-			options: options,
+			options: baroptions,
 			data: data,
 			type: 'bar' 
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LIMSCore.Entities;
 using LIMSInfrastructure.Data;
+using LIMSCore.Billing;
 
 namespace LIMSWebApp.Controllers
 {
@@ -22,7 +23,7 @@ namespace LIMSWebApp.Controllers
         // GET: Payment
         public async Task<IActionResult> Index()
         {
-            var lIMSCoreDbContext = _context.Payments.Include(p => p.Parcel);
+            var lIMSCoreDbContext = _context.Payment.Include(p => p.Invoice);
             return View(await lIMSCoreDbContext.ToListAsync());
         }
 
@@ -34,9 +35,9 @@ namespace LIMSWebApp.Controllers
                 return NotFound();
             }
 
-            var payments = await _context.Payments
-                .Include(p => p.Parcel)
-                .FirstOrDefaultAsync(m => m.PaymentsId == id);
+            var payments = await _context.Payment
+                .Include(p => p.Invoice)
+                .FirstOrDefaultAsync(m => m.PaymentId == id);
             if (payments == null)
             {
                 return NotFound();
@@ -57,16 +58,16 @@ namespace LIMSWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentsId,Amount,ModeOfPayment,PaymentDate,ReceiptNo,ParcelId")] Payments payments)
+        public async Task<IActionResult> Create([Bind("PaymentsId,Amount,ModeOfPayment,PaymentDate,ReceiptNo,InvoiceId")] Payment payment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(payments);
+                _context.Add(payment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParcelId"] = new SelectList(_context.Parcel, "ParcelId", "ParcelNum", payments.ParcelId);
-            return View(payments);
+            ViewData["InvoiceId"] = new SelectList(_context.Parcel, "InvoiceId", "InvoiceNumber", payment.InvoiceId);
+            return View(payment);
         }
 
         // GET: Payment/Edit/5
@@ -77,12 +78,12 @@ namespace LIMSWebApp.Controllers
                 return NotFound();
             }
 
-            var payments = await _context.Payments.FindAsync(id);
+            var payments = await _context.Payment.FindAsync(id);
             if (payments == null)
             {
                 return NotFound();
             }
-            ViewData["ParcelId"] = new SelectList(_context.Parcel, "ParcelId", "ParcelNum", payments.ParcelId);
+            ViewData["InvoiceId"] = new SelectList(_context.Parcel, "InvoiceId", "InvoiceNumber", payments.InvoiceId);
             return View(payments);
         }
 
@@ -91,9 +92,9 @@ namespace LIMSWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentsId,Amount,ModeOfPayment,PaymentDate,ReceiptNo,ParcelId")] Payments payments)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentsId,Amount,ModeOfPayment,PaymentDate,ReceiptNo,InvoiceId")] Payment payment)
         {
-            if (id != payments.PaymentsId)
+            if (id != payment.PaymentId)
             {
                 return NotFound();
             }
@@ -102,12 +103,12 @@ namespace LIMSWebApp.Controllers
             {
                 try
                 {
-                    _context.Update(payments);
+                    _context.Update(payment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PaymentsExists(payments.PaymentsId))
+                    if (!PaymentExists(payment.PaymentId))
                     {
                         return NotFound();
                     }
@@ -118,8 +119,8 @@ namespace LIMSWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParcelId"] = new SelectList(_context.Parcel, "ParcelId", "ParcelNum", payments.ParcelId);
-            return View(payments);
+            ViewData["InvoiceId"] = new SelectList(_context.Parcel, "InvoiceId", "InvoiceNumber", payment.InvoiceId);
+            return View(payment);
         }
 
         // GET: Payment/Delete/5
@@ -130,9 +131,9 @@ namespace LIMSWebApp.Controllers
                 return NotFound();
             }
 
-            var payments = await _context.Payments
-                .Include(p => p.Parcel)
-                .FirstOrDefaultAsync(m => m.PaymentsId == id);
+            var payments = await _context.Payment
+                .Include(p => p.Invoice)
+                .FirstOrDefaultAsync(m => m.PaymentId == id);
             if (payments == null)
             {
                 return NotFound();
@@ -146,15 +147,15 @@ namespace LIMSWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var payments = await _context.Payments.FindAsync(id);
-            _context.Payments.Remove(payments);
+            var payment = await _context.Payment.FindAsync(id);
+            _context.Payment.Remove(payment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PaymentsExists(int id)
+        private bool PaymentExists(int id)
         {
-            return _context.Payments.Any(e => e.PaymentsId == id);
+            return _context.Payment.Any(e => e.PaymentId == id);
         }
     }
 }

@@ -216,39 +216,48 @@
 						<table class="table table-sm table-responsive">
 							<thead class="thead-dark">
 								<tr>
-									<th>Receipt Number</th>
-									<th>Mode Of Payment</th>
-									<th>Payment Date</th>
-									<th>Amount Paid</th>
+									<th>Invoice Number</th>
+									<th>Amount Due</th>
+									<th>Date Generated</th>
+									<th>Date Due</th>
+
 
 									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-								@foreach (var item in Model.Payments)
+								@if (Model.Invoices != null)
 								{
-									string selectedRow = "";
-									if (item.ParcelId == (int?)ViewData["Rateid"])
+									@foreach (var item in Model.Invoices)
 									{
-										selectedRow = "success";
+										string selectedRow = "";
+										if (item.InvoiceId == (Guid?)ViewData["InvoiceId"])
+										{
+											selectedRow = "success";
+										}
+										<tr class="@selectedRow">
+											<td>
+												@Html.DisplayFor(modelItem => item.InvoiceNumber)
+											</td>
+											<td>
+												@Html.DisplayFor(modelItem => item.InvoiceAmount)
+											</td>
+											<td>
+												@Html.DisplayFor(modelItem => item.DateCreated)
+
+											</td>
+											<td>
+												@Html.DisplayFor(modelItem => item.DateDue)
+											</td>
+
+										</tr>
 									}
-									<tr class="@selectedRow">
-										<td>
-											@Html.DisplayFor(modelItem => item.ReceiptNo)
-										</td>
-										<td>
-											@Html.DisplayFor(modelItem => item.ModeOfPayment)
-										</td>
-										<td>
-											@Html.DisplayFor(modelItem => item.PaymentDate)
-
-										</td>
-										<td>
-											@Html.DisplayFor(modelItem => item.Amount)
-										</td>
-
-									</tr>
 								}
+								else
+								{
+									<tr><td>There is no payment data</td></tr>
+								}
+
 							</tbody>
 						</table>
 					</div>

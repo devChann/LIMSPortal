@@ -7,17 +7,17 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace LIMSInfrastructure.Migrations.LIMSCoreDb
+namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(LIMSCoreDbContext))]
-    [Migration("20190111085019_v2")]
+    [Migration("20190123132238_v2")]
     partial class v2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -26,17 +26,19 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.Property<Guid>("InvoiceId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Created");
+                    b.Property<DateTime>("DateCreated");
 
-                    b.Property<DateTime>("Expires");
+                    b.Property<DateTime>("DateDue");
 
-                    b.Property<Guid>("ProductId");
+                    b.Property<double>("InvoiceAmount");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("InvoiceNumber");
+
+                    b.Property<int>("ParcelId");
 
                     b.HasKey("InvoiceId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ParcelId");
 
                     b.ToTable("Invoice");
                 });
@@ -65,44 +67,26 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Billing.Payment", b =>
                 {
-                    b.Property<Guid>("PaymentId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Amount");
-
-                    b.Property<DateTime>("DatePaid");
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("decimal(9,2)");
 
                     b.Property<Guid>("InvoiceId");
 
-                    b.Property<Guid?>("MpesaTransactionId");
+                    b.Property<string>("ModeOfPayment");
 
-                    b.Property<string>("Type");
+                    b.Property<DateTime?>("PaymentDate");
+
+                    b.Property<string>("ReceiptNo");
 
                     b.HasKey("PaymentId");
 
                     b.HasIndex("InvoiceId");
 
-                    b.HasIndex("MpesaTransactionId");
-
                     b.ToTable("Payment");
-                });
-
-            modelBuilder.Entity("LIMSCore.Billing.Product", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("Number");
-
-                    b.Property<double>("Price");
-
-                    b.HasKey("ProductId");
-
-                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Administration", b =>
@@ -293,8 +277,6 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("GroupLeadershipId");
 
-                    b.Property<int>("GroupGroupLeadershipId");
-
                     b.HasKey("GroupId", "GroupLeadershipId");
 
                     b.HasIndex("GroupLeadershipId");
@@ -304,17 +286,11 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.GroupGroupMembership", b =>
                 {
-                    b.Property<int>("GroupGroupMembershipId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("GroupId");
 
                     b.Property<int>("GroupMembershipId");
 
-                    b.HasKey("GroupGroupMembershipId");
-
-                    b.HasIndex("GroupId");
+                    b.HasKey("GroupId", "GroupMembershipId");
 
                     b.HasIndex("GroupMembershipId");
 
@@ -411,8 +387,6 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.Property<int>("InstitutionLeadershipId");
 
                     b.Property<int>("InstitutionId");
-
-                    b.Property<int>("InstitutionInstitutionLeadershipId");
 
                     b.HasKey("InstitutionLeadershipId", "InstitutionId");
 
@@ -619,29 +593,6 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.ToTable("Parcel");
                 });
 
-            modelBuilder.Entity("LIMSCore.Entities.Payments", b =>
-                {
-                    b.Property<int>("PaymentsId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal?>("Amount");
-
-                    b.Property<string>("ModeOfPayment");
-
-                    b.Property<int?>("ParcelId");
-
-                    b.Property<DateTime?>("PaymentDate");
-
-                    b.Property<string>("ReceiptNo");
-
-                    b.HasKey("PaymentsId");
-
-                    b.HasIndex("ParcelId");
-
-                    b.ToTable("Payments");
-                });
-
             modelBuilder.Entity("LIMSCore.Entities.Person", b =>
                 {
                     b.Property<int>("PersonId")
@@ -673,8 +624,6 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
                     b.Property<int>("PersonId");
 
-                    b.Property<int>("PersonGroupLeadershipId");
-
                     b.HasKey("GroupLeadershipId", "PersonId");
 
                     b.HasIndex("PersonId");
@@ -684,17 +633,11 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Entities.PersonGroupMembership", b =>
                 {
-                    b.Property<int>("PersonGroupMembershipId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("GroupMembershipId");
 
                     b.Property<int>("PersonId");
 
-                    b.HasKey("PersonGroupMembershipId");
-
-                    b.HasIndex("GroupMembershipId");
+                    b.HasKey("GroupMembershipId", "PersonId");
 
                     b.HasIndex("PersonId");
 
@@ -706,8 +649,6 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.Property<int>("InstitutionLeadershipId");
 
                     b.Property<int>("PersonId");
-
-                    b.Property<int>("PersonInstitutionLeadershipId");
 
                     b.HasKey("InstitutionLeadershipId", "PersonId");
 
@@ -1199,8 +1140,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                     b.HasData(
                         new
                         {
-                            Id = "6d378dc9-28c1-4cb5-99f9-8904796fa2f5",
-                            ConcurrencyStamp = "5e19c553-e3e3-4c8e-b106-86959c5951c6",
+                            Id = "d34ff766-d0fb-4cb5-84bd-cf27c130cad3",
+                            ConcurrencyStamp = "4f04d497-2cbe-472f-b1c9-aadcd3133f85",
                             Name = "Authors",
                             NormalizedName = "AUTHORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1208,8 +1149,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         },
                         new
                         {
-                            Id = "d39fddd8-ee8d-4ede-bd9e-fb044c251439",
-                            ConcurrencyStamp = "15b1a7f8-61cc-440b-a7ae-8636d44f25fd",
+                            Id = "e51c98a4-dc42-449f-b0aa-fa6681ccac3e",
+                            ConcurrencyStamp = "9c059af1-8e91-4fb3-908f-dddae62aef52",
                             Name = "Editors",
                             NormalizedName = "EDITORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1217,8 +1158,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         },
                         new
                         {
-                            Id = "5d8c4f8e-2082-4476-b715-3e08efd21586",
-                            ConcurrencyStamp = "f0c54831-160c-4fdd-aa32-d8af5bd5734e",
+                            Id = "8fccdac6-1f85-4cd5-be71-96012d37e884",
+                            ConcurrencyStamp = "229185cc-3f74-4b87-9d19-04733d4988c0",
                             Name = "Administrators",
                             NormalizedName = "ADMINISTRATORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1228,9 +1169,9 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
 
             modelBuilder.Entity("LIMSCore.Billing.Invoice", b =>
                 {
-                    b.HasOne("LIMSCore.Billing.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                    b.HasOne("LIMSCore.Entities.Parcel", "Parcel")
+                        .WithMany("Invoices")
+                        .HasForeignKey("ParcelId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -1240,10 +1181,6 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         .WithMany("Payments")
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("LIMSCore.Billing.MpesaTransaction", "MpesaTransaction")
-                        .WithMany()
-                        .HasForeignKey("MpesaTransactionId");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.BoundaryBeacon", b =>
@@ -1412,13 +1349,6 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         .WithMany("Parcels")
                         .HasForeignKey("ValuationId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("LIMSCore.Entities.Payments", b =>
-                {
-                    b.HasOne("LIMSCore.Entities.Parcel", "Parcel")
-                        .WithMany("Payments")
-                        .HasForeignKey("ParcelId");
                 });
 
             modelBuilder.Entity("LIMSCore.Entities.Person", b =>

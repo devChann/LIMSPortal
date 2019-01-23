@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LIMSInfrastructure.Migrations.LIMSCoreDb
+namespace LIMSInfrastructure.Migrations
 {
-    public partial class Merged_Contexts_V1 : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Administration",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    AdministrationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BlockName = table.Column<string>(nullable: true),
                     DistrictName = table.Column<string>(nullable: true),
@@ -20,20 +20,20 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Administration", x => x.Id);
+                    table.PrimaryKey("PK_Administration", x => x.AdministrationId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Apartment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ApartmentId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ApartmentName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Apartment", x => x.Id);
+                    table.PrimaryKey("PK_Apartment", x => x.ApartmentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,7 +90,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Beacon",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    BeaconId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BeaconNum = table.Column<string>(nullable: true),
                     BeaconType = table.Column<string>(nullable: true),
@@ -103,27 +103,27 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Beacon", x => x.Id);
+                    table.PrimaryKey("PK_Beacon", x => x.BeaconId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Boundary",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    BoundaryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BoundaryType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Boundary", x => x.Id);
+                    table.PrimaryKey("PK_Boundary", x => x.BoundaryId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BuildingRegulations",
+                name: "BuildingRegulation",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    BuildingRegulationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     GCR = table.Column<double>(nullable: false),
                     PCR = table.Column<double>(nullable: false),
@@ -131,14 +131,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BuildingRegulations", x => x.Id);
+                    table.PrimaryKey("PK_BuildingRegulation", x => x.BuildingRegulationId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Charge",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ChargeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Amount = table.Column<double>(nullable: false),
                     InterestRate = table.Column<double>(nullable: false),
@@ -148,24 +148,24 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Charge", x => x.Id);
+                    table.PrimaryKey("PK_Charge", x => x.ChargeId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "GroupLeadership",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    GroupLeadershipId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     LeadershipRole = table.Column<string>(nullable: true),
                     LeadershipSince = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
                     LeadershipStatus = table.Column<string>(nullable: true),
                     LeadershipUntil = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
-                    PersonID = table.Column<int>(nullable: false)
+                    PersonId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupLeadership", x => x.Id);
+                    table.PrimaryKey("PK_GroupLeadership", x => x.GroupLeadershipId);
                 });
 
             migrationBuilder.CreateTable(
@@ -204,37 +204,35 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Institution",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    InstitutionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     InstitutionType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Institution", x => x.Id);
+                    table.PrimaryKey("PK_Institution", x => x.InstitutionId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "MapIndex",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    MapIndexId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    MapSheetNum = table.Column<string>(nullable: true),
-                    ParcelId = table.Column<int>(nullable: false)
+                    MapSheetNum = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MapIndex", x => x.Id);
+                    table.PrimaryKey("PK_MapIndex", x => x.MapIndexId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Mortgage",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    MortgageId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Amount = table.Column<double>(nullable: false),
-                    BuildingId = table.Column<string>(nullable: true),
                     InterestRate = table.Column<double>(nullable: false),
                     Lender = table.Column<string>(nullable: true),
                     Ranking = table.Column<int>(nullable: false),
@@ -242,7 +240,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mortgage", x => x.Id);
+                    table.PrimaryKey("PK_Mortgage", x => x.MortgageId);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,7 +264,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Owner",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    OwnerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     OwnerType = table.Column<string>(nullable: true),
@@ -276,54 +274,39 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Owner", x => x.Id);
+                    table.PrimaryKey("PK_Owner", x => x.OwnerId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OwnershiRights",
+                name: "OwnershipRight",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    OwnershipRightId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RightType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OwnershiRights", x => x.Id);
+                    table.PrimaryKey("PK_OwnershipRight", x => x.OwnershipRightId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Rate",
                 columns: table => new
                 {
-                    ProductId = table.Column<Guid>(nullable: false),
-                    Number = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.ProductId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rates",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false),
+                    RateId = table.Column<int>(nullable: false),
                     Amount = table.Column<decimal>(type: "money", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rates", x => x.id);
+                    table.PrimaryKey("PK_Rate", x => x.RateId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Registration",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    RegistrationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Jurisdiction = table.Column<string>(nullable: true),
                     RegistrationDate = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
@@ -333,14 +316,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Registration", x => x.Id);
+                    table.PrimaryKey("PK_Registration", x => x.RegistrationId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Reserve",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ReserveId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ComplianceStatus = table.Column<string>(nullable: true),
                     EnforcingAuthority = table.Column<string>(nullable: true),
@@ -348,55 +331,55 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reserve", x => x.Id);
+                    table.PrimaryKey("PK_Reserve", x => x.ReserveId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Responsibility",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ResponsibilityId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     PerformanceRequirement = table.Column<string>(nullable: true),
                     ResponsibilityType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Responsibility", x => x.Id);
+                    table.PrimaryKey("PK_Responsibility", x => x.ResponsibilityId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SpatialUnitSet",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    SpatialUnitSetId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Label = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SpatialUnitSet", x => x.Id);
+                    table.PrimaryKey("PK_SpatialUnitSet", x => x.SpatialUnitSetId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StaturtoryRestriction",
+                name: "StatutoryRestriction",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    StatutoryRestrictionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     NatureOfRestriction = table.Column<string>(nullable: true),
                     RestrictingAuthority = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StaturtoryRestriction", x => x.Id);
+                    table.PrimaryKey("PK_StatutoryRestriction", x => x.StatutoryRestrictionId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Survey",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    SurveyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CompsNo = table.Column<string>(nullable: true),
                     DateOfEntry = table.Column<DateTime>(nullable: true, defaultValueSql: "(getdate())"),
@@ -408,27 +391,27 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Survey", x => x.Id);
+                    table.PrimaryKey("PK_Survey", x => x.SurveyId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tenure",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    TenureId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     TenureType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tenure", x => x.Id);
+                    table.PrimaryKey("PK_Tenure", x => x.TenureId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Valution",
+                name: "Valuation",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ValuationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Remarks = table.Column<string>(nullable: true),
                     SerialNo = table.Column<string>(nullable: true),
@@ -439,21 +422,20 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Valution", x => x.Id);
+                    table.PrimaryKey("PK_Valuation", x => x.ValuationId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Zone",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ZoneId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RegulationId = table.Column<int>(nullable: false),
                     ZoneType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Zone", x => x.Id);
+                    table.PrimaryKey("PK_Zone", x => x.ZoneId);
                 });
 
             migrationBuilder.CreateTable(
@@ -566,8 +548,8 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "BoundaryBeacon",
                 columns: table => new
                 {
-                    BoundaryId = table.Column<int>(nullable: false),
-                    BeaconId = table.Column<int>(nullable: false)
+                    BeaconId = table.Column<int>(nullable: false),
+                    BoundaryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -576,49 +558,13 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         name: "FK_BoundaryBeacon_Beacon_BeaconId",
                         column: x => x.BeaconId,
                         principalTable: "Beacon",
-                        principalColumn: "Id",
+                        principalColumn: "BeaconId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BoundaryBeacon_Boundary_BoundaryId",
                         column: x => x.BoundaryId,
                         principalTable: "Boundary",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GroupGroupLeadership",
-                columns: table => new
-                {
-                    GroupId = table.Column<int>(nullable: false),
-                    GroupLeadershipId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupGroupLeadership", x => new { x.GroupId, x.GroupLeadershipId });
-                    table.ForeignKey(
-                        name: "FK_GroupGroupLeadership_GroupLeadership_GroupLeadershipId",
-                        column: x => x.GroupLeadershipId,
-                        principalTable: "GroupLeadership",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GroupGroupMembership",
-                columns: table => new
-                {
-                    GroupMembershipId = table.Column<int>(nullable: false),
-                    GroupId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GroupGroupMembership", x => new { x.GroupMembershipId, x.GroupId });
-                    table.ForeignKey(
-                        name: "FK_GroupGroupMembership_GroupMembership_GroupMembershipId",
-                        column: x => x.GroupMembershipId,
-                        principalTable: "GroupMembership",
-                        principalColumn: "Id",
+                        principalColumn: "BoundaryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -636,7 +582,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         name: "FK_InstitutionInstitutionLeadership_Institution_InstitutionId",
                         column: x => x.InstitutionId,
                         principalTable: "Institution",
-                        principalColumn: "Id",
+                        principalColumn: "InstitutionId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InstitutionInstitutionLeadership_InsitutionLeadership_InstitutionLeadershipId",
@@ -647,10 +593,10 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "GroupOW",
+                name: "Group",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    GroupId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     County = table.Column<string>(nullable: true),
                     GroupType = table.Column<string>(nullable: true),
@@ -658,12 +604,12 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupOW", x => x.Id);
+                    table.PrimaryKey("PK_Group", x => x.GroupId);
                     table.ForeignKey(
-                        name: "FK_GroupOW_Owner_OwnerId",
+                        name: "FK_Group_Owner_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Owner",
-                        principalColumn: "Id",
+                        principalColumn: "OwnerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -671,44 +617,23 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Person",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    PersonId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Email = table.Column<string>(nullable: true),
                     Mobile = table.Column<string>(nullable: true),
-                    OwnerId = table.Column<int>(nullable: false),
                     PersonType = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
-                    PIN = table.Column<string>(nullable: true)
+                    PIN = table.Column<string>(nullable: true),
+                    OwnerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Person", x => x.Id);
+                    table.PrimaryKey("PK_Person", x => x.PersonId);
                     table.ForeignKey(
                         name: "FK_Person_Owner_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Owner",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Invoice",
-                columns: table => new
-                {
-                    InvoiceId = table.Column<Guid>(nullable: false),
-                    Type = table.Column<string>(nullable: true),
-                    Created = table.Column<DateTime>(nullable: false),
-                    Expires = table.Column<DateTime>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Invoice", x => x.InvoiceId);
-                    table.ForeignKey(
-                        name: "FK_Invoice_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "ProductId",
+                        principalColumn: "OwnerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -726,13 +651,13 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         name: "FK_SpatialUnitSetRegistration_Registration_RegistrationId",
                         column: x => x.RegistrationId,
                         principalTable: "Registration",
-                        principalColumn: "Id",
+                        principalColumn: "RegistrationId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SpatialUnitSetRegistration_SpatialUnitSet_SpatialUnitSetId",
                         column: x => x.SpatialUnitSetId,
                         principalTable: "SpatialUnitSet",
-                        principalColumn: "Id",
+                        principalColumn: "SpatialUnitSetId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -740,41 +665,40 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Restriction",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    RestrictionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    chrageId = table.Column<int>(nullable: true),
-                    landUseId = table.Column<int>(nullable: true),
-                    morgageid = table.Column<int>(nullable: true),
-                    ReserveID = table.Column<int>(nullable: true),
                     RestrictionType = table.Column<string>(nullable: true),
-                    Statutoryid = table.Column<int>(nullable: true)
+                    ChargeId = table.Column<int>(nullable: true),
+                    MortgageId = table.Column<int>(nullable: true),
+                    ReserveId = table.Column<int>(nullable: true),
+                    StatutoryRestrictionId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Restriction", x => x.Id);
+                    table.PrimaryKey("PK_Restriction", x => x.RestrictionId);
                     table.ForeignKey(
                         name: "FK_Restriction_Charge",
-                        column: x => x.chrageId,
+                        column: x => x.ChargeId,
                         principalTable: "Charge",
-                        principalColumn: "Id",
+                        principalColumn: "ChargeId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Restriction_Mortgage",
-                        column: x => x.morgageid,
+                        column: x => x.MortgageId,
                         principalTable: "Mortgage",
-                        principalColumn: "Id",
+                        principalColumn: "MortgageId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Restriction_Reserve",
-                        column: x => x.ReserveID,
+                        column: x => x.ReserveId,
                         principalTable: "Reserve",
-                        principalColumn: "Id",
+                        principalColumn: "ReserveId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Restriction_StaturtoryRestriction",
-                        column: x => x.Statutoryid,
-                        principalTable: "StaturtoryRestriction",
-                        principalColumn: "Id",
+                        name: "FK_Restriction_StatutoryRestriction",
+                        column: x => x.StatutoryRestrictionId,
+                        principalTable: "StatutoryRestriction",
+                        principalColumn: "StatutoryRestrictionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -782,47 +706,47 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "SpatialUnit",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    SpatialUnitId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Area = table.Column<double>(nullable: true),
-                    BoundaryId = table.Column<int>(nullable: false),
                     Label = table.Column<string>(nullable: true),
                     Layer = table.Column<string>(nullable: true),
                     Length = table.Column<double>(nullable: true),
-                    MapIndexId = table.Column<int>(nullable: false),
                     PreliminaryUnitId = table.Column<int>(nullable: false),
                     ReferencePoint = table.Column<string>(nullable: true),
-                    SpatialUnitSetId = table.Column<int>(nullable: false),
                     SpatialUnitType = table.Column<string>(nullable: true),
-                    SurveyClassId = table.Column<int>(nullable: false),
-                    Volume = table.Column<double>(nullable: true)
+                    Volume = table.Column<double>(nullable: true),
+                    BoundaryId = table.Column<int>(nullable: false),
+                    MapIndexId = table.Column<int>(nullable: false),
+                    SpatialUnitSetId = table.Column<int>(nullable: false),
+                    SurveyId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SpatialUnit", x => x.Id);
+                    table.PrimaryKey("PK_SpatialUnit", x => x.SpatialUnitId);
                     table.ForeignKey(
                         name: "FK_SpatialUnit_Boundary_BoundaryId",
                         column: x => x.BoundaryId,
                         principalTable: "Boundary",
-                        principalColumn: "Id",
+                        principalColumn: "BoundaryId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SpatialUnit_MapIndex_MapIndexId",
                         column: x => x.MapIndexId,
                         principalTable: "MapIndex",
-                        principalColumn: "Id",
+                        principalColumn: "MapIndexId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SpatialUnit_SpatialUnitSet_SpatialUnitSetId",
                         column: x => x.SpatialUnitSetId,
                         principalTable: "SpatialUnitSet",
-                        principalColumn: "Id",
+                        principalColumn: "SpatialUnitSetId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SpatialUnit_Survey_SurveyClassId",
-                        column: x => x.SurveyClassId,
+                        name: "FK_SpatialUnit_Survey_SurveyId",
+                        column: x => x.SurveyId,
                         principalTable: "Survey",
-                        principalColumn: "Id",
+                        principalColumn: "SurveyId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -830,18 +754,18 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Freehold",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    FreeholdId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     TenureId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Freehold", x => x.Id);
+                    table.PrimaryKey("PK_Freehold", x => x.FreeholdId);
                     table.ForeignKey(
                         name: "FK_Freehold_Tenure_TenureId",
                         column: x => x.TenureId,
                         principalTable: "Tenure",
-                        principalColumn: "Id",
+                        principalColumn: "TenureId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -849,7 +773,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Leasehold",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    LeaseholdId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     LeasePeriod = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
                     Lessor = table.Column<string>(nullable: true),
@@ -857,12 +781,12 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Leasehold", x => x.Id);
+                    table.PrimaryKey("PK_Leasehold", x => x.LeaseholdId);
                     table.ForeignKey(
                         name: "FK_Leasehold_Tenure_TenureId",
                         column: x => x.TenureId,
                         principalTable: "Tenure",
-                        principalColumn: "Id",
+                        principalColumn: "TenureId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -870,35 +794,83 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "LandUse",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    LandUseId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BuildingRegulationsId = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: true, defaultValueSql: "(getdate())"),
                     EndDate = table.Column<DateTime>(nullable: true, defaultValueSql: "(getdate())"),
                     LandUseStatus = table.Column<string>(nullable: true),
                     LandUseType = table.Column<string>(nullable: true),
                     RegulationAgency = table.Column<string>(nullable: true),
-                    StartDate = table.Column<DateTime>(nullable: true, defaultValueSql: "(getdate())"),
+                    BuildingRegulationId = table.Column<int>(nullable: false),
                     ZoneId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LandUse", x => x.Id);
+                    table.PrimaryKey("PK_LandUse", x => x.LandUseId);
                     table.ForeignKey(
-                        name: "FK_LandUse_BuildingRegulations_BuildingRegulationsId",
-                        column: x => x.BuildingRegulationsId,
-                        principalTable: "BuildingRegulations",
-                        principalColumn: "Id",
+                        name: "FK_LandUse_BuildingRegulation_BuildingRegulationId",
+                        column: x => x.BuildingRegulationId,
+                        principalTable: "BuildingRegulation",
+                        principalColumn: "BuildingRegulationId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LandUse_Zone_ZoneId",
                         column: x => x.ZoneId,
                         principalTable: "Zone",
+                        principalColumn: "ZoneId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupGroupLeadership",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(nullable: false),
+                    GroupLeadershipId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupGroupLeadership", x => new { x.GroupId, x.GroupLeadershipId });
+                    table.ForeignKey(
+                        name: "FK_GroupGroupLeadership_Group_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Group",
+                        principalColumn: "GroupId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupGroupLeadership_GroupLeadership_GroupLeadershipId",
+                        column: x => x.GroupLeadershipId,
+                        principalTable: "GroupLeadership",
+                        principalColumn: "GroupLeadershipId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroupGroupMembership",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(nullable: false),
+                    GroupMembershipId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroupGroupMembership", x => new { x.GroupId, x.GroupMembershipId });
+                    table.ForeignKey(
+                        name: "FK_GroupGroupMembership_Group_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Group",
+                        principalColumn: "GroupId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupGroupMembership_GroupMembership_GroupMembershipId",
+                        column: x => x.GroupMembershipId,
+                        principalTable: "GroupMembership",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "GroupLeadershipPerson",
+                name: "PersonGroupLeadership",
                 columns: table => new
                 {
                     GroupLeadershipId = table.Column<int>(nullable: false),
@@ -906,42 +878,18 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroupLeadershipPerson", x => new { x.GroupLeadershipId, x.PersonId });
+                    table.PrimaryKey("PK_PersonGroupLeadership", x => new { x.GroupLeadershipId, x.PersonId });
                     table.ForeignKey(
-                        name: "FK_GroupLeadershipPerson_GroupLeadership_GroupLeadershipId",
+                        name: "FK_PersonGroupLeadership_GroupLeadership_GroupLeadershipId",
                         column: x => x.GroupLeadershipId,
                         principalTable: "GroupLeadership",
-                        principalColumn: "Id",
+                        principalColumn: "GroupLeadershipId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GroupLeadershipPerson_Person_PersonId",
+                        name: "FK_PersonGroupLeadership_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InstitutionLeadershipPerson",
-                columns: table => new
-                {
-                    InstitutionLeadershipId = table.Column<int>(nullable: false),
-                    PersonId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InstitutionLeadershipPerson", x => new { x.InstitutionLeadershipId, x.PersonId });
-                    table.ForeignKey(
-                        name: "FK_InstitutionLeadershipPerson_InsitutionLeadership_InstitutionLeadershipId",
-                        column: x => x.InstitutionLeadershipId,
-                        principalTable: "InsitutionLeadership",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InstitutionLeadershipPerson_Person_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
+                        principalColumn: "PersonId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -965,7 +913,190 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         name: "FK_PersonGroupMembership_Person_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Person",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonInstitutionLeadership",
+                columns: table => new
+                {
+                    InstitutionLeadershipId = table.Column<int>(nullable: false),
+                    PersonId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonInstitutionLeadership", x => new { x.InstitutionLeadershipId, x.PersonId });
+                    table.ForeignKey(
+                        name: "FK_PersonInstitutionLeadership_InsitutionLeadership_InstitutionLeadershipId",
+                        column: x => x.InstitutionLeadershipId,
+                        principalTable: "InsitutionLeadership",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonInstitutionLeadership_Person_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Person",
+                        principalColumn: "PersonId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Building",
+                columns: table => new
+                {
+                    BuildingId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    StreetAddress = table.Column<string>(nullable: true),
+                    ApartmentId = table.Column<int>(nullable: false),
+                    SpatialUnitId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Building", x => x.BuildingId);
+                    table.ForeignKey(
+                        name: "FK_Building_Apartment_ApartmentId",
+                        column: x => x.ApartmentId,
+                        principalTable: "Apartment",
+                        principalColumn: "ApartmentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Building_SpatialUnit_SpatialUnitId",
+                        column: x => x.SpatialUnitId,
+                        principalTable: "SpatialUnit",
+                        principalColumn: "SpatialUnitId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parcel",
+                columns: table => new
+                {
+                    ParcelId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Area = table.Column<double>(nullable: true),
+                    ParcelNum = table.Column<string>(nullable: false),
+                    AdministrationId = table.Column<int>(nullable: false),
+                    LandUseId = table.Column<int>(nullable: false),
+                    OwnerId = table.Column<int>(nullable: false),
+                    OwnershipRightId = table.Column<int>(nullable: false),
+                    RateId = table.Column<int>(nullable: true),
+                    RegistrationId = table.Column<int>(nullable: false),
+                    ResponsibilityId = table.Column<int>(nullable: false),
+                    RestrictionId = table.Column<int>(nullable: false),
+                    SpatialUnitId = table.Column<int>(nullable: false),
+                    TenureId = table.Column<int>(nullable: false),
+                    ValuationId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parcel", x => x.ParcelId);
+                    table.ForeignKey(
+                        name: "FK_Parcel_Administration_AdministrationId",
+                        column: x => x.AdministrationId,
+                        principalTable: "Administration",
+                        principalColumn: "AdministrationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_LandUse_LandUseId",
+                        column: x => x.LandUseId,
+                        principalTable: "LandUse",
+                        principalColumn: "LandUseId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_Owner_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Owner",
+                        principalColumn: "OwnerId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_OwnershipRight_OwnershipRightId",
+                        column: x => x.OwnershipRightId,
+                        principalTable: "OwnershipRight",
+                        principalColumn: "OwnershipRightId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_Rate_RateId",
+                        column: x => x.RateId,
+                        principalTable: "Rate",
+                        principalColumn: "RateId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Parcel_Registration_RegistrationId",
+                        column: x => x.RegistrationId,
+                        principalTable: "Registration",
+                        principalColumn: "RegistrationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_Responsibility_ResponsibilityId",
+                        column: x => x.ResponsibilityId,
+                        principalTable: "Responsibility",
+                        principalColumn: "ResponsibilityId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_Restriction_RestrictionId",
+                        column: x => x.RestrictionId,
+                        principalTable: "Restriction",
+                        principalColumn: "RestrictionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_SpatialUnit_SpatialUnitId",
+                        column: x => x.SpatialUnitId,
+                        principalTable: "SpatialUnit",
+                        principalColumn: "SpatialUnitId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_Tenure_TenureId",
+                        column: x => x.TenureId,
+                        principalTable: "Tenure",
+                        principalColumn: "TenureId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Parcel_Valuation_ValuationId",
+                        column: x => x.ValuationId,
+                        principalTable: "Valuation",
+                        principalColumn: "ValuationId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Invoice",
+                columns: table => new
+                {
+                    InvoiceId = table.Column<Guid>(nullable: false),
+                    InvoiceNumber = table.Column<string>(nullable: true),
+                    InvoiceAmount = table.Column<double>(nullable: false),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateDue = table.Column<DateTime>(nullable: false),
+                    ParcelId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoice", x => x.InvoiceId);
+                    table.ForeignKey(
+                        name: "FK_Invoice_Parcel_ParcelId",
+                        column: x => x.ParcelId,
+                        principalTable: "Parcel",
+                        principalColumn: "ParcelId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Operation",
+                columns: table => new
+                {
+                    OperationId = table.Column<int>(nullable: false),
+                    OperationName = table.Column<string>(nullable: true),
+                    ParcelId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Operation", x => x.OperationId);
+                    table.ForeignKey(
+                        name: "FK_Operation_Parcel",
+                        column: x => x.ParcelId,
+                        principalTable: "Parcel",
+                        principalColumn: "ParcelId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -973,12 +1104,13 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Payment",
                 columns: table => new
                 {
-                    PaymentId = table.Column<Guid>(nullable: false),
-                    Amount = table.Column<double>(nullable: false),
-                    DatePaid = table.Column<DateTime>(nullable: false),
-                    Type = table.Column<string>(nullable: true),
-                    InvoiceId = table.Column<Guid>(nullable: false),
-                    MpesaTransactionId = table.Column<Guid>(nullable: true)
+                    PaymentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Amount = table.Column<decimal>(type: "decimal(9,2)", nullable: true),
+                    ModeOfPayment = table.Column<string>(nullable: true),
+                    PaymentDate = table.Column<DateTime>(nullable: true),
+                    ReceiptNo = table.Column<string>(nullable: true),
+                    InvoiceId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -989,209 +1121,43 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                         principalTable: "Invoice",
                         principalColumn: "InvoiceId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Payment_MpesaTransaction_MpesaTransactionId",
-                        column: x => x.MpesaTransactionId,
-                        principalTable: "MpesaTransaction",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Building",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ApartmentId = table.Column<int>(nullable: false),
-                    SpatialUnitId = table.Column<int>(nullable: false),
-                    StreetAddress = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Building", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Building_Apartment_ApartmentId",
-                        column: x => x.ApartmentId,
-                        principalTable: "Apartment",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Building_SpatialUnit_SpatialUnitId",
-                        column: x => x.SpatialUnitId,
-                        principalTable: "SpatialUnit",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Parcel",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Administrationid = table.Column<int>(nullable: false),
-                    Area = table.Column<double>(nullable: true),
-                    LandUseId = table.Column<int>(nullable: false),
-                    OwnerId = table.Column<int>(nullable: false),
-                    OwnershipRights = table.Column<int>(nullable: false),
-                    ParcelNum = table.Column<string>(nullable: false),
-                    RegistrationId = table.Column<int>(nullable: false),
-                    Responsibilities = table.Column<int>(nullable: false),
-                    Restrictions = table.Column<int>(nullable: false),
-                    SpatialUnitId = table.Column<int>(nullable: false),
-                    TenureId = table.Column<int>(nullable: false),
-                    ValuationId = table.Column<int>(nullable: false),
-                    RateId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Parcel", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Parcel_Administration",
-                        column: x => x.Administrationid,
-                        principalTable: "Administration",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_LandUse_LandUseId",
-                        column: x => x.LandUseId,
-                        principalTable: "LandUse",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_Owners",
-                        column: x => x.OwnerId,
-                        principalTable: "Owner",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_OwnershiRights",
-                        column: x => x.OwnershipRights,
-                        principalTable: "OwnershiRights",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_Rates",
-                        column: x => x.RateId,
-                        principalTable: "Rates",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Parcel_Registration_RegistrationId",
-                        column: x => x.RegistrationId,
-                        principalTable: "Registration",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_Responsibility",
-                        column: x => x.Responsibilities,
-                        principalTable: "Responsibility",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_Restriction",
-                        column: x => x.Restrictions,
-                        principalTable: "Restriction",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_SpatialUnit_SpatialUnitId",
-                        column: x => x.SpatialUnitId,
-                        principalTable: "SpatialUnit",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_Tenure_TenureId",
-                        column: x => x.TenureId,
-                        principalTable: "Tenure",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Parcel_Valution_ValuationId",
-                        column: x => x.ValuationId,
-                        principalTable: "Valution",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Operation",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Parcelid = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Operation", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Operation_Parcel",
-                        column: x => x.Parcelid,
-                        principalTable: "Parcel",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Amount = table.Column<decimal>(type: "money", nullable: true),
-                    ModeOfPayment = table.Column<string>(maxLength: 10, nullable: true),
-                    PaymentDate = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "(getdate())"),
-                    ReceiptNo = table.Column<string>(type: "text", nullable: true),
-                    ParcelId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Payments_Parcel",
-                        column: x => x.ParcelId,
-                        principalTable: "Parcel",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Service",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime", nullable: true),
+                    ServiceId = table.Column<int>(nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: true),
                     IsComplete = table.Column<bool>(nullable: false),
-                    OPid = table.Column<int>(nullable: false),
-                    Progress = table.Column<int>(nullable: true)
+                    Progress = table.Column<int>(nullable: true),
+                    OperationId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Service", x => x.Id);
+                    table.PrimaryKey("PK_Service", x => x.ServiceId);
                     table.ForeignKey(
                         name: "FK_Service_Operation",
-                        column: x => x.OPid,
+                        column: x => x.OperationId,
                         principalTable: "Operation",
-                        principalColumn: "Id",
+                        principalColumn: "OperationId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName", "CreatedDate", "Description", "IPAddress", "Users" },
-                values: new object[] { "2b37b32d-26a9-4aa5-a869-7de6db6f4e23", "f9223225-3c28-42cf-812c-da5f0caffdc4", "ApplicationRole", "Authors", "AUTHORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
+                values: new object[] { "150a4ab3-b285-45a7-b3f5-df9d2e8d2b19", "4221a021-5c9c-4cfe-8073-141d34a25d18", "ApplicationRole", "Authors", "AUTHORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName", "CreatedDate", "Description", "IPAddress", "Users" },
-                values: new object[] { "3acc021c-6073-45ee-a32a-5b368e777cec", "29374409-38c9-4ba6-ba55-ef8061ae363b", "ApplicationRole", "Editors", "EDITORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
+                values: new object[] { "90a6d86b-fedb-4b36-864b-f0e8f35d0ce6", "d5cd7040-c441-40e5-b8da-e5d743214625", "ApplicationRole", "Editors", "EDITORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName", "CreatedDate", "Description", "IPAddress", "Users" },
-                values: new object[] { "c6252fb0-3b13-42fb-8d4a-d3d35a21d631", "3db2c288-7dca-4c06-b02c-dd5e75b7686d", "ApplicationRole", "Administrators", "ADMINISTRATORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
+                values: new object[] { "bf358dfe-e9b8-4e7b-9878-632498fe2884", "d205e1b0-4862-4c36-92c9-9ed92dd4b5cc", "ApplicationRole", "Administrators", "ADMINISTRATORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -1254,24 +1220,19 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Group_OwnerId",
+                table: "Group",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GroupGroupLeadership_GroupLeadershipId",
                 table: "GroupGroupLeadership",
                 column: "GroupLeadershipId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroupGroupMembership_GroupId",
+                name: "IX_GroupGroupMembership_GroupMembershipId",
                 table: "GroupGroupMembership",
-                column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GroupLeadershipPerson_PersonId",
-                table: "GroupLeadershipPerson",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GroupOW_OwnerId",
-                table: "GroupOW",
-                column: "OwnerId");
+                column: "GroupMembershipId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InstitutionInstitutionLeadership_InstitutionId",
@@ -1279,19 +1240,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 column: "InstitutionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InstitutionLeadershipPerson_PersonId",
-                table: "InstitutionLeadershipPerson",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invoice_ProductId",
+                name: "IX_Invoice_ParcelId",
                 table: "Invoice",
-                column: "ProductId");
+                column: "ParcelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LandUse_BuildingRegulationsId",
+                name: "IX_LandUse_BuildingRegulationId",
                 table: "LandUse",
-                column: "BuildingRegulationsId");
+                column: "BuildingRegulationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LandUse_ZoneId",
@@ -1304,14 +1260,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 column: "TenureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Operation_Parcelid",
+                name: "IX_Operation_ParcelId",
                 table: "Operation",
-                column: "Parcelid");
+                column: "ParcelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parcel_Administrationid",
+                name: "IX_Parcel_AdministrationId",
                 table: "Parcel",
-                column: "Administrationid");
+                column: "AdministrationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Parcel_LandUseId",
@@ -1324,9 +1280,9 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parcel_OwnershipRights",
+                name: "IX_Parcel_OwnershipRightId",
                 table: "Parcel",
-                column: "OwnershipRights");
+                column: "OwnershipRightId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Parcel_RateId",
@@ -1339,14 +1295,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 column: "RegistrationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parcel_Responsibilities",
+                name: "IX_Parcel_ResponsibilityId",
                 table: "Parcel",
-                column: "Responsibilities");
+                column: "ResponsibilityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parcel_Restrictions",
+                name: "IX_Parcel_RestrictionId",
                 table: "Parcel",
-                column: "Restrictions");
+                column: "RestrictionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Parcel_SpatialUnitId",
@@ -1369,19 +1325,14 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payment_MpesaTransactionId",
-                table: "Payment",
-                column: "MpesaTransactionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payments_ParcelId",
-                table: "Payments",
-                column: "ParcelId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Person_OwnerId",
                 table: "Person",
                 column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonGroupLeadership_PersonId",
+                table: "PersonGroupLeadership",
+                column: "PersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonGroupMembership_PersonId",
@@ -1389,29 +1340,34 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restriction_chrageId",
-                table: "Restriction",
-                column: "chrageId");
+                name: "IX_PersonInstitutionLeadership_PersonId",
+                table: "PersonInstitutionLeadership",
+                column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restriction_morgageid",
+                name: "IX_Restriction_ChargeId",
                 table: "Restriction",
-                column: "morgageid");
+                column: "ChargeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restriction_ReserveID",
+                name: "IX_Restriction_MortgageId",
                 table: "Restriction",
-                column: "ReserveID");
+                column: "MortgageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restriction_Statutoryid",
+                name: "IX_Restriction_ReserveId",
                 table: "Restriction",
-                column: "Statutoryid");
+                column: "ReserveId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Service_OPid",
+                name: "IX_Restriction_StatutoryRestrictionId",
+                table: "Restriction",
+                column: "StatutoryRestrictionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Service_OperationId",
                 table: "Service",
-                column: "OPid");
+                column: "OperationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpatialUnit_BoundaryId",
@@ -1430,9 +1386,9 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 column: "SpatialUnitSetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SpatialUnit_SurveyClassId",
+                name: "IX_SpatialUnit_SurveyId",
                 table: "SpatialUnit",
-                column: "SurveyClassId");
+                column: "SurveyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpatialUnitSetRegistration_SpatialUnitSetId",
@@ -1473,28 +1429,25 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "GroupGroupMembership");
 
             migrationBuilder.DropTable(
-                name: "GroupLeadershipPerson");
-
-            migrationBuilder.DropTable(
-                name: "GroupOW");
-
-            migrationBuilder.DropTable(
                 name: "InstitutionInstitutionLeadership");
-
-            migrationBuilder.DropTable(
-                name: "InstitutionLeadershipPerson");
 
             migrationBuilder.DropTable(
                 name: "Leasehold");
 
             migrationBuilder.DropTable(
+                name: "MpesaTransaction");
+
+            migrationBuilder.DropTable(
                 name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Payments");
+                name: "PersonGroupLeadership");
 
             migrationBuilder.DropTable(
                 name: "PersonGroupMembership");
+
+            migrationBuilder.DropTable(
+                name: "PersonInstitutionLeadership");
 
             migrationBuilder.DropTable(
                 name: "Service");
@@ -1515,31 +1468,28 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Apartment");
 
             migrationBuilder.DropTable(
-                name: "GroupLeadership");
+                name: "Group");
 
             migrationBuilder.DropTable(
                 name: "Institution");
 
             migrationBuilder.DropTable(
-                name: "InsitutionLeadership");
-
-            migrationBuilder.DropTable(
                 name: "Invoice");
 
             migrationBuilder.DropTable(
-                name: "MpesaTransaction");
+                name: "GroupLeadership");
 
             migrationBuilder.DropTable(
                 name: "GroupMembership");
+
+            migrationBuilder.DropTable(
+                name: "InsitutionLeadership");
 
             migrationBuilder.DropTable(
                 name: "Person");
 
             migrationBuilder.DropTable(
                 name: "Operation");
-
-            migrationBuilder.DropTable(
-                name: "Product");
 
             migrationBuilder.DropTable(
                 name: "Parcel");
@@ -1554,10 +1504,10 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Owner");
 
             migrationBuilder.DropTable(
-                name: "OwnershiRights");
+                name: "OwnershipRight");
 
             migrationBuilder.DropTable(
-                name: "Rates");
+                name: "Rate");
 
             migrationBuilder.DropTable(
                 name: "Registration");
@@ -1575,10 +1525,10 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Tenure");
 
             migrationBuilder.DropTable(
-                name: "Valution");
+                name: "Valuation");
 
             migrationBuilder.DropTable(
-                name: "BuildingRegulations");
+                name: "BuildingRegulation");
 
             migrationBuilder.DropTable(
                 name: "Zone");
@@ -1593,7 +1543,7 @@ namespace LIMSInfrastructure.Migrations.LIMSCoreDb
                 name: "Reserve");
 
             migrationBuilder.DropTable(
-                name: "StaturtoryRestriction");
+                name: "StatutoryRestriction");
 
             migrationBuilder.DropTable(
                 name: "Boundary");

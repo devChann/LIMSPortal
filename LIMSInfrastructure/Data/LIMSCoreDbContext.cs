@@ -23,8 +23,7 @@ namespace LIMSInfrastructure.Data
 
 		//Billing DbSets
 		public virtual DbSet<MpesaTransaction> MpesaTransaction { get; set; }
-		public virtual DbSet<Payment> Payment { get; set; }
-		public virtual DbSet<Product> Product { get; set; }
+		public virtual DbSet<Payment> Payment { get; set; }		
 		public virtual DbSet<Invoice> Invoice { get; set; }
 
 		//LIMS DbSets
@@ -54,8 +53,7 @@ namespace LIMSInfrastructure.Data
         public virtual DbSet<Operation> Operation { get; set; }
         public virtual DbSet<Owner> Owner { get; set; }
         public virtual DbSet<OwnershipRight> OwnershipRight { get; set; }
-        public virtual DbSet<Parcel> Parcel { get; set; }
-        public virtual DbSet<Payments> Payments { get; set; }
+        public virtual DbSet<Parcel> Parcel { get; set; }       
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<PersonGroupMembership> PersonGroupMembership { get; set; }
         public virtual DbSet<Rate> Rate { get; set; }
@@ -72,17 +70,7 @@ namespace LIMSInfrastructure.Data
         public virtual DbSet<Tenure> Tenure { get; set; }
         public virtual DbSet<Valuation> Valuation { get; set; }
         public virtual DbSet<Zone> Zone { get; set; }
-
-        // Unable to generate entity type for table 'dbo.BuruParcels'. Please see the warning messages.
-
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Data Source=192.168.1.231;Initial Catalog=LIMSCoreDb;Persist Security Info=True;User ID=sa;Password=MobileST!!;");
-//            }
-//        }
+		
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -117,13 +105,13 @@ namespace LIMSInfrastructure.Data
 
 			modelBuilder.Entity<Payment>(entity =>
 			{
-				entity.HasOne(m => m.MpesaTransaction);
+				entity.Property(a => a.Amount).HasColumnType("decimal(9,2)");
 			});
 
 
 			modelBuilder.Entity<Invoice>(entity =>
 			{
-				entity.HasOne(k => k.Product);
+				entity.HasOne(k => k.Parcel);
 				entity.HasMany(p => p.Payments);
 
 			});
@@ -307,7 +295,7 @@ namespace LIMSInfrastructure.Data
 
 			});
 
-            modelBuilder.Entity<Payments>(entity =>
+            modelBuilder.Entity<Payment>(entity =>
             {
                 //entity.Property(e => e.PaymentsId).HasColumnName("Id");
 

@@ -1,4 +1,4 @@
-﻿
+﻿@model LIMSWebApp.ViewModels.PaymentViewModels.CheckoutViewModel
 
 
 <div class="col-md-6">
@@ -22,13 +22,14 @@
 							<label for="amount">
 								<span class="input-label">Amount (KES)</span>
 								<span class="input-wrapper amount-wrapper">
-									<input id="amount" name="amount" type="tel" min="1" placeholder="Amount" value="10" class="form-control">
+									<input id="amount" name="amount" type="tel" min="1" placeholder="Amount" value="@Model.Amount" class="form-control">
 								</span>
 							</label>
 							<div class="bt-drop-in-wrapper">
 								<div id="bt-dropin"></div>
 							</div>
 						</section>
+						<input id="invoicenumber" name="invoice" type="hidden" value="@Model.InvoiceNumber" />
 						<input id="nonce" name="payment_method_nonce" type="hidden" />
 						<button class="btn btn-success" type="submit"><span>Pay</span></button>
 					</form>
@@ -51,8 +52,8 @@
 					<form id="expenseForm" asp-controller="Payments" asp-action="PayWithMpesa" method="post">
 
 						<div class="form-group">
-							<label class="control-label">Name</label>
-							<input name="user" disabled value="Elvis Ayiemba" class="form-control" />
+							<label class="control-label">Acount Reference</label>							
+							<input name="invoice_number" value="@Model.InvoiceNumber"  class="form-control" />
 						</div>
 						<div class="form-group">
 							<label class="control-label">Phone Number</label><span>  (Use format: 2547XXXXXXXX)</span>
@@ -60,7 +61,7 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label">Amount</label>
-							<input name="amount" value="1" class="form-control" />
+							<input name="amount" value="@Model.Amount" class="form-control" />		
 						</div>
 
 						<div class="form-group row">
@@ -78,7 +79,7 @@
 			<div class="card-header" id="headingOne">
 				<h5 class="mb-0">
 					<button class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-						<span class="pull-left"><i class="far fa-money-bill-alt"></i>  Cash on Delivery</span>
+						<span class="pull-left"><i class="far fa-money-bill-alt"></i>  Cash/Cheque</span>
 
 					</button>
 				</h5>
@@ -87,39 +88,39 @@
 			<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 				<div class="card-body">
 					<div>
-						You can pay using our paybill number or pay cash for amounts not exceeding Ksh. 50,000
+						You can pay cash at our offices for amounts not exceeding 50,000. You can also submit a bankers cheque at our offices.
 					</div>
 				</div>
 			</div>
 		</div>
 		@*<div class="card">
-			<div class="card-header">
-				<h5 class="mb-0">
-					<button class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-						<span class="pull-left"><i class="far fa-money-bill-alt"></i>  Jambo Pay</span>
+				<div class="card-header">
+					<h5 class="mb-0">
+						<button class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+							<span class="pull-left"><i class="far fa-money-bill-alt"></i>  Jambo Pay</span>
 
-					</button>
-				</h5>
-			</div>
-			<div class="card-body">
-				<form method="post" action="https://www.jambopay.com/JPExpress.aspx" target="_blank">
-					<input type="hidden" name="jp_item_type" value="cart" />
-					<input type="hidden" name="jp_item_name" value="test shop" />
-					<input type="hidden" name="order_id" value="455879" />
-					<input type="hidden" name="jp_business" value="business@yourdomain.com" />
-					<input type="hidden" name="jp_amount_1" value="51" />
-					<input type="hidden" name="jp_amount_2" value="0" />
-					<input type="hidden" name="jp_amount_5" value="0" />
-					<input type="hidden" name="jp_payee" value="email@yourcustomer.com" />
-					<input type="hidden" name="jp_shipping" value="company name" />
-					<input type="hidden" name="jp_rurl" value="http://www.yourwebsite.com/testpost/Result.aspx?ii=0" />
-					<input type="hidden" name="jp_furl" value="http://www.yourwebsite.com/testpost/Result.aspx?ii=1" />
-					<input type="hidden" name="jp_curl" value="http://www.yourwebsite.com/testpost/Result.aspx?ii=2" />
-					<input type="image" src="https://www.jambopay.com/jambohelp/jambo/rsc/paymentsbyJamboPay.jpg" />
-				</form>
-			</div>
+						</button>
+					</h5>
+				</div>
+				<div class="card-body">
+					<form method="post" action="https://www.jambopay.com/JPExpress.aspx" target="_blank">
+						<input type="hidden" name="jp_item_type" value="cart" />
+						<input type="hidden" name="jp_item_name" value="test shop" />
+						<input type="hidden" name="order_id" value="455879" />
+						<input type="hidden" name="jp_business" value="business@yourdomain.com" />
+						<input type="hidden" name="jp_amount_1" value="51" />
+						<input type="hidden" name="jp_amount_2" value="0" />
+						<input type="hidden" name="jp_amount_5" value="0" />
+						<input type="hidden" name="jp_payee" value="email@yourcustomer.com" />
+						<input type="hidden" name="jp_shipping" value="company name" />
+						<input type="hidden" name="jp_rurl" value="http://www.yourwebsite.com/testpost/Result.aspx?ii=0" />
+						<input type="hidden" name="jp_furl" value="http://www.yourwebsite.com/testpost/Result.aspx?ii=1" />
+						<input type="hidden" name="jp_curl" value="http://www.yourwebsite.com/testpost/Result.aspx?ii=2" />
+						<input type="image" src="https://www.jambopay.com/jambohelp/jambo/rsc/paymentsbyJamboPay.jpg" />
+					</form>
+				</div>
 
-		</div>*@
+			</div>*@
 	</div>
 
 </div>

@@ -1,4 +1,5 @@
 ﻿using LIMSInfrastructure.Services.Payment;
+using LIMSWebApp.ViewModels.PaymentViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,21 @@ namespace LIMSWebApp.ViewComponents
 		}
 
 
-		public async Task<IViewComponentResult> InvokeAsync()
+		public async Task<IViewComponentResult> InvokeAsync(string amount, string invoicenumber)
         {
 			var gateway = _braintreeService.GetGateway();
 
 			var clientToken = gateway.ClientToken.Generate();
 
 			ViewBag.ClientToken = clientToken;
+
+			var checkoutviewModel = new CheckoutViewModel
+			{
+				Amount = amount,
+				InvoiceNumber = invoicenumber
+			};
 			
-			return View();
+			return View(checkoutviewModel);
         }
 
 	}
