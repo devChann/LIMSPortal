@@ -180,7 +180,8 @@
 	<div class="col-md-6 d-table-cell top10">
 		<div class="card h-100">
 			<div class="card-header">
-				<h6 class="text-secondary">Parcel Location on Map</h6>
+				
+				<h6 class="text-secondary">Parcel Location on Map <span class="parcelnotify"><i class="fa fa-info-circle "></i></span></h6>
 			</div>
 			<div class="card-body d-flex align-items-lg-stretch h-100 m-0 p-0">
 				
@@ -325,6 +326,16 @@
 		
 			return JSON.parse(removequot.replace(/(\\)/g,"\\"));
 		};
+
+
+		tippy('.parcelnotify',
+			{
+				content: "Parcel location on map is for informational purposes and is not meant to accurately represent parcel boundaries. Correct and accurate parcel boundary data/map should be obtained from the relevant authority.",
+				arrow: true,
+				placement: "bottom",
+				theme: "light"
+			}
+		);
 
 
 	</script>

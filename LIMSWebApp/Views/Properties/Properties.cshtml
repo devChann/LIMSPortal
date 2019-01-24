@@ -207,6 +207,7 @@
 
 
 @section Scripts{
+	<script src="~/lib/chromajs/chroma.min.js"></script>
     <script>
 
         $(document).ready(function () {
@@ -226,10 +227,25 @@
             var colors = [];
             for (var i = 0; i <= parseInt('@Model.Count()'); i++) {
                 colors.push(getRandomColor());
-            }
+			}
 
-            return colors;
-        }
+			var numberOfColors = parseInt('@Model.Count()');
+
+			var colors2 = chroma.scale(['teal']).colors(numberOfColors);
+
+			var colors3 = chroma.cubehelix()
+				.start(200)
+				.rotations(-0.35)
+				.gamma(0.7)
+				.lightness([0.3, 0.8])
+				.scale() // convert to chroma.scale
+				.correctLightness()
+				.colors(numberOfColors);
+
+			return colors3;
+		}
+
+		
 
         var color = setRandomColor();
 
