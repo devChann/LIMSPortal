@@ -14,8 +14,8 @@
 	<title>@ViewData["Title"]</title>
 
 	<environment include="Development">
+		<link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="~/lib/Datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 		<link href="~/css/PagedList.min.css" rel="stylesheet" />
 		<link href="~/lib/openlayers/ol.css" rel="stylesheet" />
@@ -24,21 +24,14 @@
 		<link href="~/lib/tippyjs/themes/google.css" rel="stylesheet" />
 		<link href="~/lib/tippyjs/themes/light.css" rel="stylesheet" />
 		<link href="~/lib/tippyjs/tippy.css" rel="stylesheet" />
-
 		<link href="~/css/site.css" rel="stylesheet" />
 		<link href="~/css/braintree/normalize.css" rel="stylesheet" />
 		<link href="~/css/braintree/overrides.css" rel="stylesheet" />
 	</environment>
+
 	<environment exclude="Development">
-		@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"
-		asp-fallback-href="~/lib/bootstrap/css/bootstrap.css"
-		asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />*@
-
+		<link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
 		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-			  asp-append-version="true" />
-
 		<link href="~/lib/Datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 		<link href="~/css/PagedList.min.css" rel="stylesheet" />
 		<link href="~/lib/openlayers/ol.css" rel="stylesheet" />
@@ -48,14 +41,12 @@
 		<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 		<link href="~/css/braintree/normalize.css" rel="stylesheet" />
 		<link href="~/css/braintree/overrides.css" rel="stylesheet" />
-
-
 	</environment>
 </head>
 
 <body>
 
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top font-weight-normal">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top font-weight-normal">
 		<a class="navbar-brand" asp-controller="Home" asp-action="Index">LIMS</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#limsNavbar" aria-controls="limsNavbar" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -135,26 +126,27 @@
 		<script src="~/lib/jquery-ajax-unobstrusive/jquery.unobtrusive-ajax.min.js"></script>
 		<script src="~/lib/jquery-migrate/jquery-migrate.min.js"></script>
 		<script src="~/lib/jquery.easing/jquery.easing.min.js"></script>
+		
 		<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
 		<script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>
 		<script src="~/lib/Datatables/js/dataTables.bootstrap4.min.js"></script>
 
-		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		@*<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>*@
 
 		<script src="~/lib/signalr/signalr.js"></script>
 		<script src="~/lib/chartJs/Chart.min.js"></script>
 
-		<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+		@*<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>*@
 
 		<script src="~/lib/openlayers/ol.js"></script>
 		<script src="~/lib/ol-popup/ol-popup.js"></script>
 		<script src="~/lib/ol-layerswitcher/ol-layerswitcher.js"></script>
 		<script src="~/lib/tippyjs/tippy.min.js"></script>
 
-	
+
 		<script src="~/js/ie10-viewport-bug-workaround.js"></script>
 		<script src="~/js/payments.js" asp-append-version="true"></script>
 
@@ -166,16 +158,22 @@
 		<script src="~/lib/jquery-ajax-unobstrusive/jquery.unobtrusive-ajax.min.js"></script>
 		<script src="~/lib/jquery-migrate/jquery-migrate.min.js"></script>
 		<script src="~/lib/jquery.easing/jquery.easing.min.js"></script>
+		
 		<script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>
 		<script src="~/lib/Datatables/js/dataTables.bootstrap4.min.js"></script>
 
 		<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
 
-		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+		@*<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>*@
 
 		<script src="~/lib/signalr/signalr.min.js"></script>
 		<script src="~/lib/chartJs/Chart.min.js"></script>
-		<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+
+		@*<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>*@
+
 		<script src="~/lib/openlayers/ol.js"></script>
 		<script src="~/lib/ol-popup/ol-popup.js"></script>
 		<script src="~/lib/ol-layerswitcher/ol-layerswitcher.js"></script>
