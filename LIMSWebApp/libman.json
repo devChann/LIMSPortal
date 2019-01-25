@@ -57,6 +57,10 @@
 		{
 			"library": "proj4js@2.5.0",
 			"destination": "wwwroot/lib/proj4js"
+		},
+		{
+			"library": "notify.js@3.0.0",
+			"destination": "wwwroot/lib/notifyjs"
 		}
 
 	]

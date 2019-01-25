@@ -5,36 +5,37 @@
 @inject UserManager<ApplicationUser> UserManager
 
 
+
 @if (SignInManager.IsSignedIn(User))
 {
-	
 	ApplicationUser user = await UserManager.FindByNameAsync(User.Identity.Name);
 	
+<form class="form-inline my-0 my-lg-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
 
-	@if (await UserManager.IsInRoleAsync(user, "Administrators"))
-	{
-		<a class="nav-item nav-link text-light" asp-area="Identity" asp-page="/UserAdmin/Index">Manage Users</a>
-		<a class="nav-item nav-link text-light" asp-controller="Payments" asp-action="PaymentsList">Payments History</a>
-	}
 
-	<a class="nav-item nav-link text-light" asp-controller="Home" asp-action="Services">County Services</a>
-	<a class="nav-item nav-link text-light" asp-controller="Properties" asp-action="Properties">Dashboard</a>
 
-	<form class="form-inline ml-auto" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
+	<a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-item nav-link" data-toggle="tooltip" title="Manage Account">
+		<span><img class="user-img-circular" asp-controller="Photo" asp-action="Index" src="~/photo" /></span>
+		<strong class="user-name text-left">@UserManager.GetUserName(User)</strong>
+	</a>
+	<button type="button" class="ml-2 btn btn-sm btn-info">
+		messages <span class="badge badge-pill badge-warning">9</span>
+		<span class="sr-only">unread messages</span>
+	</button>
 
-		<a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-item nav-link text-light" data-toggle="tooltip" title="Manage Account">
-			<span><img class="user-img-circular" asp-controller="Photo" asp-action="Index" src="~/photo" /></span>
-			<strong class="user-name text-left">@UserManager.GetUserName(User)</strong>
-		</a>
-		<button type="submit" data-toggle="tooltip" title="Logout" class="btn btn-sm btn-outline-danger nav-link">Logout</button>
-	</form>
+	<button type="submit" class="ml-2 btn btn-sm btn-outline-danger">Logout <i class="fa fa-sign-out-alt" aria-hidden="true"></i></button>
+
+
+</form>
 }
 else
 {
-	<form class="form-inline ml-auto">
-		<a class="nav-item nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
-		<a class="nav-item nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
-	</form>
+	<form class="form-inline my-2 my-lg-0">
+		<a class="nav-item btn btn-sm btn-outline-primary mr-2 mb-0" asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
 
+		<a class="nav-item btn btn-sm btn-primary mb-0" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> Login</a>
+	</form>
 }
+
+
 
