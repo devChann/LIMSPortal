@@ -22,6 +22,9 @@ using Braintree;
 using Microsoft.AspNetCore.Http;
 using LIMSInfrastructure.Services.Payment;
 using System.IO;
+using Newtonsoft.Json;
+using LIMSInfrastructure.Services.Payment.Mpesa;
+using LIMSCore.Billing;
 
 namespace LIMSWebApp.Controllers
 {
@@ -100,7 +103,8 @@ namespace LIMSWebApp.Controllers
 				OwnerName = parcel.Owner.Name,
 				FinancialYear = DateTime.Now.AddYears(-1).Year + "/" + DateTime.Now.Year,				
 				OwnerPIN = parcel.Owner.PIN,
-				InvoiceID = filteredInvoice.InvoiceNumber
+				InvoiceID = filteredInvoice.InvoiceId,
+				InvoiceNumber = filteredInvoice.InvoiceNumber
 
             };
 
@@ -197,30 +201,31 @@ namespace LIMSWebApp.Controllers
 		[Route("/make-payment")]
 		public async Task<IActionResult> PayWithMpesa(IFormCollection collection)
         {
-  
-			var registerMpesaUrl = new CustomerToBusinessRegisterUrlDto
-			{
-				ConfirmationURL = _config["MpesaConfiguration:ConfirmationURL"],
-				ValidationURL = _config["MpesaConfiguration:ValidationURL"],
-				ResponseType = ResponseType.Completed,
-				ShortCode = C2BPayBillNumber
-			};
 
-			try
-			{
-				var registerUrl = await _mpesaClient.RegisterC2BUrlAsync(registerMpesaUrl, AccessToken, "mpesa/c2b/v1/registerurl");
+			//var registerMpesaUrl = new CustomerToBusinessRegisterUrlDto
+			//{
+			//	ConfirmationURL = _config["MpesaConfiguration:ConfirmationURL"],
+			//	ValidationURL = _config["MpesaConfiguration:ValidationURL"],
+			//	ResponseType = ResponseType.Completed,
+			//	ShortCode = C2BPayBillNumber
+			//};
 
-				_logger.LogWarning(LoggingEvents.GetItem, $"Register Url Result:{registerUrl}");
-			}
-			catch (Exception e)
-			{
+			//try
+			//{
+			//	var registerUrl = await _mpesaClient.RegisterC2BUrlAsync(registerMpesaUrl, AccessToken, RequestEndPoint.RegisterC2BUrl);
 
-				_logger.LogError($"An Error Occured:{e.Message}");
-			}
+			//	_logger.LogWarning(LoggingEvents.GetItem, $"Register Url Result:{registerUrl}");
+			//}
+			//catch (Exception e)
+			//{
+
+			//	_logger.LogError($"An Error Occured:{e.Message}");
+			//}					
+
 
 			var MpesaExpressObject2 = new LipaNaMpesaOnlineDto
 			{
-				AccountReference = collection["invoice_number"],
+				AccountReference = collection["phone_number"],
 				Amount = collection["amount"],
 				PartyA = collection["phone_number"],
 				PartyB = LNMOPayBillNumber,
@@ -236,29 +241,100 @@ namespace LIMSWebApp.Controllers
 
 			try
 			{
-				paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject2, AccessToken, "mpesa/stkpush/v1/processrequest");
+				paymentrequest = await _mpesaClient.MakeLipaNaMpesaOnlinePaymentAsync(MpesaExpressObject2, AccessToken, RequestEndPoint.LipaNaMpesaOnline);
 			}
 			catch (Exception e)
 			{
 
 				_logger.LogError($"An Error Occured while Making LipaNaMpesa payment request:{e.Message}");
-			}
-
-			
-			
-            //await _smsSender.SendSmsAsync($"+{collection["phone_number"]}", $"Please enter Mpesa PIN on your phone to complete payment of Ksh: {collection["amount"]}");
-
-			//await _smsSender.SendSmsAsync($"+{Payment.PhoneNumber}", $"Security Credential: {securityCredential}");
-
-			//await _smsSender.SendSmsAsync("+254713928142", "Chann, you need to look into this billing thing for LIMS!!");
+			}	
 
 			_logger.LogWarning(LoggingEvents.GetItem, $"Mpesa LNMO Response: {paymentrequest}");
-			
 
-			return Redirect("/my-properties");
+			return RedirectToAction("ShowMpesaResult", new { response = paymentrequest, customerNumber = collection["phone_number"], invoicenumber = collection["invoice_number"] });
+
+			//return Redirect("/my-properties");
         }
 
-        public IActionResult Error()
+		[HttpPost("/mpesatransactionstatus")]
+		public async Task<IActionResult> MpesaOnlineTransactionStatus(IFormCollection formcollection)
+		{
+
+			var accesstoken = await _mpesaClient.GetAuthTokenAsync(ConsumerKey, ConsumerSecret, RequestEndPoint.AuthToken);
+
+			var LNMOQuery = new LipaNaMpesaQueryDto
+			{
+				BusinessShortCode = "174379",
+				CheckoutRequestID = formcollection["checkoutRequestId"],
+				Passkey = PassKey
+			};
+
+			var queryResult = await _mpesaClient.QueryLipaNaMpesaTransactionAsync(LNMOQuery, accesstoken, RequestEndPoint.QueryLipaNaMpesaOnlieTransaction);
+
+
+
+			return RedirectToAction("ConfirmMpesaPayment", new { response = queryResult, customerNumber = formcollection["phone_number"] });
+
+		}
+
+
+		[Route("/showmpesaresult")]
+		public IActionResult ShowMpesaResult(string response, string customerNumber, string invoicenumber)
+		{
+
+			//deserialize response and query transaction stastus
+			var res = JsonConvert.DeserializeObject<MpesaStkResponse>(response);
+
+			//handle edge cases and errors
+
+			//Get invoice and add a checkout			
+			var invoice = _limsDbcontext.Invoice
+				.Include(i => i.Checkouts)
+				.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
+
+			var InvoiceCheckout = new Checkout {
+				CheckoutId = Guid.NewGuid(),
+				CheckoutDate = DateTime.Now,
+				CheckoutRequest = res.CheckoutRequestID,				
+			};
+
+			if(invoice != null)
+			{			
+				invoice.Checkouts.Add(InvoiceCheckout);	
+				_limsDbcontext.SaveChanges();
+			}
+			
+
+			//pass data to view/page via viewbag
+			ViewBag.ResponseCode = res.ResponseCode;
+			ViewBag.CheckoutRequestId = res.CheckoutRequestID;
+			ViewBag.MerchantRequestId = res.MerchantRequestID;
+			ViewBag.CustomerMessage = res.CustomerMessage;
+			ViewBag.ResponseDescription = res.ResponseDescription;
+			ViewBag.CustomerNumber = customerNumber;
+
+			return View();
+		}
+
+		[Route("/mpesaconfirmation")]
+		public IActionResult ConfirmMpesaPayment(string response, string customerNumber)
+		{
+			////deserialize response and query transaction stastus
+			var res = JsonConvert.DeserializeObject<LNMOQueryResponse>(response);
+
+			//handle edge cases and errors  
+
+			//pass data to view/page via viewbag
+			ViewBag.ResultDescription = res.ResultDesc;
+			ViewBag.ResultCode = res.ResultCode;
+			ViewBag.ResponseDescription = res.ResponseDescription;
+			ViewBag.CustomerNumber = customerNumber;
+
+			return View();
+		}
+
+
+		public IActionResult Error()
         {
             return View();
         }
@@ -328,7 +404,7 @@ namespace LIMSWebApp.Controllers
 			return View();
 		}
 
-		public ActionResult Show(String id)
+		public ActionResult Show(string id)
 		{
 			var gateway = _braintreeService.GetGateway();
 			var transaction = gateway.Transaction.Find(id);

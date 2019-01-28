@@ -136,7 +136,10 @@ namespace LIMSCore
    //             routes.MapHub<PaymentsHub>("/hubs/payments");
    //         });
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+			{
+				routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+			});
            
         }
 

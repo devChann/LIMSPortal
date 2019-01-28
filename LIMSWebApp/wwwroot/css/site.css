@@ -220,6 +220,18 @@ a {
     box-shadow: 1px 1px #80bdff;
 }
 
+.success-1-icon {
+	color: greenyellow
+}
+
+.success-2-icon {
+	color: forestgreen
+}
+
+.fail-icon {
+	color: red
+}
+
 
 
 

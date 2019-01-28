@@ -28,7 +28,7 @@
 
 <div class="row">
 
-	@await Component.InvokeAsync("PaymentMethod", new { amount = Model.PendingRate, invoicenumber = Model.InvoiceID})
+	@await Component.InvokeAsync("PaymentMethod", new { amount = Model.PendingRate, invoicenumber = Model.InvoiceNumber})
 
 
 	<div class="col-md-6">
@@ -49,7 +49,7 @@
 						<h6 class="my-0">Property Details</h6>
 						<small class="text-muted">Property Number: @Model.ParcelNumber</small> <br />
 						<small class="text-muted">Rate Year: @Model.FinancialYear</small> <br />
-						<small class="text-muted">Invoice Number: @Model.InvoiceID</small>
+						<small class="text-muted">Invoice Number: @Model.InvoiceNumber</small>
 					</div>
 				</div>
 			</li>

@@ -4,14 +4,16 @@ using LIMSInfrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(LIMSCoreDbContext))]
-    partial class LIMSCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190128090108_v4")]
+    partial class v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,8 +25,6 @@ namespace LIMSInfrastructure.Migrations
                 {
                     b.Property<Guid>("CheckoutId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<double>("AmountPaid");
 
                     b.Property<DateTime>("CheckoutDate");
 
@@ -43,6 +43,8 @@ namespace LIMSInfrastructure.Migrations
                 {
                     b.Property<Guid>("InvoiceId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CheckoutID");
 
                     b.Property<DateTime>("DateCreated");
 
@@ -1158,8 +1160,8 @@ namespace LIMSInfrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6c8766a5-7d27-4cf3-8ca5-0b7b30807ad3",
-                            ConcurrencyStamp = "8dab746e-d5a9-46d4-a582-484e2f531e4f",
+                            Id = "0c535581-fb61-4253-8458-691833fdb4fe",
+                            ConcurrencyStamp = "5b29a236-e78f-4724-80b4-5a3a5b1dc359",
                             Name = "Authors",
                             NormalizedName = "AUTHORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1167,8 +1169,8 @@ namespace LIMSInfrastructure.Migrations
                         },
                         new
                         {
-                            Id = "2cf358e4-5f2c-404c-bda7-7f5655c560d2",
-                            ConcurrencyStamp = "c39c3a36-587d-4769-a521-48bbe2172b6f",
+                            Id = "fa2a5f32-3039-4f71-82ea-8b292dfc914e",
+                            ConcurrencyStamp = "02a93626-1cb4-4116-b97b-acc7da4aae11",
                             Name = "Editors",
                             NormalizedName = "EDITORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1176,8 +1178,8 @@ namespace LIMSInfrastructure.Migrations
                         },
                         new
                         {
-                            Id = "e1d527f9-29f4-422e-9ae5-64cf1ee06996",
-                            ConcurrencyStamp = "37b91012-bbec-4a25-88aa-69b1d6e658a6",
+                            Id = "0fca7c4c-0cac-4902-b7cc-9baea30c5c74",
+                            ConcurrencyStamp = "de3b63db-dfdf-4c35-90c4-0bf52b8ffe58",
                             Name = "Administrators",
                             NormalizedName = "ADMINISTRATORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

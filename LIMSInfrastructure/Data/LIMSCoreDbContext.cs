@@ -25,6 +25,7 @@ namespace LIMSInfrastructure.Data
 		public virtual DbSet<MpesaTransaction> MpesaTransaction { get; set; }
 		public virtual DbSet<Payment> Payment { get; set; }		
 		public virtual DbSet<Invoice> Invoice { get; set; }
+		public virtual DbSet<Checkout> Checkout { get; set; }
 
 		//LIMS DbSets
 		public virtual DbSet<Administration> Administration { get; set; }

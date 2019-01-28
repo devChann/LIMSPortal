@@ -14,21 +14,23 @@ using Newtonsoft.Json.Linq;
 
 namespace LIMSWebApp.Controllers
 {
-	
-    [ApiController]
+
+	[ApiController]
     public class CallbackController : ControllerBase
     {
-        private readonly ILogger<CallbackController> _log;
-        private readonly LIMSCoreDbContext _billing;
+        private readonly ILogger<CallbackController> _log;       
         private readonly ISmsSender _smsSender;
 		private readonly LIMSCoreDbContext _limsDbcontext;
 		private readonly UserManager<ApplicationUser> _userManager;
 
-		public CallbackController(ILogger<CallbackController> log, LIMSCoreDbContext billing,
-			ISmsSender smsSender, LIMSCoreDbContext limscontext, UserManager<ApplicationUser> userManager)
+		public CallbackController(
+			ILogger<CallbackController> log,
+			ISmsSender smsSender,
+			LIMSCoreDbContext limscontext,
+			UserManager<ApplicationUser> userManager)
         {
             _log = log;
-            _billing = billing;
+          
             _smsSender = smsSender;
 			_limsDbcontext = limscontext;
 			_userManager = userManager;
@@ -49,8 +51,10 @@ namespace LIMSWebApp.Controllers
             _log.LogWarning(LoggingEvents.UpdateItem, $"STK Callback: {stkresult}");
 
 			var response = JsonConvert.DeserializeObject<STKResponse>(stkresult);
-			
-            var MetaData = response.Body.StkCallback.CallbackMetadata.Item.ToList();
+
+			var CheckoutID = response.Body.StkCallback.CheckoutRequestID;
+
+			var MetaData = response.Body.StkCallback.CallbackMetadata.Item.ToList();
 
             var AmountPaid = "";
             var ReceiptNum = "";
@@ -85,34 +89,26 @@ namespace LIMSWebApp.Controllers
             {
                 Id = new Guid(),
                 Amount = AmountPaid,
-                CheckoutRequestID = response.Body.StkCallback.CheckoutRequestID,
+                CheckoutRequestID = CheckoutID,
                 MerchantRequestId = response.Body.StkCallback.MerchantRequestID,
                 ReceiptNumber = ReceiptNum,
                 TransactionDate = DateTime.ParseExact(DateOfTransaction, "yyyyMMddHHmmss", null),
                 PhoneNumber = PhoneNumber
             };
 
-            _billing.Add(Payment);
-			_billing.SaveChanges();
+			var Checkout = _limsDbcontext.Checkout.FirstOrDefault(c => c.CheckoutRequest == CheckoutID);
 
-			//get owner from database
-			var owner = _limsDbcontext.Owner
-				.Where(o => o.TelephoneAddress == PhoneNumber).Single();
+			if(Checkout != null)
+			{
+				Checkout.AmountPaid = Convert.ToDouble(AmountPaid);
 
-			//get property
-			var parcel = _limsDbcontext.Parcel
-				.Include(r => r.Rate).Where(o => o.OwnerId == owner.OwnerId).FirstOrDefault();
+				_limsDbcontext.Checkout.Update(Checkout);
 
-			var currentRate = parcel.Rate.Amount;
+				_limsDbcontext.SaveChanges();
 
-			//deduct payment made from rates database
-			var ratepaid = AmountPaid;
-
-			var balance = currentRate - int.Parse(ratepaid);
-
-			currentRate = balance;
-
-			parcel.Rate.Amount = currentRate;			
+			}
+			
+			_limsDbcontext.Add(Payment);				
 			
 			_limsDbcontext.SaveChanges();
 

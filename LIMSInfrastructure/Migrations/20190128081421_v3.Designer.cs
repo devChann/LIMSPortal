@@ -4,14 +4,16 @@ using LIMSInfrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMSInfrastructure.Migrations
 {
     [DbContext(typeof(LIMSCoreDbContext))]
-    partial class LIMSCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190128081421_v3")]
+    partial class v3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,30 +21,12 @@ namespace LIMSInfrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("LIMSCore.Billing.Checkout", b =>
-                {
-                    b.Property<Guid>("CheckoutId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<double>("AmountPaid");
-
-                    b.Property<DateTime>("CheckoutDate");
-
-                    b.Property<string>("CheckoutRequest");
-
-                    b.Property<Guid>("InvoiceId");
-
-                    b.HasKey("CheckoutId");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.ToTable("Checkout");
-                });
-
             modelBuilder.Entity("LIMSCore.Billing.Invoice", b =>
                 {
                     b.Property<Guid>("InvoiceId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CheckoutID");
 
                     b.Property<DateTime>("DateCreated");
 
@@ -1158,8 +1142,8 @@ namespace LIMSInfrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6c8766a5-7d27-4cf3-8ca5-0b7b30807ad3",
-                            ConcurrencyStamp = "8dab746e-d5a9-46d4-a582-484e2f531e4f",
+                            Id = "59a0831f-2753-4e08-9eac-80145e4dffdf",
+                            ConcurrencyStamp = "eb5b3cc5-95e0-4d6f-b578-92c59df6424e",
                             Name = "Authors",
                             NormalizedName = "AUTHORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1167,8 +1151,8 @@ namespace LIMSInfrastructure.Migrations
                         },
                         new
                         {
-                            Id = "2cf358e4-5f2c-404c-bda7-7f5655c560d2",
-                            ConcurrencyStamp = "c39c3a36-587d-4769-a521-48bbe2172b6f",
+                            Id = "62f38321-c824-4ba2-b2c6-d94182cd5a8f",
+                            ConcurrencyStamp = "7c02d9ad-7a2e-49ca-b888-159c38ad0b3b",
                             Name = "Editors",
                             NormalizedName = "EDITORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1176,21 +1160,13 @@ namespace LIMSInfrastructure.Migrations
                         },
                         new
                         {
-                            Id = "e1d527f9-29f4-422e-9ae5-64cf1ee06996",
-                            ConcurrencyStamp = "37b91012-bbec-4a25-88aa-69b1d6e658a6",
+                            Id = "b2d28b06-3621-4f88-a94c-069184a2f670",
+                            ConcurrencyStamp = "330fe80a-9569-4317-8deb-0159ff8b4c7d",
                             Name = "Administrators",
                             NormalizedName = "ADMINISTRATORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Users = 0
                         });
-                });
-
-            modelBuilder.Entity("LIMSCore.Billing.Checkout", b =>
-                {
-                    b.HasOne("LIMSCore.Billing.Invoice", "Invoice")
-                        .WithMany("Checkouts")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LIMSCore.Billing.Invoice", b =>

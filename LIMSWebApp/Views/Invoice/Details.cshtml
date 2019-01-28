@@ -1,4 +1,4 @@
-﻿@model LIMSCore.Billing.Invoice
+﻿@model LIMSWebApp.ViewModels.InvoiceViewModels.InvoiceViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -48,10 +48,10 @@
 			@Html.DisplayFor(model => model.DateDue)
 		</dd>
 		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Parcel)
+			@Html.DisplayNameFor(model => model.ParcelNumber)
 		</dt>
 		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Parcel.ParcelNum)
+			@Html.DisplayFor(model => model.ParcelNumber)
 		</dd>
 		<dt class="col-sm-2">
 			@Html.DisplayNameFor(model => model.Status)
@@ -62,9 +62,9 @@
 	</dl>
 </div>
 <div>
-	<a class="btn btn-sm btn-success" data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = Model.Parcel.ParcelNum, invoicenumber = Model.InvoiceNumber })" class="text-warning">
+	<a class="btn btn-sm btn-success" data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = Model.ParcelNumber, invoicenumber = Model.InvoiceNumber })" class="text-warning">
 		<i class="fa fa-money-bill-alt"></i> Make Payment
 	</a> |
-	<a asp-action="Edit" asp-route-id="@Model.InvoiceId">Edit</a> |
+	<a asp-action="Edit" asp-route-id="@Model.InvoiceID">Edit</a> |
 	<a asp-action="Index">Back to List</a>
 </div>

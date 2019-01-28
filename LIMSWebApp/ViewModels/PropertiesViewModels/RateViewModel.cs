@@ -30,7 +30,10 @@ namespace LIMSWebApp.ViewModels.PropertiesViewModels
         public string PendingRate { get; set; }
 
 		[DisplayName("Invoice ID")]
-		public string InvoiceID { get; set; }
+		public Guid InvoiceID { get; set; }
+
+		[DisplayName("Invoice Number")]
+		public string InvoiceNumber { get; set; }
 
 	}
 }

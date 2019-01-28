@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LIMSCore.Billing.Invoice>
+﻿@model IEnumerable<LIMSWebApp.ViewModels.InvoiceViewModels.InvoiceViewModel>
 
 @using Microsoft.AspNetCore.Identity
 @using LIMSInfrastructure.Identity
@@ -49,7 +49,7 @@
 				@Html.DisplayNameFor(model => model.DateDue)
 			</th>
 			<th>
-				@Html.DisplayNameFor(model => model.Parcel)
+				@Html.DisplayNameFor(model => model.ParcelNumber)
 			</th>
 			<th>
 				@Html.DisplayNameFor(model => model.Status)
@@ -75,22 +75,22 @@
 					@Html.DisplayFor(modelItem => item.DateDue)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Parcel.ParcelNum)
+					@Html.DisplayFor(modelItem => item.ParcelNumber)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Status)
 				</td>
 				<td>
-					<a asp-action="Details" data-tippy="Invoice Details" asp-route-id="@item.InvoiceId"><i class="fa fa-clipboard-list"></i></a>
-					<a data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = item.Parcel.ParcelNum, invoicenumber = item.InvoiceNumber })" class="text-warning">
+					<a asp-action="Details" data-tippy="Invoice Details" asp-route-id="@item.InvoiceID"><i class="fa fa-clipboard-list"></i></a>
+					<a data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = item.ParcelNumber, invoicenumber = item.InvoiceNumber })" class="text-warning">
 						<i class="fa fa-money-bill-alt"></i>
 					</a>
 
 					@if (await UserManager.IsInRoleAsync(user, "Administrators"))
 					{
-						<a data-tippy="Edit Invoice" asp-action="Edit" asp-route-id="@item.InvoiceId"><i class="fa fa-pen"></i></a>
+						<a data-tippy="Edit Invoice" asp-action="Edit" asp-route-id="@item.InvoiceID"><i class="fa fa-pen"></i></a>
 
-						<a data-tippy="Delete Invoice" asp-action="Delete" class="text-danger" asp-route-id="@item.InvoiceId"><i class="fa fa-trash-alt"></i></a>
+						<a data-tippy="Delete Invoice" asp-action="Delete" class="text-danger" asp-route-id="@item.InvoiceID"><i class="fa fa-trash-alt"></i></a>
 					}
 					</td>
 			</tr>

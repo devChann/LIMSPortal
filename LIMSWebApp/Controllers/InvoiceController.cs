@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LIMSCore.Billing;
 using LIMSInfrastructure.Data;
+using LIMSWebApp.ViewModels.InvoiceViewModels;
 
 namespace LIMSWebApp.Controllers
 {
@@ -29,9 +30,36 @@ namespace LIMSWebApp.Controllers
 		// GET: Invoice
 		public async Task<IActionResult> Index(string parcelnum)
 		{
-			var Invoices = _context.Invoice.Include(i => i.Parcel).Where(a => a.Parcel.ParcelNum == parcelnum);
+			var Invoices = await _context.Invoice
+				.Include(i => i.Parcel)
+				.Include(i => i.Checkouts)
+				.Where(a => a.Parcel.ParcelNum == parcelnum).ToListAsync();
 
-			return View(await Invoices.ToListAsync());
+			
+
+			var InvoiceVMs = new List<InvoiceViewModel>();
+
+			foreach(var invoice in Invoices)
+			{				
+
+				var InvoiceVM = new InvoiceViewModel
+				{
+					InvoiceID = invoice.InvoiceId,
+					InvoiceNumber = invoice.InvoiceNumber,
+					InvoiceAmount = invoice.InvoiceAmount,
+					DateCreated = invoice.DateCreated,
+					DateDue = invoice.DateDue,
+					ParcelNumber = invoice.Parcel.ParcelNum,
+					Status = GetInvoiceStatus(invoice)
+				};
+
+				InvoiceVMs.Add(InvoiceVM);
+
+				
+			}
+			
+
+			return View(InvoiceVMs);
 		}
 
 		// GET: Invoice/Details/5
@@ -42,15 +70,28 @@ namespace LIMSWebApp.Controllers
                 return NotFound();
             }
 
-            var invoice = await _context.Invoice
-                .Include(i => i.Parcel)
+			var invoice = await _context.Invoice
+				.Include(i => i.Parcel)
+				.Include(a => a.Checkouts)
                 .FirstOrDefaultAsync(m => m.InvoiceId == id);
+
             if (invoice == null)
             {
                 return NotFound();
-            }
+            }			
 
-            return View(invoice);
+			var InvoiceViewModel = new InvoiceViewModel
+			{
+				InvoiceID = invoice.InvoiceId,
+				InvoiceNumber = invoice.InvoiceNumber,
+				InvoiceAmount = invoice.InvoiceAmount,
+				DateCreated = invoice.DateCreated,
+				DateDue = invoice.DateDue,
+				ParcelNumber = invoice.Parcel.ParcelNum,
+				Status = GetInvoiceStatus(invoice)
+			};
+
+            return View(InvoiceViewModel);
         }
 
         // GET: Invoice/Create
@@ -165,5 +206,26 @@ namespace LIMSWebApp.Controllers
         {
             return _context.Invoice.Any(e => e.InvoiceId == id);
         }
-    }
+
+
+		private string GetInvoiceStatus(Invoice invoice)
+		{
+			if (invoice.Checkouts.Any())
+			{
+				if (invoice.Checkouts.Sum(x => x.AmountPaid) < invoice.InvoiceAmount)
+				{
+					return "Not Paid";
+				}
+				else
+				{
+					return "Paid";
+				}
+			}
+			else
+			{
+				return "Not Paid";
+			}
+
+		}
+	}
 }

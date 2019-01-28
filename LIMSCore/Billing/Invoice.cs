@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace LIMSCore.Billing
@@ -11,14 +12,17 @@ namespace LIMSCore.Billing
 	{
 		public Guid InvoiceId { get; set; }
 		public string InvoiceNumber { get; set; }
-		public double InvoiceAmount { get; set; } //should be generated yearly based on land rates
+		public double InvoiceAmount { get; set; } //should be generated yearly based on land rates		
 
-		[NotMapped]
-		public string Status { get { return InvoiceStatus; } }
+		public ICollection<Checkout> Checkouts { get; set; }
+
+		//[NotMapped]
+		//public string Status { get { return InvoiceStatus; } }
 
 		public DateTime DateCreated { get; set; } = DateTime.Now;
 
-		public DateTime DateDue {
+		public DateTime DateDue
+		{
 			get {
 				return Next4Months();
 			}
@@ -33,8 +37,21 @@ namespace LIMSCore.Billing
 
 		public ICollection<Payment> Payments { get; set; }
 
-		[NotMapped]
-		private string InvoiceStatus => InvoiceAmount <= 0 ? "Paid" : "Not Paid";
+		//private double GetAmountPaid()
+		//{
+		//	if (Checkouts != null)
+		//	{
+		//		return Checkouts.Sum(x => x.AmountPaid);
+		//	}
+		//	else
+		//	{
+		//		return 0.0;
+		//	}
+
+		//}
+
+		//[NotMapped]
+		//private string InvoiceStatus => GetAmountPaid() < InvoiceAmount ? "Paid" : "Not Paid";
 
 		[NotMapped]
 		private DateTime DateGenerated => DateCreated;
@@ -52,8 +69,10 @@ namespace LIMSCore.Billing
 				
 		}
 
-	
-
 		
+
+
+
+
 	}
 }
