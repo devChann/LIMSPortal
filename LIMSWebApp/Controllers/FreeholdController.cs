@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LIMSCore.Entities;
 using LIMSInfrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LIMSWebApp.Controllers
 {
-    public class FreeholdController : Controller
+	[Authorize]
+	public class FreeholdController : Controller
     {
         private readonly LIMSCoreDbContext _context;
 

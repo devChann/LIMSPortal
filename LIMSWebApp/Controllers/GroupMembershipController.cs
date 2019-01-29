@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LIMSCore.Entities;
 using LIMSInfrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LIMSWebApp.Controllers
 {
-    public class GroupMembershipController : Controller
+	[Authorize]
+	public class GroupMembershipController : Controller
     {
         private readonly LIMSCoreDbContext _context;
 

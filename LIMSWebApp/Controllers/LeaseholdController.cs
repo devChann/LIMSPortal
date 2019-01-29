@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LIMSCore.Entities;
 using LIMSInfrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LIMSWebApp.Controllers
 {
-    public class LeaseholdController : Controller
+	[Authorize]
+	public class LeaseholdController : Controller
     {
         private readonly LIMSCoreDbContext _context;
 

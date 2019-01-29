@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using LIMSCore.Billing;
 using LIMSInfrastructure.Data;
 using LIMSWebApp.ViewModels.InvoiceViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LIMSWebApp.Controllers
 {
-    public class InvoiceController : Controller
+	[Authorize]
+	public class InvoiceController : Controller
     {
         private readonly LIMSCoreDbContext _context;
 

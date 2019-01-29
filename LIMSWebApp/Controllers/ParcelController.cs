@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using LIMSCore.Entities;
 using LIMSInfrastructure.Data;
 using LIMSWebApp.ViewModels.ParcelViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LIMSWebApp.Controllers
 {
+	[Authorize]
 	public class ParcelController : Controller
 	{
 		private readonly LIMSCoreDbContext _context;
