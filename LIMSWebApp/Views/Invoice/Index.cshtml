@@ -30,7 +30,11 @@
 
 <h4 class="text-muted">My Invoices</h4>
 
-<a class=" btn btn-sm btn-primary mb-2" asp-action="Create"><i class="fa fa-plus-square"></i> New Invoice</a>
+@if (await UserManager.IsInRoleAsync(user, "Administrators"))
+{
+	<a class=" btn btn-sm btn-primary mb-2" asp-action="Create"><i class="fa fa-plus-square"></i> New Invoice</a>
+}
+
 
 
 <table class="table table-sm table-responsive-md table-bordered table-condensed">
@@ -77,9 +81,23 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.ParcelNumber)
 				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Status)
-				</td>
+
+				@if (item.Status == "Paid")
+				{
+					<td>
+						<span class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i> Paid</span>
+					</td>
+				}
+				else
+				{
+					<td>
+						<span class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i> Not Paid</span>
+					</td>
+				}
+
+				@*<td>
+						@Html.DisplayFor(modelItem => item.Status)
+					</td>*@
 				<td>
 					<a asp-action="Details" data-tippy="Invoice Details" asp-route-id="@item.InvoiceID"><i class="fa fa-clipboard-list"></i></a>
 					<a data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = item.ParcelNumber, invoicenumber = item.InvoiceNumber })" class="text-warning">
@@ -92,7 +110,7 @@
 
 						<a data-tippy="Delete Invoice" asp-action="Delete" class="text-danger" asp-route-id="@item.InvoiceID"><i class="fa fa-trash-alt"></i></a>
 					}
-					</td>
+				</td>
 			</tr>
 		}
 	</tbody>

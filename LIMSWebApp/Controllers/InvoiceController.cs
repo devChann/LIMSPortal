@@ -20,14 +20,7 @@ namespace LIMSWebApp.Controllers
         public InvoiceController(LIMSCoreDbContext context)
         {
             _context = context;
-        }
-
-		//// GET: Invoice
-		//public async Task<IActionResult> Index()
-		//{
-		//	var lIMSCoreDbContext = _context.Invoice.Include(i => i.Parcel);
-		//	return View(await lIMSCoreDbContext.ToListAsync());
-		//}
+        }		
 
 		// GET: Invoice
 		public async Task<IActionResult> Index(string parcelnum)

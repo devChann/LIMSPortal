@@ -68,7 +68,7 @@ namespace LIMSCore
             services.Configure<SMSoptions>(Configuration);
 
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 			//Configure Stripe
 			services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
@@ -90,9 +90,9 @@ namespace LIMSCore
 
             if (HostingEnvironment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();            
-               
-                app.UseDatabaseErrorPage();              
+                app.UseDeveloperExceptionPage();
+
+				//app.useDatabaseErrorPage();             
             }
             else
             {              				

@@ -15,7 +15,7 @@ namespace LIMSWebApp.ViewModels.PropertiesViewModels
         [DisplayName("Tenure Type")]
         public string TenureType { get; set; }
 
-        [DisplayName("Land Rate")]
+        [DisplayName("Land Rate/Rent")]
         public decimal? Rate { get; set; }
 
 		public IEnumerable<Invoice> Invoices { get; set; }

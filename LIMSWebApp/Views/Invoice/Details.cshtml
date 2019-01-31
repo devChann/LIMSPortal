@@ -62,9 +62,13 @@
 	</dl>
 </div>
 <div>
-	<a class="btn btn-sm btn-success" data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = Model.ParcelNumber, invoicenumber = Model.InvoiceNumber })" class="text-warning">
-		<i class="fa fa-money-bill-alt"></i> Make Payment
-	</a> |
-	<a asp-action="Edit" asp-route-id="@Model.InvoiceID">Edit</a> |
-	<a asp-action="Index">Back to List</a>
+	@if (Model.Status == "Not Paid")
+	{
+		<a class="btn btn-sm btn-success" data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = Model.ParcelNumber, invoicenumber = Model.InvoiceNumber })" >
+			<i class="fa fa-money-bill-alt"></i> Make Payment
+		</a>		
+	}
+
+	@*<a asp-action="Edit" asp-route-id="@Model.InvoiceID">Edit</a> |
+	<a asp-action="Index">Back to List</a>*@
 </div>
