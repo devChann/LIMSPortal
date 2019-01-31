@@ -57,7 +57,29 @@ namespace LIMSWebApp.Controllers
                 return View(new List<PropertiesViewModel>());
             }
 
-            return View(parcelsowned);
+			var parcelcount = parcelsowned.Count().ToString();
+
+			var invoicecount = (from parcel in parcelsowned
+						 from invoice in parcel.Invoices
+						 select parcel).Count();
+
+			var sumOfInvoices = 0.0;
+
+			foreach (var item in parcelsowned)
+			{
+				foreach(var invoice in item.Invoices)
+				{
+					sumOfInvoices += invoice.InvoiceAmount;
+				}
+			}
+
+			ViewData["ParcelCount"] = parcelcount;
+
+			ViewData["InvoiceCount"] = invoicecount;
+
+			ViewData["InvoiceTotal"] = sumOfInvoices;
+
+			return View(parcelsowned);
         }
 
 

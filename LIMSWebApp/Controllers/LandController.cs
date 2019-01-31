@@ -100,22 +100,24 @@ namespace LIMSWebApp.Controllers
                 parcelviewmodel.Invoices = parcel.Invoices;
                 parcelviewmodel.RegistrationDate = parcel.Registration.RegistrationDate;
             }
+			var geodata = "";
 
-			var geodata = _geoService.GetLandParcel("Parcels", "Parcel_Num", parcelnum);			
+			try
+			{
+				geodata =_geoService.GetLandParcel("Parcels", "Parcel_Num", parcelnum);
+			}
+			catch(Exception e)
+			{
+				return NotFound(e.Message);
+			}
+					
 
 			ViewData["Parcel"] = geodata;
 
 			return View(parcelviewmodel);
         }
 
-		//[HttpGet("[action]/{featurename}/{attribute}/{filter}")]
-		//[Route("/parcel-geometry")]
-		//public IActionResult ParcelGeometry(string featurename,string attribute,string filter)
-		//{
-		//	var geodata = _geoService.GetLandParcel(featurename, attribute, filter);
-
-		//	return Json(geodata);
-		//}
+		
 
 		[Route("/edit-parcel")]
 		public IActionResult EditParcel(string parcelnum)

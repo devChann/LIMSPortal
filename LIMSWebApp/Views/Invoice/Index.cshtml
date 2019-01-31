@@ -95,22 +95,25 @@
 					</td>
 				}
 
-				@*<td>
-						@Html.DisplayFor(modelItem => item.Status)
-					</td>*@
-				<td>
-					<a asp-action="Details" data-tippy="Invoice Details" asp-route-id="@item.InvoiceID"><i class="fa fa-clipboard-list"></i></a>
-					<a data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = item.ParcelNumber, invoicenumber = item.InvoiceNumber })" class="text-warning">
-						<i class="fa fa-money-bill-alt"></i>
-					</a>
+				
+					<td>
+						<a asp-action="Details" data-tippy="Invoice Details" asp-route-id="@item.InvoiceID"><i class="fa fa-clipboard-list"></i></a>
 
-					@if (await UserManager.IsInRoleAsync(user, "Administrators"))
-					{
-						<a data-tippy="Edit Invoice" asp-action="Edit" asp-route-id="@item.InvoiceID"><i class="fa fa-pen"></i></a>
+						@if (item.Status != "Paid")
+						{
+							<a data-tippy="Make Payment" href="@Url.Action("checkout", "Payments", new { property = item.ParcelNumber, invoicenumber = item.InvoiceNumber })" class="text-warning">
+								<i class="fa fa-money-bill-alt"></i>
+							</a>
+						}
 
-						<a data-tippy="Delete Invoice" asp-action="Delete" class="text-danger" asp-route-id="@item.InvoiceID"><i class="fa fa-trash-alt"></i></a>
-					}
-				</td>
+
+						@if (await UserManager.IsInRoleAsync(user, "Administrators"))
+						{
+							<a data-tippy="Edit Invoice" asp-action="Edit" asp-route-id="@item.InvoiceID"><i class="fa fa-pen"></i></a>
+
+							<a data-tippy="Delete Invoice" asp-action="Delete" class="text-danger" asp-route-id="@item.InvoiceID"><i class="fa fa-trash-alt"></i></a>
+						}
+					</td>
 			</tr>
 		}
 	</tbody>
