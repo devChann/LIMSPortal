@@ -29,56 +29,53 @@ namespace LIMSWebApp.Areas.Identity
                         maxRetryDelay: TimeSpan.FromSeconds(30),
                         errorNumbersToAdd: null);
                     }
-                    ));
+                    ));				
 
-				//services.ConfigureDatabase(context.Configuration.GetConnectionString("LIMSCoreDbConnection"));
+				services.AddDefaultIdentity<ApplicationUser>(options =>
+				{
+					options.Stores.MaxLengthForKeys = 128;
+					// Password settings
+					options.Password.RequireDigit = true;
+					options.Password.RequiredLength = 8;
+					options.Password.RequireNonAlphanumeric = true;
+					options.Password.RequireUppercase = false;
+					options.Password.RequireLowercase = true;
+					options.Password.RequiredUniqueChars = 1;
 
-				services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-                {
-                    options.Stores.MaxLengthForKeys = 128;
-                    // Password settings
-                    options.Password.RequireDigit = true;
-                    options.Password.RequiredLength = 8;
-                    options.Password.RequireNonAlphanumeric = true;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequireLowercase = true;
-                    options.Password.RequiredUniqueChars = 1;
+					// Lockout settings
+					options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+					options.Lockout.MaxFailedAccessAttempts = 5;
+					options.Lockout.AllowedForNewUsers = true;
 
-                    // Lockout settings
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                    options.Lockout.MaxFailedAccessAttempts = 5;
-                    options.Lockout.AllowedForNewUsers = true;
+					//sign in settings
+					options.SignIn.RequireConfirmedEmail = true;
+					options.SignIn.RequireConfirmedPhoneNumber = false;
 
-                    //sign in settings
-                    options.SignIn.RequireConfirmedEmail = true;
-                    options.SignIn.RequireConfirmedPhoneNumber = false;})
-                    .AddRoles<ApplicationRole>()
-                    .AddRoleManager<RoleManager<ApplicationRole>>()
-                    .AddEntityFrameworkStores<LIMSCoreDbContext>()
-					.AddDefaultUI()
-					.AddDefaultTokenProviders();
+				})
+				.AddRoles<ApplicationRole>()
+				.AddDefaultUI(UIFramework.Bootstrap4)
+				.AddEntityFrameworkStores<LIMSCoreDbContext>()
+				.AddDefaultTokenProviders();	
 
 				services.ConfigureApplicationCookie(options =>
 				{
-					options.LoginPath = "/account/login";
-					options.LogoutPath = "/account/logged-out";
-					options.AccessDeniedPath = "/access-denied";
+					options.LoginPath = "/Identity/Account/Login";
+					options.LogoutPath = "/Identity/Account/Logout";
+					options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 					options.SlidingExpiration = true;
 					options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
 				});
 
-				services.AddAuthentication()
-                .AddGoogle(googleOptions =>
-                {
-                    googleOptions.ClientId = context.Configuration["Authentication:Google:ClientId"];
-                    googleOptions.ClientSecret = context.Configuration["Authentication:Google:ClientSecret"];
-                });
-
-				//wait for Microsoft.AspNetCore.Authentication.MicrosoftAccount package upgrade to 2.1.1
-				//.AddMicrosoftAccount(microsoftOptions => 
+				//services.AddAuthentication()
+				//.AddGoogle(googleOptions =>
 				//{
-				//    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
-				//    microsoftOptions.ClientSecret = Configuration["Authentication:Miscrosoft:Password"];
+				//	googleOptions.ClientId = context.Configuration["Authentication:Google:ClientId"];
+				//	googleOptions.ClientSecret = context.Configuration["Authentication:Google:ClientSecret"];
+				//})
+				//.AddMicrosoftAccount(microsoftOptions =>
+				//{
+				//	microsoftOptions.ClientId = context.Configuration["Authentication:Microsoft:ApplicationId"];
+				//	microsoftOptions.ClientSecret = context.Configuration["Authentication:Miscrosoft:Password"];
 				//});
 
 				services.AddAuthorization(AuthorizationPolicy.Execute);

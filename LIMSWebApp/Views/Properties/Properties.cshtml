@@ -223,6 +223,7 @@
 
 			var numberOfColors = parseInt('@Model.Count()');
 
+			// we are using chromajs here
 			var colors2 = chroma.scale(['teal']).colors(numberOfColors);
 
 			var colors3 = chroma.cubehelix()

@@ -90,7 +90,7 @@ namespace LIMSCore
 
             if (HostingEnvironment.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();			
 
 				//app.useDatabaseErrorPage();             
             }
@@ -101,21 +101,12 @@ namespace LIMSCore
 				app.ConfigureSecurityHeaders();
             }
 
-            app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");
-
-           /* app.UseCors(builder => 
-                builder.WithOrigins("https://demo.osl.co.ke:7574")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials()
-                
-            );*/
+            app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");           
           
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            //app.UseCookiePolicy();
-            //app.UseAuthentication();
+			
 
 			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager);
 
@@ -129,15 +120,10 @@ namespace LIMSCore
 			{
 				routes.MapHub<PaymentsHub>("/Payments");
 			});
-
-			//Use Azure signalR service
-			//app.UseAzureSignalR(routes =>
-   //         {
-   //             routes.MapHub<PaymentsHub>("/hubs/payments");
-   //         });
+			
 
             app.UseMvc(routes =>
-			{
+			{		
 				routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
 			});
            

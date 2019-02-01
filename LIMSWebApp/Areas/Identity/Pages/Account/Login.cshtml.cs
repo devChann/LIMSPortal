@@ -84,10 +84,10 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             if (Input.Email.IndexOf('@') > -1)
             {
                 //Validate email format
-                string emailRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                var emailRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
                                        @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
                                           @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-                Regex re = new Regex(emailRegex);
+                var re = new Regex(emailRegex);
                 if (!re.IsMatch(Input.Email))
                 {
                     ModelState.AddModelError("Email", "Email is not valid");
@@ -96,8 +96,8 @@ namespace LIMSWebApp.Areas.Identity.Pages.Account
             else
             {
                 //validate Username format
-                string emailRegex = @"^[a-zA-Z0-9]*$";
-                Regex re = new Regex(emailRegex);
+                var emailRegex = @"^[a-zA-Z0-9]*$";
+                var re = new Regex(emailRegex);
                 if (!re.IsMatch(Input.Email))
                 {
                     ModelState.AddModelError("Email", "Username is not valid");
