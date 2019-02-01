@@ -19,7 +19,6 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using MpesaLib;
-using Serilog;
 using LIMSInfrastructure.Services.GeoServices;
 
 namespace LIMSCore
@@ -68,7 +67,7 @@ namespace LIMSCore
             services.Configure<SMSoptions>(Configuration);
 
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 			//Configure Stripe
 			services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
@@ -82,7 +81,7 @@ namespace LIMSCore
        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void  Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public void  Configure(IApplicationBuilder app, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {           
 
             //Stripe configuration
@@ -96,7 +95,7 @@ namespace LIMSCore
             }
             else
             {              				
-                app.UseExceptionHandler("/Home/Error");               
+                app.UseExceptionHandler("/Home/Error");             
               
 				app.ConfigureSecurityHeaders();
             }
@@ -104,9 +103,7 @@ namespace LIMSCore
             app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");           
           
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-			
+            app.UseStaticFiles();			
 
 			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager);
 
