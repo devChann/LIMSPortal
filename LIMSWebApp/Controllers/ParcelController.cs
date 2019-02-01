@@ -71,6 +71,7 @@ namespace LIMSWebApp.Controllers
 		}
 
 		// GET: Parcel/Create
+		[Authorize(Roles = "Administrators")]
 		public IActionResult Create()
 		{
 			ViewData["AdministrationId"] = new SelectList(_context.Administration, "AdministrationId", "AdministrationId");
@@ -90,6 +91,7 @@ namespace LIMSWebApp.Controllers
 		// POST: Parcel/Create
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "Administrators")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("ParcelId,Area,ParcelNum,AdministrationId,LandUseId,OwnerId,OwnershipRightId,RateId,RegistrationId,ResponsibilityId,RestrictionId,SpatialUnitId,TenureId,ValuationId")] Parcel parcel)
@@ -115,6 +117,7 @@ namespace LIMSWebApp.Controllers
 		}
 
 		// GET: Parcel/Edit/5
+		[Authorize(Roles = "Administrators")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -174,6 +177,7 @@ namespace LIMSWebApp.Controllers
 		// POST: Parcel/Edit/5
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "Administrators")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(ParcelEditViewModel parceledit)
@@ -225,6 +229,7 @@ namespace LIMSWebApp.Controllers
 		}
 
 		// GET: Parcel/Delete/5
+		[Authorize(Roles = "Administrators")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -254,6 +259,7 @@ namespace LIMSWebApp.Controllers
 		}
 
 		// POST: Parcel/Delete/5
+		[Authorize(Roles = "Administrators")]
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
