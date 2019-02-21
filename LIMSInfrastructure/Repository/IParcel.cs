@@ -15,7 +15,5 @@ namespace LIMSInfrastructure.Repository
 		Task Add(Parcel parcel);
 		Task Delete(string parcelNumber);
 		Task Update(string parcelNumber);
-
-
 	}
 }
