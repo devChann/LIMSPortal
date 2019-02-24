@@ -4,7 +4,7 @@ using SendGrid.Helpers.Mail;
 using System;
 using System.Threading.Tasks;
 
-namespace LIMSInfrastructure.Services
+namespace LIMSInfrastructure.Services.Messaging
 {
 	// This class is used by the application to send email for account confirmation and password reset.
 	// For more details see https://go.microsoft.com/fwlink/?LinkID=532713

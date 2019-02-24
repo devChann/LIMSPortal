@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LIMSInfrastructure.Repository
+namespace LIMSInfrastructure.Services.Property
 {
-	public interface IParcel
+	public interface IParcelService
 	{
 		Parcel GetByNumber(string parcelNumber);
 		IEnumerable<Parcel> GetAll();

@@ -20,6 +20,7 @@ using System.IO;
 using System.Threading.Tasks;
 using MpesaLib;
 using LIMSInfrastructure.Services.GeoServices;
+using LIMSInfrastructure.Services.Messaging;
 
 namespace LIMSCore
 {

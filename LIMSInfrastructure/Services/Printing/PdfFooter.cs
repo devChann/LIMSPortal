@@ -11,7 +11,7 @@ namespace LIMSInfrastructure.Services.Printing
         {
                
             base.OnEndPage(writer, document);
-            PdfPTable tabFot = new PdfPTable(new float[] { 1F });
+            var tabFot = new PdfPTable(new float[] { 1F });
             PdfPCell cell;
             tabFot.TotalWidth = 300F;
             //var logo = iTextSharp.text.Image.GetInstance(path);

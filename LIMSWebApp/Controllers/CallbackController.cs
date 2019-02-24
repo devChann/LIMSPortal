@@ -4,6 +4,7 @@ using LIMSCore.Billing;
 using LIMSInfrastructure.Data;
 using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services;
+using LIMSInfrastructure.Services.Messaging;
 using LIMSWebApp.ViewModels.MpesaModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
