@@ -80,4 +80,8 @@
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Reports\" />
+  </ItemGroup>
+
 </Project>

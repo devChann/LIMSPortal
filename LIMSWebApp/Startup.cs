@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using MpesaLib;
 using LIMSInfrastructure.Services.GeoServices;
 using LIMSInfrastructure.Services.Messaging;
+using LIMSInfrastructure.Services.Property;
 
 namespace LIMSCore
 {
@@ -55,26 +56,33 @@ namespace LIMSCore
 				options.AutomaticAuthentication = true;
 			});
 
-			services.AddHttpClient<IGeoService, GeoService>(options =>
-			{
-				options.BaseAddress = new Uri(Configuration.GetSection("ParcelsServerBaseAddress").Value);
-			});
+			services.Configure<SMSoptions>(Configuration);
+
+			
 
 
 
 			//Add notification services
 			services.AddSingleton<IEmailSender, EmailSender>();
             services.AddTransient<ISmsSender, SmsSender>();
-            services.Configure<SMSoptions>(Configuration);
 
-            
-            services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+			//Application Services
+			services.AddHttpClient<IGeoService, GeoService>(options =>
+			{
+				options.BaseAddress = new Uri(Configuration.GetSection("ParcelsServerBaseAddress").Value);
+			});
+
+			services.AddScoped<IParcelService, ParcelService>();           
+           
 
 			//Configure Stripe
 			services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
 			services.AddSingleton<IBraintreeService, BraintreeService>();
-			
+
+			services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
 			services.AddSignalR();	
 
 		}
