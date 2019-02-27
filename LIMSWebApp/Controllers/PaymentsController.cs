@@ -25,6 +25,7 @@ using System.IO;
 using Newtonsoft.Json;
 using LIMSInfrastructure.Services.Payment.Mpesa;
 using LIMSCore.Billing;
+using LIMSInfrastructure.Services.Messaging;
 
 namespace LIMSWebApp.Controllers
 {
@@ -166,63 +167,12 @@ namespace LIMSWebApp.Controllers
             return View(paymentList);
         }
 
-        [HttpGet]
-        [Route("/make-payment")]
-        public IActionResult PayWithMpesa(string apiresult)
-        {
-			//var owner = _limsDbcontext.Owner
-			//	.Where(o => o.TelephoneAddress == "254725589166").Single();
-
-			////get property
-			//var parcel = _limsDbcontext.Parcel
-			//	.Include(r => r.Rate).Where(o => o.OwnerId == owner.Id).FirstOrDefault();
-
-			//var currentRate = parcel.Rate.Amount;
-
-			////deduct payment made from rates database
-			//var ratepaid = 15;
-
-			//var balance = currentRate -ratepaid;
-
-			//currentRate = balance;
-
-			//parcel.Rate.Amount = currentRate;
-
-			//_limsDbcontext.SaveChanges();
-
-			//ViewData["Balance"] = currentRate;
-			//ViewData["Name"] = owner.Name;
-			ViewData["Result"] = apiresult;
-
-			return View();
-        }
+        
 
         [HttpPost]
 		[Route("/make-payment")]
 		public async Task<IActionResult> PayWithMpesa(IFormCollection collection)
-        {
-
-			//var registerMpesaUrl = new CustomerToBusinessRegisterUrlDto
-			//{
-			//	ConfirmationURL = _config["MpesaConfiguration:ConfirmationURL"],
-			//	ValidationURL = _config["MpesaConfiguration:ValidationURL"],
-			//	ResponseType = ResponseType.Completed,
-			//	ShortCode = C2BPayBillNumber
-			//};
-
-			//try
-			//{
-			//	var registerUrl = await _mpesaClient.RegisterC2BUrlAsync(registerMpesaUrl, AccessToken, RequestEndPoint.RegisterC2BUrl);
-
-			//	_logger.LogWarning(LoggingEvents.GetItem, $"Register Url Result:{registerUrl}");
-			//}
-			//catch (Exception e)
-			//{
-
-			//	_logger.LogError($"An Error Occured:{e.Message}");
-			//}					
-
-
+        {		
 			var MpesaExpressObject2 = new LipaNaMpesaOnlineDto
 			{
 				AccountReference = collection["phone_number"],

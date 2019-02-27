@@ -14,14 +14,15 @@
 
 
 
-	<a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-item nav-link" data-toggle="tooltip" title="Manage Account">
-		<span><img class="user-img-circular" asp-controller="Photo" asp-action="Index" src="~/photo" /></span>
-		<strong class="user-name text-left">@UserManager.GetUserName(User)</strong>
+	<a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-item btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Manage Account">
+		@*<span><img class="user-img-circular" asp-controller="Photo" asp-action="Index" src="~/photo" /></span>
+		<strong class="user-name text-left">@UserManager.GetUserName(User)</strong>*@
+		<i class="fa fa-user-circle" aria-hidden="true"></i> My Account
 	</a>
-	<button type="button" class="ml-2 btn btn-sm btn-info">
+	@*<button type="button" class="ml-2 btn btn-sm btn-info">
 		messages <span class="badge badge-pill badge-warning">9</span>
 		<span class="sr-only">unread messages</span>
-	</button>
+	</button>*@
 
 	<button type="submit" class="ml-2 btn btn-sm btn-outline-danger">Logout <i class="fa fa-sign-out-alt" aria-hidden="true"></i></button>
 

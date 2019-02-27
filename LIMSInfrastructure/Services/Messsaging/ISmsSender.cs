@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Twilio.Rest.Api.V2010.Account;
 
-namespace LIMSInfrastructure.Services
+namespace LIMSInfrastructure.Services.Messaging
 {
     public interface ISmsSender
     {
