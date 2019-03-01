@@ -17,8 +17,8 @@ namespace LIMSWebApp.Helpers
 {
     public class DocPrinter:Controller
     {
-        private LIMSCoreDbContext _context;
-        private IHostingEnvironment _hostingEnvironment;
+        private readonly LIMSCoreDbContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         public DocPrinter(LIMSCoreDbContext ctx, IHostingEnvironment hostingEnvironment)
         {

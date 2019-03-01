@@ -75,13 +75,10 @@
    
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Sendgrid" Version="9.9.0" />
+    <PackageReference Include="SqlTableDependency" Version="8.5.3" />
     <PackageReference Include="Stripe.net" Version="16.16.0" />
     <PackageReference Include="Twilio" Version="5.13.7" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.4.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Reports\" />
   </ItemGroup>
 
 </Project>

@@ -111,6 +111,10 @@ namespace LIMSWebApp.Controllers
 		[Route("/edit-parcel")]
 		public IActionResult EditParcel(string parcelnum)
 		{
+			if (string.IsNullOrWhiteSpace(parcelnum))
+			{
+				throw new ArgumentException("message", nameof(parcelnum));
+			}
 
 			var parcel = new ParcelSearchViewModel
 			{
@@ -122,7 +126,11 @@ namespace LIMSWebApp.Controllers
 
 		[Route("/delete-parcel")]
 		public IActionResult DeleteParcel(string parcelnum)
-		{			
+		{
+			if (string.IsNullOrWhiteSpace(parcelnum))
+			{
+				throw new ArgumentException("message", nameof(parcelnum));
+			}
 
 			return RedirectToAction("ListParcels");
 		}
@@ -131,7 +139,6 @@ namespace LIMSWebApp.Controllers
 		public IActionResult ListParcels()
 		{
 			var parcels = new List<ParcelSearchViewModel> {
-
 			
 			};
 

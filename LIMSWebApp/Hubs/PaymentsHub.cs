@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using LIMSInfrastructure.Services.Property;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,23 @@ namespace LIMSWebApp.Hubs
 {
     public class PaymentsHub: Hub
     {
-        public async Task UpdatePaymentList(string user, string message)
-        {
-            var userx = Context.User?.Identity.Name ?? "Anonymous";
+		private readonly ParcelService _parcelService;
 
-            await Clients.All.SendAsync("ReceiveMessage", userx, message);
-        }
-    }
+		public PaymentsHub(ParcelService parcelService)
+		{
+			_parcelService = parcelService;
+		}
+
+		public Task RegisterProduct(string query)
+		{
+			_parcelService.GetFilteredParcels(query);
+			return Clients.All.SendAsync("UpdateParcels", _parcelService.GetAllParcels());
+		}
+
+		public async Task SellProduct(string query)
+		{
+			_parcelService.GetFilteredParcels(query);
+			await Clients.All.SendAsync("UpdateParcels", _parcelService.GetAllParcels());
+		}
+	}
 }
