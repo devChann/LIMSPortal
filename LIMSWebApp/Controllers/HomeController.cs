@@ -2,27 +2,38 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using LIMSWebApp.ViewModels;
+using LIMSWebApp.Hubs;
 using LIMSInfrastructure.Services.Payment;
 using System;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using LIMSInfrastructure.Services.GeoServices;
+using Microsoft.Extensions.Configuration;
+using LIMSInfrastructure.Services.Property;
 
 namespace LIMSWebApp.Controllers
 {
 	public class HomeController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
+		private readonly IParcelService _parcelService;
 		private readonly IGeoService _geoService;
+		private readonly IConfiguration _configuration;
 
-		public HomeController(IHostingEnvironment hostingEnvironment, IGeoService geoService)
+		public HomeController(IHostingEnvironment hostingEnvironment, IParcelService parcelService, IGeoService geoService,IConfiguration configuration)
         {
             _hostingEnvironment = hostingEnvironment;
+			_parcelService = parcelService;
 			_geoService = geoService;
+			_configuration = configuration;
 		}
 
         public IActionResult Index()
-        {		
+        {
+			var myhub = new PaymentsHub(_parcelService, _configuration);
+
+			myhub.Notify();
+
             return View();
         }
 
