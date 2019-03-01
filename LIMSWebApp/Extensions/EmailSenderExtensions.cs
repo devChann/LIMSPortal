@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using LIMSCore.Services;
 using LIMSInfrastructure.Services;
+using LIMSInfrastructure.Services.Messaging;
 
 namespace LIMSCore.Services
 {

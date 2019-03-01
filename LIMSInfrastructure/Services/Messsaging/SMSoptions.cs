@@ -1,4 +1,4 @@
-﻿namespace LIMSInfrastructure.Services
+﻿namespace LIMSInfrastructure.Services.Messaging
 {
     public class SMSoptions
     {

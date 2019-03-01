@@ -1,6 +1,7 @@
 ﻿using LIMSInfrastructure.Data;
 using LIMSInfrastructure.Identity;
 using LIMSInfrastructure.Services.GeoServices;
+using LIMSInfrastructure.Services.Property;
 using LIMSWebApp.Helpers;
 using LIMSWebApp.ViewModels.LIMSViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -19,15 +20,16 @@ namespace LIMSWebApp.Controllers
         private readonly LIMSCoreDbContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly IGeoService _geoService;
-		private readonly LIMSCoreDbContext _usercontext;
+		private readonly IParcelService _parcelService;
 
-        public LandController(LIMSCoreDbContext context, LIMSCoreDbContext usercontext, IHostingEnvironment hostingEnvironment, IGeoService geoService)
+		public LandController(LIMSCoreDbContext context, IHostingEnvironment hostingEnvironment,
+			IGeoService geoService, IParcelService parcelService)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
 			_geoService = geoService;
-			_usercontext = usercontext;
-        }
+			_parcelService = parcelService;
+		}
 
         //Renders the search page
         [HttpGet]
@@ -43,7 +45,7 @@ namespace LIMSWebApp.Controllers
         {
             var username = HttpContext.User.Identity.Name;
 
-            var user = _usercontext.Users.SingleOrDefault(p => p.UserName == username);
+            var user = _context.Users.SingleOrDefault(p => p.UserName == username);
 
             ViewData["UserPIN"] = user.KRAPIN;
 
@@ -53,21 +55,8 @@ namespace LIMSWebApp.Controllers
 				return View("ProductNotFound");
 			}
 
-            var parcelviewmodel = new ParcelSearchViewModel(); 
-
-            var parcel = _context.Parcel
-                .Include(i => i.Administration)
-                .Include(i => i.LandUse)
-                .Include(i => i.Registration)
-                .Include(i => i.Restriction.Charge)
-                .Include(i => i.Restriction.Mortgage)
-                .Include(i => i.SpatialUnit)
-                .Include(i => i.Tenure)
-                .Include(p => p.Invoices)
-                .Include(i => i.Valuation)
-                .Include(i => i.Owner)
-                
-                .Where(a => a.ParcelNum == parcelnum).SingleOrDefault();
+            var parcelviewmodel = new ParcelSearchViewModel();
+			var parcel = _parcelService.GetParcelByNumber(parcelnum);           
 
             if (parcel == null)
             {
@@ -149,28 +138,13 @@ namespace LIMSWebApp.Controllers
 			return View(parcels);
 		}
 
-		[HttpGet]
-		[Route("/add-parcel")]
-		public IActionResult AddParcel()
-		{
-			// add parcels to database
-
-			return View();
-		}
-
-		[HttpPost]
-		[Route("/add-parcel")]
-		public IActionResult AddParcel([Bind]ParcelSearchViewModel parcel)
-		{
-			// add parcels to database
-
-			return View();
-		}
+		
 
 		//Prints the search certificate
         public FileResult CreatePdf(string parcelnum)
         {
             var pdfprinter = new DocPrinter(_context, _hostingEnvironment);
+
             return pdfprinter.CreatePdf(parcelnum);
         }     
 

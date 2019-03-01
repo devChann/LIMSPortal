@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LIMSInfrastructure.Services
+namespace LIMSInfrastructure.Services.Messaging
 {
     public class AuthMessageSenderOptions
     {
