@@ -203,7 +203,7 @@ namespace LIMSWebApp.Controllers
 
 			return RedirectToAction("ShowMpesaResult", new { response = paymentrequest, customerNumber = collection["phone_number"], invoicenumber = collection["invoice_number"] });
 
-			//return Redirect("/my-properties");
+			
         }
 
 		[HttpPost("/mpesatransactionstatus")]

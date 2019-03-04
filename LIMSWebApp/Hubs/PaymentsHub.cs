@@ -35,8 +35,13 @@ namespace LIMSWebApp.Hubs
 
 		public void Notify()
 		{
+
+			var builder = new System.Data.SqlClient.SqlConnectionStringBuilder(_configuration.GetConnectionString("LIMSCoreDbConnection"));
+
+			var server = builder.DataSource;
+			var database = builder.InitialCatalog;
 			// See constructor optional parameters to configure it according to your needs
-			var listener = new SqlDependencyEx(_configuration.GetConnectionString("LIMSCoreDbConnection"), "LIMSCoreDb", "MpesaTransaction");
+			var listener = new SqlDependencyEx(_configuration.GetConnectionString("LIMSCoreDbConnection"), database, "MpesaTransaction");
 
 			
 
