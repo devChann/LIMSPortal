@@ -30,8 +30,9 @@ namespace LIMSCore
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
-			HostingEnvironment = hostingEnvironment;
-        }
+			HostingEnvironment = hostingEnvironment;		
+
+		}
 
         public IConfiguration Configuration { get; }
 		public IHostingEnvironment HostingEnvironment { get; }

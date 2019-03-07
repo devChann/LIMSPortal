@@ -534,6 +534,7 @@ namespace LIMSInfrastructure.Services.Notification
 			this.NotificaionTypes = listenerType;
 			this.DetailsIncluded = receiveDetails;
 			this.Identity = identity;
+			
 		}
 
 		public void Start()

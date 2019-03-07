@@ -30,11 +30,11 @@ namespace LIMSWebApp.Controllers
 
         public IActionResult Index()
         {
-			var myhub = new PaymentsHub(_parcelService, _configuration);
+			//var myhub = new PaymentsHub(_parcelService, _configuration);
 
-			myhub.Notify();
+			//myhub.Notify();
 
-            return View();
+			return View();
         }
 
 		public IActionResult About()

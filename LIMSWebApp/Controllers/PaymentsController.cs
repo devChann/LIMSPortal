@@ -195,7 +195,6 @@ namespace LIMSWebApp.Controllers
 			}
 			catch (Exception e)
 			{
-
 				_logger.LogError($"An Error Occured while Making LipaNaMpesa payment request:{e.Message}");
 			}	
 
@@ -228,9 +227,13 @@ namespace LIMSWebApp.Controllers
 		}
 
 
-		[Route("/showmpesaresult")]
+		[HttpGet("/showmpesaresult")]
 		public IActionResult ShowMpesaResult(string response, string customerNumber, string invoicenumber)
 		{
+			if(response == null)
+			{
+				return RedirectToAction("Error","Home", new { statusCode = 500});
+			}
 
 			//deserialize response and query transaction stastus
 			var res = JsonConvert.DeserializeObject<MpesaStkResponse>(response);
@@ -266,7 +269,7 @@ namespace LIMSWebApp.Controllers
 			return View();
 		}
 
-		[Route("/mpesaconfirmation")]
+		[HttpGet("/mpesaconfirmation")]
 		public IActionResult ConfirmMpesaPayment(string response, string customerNumber)
 		{
 			////deserialize response and query transaction stastus
