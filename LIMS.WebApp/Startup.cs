@@ -8,9 +8,9 @@ using LIMS.WebApp.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-//using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using MpesaLib;
 using Stripe;
@@ -54,8 +54,6 @@ namespace LIMS.WebApp
 
 			
 
-
-
 			//Add notification services
 			services.AddSingleton<IEmailSender, EmailSender>();
             services.AddTransient<ISmsSender, SmsSender>();
@@ -75,7 +73,7 @@ namespace LIMS.WebApp
 
 			services.AddSingleton<IBraintreeService, BraintreeService>();
 
-			services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+			services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddRazorRuntimeCompilation();
 
 			services.AddSignalR();	
 
