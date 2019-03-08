@@ -1,0 +1,90 @@
+﻿@model LIMS.Core.Entities.SpatialUnit
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>SpatialUnit</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Area)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Area)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Label)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Label)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Layer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Layer)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Length)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Length)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PreliminaryUnitId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PreliminaryUnitId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ReferencePoint)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ReferencePoint)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SpatialUnitType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SpatialUnitType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Volume)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Volume)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Boundary)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Boundary.BoundaryId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MapIndex)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MapIndex.MapIndexId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SpatialUnitSet)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SpatialUnitSet.SpatialUnitSetId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Survey)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Survey.SurveyId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SpatialUnitId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,73 @@
+﻿@model LIMS.WebApp.ViewModels.LIMSViewModels.ParcelSearchViewModel
+
+
+
+<h2>edit</h2>
+
+<h4>ParcelSearchViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ID" class="control-label"></label>
+                <input asp-for="ID" class="form-control" />
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParcelNumber" class="control-label"></label>
+                <input asp-for="ParcelNumber" class="form-control" />
+                <span asp-validation-for="ParcelNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Area" class="control-label"></label>
+                <input asp-for="Area" class="form-control" />
+                <span asp-validation-for="Area" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdministrationArea" class="control-label"></label>
+                <input asp-for="AdministrationArea" class="form-control" />
+                <span asp-validation-for="AdministrationArea" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="landUse" class="control-label"></label>
+                <input asp-for="landUse" class="form-control" />
+                <span asp-validation-for="landUse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tenure" class="control-label"></label>
+                <input asp-for="Tenure" class="form-control" />
+                <span asp-validation-for="Tenure" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RRRscount" class="control-label"></label>
+                <input asp-for="RRRscount" class="form-control" />
+                <span asp-validation-for="RRRscount" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Owner" class="control-label"></label>
+                <input asp-for="Owner" class="form-control" />
+                <span asp-validation-for="Owner" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Leahold" class="control-label"></label>
+                <input asp-for="Leahold" class="form-control" />
+                <span asp-validation-for="Leahold" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeasePeriod" class="control-label"></label>
+                <input asp-for="LeasePeriod" class="form-control" />
+                <span asp-validation-for="LeasePeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

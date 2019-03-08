@@ -1,0 +1,60 @@
+﻿@model LIMS.Core.Entities.Survey
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Survey</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CompsNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CompsNo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfEntry)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateOfEntry)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ParcelId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ParcelId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PdpRefNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PdpRefNo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlansNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlansNo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SurveyorsName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SurveyorsName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeOfSurvey)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TypeOfSurvey)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SurveyId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

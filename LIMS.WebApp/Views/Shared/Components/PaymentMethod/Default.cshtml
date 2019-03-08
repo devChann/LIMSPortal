@@ -1,0 +1,129 @@
+﻿@model LIMS.WebApp.ViewModels.PaymentViewModels.CheckoutViewModel
+
+
+<div class="col-md-6">
+	<h5 class="d-flex justify-content-center align-items-center mb-3">
+		<span class="text-muted">Select Preferred Payment Method</span>
+	</h5>
+	<div id="accordion">
+		<div class="card">
+			<div class="card-header" id="headingThree">
+				<h5 class="mb-0">
+					<button class="btn btn-link btn-block collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+						<span class="pull-left"><i class="fas fa-credit-card"></i>    Credit Card</span>
+
+					</button>
+				</h5>
+			</div>
+			<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+				<div class="card-body">
+					<form id="payment-form" method="post" action="/braintreecheckout">
+						<section>
+							<label for="amount">
+								<span class="input-label">Amount (KES)</span>
+								<span class="input-wrapper amount-wrapper">
+									<input id="amount" name="amount" type="tel" min="1" placeholder="Amount" value="@Model.Amount" class="form-control">
+								</span>
+							</label>
+							<div class="bt-drop-in-wrapper">
+								<div id="bt-dropin"></div>
+							</div>
+						</section>
+						<input id="invoicenumber" name="invoice" type="hidden" value="@Model.InvoiceNumber" />
+						<input id="nonce" name="payment_method_nonce" type="hidden" />
+						<button class="btn btn-success" type="submit"><span>Pay</span></button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header" id="headingTwo">
+				<h5 class="mb-0">
+					<button class="btn btn-link btn-block collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						<span class="pull-left"><i class="fas fa-mobile-alt"></i>   M-PESA</span>
+						<span class="pull-right"><img class="" src="~/images/logos/lipanampesa.png" height="25"  /></span>
+
+					</button>
+				</h5>
+			</div>
+			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+				<div class="card-body">
+					<form id="expenseForm" asp-controller="Payments" asp-action="PayWithMpesa" method="post">
+
+						<div class="form-group">
+							<label class="control-label">Acount Reference</label>							
+							<input name="invoice_number" value="@Model.InvoiceNumber"  class="form-control" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Phone Number</label><span>  (Use format: 2547XXXXXXXX)</span>
+							<input name="phone_number" placeholder="2547XXXXXXXX" class="form-control" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Amount</label>
+							<input name="amount" value="@Model.Amount" class="form-control" />		
+						</div>
+
+						<div class="form-group row">
+							<div class="col-sm-6">
+								<button type="submit" id="btnSubmit" class="btn btn-success">Initiate Payment</button>
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header" id="headingOne">
+				<h5 class="mb-0">
+					<button class="btn btn-link btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+						<span class="pull-left"><i class="far fa-money-bill-alt"></i>  Cash/Cheque</span>
+
+					</button>
+				</h5>
+			</div>
+
+			<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+				<div class="card-body">
+					<div>
+						You can pay cash at our offices for amounts not exceeding 50,000. You can also submit a bankers cheque at our offices.
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+</div>
+
+
+<script src="https://js.braintreegateway.com/web/dropin/1.14.1/js/dropin.min.js"></script>
+<script>
+    var client_token = "@ViewBag.ClientToken";
+    var form = document.querySelector('#payment-form');
+
+    braintree.dropin.create({
+        authorization: client_token,
+        container: '#bt-dropin'
+        //paypal: {
+        //    flow: 'vault'
+        //}
+    }, function (createErr, instance) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            instance.requestPaymentMethod(function (err, payload) {
+                if (err) {
+                    console.log('Error', err);
+                    return;
+                }
+
+                // Add the nonce to the form and submit
+                document.querySelector('#nonce').value = payload.nonce;
+                form.submit();
+            });
+        });
+    });
+</script>
+<script src="~/js/demo.js"></script>

@@ -1,0 +1,60 @@
+﻿@model LIMS.Core.Entities.Beacon
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Beacon</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BeaconNum" class="control-label"></label>
+                <input asp-for="BeaconNum" class="form-control" />
+                <span asp-validation-for="BeaconNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BeaconType" class="control-label"></label>
+                <input asp-for="BeaconType" class="form-control" />
+                <span asp-validation-for="BeaconType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hcoordinate" class="control-label"></label>
+                <input asp-for="Hcoordinate" class="form-control" />
+                <span asp-validation-for="Hcoordinate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorizontalDatum" class="control-label"></label>
+                <input asp-for="HorizontalDatum" class="form-control" />
+                <span asp-validation-for="HorizontalDatum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VerticalDatum" class="control-label"></label>
+                <input asp-for="VerticalDatum" class="form-control" />
+                <span asp-validation-for="VerticalDatum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Xcoordinate" class="control-label"></label>
+                <input asp-for="Xcoordinate" class="form-control" />
+                <span asp-validation-for="Xcoordinate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ycoordinate" class="control-label"></label>
+                <input asp-for="Ycoordinate" class="form-control" />
+                <span asp-validation-for="Ycoordinate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

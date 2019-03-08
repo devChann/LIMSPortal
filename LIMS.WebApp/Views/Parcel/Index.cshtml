@@ -1,0 +1,99 @@
+﻿@model IEnumerable<LIMS.Core.Entities.Parcel>
+
+@using Microsoft.AspNetCore.Identity
+@using LIMS.Infrastructure.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+@{
+	ApplicationUser user = await UserManager.FindByNameAsync(User.Identity.Name);
+}
+
+<div class="">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a asp-controller="Home" asp-action="Index">Home</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a asp-controller="" asp-action="">admin-dashboard</a>
+		</li>
+		<li class="breadcrumb-item active">parcel-management</li>
+	</ol>
+</div>
+
+
+<h4 class="text-muted">Land Parcels</h4>
+
+@if (await UserManager.IsInRoleAsync(user, "Administrators"))
+{
+	<a class=" btn btn-sm btn-primary mb-2" asp-action="Create"><i class="fa fa-plus-circle"></i> Add Parcel</a>
+}
+
+<table class="table table-sm table-responsive-md table-bordered table-condensed">
+	<thead class="thead-light">
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.ParcelNum)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Administration.DistrictName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LandUse.LandUseType)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Owner.Name)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.OwnershipRight.RightType)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Tenure.TenureType)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Valuation.Value)
+			</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.ParcelNum)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Administration.DistrictName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.LandUse.LandUseType)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Owner.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.OwnershipRight.RightType)
+				</td>
+
+				<td>
+					@Html.DisplayFor(modelItem => item.Tenure.TenureType)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Valuation.Value)
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.ParcelId"><i class="fa fa-pen"></i></a> |
+					<a asp-action="Details" class="text-info" asp-route-id="@item.ParcelId"><i class="fa fa-info-circle"></i></a> |
+					<a asp-action="Delete" class="text-danger" asp-route-id="@item.ParcelId"><i class="fa fa-trash"></i></a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

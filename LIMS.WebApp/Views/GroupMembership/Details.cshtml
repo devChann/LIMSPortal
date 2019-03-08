@@ -1,0 +1,42 @@
+﻿@model LIMS.Core.Entities.GroupMembership
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>GroupMembership</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MembershipShare)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MembershipShare)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MembershipSince)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MembershipSince)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MembershipStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MembershipStatus)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MembershipUntil)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MembershipUntil)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
