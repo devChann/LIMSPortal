@@ -1,6 +1,6 @@
 # LIMS
 
-Application demo site https://countylims.azurewebsites.net/
+Application review site https://county.azurewebsites.net
 ## Land Information Management System
 This project is about a unified land Information Management web and mobile portal. Land Administrators, organizations and
 citizens will have roles and functions in the system. All users are authenticated and authorized. The following modules are 
