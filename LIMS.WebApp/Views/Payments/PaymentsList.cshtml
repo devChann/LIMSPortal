@@ -1,0 +1,131 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@*@model IPagedList<LIMS.WebApp.ViewModels.MpesaModels.PaymentsListViewModel>*@
+@model List<LIMS.WebApp.ViewModels.MpesaModels.PaymentsListViewModel>
+
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a asp-controller="Home" asp-action="Index">Home</a>
+		</li>
+		<li class="breadcrumb-item">
+			<a asp-controller="Payments" asp-action="PaymentsList">Payments</a>
+		</li>
+		<li class="breadcrumb-item active">Payment-list</li>
+	</ol>
+</div>
+
+
+@if (Model.Any())
+{
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="text-muted">Payments History</h3>
+			<table id="payments_table" class="table table-sm table-hover table-light table-bordered table-responsive-md">
+				<thead class="thead-light">
+					<tr>
+
+						<th>
+							@*@Html.DisplayNameFor(model => model.PaymentDate)*@
+							Payment Date
+						</th>
+						<th>
+							@*@Html.DisplayNameFor(model => model.CustomerName)*@
+							Customer Name
+						</th>
+						<th>
+							@*@Html.DisplayNameFor(model => model.PhoneNumber)*@
+							Phone Number
+						</th>
+						<th>
+							@*@Html.DisplayNameFor(model => model.Amount)*@
+							Amount
+						</th>
+						<th>
+							@*@Html.DisplayNameFor(model => model.CheckOutID)*@
+							Checkout ID
+						</th>
+						<th>
+							@*@Html.DisplayNameFor(model => model.ReceiptNumber)*@
+							Receipt Number
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>
+								@Html.DisplayFor(modelItem => item.PaymentDate)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.CustomerName)
+							</td>
+							<th>
+								@Html.DisplayFor(modelItem => item.PhoneNumber)
+							</th>
+							<td>
+								@Html.DisplayFor(modelItem => item.Amount)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.CheckOutID)
+							</td>
+							<th>
+								@Html.DisplayFor(modelItem => item.ReceiptNumber)
+							</th>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+}
+else
+{
+	<div class="row">
+		<div class="col-md-12">
+			<div class="alert alert-warning text-center font-weight-bold">
+				<i class="fa fa-info-circle"></i>
+				<strong>There are no payment records.</strong>
+			</div>
+		</div>
+	</div>
+
+}
+
+
+
+@*@Html.PagedListPager(Model, page => Url.Action("PaymentsList", new { page }))*@
+
+@*<div class="row">&nbsp;</div>
+	<div class="row">
+		<div class="col-6">&nbsp;</div>
+		<div class="col-6">
+			User..........<input type="text" id="userInput" />
+			<br />
+			Message...<input type="text" id="messageInput" />
+			<input type="button" id="sendButton" value="Send Message" />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<hr />
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-6">&nbsp;</div>
+		<div class="col-6">
+			<ul id="messagesList"></ul>
+		</div>
+	</div>*@
+
+@section scripts{
+	<script>
+		$(document).ready(function () {
+			$('#payments_table').DataTable();
+		});
+	</script>
+}
+
+

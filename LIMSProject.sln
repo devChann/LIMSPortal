@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIMSWebApp", "LIMSWebApp\LIMSWebApp.csproj", "{7BC183B2-74A6-4E1D-A27F-67A38F36E2E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIMS.WebApp", "LIMS.WebApp\LIMS.WebApp.csproj", "{7BC183B2-74A6-4E1D-A27F-67A38F36E2E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIMSCore", "LIMSCore\LIMSCore.csproj", "{63AE5DB6-8BF3-4BBD-A60F-394E4CDAA582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIMS.Core", "LIMS.Core\LIMS.Core.csproj", "{63AE5DB6-8BF3-4BBD-A60F-394E4CDAA582}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIMSInfrastructure", "LIMSInfrastructure\LIMSInfrastructure.csproj", "{469AB780-D300-428D-8064-D6DE8FF72399}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIMS.Infrastructure", "LIMS.Infrastructure\LIMS.Infrastructure.csproj", "{469AB780-D300-428D-8064-D6DE8FF72399}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{8A26372E-7382-42C7-B228-F319BECB6E93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LIMS.UnitTests", "LIMS.UnitTests\LIMS.UnitTests.csproj", "{8A26372E-7382-42C7-B228-F319BECB6E93}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{60039575-1244-41FD-B7A9-858DC0583834}"
 	ProjectSection(SolutionItems) = preProject
