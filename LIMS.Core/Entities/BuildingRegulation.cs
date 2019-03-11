@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             LandUses = new HashSet<LandUse>();
         }
 
-        public int BuildingRegulationId { get; set; }
+        public Guid BuildingRegulationId { get; set; }
         public double GCR { get; set; }
         public double PCR { get; set; }
         public double PlotFrontage { get; set; }

@@ -53,27 +53,32 @@ namespace LIMS.Infrastructure.Services.Property
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<Parcel> GetParcelsByOwner(string OwnerId)
+		public Task UpdateParcel(string number)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task UpdateParcel(string parcelNumber)
+		public Owner GetParcelOwnerByUsername(string name)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Owner GetParcelOwnerByUsername(string UserName)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Owner GetParcelOwnerByIdNumber(string IDNumber)
+		public Owner GetParcelOwnerByIdNumber(string id)
 		{
 			throw new NotImplementedException();
 		}
 
 		public Parcel GetParcelById(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ChangeOwner (Parcel parcel, Owner owner)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<Parcel> GetParcelsByOwner(string id)
 		{
 			throw new NotImplementedException();
 		}

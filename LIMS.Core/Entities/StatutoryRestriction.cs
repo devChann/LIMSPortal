@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             Restrictions = new HashSet<Restriction>();
         }
 
-        public int StatutoryRestrictionId { get; set; }
+        public Guid StatutoryRestrictionId { get; set; }
         public string NatureOfRestriction { get; set; }
         public string RestrictingAuthority { get; set; }
 

@@ -63,7 +63,7 @@ namespace LIMS.WebApp.Controllers
 						 from invoice in parcel.Invoices
 						 select parcel).Count();
 
-			var sumOfInvoices = 0.0;
+			var sumOfInvoices = 0m;
 
 			foreach (var item in parcelsowned)
 			{

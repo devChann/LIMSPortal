@@ -42,7 +42,7 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// GET: Parcel/Details/5
-		public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> Details(Guid? id)
 		{
 			if (id == null)
 			{
@@ -118,7 +118,7 @@ namespace LIMS.WebApp.Controllers
 
 		// GET: Parcel/Edit/5
 		[Authorize(Roles = "Administrators")]
-		public async Task<IActionResult> Edit(int? id)
+		public async Task<IActionResult> Edit(Guid? id)
 		{
 			if (id == null)
 			{
@@ -230,7 +230,7 @@ namespace LIMS.WebApp.Controllers
 
 		// GET: Parcel/Delete/5
 		[Authorize(Roles = "Administrators")]
-		public async Task<IActionResult> Delete(int? id)
+		public async Task<IActionResult> Delete(Guid? id)
 		{
 			if (id == null)
 			{
@@ -270,7 +270,7 @@ namespace LIMS.WebApp.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		private bool ParcelExists(int id)
+		private bool ParcelExists(Guid id)
 		{
 			return _context.Parcel.Any(e => e.ParcelId == id);
 		}

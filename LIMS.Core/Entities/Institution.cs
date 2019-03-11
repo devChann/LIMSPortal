@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             InstitutionInstitutionLeadership = new HashSet<InstitutionInstitutionLeadership>();
         }
 
-        public int InstitutionId { get; set; }
+        public Guid InstitutionId { get; set; }
         public string InstitutionType { get; set; }
 
         public ICollection<InstitutionInstitutionLeadership> InstitutionInstitutionLeadership { get; set; }

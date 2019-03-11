@@ -5,17 +5,19 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 
-<div class="jumbotron text-center">
-    <h3>County Land Information Portal</h3>
-    <p class="lead">An integrated platform that provides access to land information and
-	makes it easy for County Governments and property owners to manage rateable property.
-	</p>
-    <hr class="my-4">
+	<div class="jumbotron text-center">
+		<h3>County Land Information Portal</h3>
+		<p class="lead">
+			An integrated platform that provides access to land information and
+			makes it easy for County Governments and property owners to manage rateable property.
+		</p>
+		<hr class="my-4">
 
-    <p class="lead">
-        <a class="btn btn-info btn-lg" asp-controller="Home" asp-action="About" role="button">Learn more</a>
-    </p>
-</div>
+		<p class="lead">
+			<a class="btn btn-info btn-lg" asp-controller="Home" asp-action="About" role="button">Learn more</a>
+		</p>
+		
+	</div>
 
 
     @if (SignInManager.IsSignedIn(User))

@@ -5,7 +5,7 @@ namespace LIMS.Core.Billing
 {
     public partial class Payment
     {
-        public int PaymentId { get; set; }
+        public Guid PaymentId { get; set; }
         public decimal? Amount { get; set; }
         public string ModeOfPayment { get; set; }
         public DateTime? PaymentDate { get; set; }
@@ -13,5 +13,7 @@ namespace LIMS.Core.Billing
 
 		public Guid InvoiceId { get; set; }
 		public Invoice Invoice { get; set; }
+
+		//public Checkout Checkout { get; set; }
 	}
 }

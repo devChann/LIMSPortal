@@ -21,7 +21,7 @@ namespace LIMS.WebApp.ViewModels.InvoiceViewModels
 		public DateTime DateDue { get; set; }
 
 		[Display(Name ="Amount")]
-		public double InvoiceAmount { get; set; }
+		public decimal InvoiceAmount { get; set; }
 
 		[Display(Name ="Status")]
 		public string Status { get; set; }

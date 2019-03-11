@@ -88,7 +88,7 @@ namespace LIMS.WebApp.Controllers
 
             var Payment = new MpesaTransaction
             {
-                Id = new Guid(),
+                MpesaTransactionId = Guid.NewGuid(),
                 Amount = AmountPaid,
                 CheckoutRequestID = CheckoutID,
                 MerchantRequestId = response.Body.StkCallback.MerchantRequestID,
@@ -97,7 +97,7 @@ namespace LIMS.WebApp.Controllers
                 PhoneNumber = PhoneNumber
             };
 
-			var Checkout = _limsDbcontext.Checkout.FirstOrDefault(c => c.CheckoutRequest == CheckoutID);
+			var Checkout = _limsDbcontext.Checkout.FirstOrDefault(c => c.CheckoutRequestId == CheckoutID);
 
 			if(Checkout != null)
 			{

@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             Restrictions = new HashSet<Restriction>();
         }
 
-        public int MortgageId { get; set; }
+        public Guid MortgageId { get; set; }
         public double Amount { get; set; }       
         public double InterestRate { get; set; }
         public string Lender { get; set; }

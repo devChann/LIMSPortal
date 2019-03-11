@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             Parcels = new HashSet<Parcel>();
         }
 
-        public int ResponsibilityId { get; set; }
+        public Guid ResponsibilityId { get; set; }
         public string PerformanceRequirement { get; set; }
         public string ResponsibilityType { get; set; }
 

@@ -11,7 +11,7 @@ namespace LIMS.Core.Entities
 			PersonInstitutionLeaderships = new HashSet<PersonInstitutionLeadership>();
         }
 
-        public int Id { get; set; }
+        public Guid InsitutionLeadershipId { get; set; }
         public DateTime MemberSince { get; set; }
         public DateTime MemberUntil { get; set; }
         public string MembershipRole { get; set; }

@@ -11,7 +11,7 @@ namespace LIMS.Core.Entities
             SpatialUnitSetRegistrations = new HashSet<SpatialUnitSetRegistration>();
         }
 
-        public int RegistrationId { get; set; }
+        public Guid RegistrationId { get; set; }
         public string Jurisdiction { get; set; }
         public DateTime RegistrationDate { get; set; }
         public string RegistrationSection { get; set; }

@@ -11,7 +11,7 @@ namespace LIMS.Core.Entities
             Parcels = new HashSet<Parcel>();
         }
 
-        public int SpatialUnitId { get; set; }
+        public Guid SpatialUnitId { get; set; }
         public double? Area { get; set; }       
         public string Label { get; set; }
         public string Layer { get; set; }
@@ -21,16 +21,16 @@ namespace LIMS.Core.Entities
         public string SpatialUnitType { get; set; }      
         public double? Volume { get; set; }
 
-		public int BoundaryId { get; set; }
+		public Guid BoundaryId { get; set; }
 		public Boundary Boundary { get; set; }
 
-		public int MapIndexId { get; set; }
+		public Guid MapIndexId { get; set; }
 		public MapIndex MapIndex { get; set; }
 
-		public int SpatialUnitSetId { get; set; }
+		public Guid SpatialUnitSetId { get; set; }
 		public SpatialUnitSet SpatialUnitSet { get; set; }
 
-		public int SurveyId { get; set; }
+		public Guid SurveyId { get; set; }
 		public Survey Survey { get; set; }
 
         public ICollection<Building> Buildings { get; set; }

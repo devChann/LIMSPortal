@@ -35,8 +35,7 @@ namespace LIMS.Infrastructure.Data
         public virtual DbSet<BoundaryBeacon> BoundaryBeacon { get; set; }
         public virtual DbSet<Building> Building { get; set; }
         public virtual DbSet<BuildingRegulation> BuildingRegulation { get; set; }
-        public virtual DbSet<Charge> Charge { get; set; }
-        public virtual DbSet<Freehold> Freehold { get; set; }
+        public virtual DbSet<Charge> Charge { get; set; }        
         public virtual DbSet<GroupGroupLeadership> GroupGroupLeadership { get; set; }
         public virtual DbSet<GroupGroupMembership> GroupGroupMembership { get; set; }
         public virtual DbSet<GroupLeadership> GroupLeadership { get; set; }
@@ -47,8 +46,7 @@ namespace LIMS.Infrastructure.Data
         public virtual DbSet<Institution> Institution { get; set; }
         public virtual DbSet<InstitutionInstitutionLeadership> InstitutionInstitutionLeadership { get; set; }
         public virtual DbSet<PersonInstitutionLeadership> PersonInstitutionLeadership { get; set; }
-        public virtual DbSet<LandUse> LandUse { get; set; }
-        public virtual DbSet<Leasehold> Leasehold { get; set; }
+        public virtual DbSet<LandUse> LandUse { get; set; }        
         public virtual DbSet<MapIndex> MapIndex { get; set; }
         public virtual DbSet<Mortgage> Mortgage { get; set; }
         public virtual DbSet<Operation> Operation { get; set; }
@@ -101,7 +99,7 @@ namespace LIMS.Infrastructure.Data
 			//BIlling Entities configuration
 			modelBuilder.Entity<MpesaTransaction>(entity =>
 			{
-				entity.HasKey(k => k.Id);
+				entity.HasKey(k => k.MpesaTransactionId);
 			});
 
 			modelBuilder.Entity<Payment>(entity =>
@@ -120,6 +118,7 @@ namespace LIMS.Infrastructure.Data
 
 
 			//LIMS Entity configuration
+			
 			modelBuilder.Entity<Beacon>(entity =>
             {
                 entity.Property(e => e.DateSet).HasDefaultValueSql("(getdate())");               
@@ -158,12 +157,7 @@ namespace LIMS.Infrastructure.Data
                 entity.Property(e => e.Lender).HasColumnName("lender");
             });
 
-            modelBuilder.Entity<Freehold>(entity =>
-            {
-                entity.HasIndex(e => e.TenureId)
-                    .IsUnique();
-               
-            });
+            
 
 			modelBuilder.Entity<GroupGroupLeadership>(entity =>
 			{
@@ -258,18 +252,7 @@ namespace LIMS.Infrastructure.Data
                 entity.HasOne(d => d.Zone)
                     .WithMany(p => p.LandUses)
                     .HasForeignKey(d => d.ZoneId);
-            });
-
-            modelBuilder.Entity<Leasehold>(entity =>
-            {
-                entity.HasIndex(e => e.TenureId);
-
-                entity.Property(e => e.LeasePeriod).HasDefaultValueSql("(getdate())");
-
-                entity.HasOne(d => d.Tenure)
-                    .WithMany(p => p.Leaseholds)
-                    .HasForeignKey(d => d.TenureId);
-            });
+            });           
 
             modelBuilder.Entity<Operation>(entity =>
             {
@@ -463,6 +446,7 @@ namespace LIMS.Infrastructure.Data
             {
                 entity.Property(e => e.ValuationDate).HasDefaultValueSql("(getdate())");
             });
+		
         }
 
 		public static void SeedData(LIMSCoreDbContext context)

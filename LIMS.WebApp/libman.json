@@ -61,6 +61,14 @@
 		{
 			"library": "notify.js@3.0.0",
 			"destination": "wwwroot/lib/notifyjs"
+		},
+		{
+			"library": "toastr.js@2.1.4",
+			"destination": "wwwroot/lib/toastr"
+		},
+		{
+			"library": "bulma@0.7.4",
+			"destination": "wwwroot/lib/bulma"
 		}
 
 	]

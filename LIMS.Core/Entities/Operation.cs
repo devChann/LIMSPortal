@@ -10,10 +10,10 @@ namespace LIMS.Core.Entities
             Services = new HashSet<Service>();
         }
 
-        public int OperationId { get; set; }
+        public Guid OperationId { get; set; }
 		public string OperationName { get; set; }
 
-        public int? ParcelId { get; set; }
+        public Guid ParcelId { get; set; }
         public Parcel Parcel { get; set; }
 
         public ICollection<Service> Services { get; set; }
