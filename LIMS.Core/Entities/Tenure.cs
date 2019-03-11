@@ -5,18 +5,11 @@ namespace LIMS.Core.Entities
 {
     public partial class Tenure
     {
-        public Tenure()
-        {
-			Freeholds = new HashSet<Freehold>();
-			Leaseholds = new HashSet<Leasehold>();
-            Parcels = new HashSet<Parcel>();
-        }
-
-        public int TenureId { get; set; }
-        public string TenureType { get; set; }
-
-        public ICollection<Freehold> Freeholds { get; set; }
-        public ICollection<Leasehold> Leaseholds { get; set; }
-        public ICollection<Parcel> Parcels { get; set; }
+        public Guid TenureId { get; set; }
+        public string TenureType { get; set; } //can be leashold or freehold
+		public DateTime TenureBeginDate { get; set; }
+		public DateTime TenureEndDate { get; set; }
+		public string Lessor { get; set; }
+		public Parcel Parcel { get; set; }
     }
 }

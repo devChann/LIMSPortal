@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             BoundaryBeacons = new HashSet<BoundaryBeacon>();
         }
 
-        public int BeaconId { get; set; }
+        public Guid BeaconId { get; set; }
         public string BeaconNum { get; set; }
         public string BeaconType { get; set; }
         public DateTime DateSet { get; set; }

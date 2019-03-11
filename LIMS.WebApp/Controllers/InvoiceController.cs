@@ -27,7 +27,7 @@ namespace LIMS.WebApp.Controllers
 		{
 			var Invoices = await _context.Invoice
 				.Include(i => i.Parcel)
-				.Include(i => i.Checkouts)
+				.Include(i => i.Payments)
 				.Where(a => a.Parcel.ParcelNum == parcelnum).ToListAsync();
 
 			
@@ -67,7 +67,7 @@ namespace LIMS.WebApp.Controllers
 
 			var invoice = await _context.Invoice
 				.Include(i => i.Parcel)
-				.Include(a => a.Checkouts)
+				.Include(a => a.Payments)
                 .FirstOrDefaultAsync(m => m.InvoiceId == id);
 
             if (invoice == null)
@@ -205,9 +205,9 @@ namespace LIMS.WebApp.Controllers
 
 		private string GetInvoiceStatus(Invoice invoice)
 		{
-			if (invoice.Checkouts.Any())
+			if (invoice.Payments.Any())
 			{
-				if (invoice.Checkouts.Sum(x => x.AmountPaid) < invoice.InvoiceAmount)
+				if (invoice.Payments.Sum(x => x.Amount) < invoice.InvoiceAmount)
 				{
 					return "Not Paid";
 				}

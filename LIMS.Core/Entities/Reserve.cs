@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             Restrictions = new HashSet<Restriction>();
         }
 
-        public int ReserveId { get; set; }
+        public Guid ReserveId { get; set; }
         public string ComplianceStatus { get; set; }
         public string EnforcingAuthority { get; set; }
         public string ReserveType { get; set; }

@@ -8,12 +8,11 @@ namespace LIMS.Core.Billing
 	{
 		public Guid CheckoutId { get; set; }
 		public DateTime CheckoutDate { get; set; }
-		public string CheckoutRequest { get; set; }
-
+		public string CheckoutRequestId { get; set; }
 		public double AmountPaid { get; set; }
 
-		public Guid InvoiceId { get; set; }
-		public Invoice Invoice { get; set; }
+		public Guid PaymentId { get; set; }
+		public Payment Payment { get; set; }
 
 	}
 }

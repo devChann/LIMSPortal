@@ -11,7 +11,7 @@ namespace LIMS.WebApp.ViewModels.ParcelViewModels
 	public class ParcelEditViewModel
 	{
 
-		public int ParcelId { get; set; }
+		public Guid ParcelId { get; set; }
 
 		[Required]
 		[Display(Name = "Parcel Number")]
@@ -23,17 +23,17 @@ namespace LIMS.WebApp.ViewModels.ParcelViewModels
 
 		[Required]
 		[Display(Name = "District")]
-		public int SelectedDistrict { get; set; }
+		public Guid SelectedDistrict { get; set; }
 		public IEnumerable<SelectListItem> Districts { get; set; }
 
 		[Required]
 		[Display(Name = "Block")]
-		public int SelectedBlock { get; set; }
+		public Guid SelectedBlock { get; set; }
 		public IEnumerable<SelectListItem> Blocks { get; set; }		
 
 		[Required]
 		[Display(Name = "Land Use")]
-		public int SelectedLandUse { get; set; }
+		public Guid SelectedLandUse { get; set; }
 		public IEnumerable<SelectListItem> LandUses { get; set; }
 	}
 }

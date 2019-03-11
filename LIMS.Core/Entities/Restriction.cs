@@ -10,19 +10,19 @@ namespace LIMS.Core.Entities
             Parcels = new HashSet<Parcel>();
         }
 
-        public int RestrictionId { get; set; }                       
+        public Guid RestrictionId { get; set; }                       
         public string RestrictionType { get; set; }       
 
-		public int? ChargeId { get; set; }
+		public Guid ChargeId { get; set; }
 		public Charge Charge { get; set; }
 
-		public int? MortgageId { get; set; }
+		public Guid MortgageId { get; set; }
 		public Mortgage Mortgage { get; set; }
 
-		public int? ReserveId { get; set; }
+		public Guid ReserveId { get; set; }
 		public Reserve Reserve { get; set; }
 
-		public int? StatutoryRestrictionId { get; set; }
+		public Guid StatutoryRestrictionId { get; set; }
 		public StatutoryRestriction StatutoryRestriction { get; set; }
 
         public ICollection<Parcel> Parcels { get; set; }

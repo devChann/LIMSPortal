@@ -11,12 +11,12 @@ namespace LIMS.Core.Entities
 			PersonGroupLeaderships = new HashSet<PersonGroupLeadership>();
         }
 
-        public int GroupLeadershipId { get; set; }
+        public Guid GroupLeadershipId { get; set; }
         public string LeadershipRole { get; set; }
         public DateTime LeadershipSince { get; set; }
         public string LeadershipStatus { get; set; }
         public DateTime LeadershipUntil { get; set; }
-        public int PersonId { get; set; }
+        public Guid PersonId { get; set; }
 
         public ICollection<GroupGroupLeadership> GroupGroupLeadership { get; set; }
         public ICollection<PersonGroupLeadership> PersonGroupLeaderships { get; set; }

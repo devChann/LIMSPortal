@@ -39,10 +39,9 @@ namespace LIMS.WebApp
 			services.AddCors();
 
 			//change this to use https://api.safaricom.co.ke/ when deploying to proction
-			services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = new Uri("https://sandbox.safaricom.co.ke/"));
+			services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = RequestEndPoint.SandboxBaseAddress);
 
-            services.ConfigureSecurityAndAuthentication();
-			
+            services.ConfigureSecurityAndAuthentication();			
 
 			services.Configure<IISOptions>(options =>
 			{
@@ -73,7 +72,7 @@ namespace LIMS.WebApp
 
 			services.AddSingleton<IBraintreeService, BraintreeService>();
 
-			services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddRazorRuntimeCompilation();
+			services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 			services.AddSignalR();	
 

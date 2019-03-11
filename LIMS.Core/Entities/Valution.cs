@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             Parcels = new HashSet<Parcel>();
         }
 
-        public int ValuationId { get; set; }
+        public Guid ValuationId { get; set; }
         public string Remarks { get; set; }
         public string SerialNo { get; set; }
         public string ValuationBookNo { get; set; }
