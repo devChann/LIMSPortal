@@ -1,14 +1,19 @@
-FROM microsoft/dotnet:3.0-aspnetcore-runtime-stretch-slim AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM microsoft/dotnet:3.0-sdk-stretch AS build
+FROM microsoft/dotnet:3.0-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 53251
+EXPOSE 44399
+
+#RUN chmod +x /entrypoint.sh
+#CMD /bin/bash /entrypoint.sh
+
+FROM microsoft/dotnet:3.0-sdk AS build
 WORKDIR /src
 COPY ["LIMS.WebApp/LIMS.WebApp.csproj", "LIMS.WebApp/"]
-COPY ["LIMS.Infrastructure/LIMS.Infrastructure.csproj", "LIMS.Infrastructure/"]
 COPY ["LIMS.Core/LIMS.Core.csproj", "LIMS.Core/"]
+COPY ["LIMS.Infrastructure/LIMS.Infrastructure.csproj", "LIMS.Infrastructure/"]
 RUN dotnet restore "LIMS.WebApp/LIMS.WebApp.csproj"
+
 COPY . .
 WORKDIR "/src/LIMS.WebApp"
 RUN dotnet build "LIMS.WebApp.csproj" -c Release -o /app
