@@ -23,13 +23,13 @@ namespace LIMS.WebApp.Hubs
 		public Task RegisterProduct(string query)
 		{
 			_parcelService.GetFilteredParcels(query);
-			return Clients.All.SendAsync("UpdateParcels", _parcelService.GetAllParcels());
+			return Clients.All.SendAsync("UpdateParcels", _parcelService.GetParcels());
 		}
 
 		public async Task SellProduct(string query)
 		{
 			_parcelService.GetFilteredParcels(query);
-			await Clients.All.SendAsync("UpdateParcels", _parcelService.GetAllParcels());
+			await Clients.All.SendAsync("UpdateParcels", _parcelService.GetParcels());
 		}
 
 

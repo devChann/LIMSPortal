@@ -36,12 +36,9 @@ namespace LIMS.WebApp
 
 			services.ConfigureDatabase(Configuration);
 
-			services.AddCors();
+			services.ConfigureSecurityAndAuthentication();
 
-			//change this to use https://api.safaricom.co.ke/ when deploying to proction
-			services.AddHttpClient<IMpesaClient, MpesaClient>(options => options.BaseAddress = RequestEndPoint.SandboxBaseAddress);
-
-            services.ConfigureSecurityAndAuthentication();			
+			services.ConfigureInfrastructureServices(Configuration);
 
 			services.Configure<IISOptions>(options =>
 			{
@@ -49,28 +46,7 @@ namespace LIMS.WebApp
 				options.AutomaticAuthentication = true;
 			});
 
-			services.Configure<SMSoptions>(Configuration);
-
-			
-
-			//Add notification services
-			services.AddSingleton<IEmailSender, EmailSender>();
-            services.AddTransient<ISmsSender, SmsSender>();
-
-
-			//Application Services
-			services.AddHttpClient<IGeoService, GeoService>(options =>
-			{
-				options.BaseAddress = new Uri(Configuration.GetSection("ParcelsServerBaseAddress").Value);
-			});
-
-			services.AddScoped<IParcelService, ParcelService>();           
-           
-
-			//Configure Stripe
-			services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-
-			services.AddSingleton<IBraintreeService, BraintreeService>();
+			services.AddCors();
 
 			services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
