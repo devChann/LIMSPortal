@@ -1,20 +1,13 @@
 ﻿using LIMS.Infrastructure.Identity;
-using LIMS.Infrastructure.Services.GeoServices;
-using LIMS.Infrastructure.Services.Messaging;
-using LIMS.Infrastructure.Services.Payment;
-using LIMS.Infrastructure.Services.Property;
 using LIMS.WebApp.Configuration.Startup;
 using LIMS.WebApp.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MpesaLib;
 using Stripe;
-using System;
 
 namespace LIMS.WebApp
 {

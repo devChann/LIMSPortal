@@ -1,7 +1,7 @@
 ﻿using LIMS.Infrastructure.Data;
 using LIMS.Infrastructure.Identity;
 using LIMS.Infrastructure.Services.GeoServices;
-using LIMS.Infrastructure.Services.Property;
+using LIMS.Infrastructure.Services.Properties;
 using LIMS.WebApp.Helpers;
 using LIMS.WebApp.ViewModels.LIMSViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LIMS.WebApp.Controllers
 {
@@ -41,7 +42,7 @@ namespace LIMS.WebApp.Controllers
 
         //Renders the search results        
         [Route("/parcel-details")]
-        public IActionResult ParcelDetails(string parcelnum)
+        public async Task<IActionResult> ParcelDetails(string parcelnum)
         {
             var username = HttpContext.User.Identity.Name;
 
@@ -56,7 +57,7 @@ namespace LIMS.WebApp.Controllers
 			}
 
             var parcelviewmodel = new ParcelSearchViewModel();
-			var parcel = _parcelService.GetParcelByNumber(parcelnum);           
+			var parcel = await _parcelService.GetParcelByNumber(parcelnum);           
 
             if (parcel == null)
             {
