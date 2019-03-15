@@ -26,7 +26,7 @@
             <div class="col-md-4 bottom10">
 
                 <div>
-                    <a asp-controller="Parcels" asp-action="Search" class="text-info">
+                    <a asp-controller="Parcels" asp-action="Search" class="text-info-modified">
 
                         <div class="card text-center card-padding">
                             <span class="card-title"><i class='fa fa-search fa-3x text-center'></i></span>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-md-4 bottom10">
 
-                <a asp-controller="Properties" asp-action="Properties" class="text-info">
+                <a asp-controller="Properties" asp-action="Properties" class="text-info-modified">
 
                     <div class="card text-center card-padding">
                         <span class="card-title"><i class='fa fa-chart-bar fa-3x mx-auto'></i></span>
@@ -56,7 +56,7 @@
             </div>
             <div class="col-md-4 bottom10">
 
-                <a asp-controller="Home" asp-action="Services" class="text-info">
+                <a asp-controller="Home" asp-action="Services" class="text-info-modified">
 
                     <div class="card text-center card-padding">
                         <span class="card-title"><i class='fa fa-cog fa-3x text-center'></i></span>
@@ -76,7 +76,7 @@
     {
         <div class="row">
             <div class="col-md-4 bottom10">
-                <a asp-area="Identity" asp-page="/Account/Register" class="text-info">
+                <a asp-area="Identity" asp-page="/Account/Register" class="text-info-modified">
                     <div class="card text-center card-padding">
                         <span class="card-title"><i class='fa fa-user-plus fa-3x'></i></span>
                         <div class="card-body">
@@ -87,7 +87,7 @@
                 </a>
             </div>
             <div class="col-md-4 bottom10">
-                <a asp-area="Identity" asp-page="/Account/Login" class="text-info">
+                <a asp-area="Identity" asp-page="/Account/Login" class="text-info-modified">
                     <div class="card text-center card-padding">
                         <span class="card-title"><i class='fa fa-sign-in-alt fa-3x'></i></span>
                         <div class="card-body">
@@ -99,7 +99,7 @@
 
             </div>
             <div class="col-md-4 bottom10">
-                <a asp-controller="Home" asp-action="Terms" class="text-info">
+                <a asp-controller="Home" asp-action="Terms" class="text-info-modified">
                     <div class="card text-center card-padding">
                         <span class="card-title"><i class='fa fa-exclamation-circle fa-3x'></i></span>
                         <div class="card-body">
@@ -108,7 +108,22 @@
                         </div>
                     </div>
                 </a>
-            </div>           
+            </div>
+			
         </div>
+		<div>
+			<div class="bd-callout bd-callout-info">
+				<h4 id="dealing-with-specificity">Dealing with specificity</h4>
+
+				<p>Sometimes contextual classes cannot be applied due to the specificity of another selector. In some cases, a sufficient workaround is to wrap your element’s content in a <code class="highlighter-rouge">&lt;div&gt;</code> with the class.</p>
+			</div>
+
+			<div class="bd-callout bd-callout-warning">
+				<h5 id="conveying-meaning-to-assistive-technologies">Conveying meaning to assistive technologies</h5>
+
+				<p>Using color to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (e.g. the visible text), or is included through alternative means, such as additional text hidden with the <code class="highlighter-rouge">.sr-only</code> class.</p>
+			</div>
+			<div class="bs-callout bs-callout-success"><i class="fa fa-star" aria-hidden="true"></i><h4>New!</h4><p> Callouts are new to Bootstrap 4 version of the Template.</p></div>
+		</div>
 
     }

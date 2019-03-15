@@ -209,9 +209,9 @@ a {
 .form-control:focus {
 	color: #495057;
 	background-color: #fff;
-	border-color: #80bdff;
+	border-color: #ff7f30;
 	outline: none;
-	box-shadow: 1px 1px #80bdff;
+	box-shadow: 1px 1px #ff7f30;
 }
 
 .success-1-icon {
@@ -224,4 +224,9 @@ a {
 
 .fail-icon {
 	color: red
+}
+
+.text-info-modified {
+	color: #ff7f30;
+	
 }
