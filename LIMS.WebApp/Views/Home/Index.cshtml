@@ -2,128 +2,159 @@
 @using Microsoft.AspNetCore.Identity
 @using LIMS.Infrastructure.Identity
 
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<ApplicationUser> SignInManager	
 
-
-	<div class="jumbotron text-center">
-		<h3>County Land Information Portal</h3>
-		<p class="lead">
-			An integrated platform that provides access to land information and
-			makes it easy for County Governments and property owners to manage rateable property.
-		</p>
-		<hr class="my-4">
-
-		<p class="lead">
-			<a class="btn btn-info btn-lg" asp-controller="Home" asp-action="About" role="button">Learn more</a>
-		</p>
-		
-	</div>
-
-
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <div class="row">
-            <div class="col-md-4 bottom10">
-
-                <div>
-                    <a asp-controller="Parcels" asp-action="Search" class="text-info-modified">
-
-                        <div class="card text-center card-padding">
-                            <span class="card-title"><i class='fa fa-search fa-3x text-center'></i></span>
-                            <div class="card-body">
-                                <h4 class="card-title">Property Status</h4>
-                                <p class="card-text">Query status of other properties</p>
-
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-4 bottom10">
-
-                <a asp-controller="Properties" asp-action="Properties" class="text-info-modified">
-
-                    <div class="card text-center card-padding">
-                        <span class="card-title"><i class='fa fa-chart-bar fa-3x mx-auto'></i></span>
-                        <div class="card-body">
-                            <h4 class="card-title">Dashboard</h4>
-                            <p class="card-text">Go to Dashboard</p>
-
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-            <div class="col-md-4 bottom10">
-
-                <a asp-controller="Home" asp-action="Services" class="text-info-modified">
-
-                    <div class="card text-center card-padding">
-                        <span class="card-title"><i class='fa fa-cog fa-3x text-center'></i></span>
-                        <div class="card-body">
-                            <h4 class="card-title">County Services</h4>
-                            <p class="card-text">View Available Services</p>
-
-                        </div>
-                    </div>
-                </a>
-
-
-            </div>
-        </div>
-    }
-    else
-    {
-        <div class="row">
-            <div class="col-md-4 bottom10">
-                <a asp-area="Identity" asp-page="/Account/Register" class="text-info-modified">
-                    <div class="card text-center card-padding">
-                        <span class="card-title"><i class='fa fa-user-plus fa-3x'></i></span>
-                        <div class="card-body">
-                            <h4 class="card-title">Create Account</h4>
-                            <p class="card-text">Create a new user account</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4 bottom10">
-                <a asp-area="Identity" asp-page="/Account/Login" class="text-info-modified">
-                    <div class="card text-center card-padding">
-                        <span class="card-title"><i class='fa fa-sign-in-alt fa-3x'></i></span>
-                        <div class="card-body">
-                            <h4 class="card-title">Sign In</h4>
-                            <p class="card-text">Sign into your account</p>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-            <div class="col-md-4 bottom10">
-                <a asp-controller="Home" asp-action="Terms" class="text-info-modified">
-                    <div class="card text-center card-padding">
-                        <span class="card-title"><i class='fa fa-exclamation-circle fa-3x'></i></span>
-                        <div class="card-body">
-                            <h4 class="card-title">Terms & Conditions</h4>
-                            <p class="card-text">Read our terms and conditions</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-			
-        </div>
-		<div>
-			<div class="bd-callout bd-callout-info">
-				<h4 id="dealing-with-specificity">Dealing with specificity</h4>
-
-				<p>Sometimes contextual classes cannot be applied due to the specificity of another selector. In some cases, a sufficient workaround is to wrap your element’s content in a <code class="highlighter-rouge">&lt;div&gt;</code> with the class.</p>
-			</div>
-
-			<div class="bd-callout bd-callout-warning">
-				<h5 id="conveying-meaning-to-assistive-technologies">Conveying meaning to assistive technologies</h5>
-
-				<p>Using color to add meaning only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (e.g. the visible text), or is included through alternative means, such as additional text hidden with the <code class="highlighter-rouge">.sr-only</code> class.</p>
-			</div>
-			<div class="bs-callout bs-callout-success"><i class="fa fa-star" aria-hidden="true"></i><h4>New!</h4><p> Callouts are new to Bootstrap 4 version of the Template.</p></div>
+	@*<div class="content-header row">
+		<div class="content-header-left col-md-6 col-12 mb-1">
+			<h3 class="content-header-title">Home</h3>
 		</div>
+		<div class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-12">
+			<div class="breadcrumb-wrapper col-12">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item active">
+						<a asp-controller="Home" asp-action="Index">Home</a>
+					</li>
+					<li class="breadcrumb-item">
+						<a href="#">Starters Kit</a>
+					</li>
+					<li class="breadcrumb-item active">
+						Fixed Navbar &amp; Footer
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>*@
 
-    }
+<section class="row">
+	<div class="col-sm-12">				
+				
+		<div id="kick-start" class="card">
+			<div class="card-header">
+				<h4 class="card-title">County Land Information Portal</h4>
+				@*<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+				<div class="heading-elements">
+					<ul class="list-inline mb-0">
+						<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+						<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+						<li><a data-action="close"><i class="ft-x"></i></a></li>
+					</ul>
+				</div>*@
+			</div>
+			<div class="card-content collapse show">
+				<div class="card-body">
+					<div class="card-text">
+								
+						<p class="lead">
+							CLIMS is an integrated platform that provides access to land information and
+							makes it easy for County Governments and property owners to manage rateable property.
+						</p>
+						<hr class="my-4">
+
+						<p class="lead">
+							<a class="btn btn-info btn-lg" asp-controller="Home" asp-action="About" role="button">Learn more</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+
+	</div>
+</section>
+
+
+<section class="row">
+
+	@if (SignInManager.IsSignedIn(User))
+	{				
+		<div class="col-4 bottom10">
+
+				<div>
+					<a asp-controller="Parcels" asp-action="Search" class="text-info-modified">
+
+						<div class="card text-center card-padding">
+							<span class="card-title"><i class='fa fa-search fa-3x text-center'></i></span>
+							<div class="card-body">
+								<h4 class="card-title">Property Status</h4>
+								<p class="card-text">Query status of other properties</p>
+
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		<div class="col-4 bottom10">
+
+				<a asp-controller="Properties" asp-action="Properties" class="text-info-modified">
+
+					<div class="card text-center card-padding">
+						<span class="card-title"><i class='fa fa-pie-chart fa-3x mx-auto'></i></span>
+						<div class="card-body">
+							<h4 class="card-title">Dashboard</h4>
+							<p class="card-text">Go to Dashboard</p>
+
+						</div>
+					</div>
+				</a>
+
+			</div>
+		<div class="col-4 bottom10">
+
+				<a asp-controller="Home" asp-action="Services" class="text-info-modified">
+
+					<div class="card text-center card-padding">
+						<span class="card-title"><i class='fa fa-cog fa-3x text-center'></i></span>
+						<div class="card-body">
+							<h4 class="card-title">County Services</h4>
+							<p class="card-text">View Available Services</p>
+
+						</div>
+					</div>
+				</a>
+
+
+			</div>				
+	}
+	else
+	{
+				
+		<div class="col-4 bottom10">
+				<a asp-area="Identity" asp-page="/Account/Register" class="text-info-modified">
+					<div class="card text-center card-padding">
+						<span class="card-title"><i class='fa fa-user-plus fa-3x'></i></span>
+						<div class="card-body">
+							<h4 class="card-title">Create Account</h4>
+							<p class="card-text">Create a new user account</p>
+						</div>
+					</div>
+				</a>
+			</div>
+		<div class="col-4 bottom10">
+				<a asp-area="Identity" asp-page="/Account/Login" class="text-info-modified">
+					<div class="card text-center card-padding">
+						<span class="card-title"><i class='fa fa-sign-in fa-3x'></i></span>
+						<div class="card-body">
+							<h4 class="card-title">Sign In</h4>
+							<p class="card-text">Sign into your account</p>
+						</div>
+					</div>
+				</a>
+
+			</div>
+		<div class="col-4 bottom10">
+			<a asp-controller="Home" asp-action="Terms" class="text-info-modified">
+				<div class="card text-center card-padding">
+					<span class="card-title"><i class='fa fa-exclamation-circle fa-3x'></i></span>
+					<div class="card-body">
+						<h4 class="card-title">Terms & Conditions</h4>
+						<p class="card-text">Read our terms and conditions</p>
+					</div>
+				</div>
+			</a>
+		</div>			
+				
+
+	}
+
+</section>
+	

@@ -1,4 +1,5 @@
 ﻿using LIMS.Infrastructure.Identity;
+using LIMS.Infrastructure.Services.AppVersion;
 using LIMS.WebApp.Configuration.Startup;
 using LIMS.WebApp.Hubs;
 using Microsoft.AspNetCore.Builder;
@@ -42,6 +43,8 @@ namespace LIMS.WebApp
 			services.AddCors();
 
 			services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+			services.AddTransient<IAppVersionService, AppVersionService>();
 
 			services.AddSignalR();	
 

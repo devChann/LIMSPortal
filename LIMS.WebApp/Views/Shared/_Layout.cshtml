@@ -1,190 +1,271 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using LIMS.Infrastructure.Identity
+@using LIMS.Infrastructure.Services.AppVersion
+
+@inject IAppVersionService AppVersionService
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-	ViewData["Title"] = "LIMS Portal";
+	ViewData["Title"] = "CLIMS";
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="description" content="LIMS Portal is an integrated land information management system for local governments">
+	<meta name="keywords" content="Land, property, county">
+	<meta name="author" content="OAKAR SERVICES LIMITED">
 	<title>@ViewData["Title"]</title>
 
-	<environment include="Development">
-		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-		<link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
-		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-		<link href="~/lib/Datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-		<link href="~/css/PagedList.min.css" rel="stylesheet" />
-		<link href="~/lib/openlayers/ol.css" rel="stylesheet" />
-		<link href="~/lib/ol-popup/ol-popup.css" rel="stylesheet" />
-		<link href="~/lib/ol-layerswitcher/ol-layerswitcher.css" rel="stylesheet" />
-		<link href="~/lib/tippyjs/themes/google.css" rel="stylesheet" />
-		<link href="~/lib/tippyjs/themes/light.css" rel="stylesheet" />
-		<link href="~/lib/tippyjs/tippy.css" rel="stylesheet" />
-		<link href="~/css/site.css" rel="stylesheet" />
-		<link href="~/css/braintree/normalize.css" rel="stylesheet" />
-		<link href="~/css/braintree/overrides.css" rel="stylesheet" />
-	</environment>
+	<link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
 
-	<environment exclude="Development">
-		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-		<link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
-		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-		<link href="~/lib/Datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-		<link href="~/css/PagedList.min.css" rel="stylesheet" />
-		<link href="~/lib/openlayers/ol.css" rel="stylesheet" />
-		<link href="~/lib/ol-popup/ol-popup.css" rel="stylesheet" />
-		<link href="~/lib/ol-layerswitcher/ol-layerswitcher.css" rel="stylesheet" />
-		<link href="~/lib/tippyjs/themes/google.css" rel="stylesheet" />
-		<link href="~/lib/tippyjs/themes/light.css" rel="stylesheet" />
-		<link href="~/lib/tippyjs/tippy.css" rel="stylesheet" />
-		<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-		<link href="~/css/braintree/normalize.css" rel="stylesheet" />
-		<link href="~/css/braintree/overrides.css" rel="stylesheet" />
-	</environment>
+	<!-- BEGIN: Vendor CSS-->
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+	<!-- END: Vendor CSS-->
+
+	<!-- BEGIN: Theme CSS-->
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+	<!-- END: Theme CSS-->
+
+	<!-- BEGIN: Page CSS-->
+	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
+	<!-- END: Page CSS-->
+
+	<!-- BEGIN: Custom CSS-->
+	<link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+	<!-- END: Custom CSS-->
+
 </head>
 
-<body>
+<body class="vertical-layout vertical-menu 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu" data-col="2-columns">
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" asp-controller="Home" asp-action="Index">LIMS</a>
+	<!-- BEGIN: Header-->
+	<nav class="header-navbar navbar-expand-md navbar navbar-with-menu fixed-top navbar-light navbar-border">
+		<div class="navbar-wrapper">
+			<div class="navbar-header">
+				<ul class="nav navbar-nav flex-row">
+					<li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
+					<li class="nav-item">
+						<a class="navbar-brand" asp-controller="Home" asp-action="Index">
+							<img class="brand-logo" alt="stack admin logo" src="../../../app-assets/images/logo/stack-logo.png">
+							<h2 class="brand-text">CLIMS</h2>
+						</a>
+					</li>
+					<li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="fa fa-ellipsis-v"></i></a></li>
+				</ul>
+			</div>
+			<div class="navbar-container content">
+				<div class="navbar-toggleable-sm" id="navbar-mobile">
+					<ul class="nav navbar-nav mr-auto float-left">
+						<li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
+					</ul>
 
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#limsNavbar" aria-controls="limsNavbar" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="limsNavbar">
-
-			<div class="navbar-nav mr-auto">
-				<a class="nav-item nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
-
-				@if (SignInManager.IsSignedIn(User))
-				{
-					ApplicationUser user = await UserManager.FindByNameAsync(User.Identity.Name);
-
-					@if (await UserManager.IsInRoleAsync(user, "Administrators"))
+					@if (SignInManager.IsSignedIn(User))
 					{
-						<a class="nav-item nav-link" asp-area="" asp-page="">Admin Dashboard</a>
+						ApplicationUser user = await UserManager.FindByNameAsync(User.Identity.Name);
 
-						<a class="nav-item nav-link" asp-area="Identity" asp-page="/UserAdmin/Index">Manage Users</a>
+						var username = $"{user.FirstName} {user.LastName}";
 
-						<a class="nav-item nav-link" asp-controller="" asp-action="">Invoicing</a>
 
-						<a class="nav-item nav-link" asp-controller="Payments" asp-action="PaymentsList">Payments History</a>
+						<ul class="nav navbar-nav float-right">
+							<li class="dropdown dropdown-user nav-item">
+								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="avatar avatar-online"><img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span><span class="user-name">@username </span></a>
+								<div class="dropdown-menu dropdown-menu-right">
+									<form class="form-inline float-right my-0 my-lg-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
+
+										<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" title="Manage Account">
+											<i class="fa fa-user-circle" aria-hidden="true"></i> Manage Account
+										</a>
+
+										@*<a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>*@
+										@*<a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a>*@
+										<a class="dropdown-item" href="#"><i class="fa fa-envelope"></i> My Inbox</a>
+
+										<div class="dropdown-divider"></div>
+										@*<a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>*@
+
+										<button type="submit" class="dropdown-item"><i class="ft-power" aria-hidden="true"></i> Logout </button>
+
+									</form>
+
+									
+								</div>
+							</li>
+						</ul>
 					}
 					else
 					{
-						<a class="nav-item nav-link" asp-controller="Home" asp-action="Services">County Services</a>
-						<a class="nav-item nav-link" asp-controller="Properties" asp-action="Properties">My Dashboard</a>
-						@*<a class="nav-item nav-link" asp-controller="Home" asp-action="Contact">Contact Us<span class="sr-only">(current)</span></a>*@
+						@*<form class="form-inline my-2 my-lg-0">
+							<a class="nav-item btn btn-sm btn-outline-primary mr-2 mb-0" asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
+
+							<a class="nav-item btn btn-sm btn-primary mb-0" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> Login</a>
+						</form>*@
+						<ul class="nav navbar-nav float-right">
+							<li class="dropdown dropdown-user nav-item">
+								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">@*<span class="avatar avatar-online"><img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span>*@<span class="user-name">Account</span></a>
+								<div class="dropdown-menu dropdown-menu-right">
+									<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+									@*<a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>*@
+									<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>	
+								</div>
+							</li>
+						</ul>
 					}
 
-				}
-
-
-
-
+				</div>
 			</div>
-
-			@await Html.PartialAsync("_LoginPartial")
-
-
-
-
 		</div>
 	</nav>
+	<!-- END: Header-->
 
-	<partial name="_CookieConsentPartial" />
+	
+		<!-- BEGIN: Main Menu-->
+		<!-- main menu-->
+		<div class="main-menu menu-fixed menu-light menu-accordion menu-border" data-scroll-to-active="true">
+			<!-- main menu header-->
+			<!-- / main menu header-->
+			<!-- main menu content-->
+			<div class="main-menu-content">
+				<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+					<li class=" nav-item">
+						<a href="../../../html/ltr/vertical-menu-template-light/index.html"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span><span class="badge badge badge-primary badge-pill float-right mr-2">5</span></a>
+					</li>
+					<li class=" nav-item">
+						<a href="#"><i class="ft-zap"></i><span class="menu-title" data-i18n="">Starter kit</span></a>
+						<ul class="menu-content">
+							<li>
+								<a class="menu-item" href="layout-1-column.html" data-i18n="nav.starter_kit.1_column">1 column</a>
+							</li>
+							<li>
+								<a class="menu-item" href="layout-2-columns.html" data-i18n="nav.starter_kit.2_columns">2 columns</a>
+							</li>
+							<li>
+								<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.main">Content Det. Sidebar</a>
+								<ul class="menu-content">
+									<li>
+										<a class="menu-item" href="layout-content-detached-left-sidebar.html" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_left_sidebar">Detached left sidebar</a>
+									</li>
+									<li>
+										<a class="menu-item" href="layout-content-detached-left-sticky-sidebar.html" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_sticky_left_sidebar">Detached sticky left sidebar</a>
+									</li>
+									<li>
+										<a class="menu-item" href="layout-content-detached-right-sidebar.html" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_right_sidebar">Detached right sidebar</a>
+									</li>
+									<li>
+										<a class="menu-item" href="layout-content-detached-right-sticky-sidebar.html" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_sticky_right_sidebar">Detached sticky right sidebar</a>
+									</li>
+								</ul>
+							</li>
+							<li class="navigation-divider"></li>
+							<li>
+								<a class="menu-item" href="layout-fixed-navbar.html" data-i18n="nav.starter_kit.fixed_navbar">Fixed navbar</a>
+							</li>
+							<li>
+								<a class="menu-item" href="layout-fixed-navigation.html" data-i18n="nav.starter_kit.fixed_navigation">Fixed navigation</a>
+							</li>
+							<li>
+								<a class="menu-item" href="layout-fixed-navbar-navigation.html" data-i18n="nav.starter_kit.fixed_navbar_navigation">Fixed navbar &amp; navigation</a>
+							</li>
+							<li class="active">
+								<a class="menu-item" href="layout-fixed-navbar-footer.html" data-i18n="nav.starter_kit.fixed_navbar_footer">Fixed navbar &amp; footer</a>
+							</li>
+							<li class="navigation-divider"></li>
+							<li>
+								<a class="menu-item" href="layout-fixed.html" data-i18n="nav.starter_kit.fixed_layout">Fixed layout</a>
+							</li>
+							<li>
+								<a class="menu-item" href="layout-boxed.html" data-i18n="nav.starter_kit.boxed_layout">Boxed layout</a>
+							</li>
+							<li>
+								<a class="menu-item" href="layout-static.html" data-i18n="nav.starter_kit.static_layout">Static layout</a>
+							</li>
+							<li class="navigation-divider"></li>
+							<li>
+								<a class="menu-item" href="layout-light.html" data-i18n="nav.starter_kit.light_layout">Light layout</a>
+							</li>
+							<li>
+								<a class="menu-item" href="layout-dark.html" data-i18n="nav.starter_kit.dark_layout">Dark layout</a>
+							</li>
+							<li>
+								<a class="menu-item" href="layout-semi-dark.html" data-i18n="nav.starter_kit.semi_dark_layout">Semi dark layout</a>
+							</li>
+						</ul>
+					</li>
 
-	<div class="container pb-5 mb-5">
+					@if (SignInManager.IsSignedIn(User))
+					{
+						<li class=" nav-item">
+							<a href="changelog.html"><i class="ft-file"></i><span class="menu-title" data-i18n="">Changelog</span><span class="badge badge badge-pill badge-danger float-right">3.2</span></a>
+						</li>
+					}
 
-		@RenderBody()
-	</div>
-
-	<footer class="border-top footer text-muted">
-		<div class="container text-center">
-			&copy; @DateTime.Now.Year |
-			<a href="http://www.osl.co.ke" target="_blank" class="text-muted" style="text-decoration:none">
-				Oakar Services Limited
-			</a>&nbsp;|&nbsp;County LIMS Portal | All Rights Reserved | <a asp-area="" asp-page="/Privacy">Privacy Policy</a>
+					<li class=" nav-item">
+						<a href="https://pixinvent.ticksy.com/"><i class="ft-life-buoy"></i><span class="menu-title" data-i18n="">Raise Support</span></a>
+					</li>
+					<li class=" nav-item">
+						<a asp-controller="Home" asp-action="Privacy"><i class="fa fa-user-secret"></i>@*<i class="ft-folder"></i>*@<span class="menu-title" data-i18n="">Privacy Policy</span></a>
+					</li>
+				</ul>
+			</div>
+			<!-- /main menu content-->
+			<!-- main menu footer--><i class="fas fa-user-secret"></i>
+			<!-- main menu footer-->
 		</div>
+		<!-- / main menu-->
+		<!-- END: Main Menu-->
+	
+
+
+	<!-- BEGIN: Content-->
+	<div class="app-content content">
+		<div class="content-wrapper">
+
+			<div class="content-body">
+				@RenderBody()
+			</div>
+		</div>
+	</div>
+	<!-- END: Content-->
+
+	<div class="sidenav-overlay"></div>
+	<div class="drag-target"></div>
+
+	<!-- BEGIN: Footer-->
+	<footer class="footer fixed-bottom footer-light navbar-border">
+		<p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; @DateTime.Now.Year <a class="text-bold-800 grey darken-2" href="https://www.osl.co.ke" target="_blank">OAKAR SERVICES LIMITED </a></span><span class="float-md-right d-none d-lg-block">Version @AppVersionService.Version @*<i class="ft-heart pink"></i>*@</span></p>
 	</footer>
+	<!-- END: Footer-->
 
+	<!-- BEGIN: Vendor JS-->
+	<script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+	<!-- BEGIN Vendor JS-->
 
+	<!-- BEGIN: Page Vendor JS-->
+	<!-- END: Page Vendor JS-->
 
-	<environment include="Development">
-		<script src="~/lib/jquery/jquery.min.js"></script>
-		<script src="~/lib/jquery-ajax-unobstrusive/jquery.unobtrusive-ajax.min.js"></script>
-		<script src="~/lib/jquery-migrate/jquery-migrate.min.js"></script>
-		<script src="~/lib/jquery.easing/jquery.easing.min.js"></script>
+	<!-- BEGIN: Theme JS-->
+	<script src="../../../app-assets/js/core/app-menu.js"></script>
+	<script src="../../../app-assets/js/core/app.js"></script>
+	<script src="../../../app-assets/js/scripts/customizer.js"></script>
+	<!-- END: Theme JS-->
 
-		<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
-		<script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>
-		<script src="~/lib/Datatables/js/dataTables.bootstrap4.min.js"></script>
-
-
-		@*<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>*@
-
-		<script src="~/lib/signalr/signalr.js"></script>
-		<script src="~/lib/chartJs/Chart.min.js"></script>
-
-		@*<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>*@
-
-		<script src="~/lib/openlayers/ol.js"></script>
-		<script src="~/lib/ol-popup/ol-popup.js"></script>
-		<script src="~/lib/ol-layerswitcher/ol-layerswitcher.js"></script>
-		<script src="~/lib/tippyjs/tippy.min.js"></script>
-
-
-		<script src="~/js/ie10-viewport-bug-workaround.js"></script>
-		<script src="~/js/payments.js" asp-append-version="true"></script>
-
-
-	</environment>
-
-	<environment exclude="Development">
-		<script src="~/lib/jquery/jquery.min.js"></script>
-		<script src="~/lib/jquery-ajax-unobstrusive/jquery.unobtrusive-ajax.min.js"></script>
-		<script src="~/lib/jquery-migrate/jquery-migrate.min.js"></script>
-		<script src="~/lib/jquery.easing/jquery.easing.min.js"></script>
-
-		<script src="~/lib/Datatables/js/jquery.dataTables.min.js"></script>
-		<script src="~/lib/Datatables/js/dataTables.bootstrap4.min.js"></script>
-
-		<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
-
-
-		@*<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>*@
-
-		<script src="~/lib/signalr/signalr.min.js"></script>
-		<script src="~/lib/chartJs/Chart.min.js"></script>
-
-		@*<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>*@
-
-		<script src="~/lib/openlayers/ol.js"></script>
-		<script src="~/lib/ol-popup/ol-popup.js"></script>
-		<script src="~/lib/ol-layerswitcher/ol-layerswitcher.js"></script>
-		<script src="~/lib/tippyjs/tippy.min.js"></script>
-		<script src="~/js/ie10-viewport-bug-workaround.js"></script>
-		<script src="~/js/payments.js"></script>
-
-	</environment>
+	<!-- BEGIN: Page JS-->
+	<!-- END: Page JS-->
 
 
 	@RenderSection("Scripts", required: false)
-
 </body>
+<!-- END: Body-->
+
 </html>
+
