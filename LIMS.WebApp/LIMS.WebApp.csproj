@@ -59,6 +59,7 @@
   </ItemGroup>
   
 <ItemGroup>
+  <Folder Include="HealthChecks\" />
   <Folder Include="Properties\PublishProfiles\" />
   <Folder Include="wwwroot\app-assets\data\" />
   <Folder Include="wwwroot\lib\bootstrap\" />

@@ -22,25 +22,22 @@
 	<meta name="author" content="OAKAR SERVICES LIMITED">
 	<title>@ViewData["Title"]</title>
 
-	<link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+	<link rel="apple-touch-icon" href="../../../app-assets/images/ico/favicon.ico">
 	<link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
 
 	<!-- BEGIN: Vendor CSS-->
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
 	<!-- END: Vendor CSS-->
-
 	<!-- BEGIN: Theme CSS-->
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
 	<!-- END: Theme CSS-->
-
 	<!-- BEGIN: Page CSS-->
 	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
 	<!-- END: Page CSS-->
-
 	<!-- BEGIN: Custom CSS-->
 	<link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
 	<!-- END: Custom CSS-->
@@ -86,37 +83,27 @@
 										<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" title="Manage Account">
 											<i class="fa fa-user-circle" aria-hidden="true"></i> Manage Account
 										</a>
-
-										@*<a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>*@
-										@*<a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a>*@
 										<a class="dropdown-item" href="#"><i class="fa fa-envelope"></i> My Inbox</a>
-
 										<div class="dropdown-divider"></div>
-										@*<a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>*@
 
 										<button type="submit" class="dropdown-item"><i class="ft-power" aria-hidden="true"></i> Logout </button>
 
 									</form>
 
-									
+
 								</div>
 							</li>
 						</ul>
 					}
 					else
 					{
-						@*<form class="form-inline my-2 my-lg-0">
-							<a class="nav-item btn btn-sm btn-outline-primary mr-2 mb-0" asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
 
-							<a class="nav-item btn btn-sm btn-primary mb-0" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> Login</a>
-						</form>*@
 						<ul class="nav navbar-nav float-right">
 							<li class="dropdown dropdown-user nav-item">
-								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">@*<span class="avatar avatar-online"><img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span>*@<span class="user-name">Account</span></a>
+								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="user-name">Account</span></a>
 								<div class="dropdown-menu dropdown-menu-right">
 									<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
-									@*<a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>*@
-									<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>	
+									<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
 								</div>
 							</li>
 						</ul>
@@ -127,106 +114,65 @@
 		</div>
 	</nav>
 	<!-- END: Header-->
+	<!-- BEGIN: Main Menu-->
+	<!-- main menu-->
+	<div class="main-menu menu-fixed menu-light menu-accordion menu-border" data-scroll-to-active="true">
+		<!-- main menu header-->
+		<!-- / main menu header-->
+		<!-- main menu content-->
+		<div class="main-menu-content">
+			<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+				<li class=" nav-item">
+					<a href="#"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span>@*<span class="badge badge badge-primary badge-pill float-right mr-2">5</span>*@</a>
+				</li>
 
-	
-		<!-- BEGIN: Main Menu-->
-		<!-- main menu-->
-		<div class="main-menu menu-fixed menu-light menu-accordion menu-border" data-scroll-to-active="true">
-			<!-- main menu header-->
-			<!-- / main menu header-->
-			<!-- main menu content-->
-			<div class="main-menu-content">
-				<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+
+				@if (SignInManager.IsSignedIn(User))
+				{
 					<li class=" nav-item">
-						<a href="#"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span><span class="badge badge badge-primary badge-pill float-right mr-2">5</span></a>
-					</li>
-					<li class=" nav-item">
-						<a href="#"><i class="ft-zap"></i><span class="menu-title" data-i18n="">Starter kit</span></a>
+						<a href="#"><i class="ft-zap"></i><span class="menu-title" data-i18n="">Actions</span></a>
 						<ul class="menu-content">
 							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.1_column">1 column</a>
+								<a class="menu-item" href="#" data-i18n="nav.starter_kit.1_column">Add Property</a>
 							</li>
 							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.2_columns">2 columns</a>
+								<a class="menu-item" href="#" data-i18n="nav.starter_kit.2_columns">Update Property</a>
 							</li>
 							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.main">Content Det. Sidebar</a>
+								<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.main">Ownership</a>
 								<ul class="menu-content">
 									<li>
-										<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_left_sidebar">Detached left sidebar</a>
+										<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_left_sidebar">Register Party</a>
 									</li>
 									<li>
-										<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_sticky_left_sidebar">Detached sticky left sidebar</a>
-									</li>
-									<li>
-										<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_right_sidebar">Detached right sidebar</a>
-									</li>
-									<li>
-										<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_sticky_right_sidebar">Detached sticky right sidebar</a>
+										<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_right_sidebar">Update Party</a>
 									</li>
 								</ul>
 							</li>
 							<li class="navigation-divider"></li>
 							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.fixed_navbar">Fixed navbar</a>
+								<a class="menu-item" href="#" data-i18n="nav.starter_kit.fixed_navbar">Register Complaint</a>
 							</li>
-							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.fixed_navigation">Fixed navigation</a>
-							</li>
-							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.fixed_navbar_navigation">Fixed navbar &amp; navigation</a>
-							</li>
-							<li class="active">
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.fixed_navbar_footer">Fixed navbar &amp; footer</a>
-							</li>
-							<li class="navigation-divider"></li>
-							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.fixed_layout">Fixed layout</a>
-							</li>
-							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.boxed_layout">Boxed layout</a>
-							</li>
-							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.static_layout">Static layout</a>
-							</li>
-							<li class="navigation-divider"></li>
-							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.light_layout">Light layout</a>
-							</li>
-							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.dark_layout">Dark layout</a>
-							</li>
-							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.semi_dark_layout">Semi dark layout</a>
-							</li>
+
 						</ul>
 					</li>
 
-					@if (SignInManager.IsSignedIn(User))
-					{
-						<li class=" nav-item">
-							<a href="#"><i class="ft-file"></i><span class="menu-title" data-i18n="">Changelog</span><span class="badge badge badge-pill badge-danger float-right">3.2</span></a>
-						</li>
+				}
+				<li class=" nav-item">
+					<a asp-controller="Home" asp-action="Terms"><i class="ft-info"></i><span class="menu-title" data-i18n="">Terms and Conditions</span></a>
+				</li>
 
-					}
-					<li class=" nav-item">
-						<a href="#"><i class="ft-life-buoy"></i><span class="menu-title" data-i18n="">Support</span></a>
-					</li>
-
-					<li class=" nav-item">
-						<a asp-controller="Home" asp-action="Privacy"><i class="fa fa-user-secret"></i>@*<i class="ft-folder"></i>*@<span class="menu-title" data-i18n="">Privacy Policy</span></a>
-					</li>
-				</ul>
-			</div>
-			<!-- /main menu content-->
-			<!-- main menu footer--><i class="fas fa-user-secret"></i>
-			<!-- main menu footer-->
+				<li class=" nav-item">
+					<a asp-controller="Home" asp-action="Privacy"><i class="fa fa-user-secret"></i><span class="menu-title" data-i18n="">Privacy Policy</span></a>
+				</li>
+			</ul>
 		</div>
-		<!-- / main menu-->
-		<!-- END: Main Menu-->
-	
-
-
+		<!-- /main menu content-->
+		<!-- main menu footer--><i class="fas fa-user-secret"></i>
+		<!-- main menu footer-->
+	</div>
+	<!-- / main menu-->
+	<!-- END: Main Menu-->
 	<!-- BEGIN: Content-->
 	<div class="app-content content">
 		<div class="content-wrapper">
@@ -246,20 +192,16 @@
 		<p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; @DateTime.Now.Year <a class="text-bold-800 grey darken-2" href="https://www.osl.co.ke" target="_blank">OAKAR SERVICES LIMITED </a></span><span class="float-md-right d-none d-lg-block">Version @AppVersionService.Version @*<i class="ft-heart pink"></i>*@</span></p>
 	</footer>
 	<!-- END: Footer-->
-
 	<!-- BEGIN: Vendor JS-->
 	<script src="../../../app-assets/vendors/js/vendors.min.js"></script>
 	<!-- BEGIN Vendor JS-->
-
 	<!-- BEGIN: Page Vendor JS-->
 	<!-- END: Page Vendor JS-->
-
 	<!-- BEGIN: Theme JS-->
 	<script src="../../../app-assets/js/core/app-menu.js"></script>
 	<script src="../../../app-assets/js/core/app.js"></script>
 	<script src="../../../app-assets/js/scripts/customizer.js"></script>
 	<!-- END: Theme JS-->
-
 	<!-- BEGIN: Page JS-->
 	<!-- END: Page JS-->
 

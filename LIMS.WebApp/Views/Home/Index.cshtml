@@ -14,16 +14,19 @@
 					<li class="breadcrumb-item active">
 						<a asp-controller="Home" asp-action="Index">Home</a>
 					</li>
-					<li class="breadcrumb-item">
-						<a href="#">Starters Kit</a>
-					</li>
-					<li class="breadcrumb-item active">
-						Fixed Navbar &amp; Footer
-					</li>
+					
 				</ol>
 			</div>
 		</div>
 	</div>*@
+
+	<div>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item active">
+				<a asp-controller="Home" asp-action="Index">Home /</a>
+			</li>			
+		</ol>
+	</div>
 
 <section class="row">
 	<div class="col-sm-12">				
@@ -67,47 +70,78 @@
 
 	@if (SignInManager.IsSignedIn(User))
 	{				
-		<div class="col-4 bottom10">
+		<div class="col-md-4">
 
 				<div>
 					<a asp-controller="Parcels" asp-action="Search" class="text-info-modified">
 
 						<div class="card text-center card-padding">
-							<span class="card-title"><i class='fa fa-search fa-3x text-center'></i></span>
+							
 							<div class="card-body">
-								<h4 class="card-title">Property Status</h4>
-								<p class="card-text">Query status of other properties</p>
-
+								
+								<div class="bs-callout-success mt-1">
+									<div class="media align-items-stretch">
+										<div class="d-flex align-items-center bg-success p-2">
+											<i class="fa fa-search fa-3x white font-large-2"></i>
+										</div>
+										<div class="media-body p-1">
+											<strong>Property Status</strong>
+											<p>Query status of other properties</p>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</a>
 				</div>
 			</div>
-		<div class="col-4 bottom10">
+		<div class="col-md-4">
 
 				<a asp-controller="Properties" asp-action="Properties" class="text-info-modified">
 
 					<div class="card text-center card-padding">
-						<span class="card-title"><i class='fa fa-pie-chart fa-3x mx-auto'></i></span>
+						
 						<div class="card-body">
-							<h4 class="card-title">Dashboard</h4>
-							<p class="card-text">Go to Dashboard</p>
+							
+
+							<div class="bs-callout-success mt-1">
+								<div class="media align-items-stretch">
+									<div class="d-flex align-items-center bg-success p-2">
+										<i class="fa fa-pie-chart fa-3x white font-large-2"></i>
+									</div>
+									<div class="media-body p-1">
+										<strong>Dashboard</strong>
+										<p>Go to dashboard</p>
+									</div>
+								</div>
+							</div>
 
 						</div>
 					</div>
+
+
 				</a>
 
 			</div>
-		<div class="col-4 bottom10">
+		<div class="col-md-4 ">
 
 				<a asp-controller="Home" asp-action="Services" class="text-info-modified">
 
 					<div class="card text-center card-padding">
-						<span class="card-title"><i class='fa fa-cog fa-3x text-center'></i></span>
+					
 						<div class="card-body">
-							<h4 class="card-title">County Services</h4>
-							<p class="card-text">View Available Services</p>
-
+							
+							<div class="bs-callout-success mt-1">
+								<div class="media align-items-stretch">
+									<div class="d-flex align-items-center bg-success p-2">
+										<i class="fa fa-cog fa-3x white font-large-2"></i>
+									</div>
+									<div class="media-body p-1">
+										<strong>County Services</strong>
+										<p>View Available Services</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</a>
@@ -118,36 +152,71 @@
 	else
 	{
 				
-		<div class="col-4 bottom10">
-				<a asp-area="Identity" asp-page="/Account/Register" class="text-info-modified">
-					<div class="card text-center card-padding">
-						<span class="card-title"><i class='fa fa-user-plus fa-3x'></i></span>
-						<div class="card-body">
-							<h4 class="card-title">Create Account</h4>
-							<p class="card-text">Create a new user account</p>
+		<div class="col-md-4  ">
+			<a asp-area="Identity" asp-page="/Account/Register" class="text-info-modified">
+				<div class="card text-center card-padding">
+					
+					<div class="card-body">					
+
+						<div class="bs-callout-primary mt-1">
+							<div class="media align-items-stretch">
+								<div class="d-flex align-items-center bg-primary p-2">
+									<i class="fa fa-user-plus fa-3x white font-large-2"></i>
+								</div>
+								<div class="media-body p-1">
+									<strong>Create Account</strong>
+									<p>Create a new user account</p>
+								</div>
+							</div>
 						</div>
 					</div>
-				</a>
+				</div>
+
+				
+
+			</a>
 			</div>
-		<div class="col-4 bottom10">
+		<div class="col-md-4 ">
 				<a asp-area="Identity" asp-page="/Account/Login" class="text-info-modified">
 					<div class="card text-center card-padding">
-						<span class="card-title"><i class='fa fa-sign-in fa-3x'></i></span>
-						<div class="card-body">
-							<h4 class="card-title">Sign In</h4>
-							<p class="card-text">Sign into your account</p>
+						
+						<div class="card-body">						
+
+							<div class="bs-callout-success mt-1">
+								<div class="media align-items-stretch">
+									<div class="d-flex align-items-center bg-success p-2">
+										<i class="fa fa-sign-in fa-3x white font-large-2"></i>
+									</div>
+									<div class="media-body p-1">
+										<strong>Sign In</strong>
+										<p>Sign into your user account</p>
+									</div>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</a>
 
 			</div>
-		<div class="col-4 bottom10">
+		<div class="col-md-4 ">
 			<a asp-controller="Home" asp-action="Terms" class="text-info-modified">
 				<div class="card text-center card-padding">
-					<span class="card-title"><i class='fa fa-exclamation-circle fa-3x'></i></span>
+					
 					<div class="card-body">
-						<h4 class="card-title">Terms & Conditions</h4>
-						<p class="card-text">Read our terms and conditions</p>
+						
+						<div class="bs-callout-danger mt-1">
+							<div class="media align-items-stretch">
+								<div class="d-flex align-items-center bg-danger p-2">
+									<i class="fa fa-exclamation-circle fa-3x  white font-large-2"></i>
+								</div>
+								<div class="media-body p-1">
+									<strong>Terms and Conditions</strong>
+									<p>Read our terms and conditions</p>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</a>
