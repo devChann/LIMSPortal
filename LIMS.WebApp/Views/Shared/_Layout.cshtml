@@ -22,22 +22,25 @@
 	<meta name="author" content="OAKAR SERVICES LIMITED">
 	<title>@ViewData["Title"]</title>
 
-	<link rel="apple-touch-icon" href="../../../app-assets/images/ico/favicon.ico">
-	<link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+	<link rel="apple-touch-icon" href="../../../lims-assets/images/ico/apple-touch-icon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../../lims-assets/images/ico/favicon.ico">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i%7COpen+Sans:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
 
 	<!-- BEGIN: Vendor CSS-->
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+	<link rel="stylesheet" type="text/css" href="../../../lims-assets/vendors/css/vendors.min.css">
 	<!-- END: Vendor CSS-->
+
 	<!-- BEGIN: Theme CSS-->
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+	<link rel="stylesheet" type="text/css" href="../../../lims-assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../../../lims-assets/css/bootstrap-extended.css">
+	<link rel="stylesheet" type="text/css" href="../../../lims-assets/css/colors.css">
+	<link rel="stylesheet" type="text/css" href="../../../lims-assets/css/components.css">
 	<!-- END: Theme CSS-->
+
 	<!-- BEGIN: Page CSS-->
-	<link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
+	<link rel="stylesheet" type="text/css" href="../../../lims-assets/css/core/menu/menu-types/vertical-menu.css">
 	<!-- END: Page CSS-->
+
 	<!-- BEGIN: Custom CSS-->
 	<link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
 	<!-- END: Custom CSS-->
@@ -54,7 +57,7 @@
 					<li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
 					<li class="nav-item">
 						<a class="navbar-brand" asp-controller="Home" asp-action="Index">
-							<img class="brand-logo" alt="stack admin logo" src="../../../app-assets/images/logo/stack-logo.png">
+							@*<img class="brand-logo" alt="CLIMS Logo" src="../../../lims-assets/images/logo/logo.png">*@
 							<h2 class="brand-text">CLIMS</h2>
 						</a>
 					</li>
@@ -76,7 +79,7 @@
 
 						<ul class="nav navbar-nav float-right">
 							<li class="dropdown dropdown-user nav-item">
-								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="avatar avatar-online"><img src="../../../app-assets/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span><span class="user-name">@username </span></a>
+								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="avatar avatar-online"><img asp-controller="Photo" asp-action="Index" src="~/photo" class="img-fluid" alt="avatar" /><i></i></span><span class="user-name">@username </span></a>
 								<div class="dropdown-menu dropdown-menu-right">
 									<form class="form-inline float-right my-0 my-lg-0" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" id="logoutForm">
 
@@ -122,13 +125,14 @@
 		<!-- main menu content-->
 		<div class="main-menu-content">
 			<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-				<li class=" nav-item">
-					<a href="#"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span>@*<span class="badge badge badge-primary badge-pill float-right mr-2">5</span>*@</a>
-				</li>
+
 
 
 				@if (SignInManager.IsSignedIn(User))
 				{
+					<li class=" nav-item">
+						<a href="#"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span>@*<span class="badge badge badge-primary badge-pill float-right mr-2">5</span>*@</a>
+					</li>
 					<li class=" nav-item">
 						<a href="#"><i class="ft-zap"></i><span class="menu-title" data-i18n="">Actions</span></a>
 						<ul class="menu-content">
@@ -189,18 +193,18 @@
 
 	<!-- BEGIN: Footer-->
 	<footer class="footer fixed-bottom footer-light navbar-border">
-		<p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; @DateTime.Now.Year <a class="text-bold-800 grey darken-2" href="https://www.osl.co.ke" target="_blank">OAKAR SERVICES LIMITED </a></span><span class="float-md-right d-none d-lg-block">Version @AppVersionService.Version @*<i class="ft-heart pink"></i>*@</span></p>
+		<p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; @DateTime.Now.Year <a class="text-bold-800 grey darken-2" href="https://www.osl.co.ke" target="_blank">Oakar Services Ltd. </a></span><span class="float-md-right d-none d-lg-block">Version @AppVersionService.Version @*<i class="ft-heart pink"></i>*@</span></p>
 	</footer>
 	<!-- END: Footer-->
 	<!-- BEGIN: Vendor JS-->
-	<script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+	<script src="../../../lims-assets/vendors/js/vendors.min.js"></script>
 	<!-- BEGIN Vendor JS-->
 	<!-- BEGIN: Page Vendor JS-->
 	<!-- END: Page Vendor JS-->
 	<!-- BEGIN: Theme JS-->
-	<script src="../../../app-assets/js/core/app-menu.js"></script>
-	<script src="../../../app-assets/js/core/app.js"></script>
-	<script src="../../../app-assets/js/scripts/customizer.js"></script>
+	<script src="../../../lims-assets/js/core/app-menu.js"></script>
+	<script src="../../../lims-assets/js/core/app.js"></script>
+	<script src="../../../lims-assets/js/scripts/customizer.js"></script>
 	<!-- END: Theme JS-->
 	<!-- BEGIN: Page JS-->
 	<!-- END: Page JS-->

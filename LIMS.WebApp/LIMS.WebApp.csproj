@@ -61,8 +61,9 @@
 <ItemGroup>
   <Folder Include="HealthChecks\" />
   <Folder Include="Properties\PublishProfiles\" />
-  <Folder Include="wwwroot\app-assets\data\" />
   <Folder Include="wwwroot\lib\bootstrap\" />
+  <Folder Include="wwwroot\lims-assets\images\logo\" />
+  <Folder Include="wwwroot\lims-assets\images\pages\" />
 </ItemGroup>
   
 <ItemGroup>
