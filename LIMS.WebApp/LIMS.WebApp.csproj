@@ -46,8 +46,8 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.9" />
   
       
-    <PackageReference Include="MpesaLib" Version="3.2.1" />    
-    <PackageReference Include="NLog" Version="4.6.0-rc1" />
+    <PackageReference Include="MpesaLib" Version="3.2.3" />    
+    <PackageReference Include="NLog" Version="4.6.0-rc3" />
 		 <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.0" />
      
    

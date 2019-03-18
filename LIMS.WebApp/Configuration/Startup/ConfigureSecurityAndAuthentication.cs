@@ -3,6 +3,7 @@ using LIMS.Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LIMS.WebApp.Configuration.Startup
@@ -22,7 +23,7 @@ namespace LIMS.WebApp.Configuration.Startup
 
 		public static IApplicationBuilder ConfigureSecurityHeaders(this IApplicationBuilder app)
 		{
-			//app.UseHsts(options => options.MaxAge(days: 365).IncludeSubdomains());
+			app.UseHsts(options => options.MaxAge(minutes: 15));
 			app.UseXContentTypeOptions();
 			app.UseReferrerPolicy(options => options.NoReferrer());
 			app.UseXXssProtection(options => options.EnabledWithBlockMode());
@@ -31,11 +32,11 @@ namespace LIMS.WebApp.Configuration.Startup
 			return app;
 		}
 
-		public static async Task<IApplicationBuilder> ConfigureAuthentication(this IApplicationBuilder app, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+		public static async Task<IApplicationBuilder> ConfigureAuthentication(this IApplicationBuilder app, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IConfiguration config)
 		{
 			app.UseCookiePolicy();
 			app.UseAuthentication();
-			await SeedDefaultAdminUserToAdminRole.Seed(userManager, roleManager);
+			await SeedDefaultAdminUserToAdminRole.Seed(userManager, roleManager, config);
 			return app;
 		}
 	}

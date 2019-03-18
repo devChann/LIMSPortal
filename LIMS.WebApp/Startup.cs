@@ -72,12 +72,11 @@ namespace LIMS.WebApp
 				app.ConfigureSecurityHeaders();
             }
 
-            app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");           
+            app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");      
           
-            app.UseHttpsRedirection();
             app.UseStaticFiles();			
 
-			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager);
+			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager, Configuration);
 
 			authenticationTask.GetAwaiter().GetResult();
 
