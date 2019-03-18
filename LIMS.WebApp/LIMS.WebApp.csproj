@@ -10,6 +10,7 @@
     <Product>LIMS Portal Application</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <NeutralLanguage>en-KE</NeutralLanguage>
+		<Version>1.0.1</Version>
   </PropertyGroup>
 
 
@@ -58,8 +59,11 @@
   </ItemGroup>
   
 <ItemGroup>
+  <Folder Include="HealthChecks\" />
   <Folder Include="Properties\PublishProfiles\" />
   <Folder Include="wwwroot\lib\bootstrap\" />
+  <Folder Include="wwwroot\lims-assets\images\logo\" />
+  <Folder Include="wwwroot\lims-assets\images\pages\" />
 </ItemGroup>
   
 <ItemGroup>
@@ -101,6 +105,15 @@
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
   <Content Update="Views\Payments\MpesaExpress.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
+  <Content Update="Views\Shared\400.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
+  <Content Update="Views\Shared\401.cshtml">
+    <Pack>$(IncludeRazorContentInPack)</Pack>
+  </Content>
+  <Content Update="Views\Shared\403.cshtml">
     <Pack>$(IncludeRazorContentInPack)</Pack>
   </Content>
   <Content Update="Views\Shared\ProductNotFound.cshtml">
