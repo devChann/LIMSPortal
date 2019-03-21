@@ -71,7 +71,7 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// GET: Parcel/Create
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		public IActionResult Create()
 		{
 			ViewData["AdministrationId"] = new SelectList(_context.Administration, "AdministrationId", "AdministrationId");
@@ -91,7 +91,7 @@ namespace LIMS.WebApp.Controllers
 		// POST: Parcel/Create
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("ParcelId,Area,ParcelNum,AdministrationId,LandUseId,OwnerId,OwnershipRightId,RateId,RegistrationId,ResponsibilityId,RestrictionId,SpatialUnitId,TenureId,ValuationId")] Parcel parcel)
@@ -117,7 +117,7 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// GET: Parcel/Edit/5
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Edit(Guid? id)
 		{
 			if (id == null)
@@ -177,7 +177,7 @@ namespace LIMS.WebApp.Controllers
 		// POST: Parcel/Edit/5
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(ParcelEditViewModel parceledit)
@@ -229,7 +229,7 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// GET: Parcel/Delete/5
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		public async Task<IActionResult> Delete(Guid? id)
 		{
 			if (id == null)
@@ -259,7 +259,7 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// POST: Parcel/Delete/5
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
