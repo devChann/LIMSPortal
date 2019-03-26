@@ -9,6 +9,7 @@ using LIMS.Core.Entities;
 using LIMS.Infrastructure.Data;
 using LIMS.WebApp.ViewModels.ParcelViewModels;
 using Microsoft.AspNetCore.Authorization;
+using LIMS.Infrastructure.Services.Properties;
 
 namespace LIMS.WebApp.Controllers
 {
@@ -16,52 +17,31 @@ namespace LIMS.WebApp.Controllers
 	public class ParcelController : Controller
 	{
 		private readonly LIMSCoreDbContext _context;
+		private readonly IParcelService _parcelService;
 
-		public ParcelController(LIMSCoreDbContext context)
+		public ParcelController(LIMSCoreDbContext context, IParcelService parcelService)
 		{
 			_context = context;
+			_parcelService = parcelService;
 		}
 
-		// GET: Parcel
+		// GET: Parcels
 		public async Task<IActionResult> Index()
-		{
-			var LIMSCoreDbContext = _context.Parcel
-				.Include(p => p.Administration)
-				.Include(p => p.LandUse)
-				.Include(p => p.Owner)
-				.Include(p => p.OwnershipRight)
-				.Include(p => p.Rate)
-				.Include(p => p.Registration)
-				.Include(p => p.Responsibility)
-				.Include(p => p.Restriction)
-				.Include(p => p.SpatialUnit)
-				.Include(p => p.Tenure)
-				.Include(p => p.Valuation);
-
-			return View(await LIMSCoreDbContext.ToListAsync());
+		{		
+			return View(await _parcelService.GetParcels());
 		}
 
 		// GET: Parcel/Details/5
 		public async Task<IActionResult> Details(Guid? id)
 		{
+			//this check is not honest
 			if (id == null)
 			{
-				return NotFound();
+				return BadRequest();
 			}
 
-			var parcel = await _context.Parcel
-				.Include(p => p.Administration)
-				.Include(p => p.LandUse)
-				.Include(p => p.Owner)
-				.Include(p => p.OwnershipRight)
-				.Include(p => p.Rate)
-				.Include(p => p.Registration)
-				.Include(p => p.Responsibility)
-				.Include(p => p.Restriction)
-				.Include(p => p.SpatialUnit)
-				.Include(p => p.Tenure)
-				.Include(p => p.Valuation)
-				.FirstOrDefaultAsync(m => m.ParcelId == id);
+			var parcel = await _parcelService.GetParcel(id);
+
 			if (parcel == null)
 			{
 				return NotFound();
@@ -122,7 +102,7 @@ namespace LIMS.WebApp.Controllers
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return BadRequest();
 			}
 
 			var parcel = await _context.Parcel.FindAsync(id);
@@ -161,12 +141,42 @@ namespace LIMS.WebApp.Controllers
 				ParcelId = parcel.ParcelId,
 				ParcelNumber = parcel.ParcelNum,
 				Area = parcel.Area,
+
 				SelectedBlock = parcel.AdministrationId,
 				Blocks = Blocks,
+
 				SelectedDistrict = parcel.AdministrationId,
 				Districts = Districts,
+
 				SelectedLandUse = parcel.LandUseId,
 				LandUses = LandUses,
+
+				SelectedOwner = parcel.OwnerId,
+				Owners = Owners,
+
+				SelectedRight = parcel.OwnershipRightId,
+				Rights =Rights,
+
+				SelectedRate = parcel.RateId,
+				Rates = Rates,
+
+				SelectedRegistration = parcel.RegistrationId,
+				Registrations = Registrations,
+
+				SelectedResponsibility = parcel.ResponsibilityId,
+				Responsibilities = Responsibilities,
+
+				SelectedRestriction = parcel.RestrictionId,
+				Restrictions = Restrictions,
+
+				SelectedSpatialUnit = parcel.SpatialUnitId,
+				SpatialUnits = SpatialUnits,
+
+				SelectedTenure = parcel.TenureId,
+				Tenures = Tenures,
+
+				SelectedValuation = parcel.ValuationId,
+				Valuations = valuations
 
 
 			};
@@ -234,7 +244,7 @@ namespace LIMS.WebApp.Controllers
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return BadRequest();
 			}
 
 			var parcel = await _context.Parcel

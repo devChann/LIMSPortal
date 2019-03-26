@@ -42,7 +42,7 @@ namespace LIMS.WebApp.Controllers
 
         //Renders the search results        
         [Route("/parcel-details")]
-        public async Task<IActionResult> ParcelDetails(string parcelnum)
+        public async Task<IActionResult> ParcelDetails(Guid parcelid)
         {
             var username = HttpContext.User.Identity.Name;
 
@@ -50,14 +50,14 @@ namespace LIMS.WebApp.Controllers
 
             ViewData["UserPIN"] = user.KRAPIN;
 
-            if (parcelnum == null)
+            if (parcelid == null)
             {
 				Response.StatusCode = 404;
 				return View("ProductNotFound");
 			}
 
             var parcelviewmodel = new ParcelSearchViewModel();
-			var parcel = await _parcelService.GetParcelByNumber(parcelnum);           
+			var parcel = await _parcelService.GetParcel(parcelid);           
 
             if (parcel == null)
             {
@@ -73,7 +73,7 @@ namespace LIMS.WebApp.Controllers
                 parcelviewmodel.Area = parcel.Area;
                 parcelviewmodel.AdministrationArea = parcel.Administration.DistrictName;
                 parcelviewmodel.landUse = parcel.LandUse.LandUseType;
-                parcelviewmodel.Tenure = parcel.Tenure.TenureType;
+                parcelviewmodel.Tenure = parcel.Tenure.TenureType.ToString();
                 parcelviewmodel.PIN = parcel.Owner.PIN;
                 parcelviewmodel.Name = parcel.Owner.Name;
                 parcelviewmodel.Phone = parcel.Owner.TelephoneAddress;
@@ -94,7 +94,7 @@ namespace LIMS.WebApp.Controllers
 
 			try
 			{
-				geodata =_geoService.GetLandParcel("Parcels", "Parcel_Num", parcelnum);
+				geodata =_geoService.GetLandParcel("Parcels", "Parcel_Num", parcel.ParcelNum);
 			}
 			catch(Exception e)
 			{

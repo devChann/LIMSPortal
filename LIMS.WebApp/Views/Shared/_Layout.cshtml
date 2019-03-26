@@ -125,13 +125,13 @@
 		<div class="main-menu-content">
 			<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
-
+				<li class=" nav-item">
+					<a asp-controller="Home" asp-action="Index"><i class="ft-home"></i><span class="menu-title" data-i18n="">Home</span>@*<span class="badge badge badge-primary badge-pill float-right mr-2">5</span>*@</a>
+				</li>
 
 				@if (SignInManager.IsSignedIn(User))
 				{
-					<li class=" nav-item">
-						<a href="#"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span>@*<span class="badge badge badge-primary badge-pill float-right mr-2">5</span>*@</a>
-					</li>
+
 					<li class=" nav-item">
 						<a href="#"><i class="ft-zap"></i><span class="menu-title" data-i18n="">Actions</span></a>
 						<ul class="menu-content">
