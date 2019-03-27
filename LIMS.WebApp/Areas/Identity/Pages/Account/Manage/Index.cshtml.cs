@@ -181,27 +181,30 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account.Manage
 
             // Convert the user uploaded Photo as Byte Array before save to DB
             var Image = Input.Photo;
+			if(Image != null)
+			{
+				if (Image.Length > 0)
+				{
+					using (var filestream = Image.OpenReadStream())
+					using (var memorystream = new MemoryStream())
+					{
+						await filestream.CopyToAsync(memorystream);
+						var UserPhoto = memorystream.ToArray();
 
-            if (Image.Length > 0)
-            {
-				using (var filestream = Image.OpenReadStream())
-                using (var memorystream = new MemoryStream())
-                {
-                    await filestream.CopyToAsync(memorystream);
-					var UserPhoto = memorystream.ToArray();
-
-					user.Photo = UserPhoto;                   
-                    try
-                    {                       
-                        user.Photo = DbImageAPI.Imaging.ScaleImage(memorystream.ToArray(), 50, 50, System.Drawing.Imaging.ImageFormat.Png);
-                        await _userManager.UpdateAsync(user);
-                        _cache.Set(user.Id, user.Photo);
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
+						user.Photo = UserPhoto;
+						try
+						{
+							user.Photo = DbImageAPI.Imaging.ScaleImage(memorystream.ToArray(), 50, 50, System.Drawing.Imaging.ImageFormat.Png);
+							await _userManager.UpdateAsync(user);
+							_cache.Set(user.Id, user.Photo);
+						}
+						catch
+						{
+						}
+					}
+				}
+			}
+          
 
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
