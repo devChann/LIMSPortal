@@ -10,7 +10,7 @@
     <Product>LIMS Portal Application</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <NeutralLanguage>en-KE</NeutralLanguage>
-		<Version>1.0.1</Version>
+		<Version>0.5.1</Version>
   </PropertyGroup>
 
 

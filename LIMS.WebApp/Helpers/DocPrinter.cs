@@ -46,7 +46,7 @@ namespace LIMS.WebApp.Helpers
             parcelviewmodel.Area = parcel.Area;
             parcelviewmodel.AdministrationArea = parcel.Administration.DistrictName;
             parcelviewmodel.landUse = parcel.LandUse.LandUseType;
-            parcelviewmodel.Tenure = parcel.Tenure.TenureType;
+            parcelviewmodel.Tenure = parcel.Tenure.TenureType.ToString();
 
             parcelviewmodel.Name = parcel.Owner.Name;
             parcelviewmodel.Phone = parcel.Owner.TelephoneAddress;

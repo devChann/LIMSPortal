@@ -4,12 +4,22 @@
 	ViewData["Title"] = "Confirm Email";
 }
 
-
-<div class="mt-4">
-	<p>
-		We have created your account! But first we need to confirm your email before we let you in. Kindly Check your inbox for a confirmation link we have sent. It might take a few minutes to get to your inbox.
-	</p>
-	<p>Your email is: @Model.Email</p>
-	<p>Once you have successfully confirmed your email you will be able to login. </p>
-	<a asp-area="Identity" asp-page="/Account/Login" class="btn btn-lg btn-success">Login</a>
-</div>
+<section class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h2 class="card-title">@ViewData["Title"]</h2>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<p>
+						We have created your account! But first we need to confirm your email before we let you in. Kindly Check your inbox for a confirmation link we have sent. It might take a few minutes to get to your inbox.
+					</p>
+					<p>Your email is: @Model.Email</p>
+					<p>Once you have successfully confirmed your email you will be able to login. </p>
+					<a asp-area="Identity" asp-page="/Account/Login" class="btn btn-lg btn-success">Login</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

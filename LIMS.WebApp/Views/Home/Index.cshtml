@@ -50,12 +50,11 @@
 						<p class="lead">
 							CLIMS is an integrated platform that provides access to land information and
 							makes it easy for County Governments and property owners to manage rateable property.
-						</p>
-						<hr class="my-4">
+						</p>					
 
-						<p class="lead">
+						@*<p class="lead">
 							<a class="btn btn-info btn-lg" asp-controller="Home" asp-action="About" role="button">Learn more</a>
-						</p>
+						</p>*@
 					</div>
 				</div>
 			</div>
@@ -75,18 +74,18 @@
 				<div>
 					<a asp-controller="Parcels" asp-action="Search" class="text-info-modified">
 
-						<div class="card text-center card-padding">
+						<div class="card card-padding">
 							
 							<div class="card-body">
 								
 								<div class="bs-callout-success mt-1">
 									<div class="media align-items-stretch">
-										<div class="d-flex align-items-start bg-success p-2">
+										<div class="d-flex align-items-start bg-teal p-2">
 											<i class="fa fa-search fa-3x white font-large-2"></i>
 										</div>
 										<div class="media-body p-1">
-											<strong>Property Status</strong>
-											<p>Query status of other properties</p>
+											<h4>Application Status</h4>
+											<h6>Query application status</h6>
 										</div>
 									</div>
 								</div>
@@ -99,19 +98,19 @@
 
 				<a asp-controller="Properties" asp-action="Properties" class="text-info-modified">
 
-					<div class="card text-center card-padding">
+					<div class="card card-padding">
 						
 						<div class="card-body">
 							
 
 							<div class="bs-callout-success mt-1">
 								<div class="media align-items-stretch">
-									<div class="d-flex align-items-start bg-success p-2">
+									<div class="d-flex align-items-start bg-teal p-2">
 										<i class="fa fa-pie-chart fa-3x white font-large-2"></i>
 									</div>
 									<div class="media-body p-1">
-										<strong>Dashboard</strong>
-										<p>Go to dashboard</p>
+										<h4>Dashboard</h4>
+										<h6>Go to dashboard</h6>
 									</div>
 								</div>
 							</div>
@@ -127,18 +126,18 @@
 
 				<a asp-controller="Home" asp-action="Services" class="text-info-modified">
 
-					<div class="card text-center card-padding">
+					<div class="card card-padding">
 					
 						<div class="card-body">
 							
 							<div class="bs-callout-success mt-1">
 								<div class="media align-items-stretch">
-									<div class="d-flex align-items-start bg-success p-2">
+									<div class="d-flex align-items-start bg-teal p-2">
 										<i class="fa fa-cog fa-3x white font-large-2"></i>
 									</div>
 									<div class="media-body p-1">
-										<strong>County Services</strong>
-										<p>View Available Services</p>
+										<h4>County Services</h4>
+										<h6>View Other Services</h6>
 									</div>
 								</div>
 							</div>
@@ -154,7 +153,7 @@
 				
 		<div class="col-md-4  ">
 			<a asp-area="Identity" asp-page="/Account/Register" class="text-info-modified">
-				<div class="card text-center card-padding">
+				<div class="card card-padding">
 					
 					<div class="card-body">					
 
@@ -164,8 +163,7 @@
 									<i class="fa fa-user-plus fa-3x white font-large-2"></i>
 								</div>
 								<div class="media-body p-1">
-									<strong>Create Account</strong>
-									<p>Create a new user account</p>
+									<h3>Create Account</h3>									
 								</div>
 							</div>
 						</div>
@@ -178,7 +176,7 @@
 			</div>
 		<div class="col-md-4 ">
 				<a asp-area="Identity" asp-page="/Account/Login" class="text-info-modified">
-					<div class="card text-center card-padding">
+					<div class="card card-padding">
 						
 						<div class="card-body">						
 
@@ -188,8 +186,7 @@
 										<i class="fa fa-sign-in fa-3x white font-large-2"></i>
 									</div>
 									<div class="media-body p-1">
-										<strong>Sign In</strong>
-										<p>Sign into your user account</p>
+										<h3>Sign In</h3>										
 									</div>
 								</div>
 							</div>
@@ -201,7 +198,7 @@
 			</div>
 		<div class="col-md-4 ">
 			<a asp-controller="Home" asp-action="Terms" class="text-info-modified">
-				<div class="card text-center card-padding">
+				<div class="card card-padding">
 					
 					<div class="card-body">
 						
@@ -211,8 +208,7 @@
 									<i class="fa fa-exclamation-circle fa-3x  white font-large-2"></i>
 								</div>
 								<div class="media-body p-1">
-									<strong>Terms and Conditions</strong>
-									<p>Read our terms and conditions</p>
+									<h3>Terms & Conditions</h3>									
 								</div>
 							</div>
 						</div>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using LIMS.Infrastructure.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuthWithPhoto.Controllers
 {
@@ -17,7 +18,8 @@ namespace AuthWithPhoto.Controllers
             _userManager = usermanager;
         }
 
-        [Route("/photo")]
+		[Authorize]
+		[Route("/photo")]
         public async Task<IActionResult> Index()
         {
             var id = _userManager.GetUserId(User);

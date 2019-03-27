@@ -8,7 +8,7 @@
 
 
 <section class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
 
 		<div class="card">
 			<div class="card-header">
@@ -19,13 +19,19 @@
 				<div class="card-body">
 					<p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
 					<p>
-						<strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+						<strong class="text-danger">
+						Deleting this data will permanently remove your account, and this cannot be recovered.
+						</strong>
 					</p>
 					<form asp-page="DownloadPersonalData" method="post" class="form-group">
-						<button class="btn btn-outline-secondary" type="submit">Download</button>
+						<button class="btn btn-secondary" type="submit">
+							<i class="fa fa-download"></i> Download
+						</button>
 					</form>
 					<p>
-						<a asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
+						<a asp-page="DeletePersonalData" class="btn btn-danger">
+							<i class="fa fa-trash-o"></i> Delete
+						</a>
 					</p>
 				</div>
 			</div>

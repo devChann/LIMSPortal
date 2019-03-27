@@ -18,7 +18,7 @@ namespace LIMS.Infrastructure.Services.Properties
 			_context = context;
 		}
 
-		public Task DeleteParcel(string parcelNumber)
+		public Task DeleteParcel(string parcelId)
 		{
 			throw new NotImplementedException();
 		}
@@ -33,19 +33,61 @@ namespace LIMS.Infrastructure.Services.Properties
 			throw new NotImplementedException();
 		}
 
-		public Task<Parcel> GetParcelByNumber(string parcelnumber)
+		public async Task<Parcel> GetParcel(Guid? id)
 		{
-			throw new NotImplementedException();
+			var parcel = await _context.Parcel
+				.Include(p => p.Administration)
+				.Include(p => p.LandUse)
+				.Include(p => p.Owner)
+				.Include(p => p.OwnershipRight)
+				.Include(p => p.Rate)
+				.Include(p => p.Registration)
+				.Include(p => p.Responsibility)
+				.Include(p => p.Restriction)
+				.Include(p => p.SpatialUnit)
+				.Include(p => p.Tenure)
+				.Include(p => p.Valuation)
+				.FirstOrDefaultAsync(m => m.ParcelId == id);
+
+			return parcel;
 		}
 
-		public IEnumerable<Parcel> GetParcels()
+		public async Task<IEnumerable<Parcel>> GetParcels()
 		{
-			throw new NotImplementedException();
+			var parcels = await _context.Parcel
+				.Include(p => p.Administration)
+				.Include(p => p.LandUse)
+				.Include(p => p.Owner)
+				.Include(p => p.OwnershipRight)
+				.Include(p => p.Rate)
+				.Include(p => p.Registration)
+				.Include(p => p.Responsibility)
+				.Include(p => p.Restriction)
+				.Include(p => p.SpatialUnit)
+				.Include(p => p.Tenure)
+				.Include(p => p.Valuation).ToListAsync();
+
+			return parcels;
 		}
 
-		public IEnumerable<Parcel> GetParcelsByOwner(string parcelnumber)
+		public async Task<IEnumerable<Parcel>> GetParcelsByOwner(Guid? ownerId)
 		{
-			throw new NotImplementedException();
+			var parcel = await _context.Parcel
+				.Include(p => p.Administration)
+				.Include(p => p.LandUse)
+				.Include(p => p.Owner)
+				.Include(p => p.OwnershipRight)
+				.Include(p => p.Rate)
+				.Include(p => p.Registration)
+				.Include(p => p.Responsibility)
+				.Include(p => p.Restriction)
+				.Include(p => p.SpatialUnit)
+				.Include(p => p.Tenure)
+				.Include(p => p.Valuation)
+				.Where(m => m.OwnerId == ownerId)
+				.ToListAsync();
+
+			return parcel;
 		}
 
 		public Task<Owner> GetPartyById(string partyId)
@@ -53,7 +95,7 @@ namespace LIMS.Infrastructure.Services.Properties
 			throw new NotImplementedException();
 		}
 
-		public Task RegisterParcel(Parcel parcel)
+		public Task AddParcel(Parcel parcel)
 		{
 			throw new NotImplementedException();
 		}

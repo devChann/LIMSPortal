@@ -6,7 +6,7 @@
 
 
 <section class="row">
-	<div class="col-md-8">
+	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
 				<h4 class=card-title>@ViewData["Title"]</h4>
@@ -49,8 +49,12 @@
 					}
 					else
 					{
-						<a asp-page="./EnableAuthenticator" class="btn btn-outline-primary">Configure authenticator app</a>
-						<a asp-page="./ResetAuthenticator" class="btn btn-outline-primary">Reset authenticator app</a>
+						<a asp-page="./EnableAuthenticator" class="btn btn-outline-primary">
+							<i class="fa fa-cog"></i> Configure authenticator app
+						</a>
+						<a asp-page="./ResetAuthenticator" class="btn btn-outline-primary">
+							<i class="fa fa-recycle"></i> Reset authenticator app
+						</a>
 					}
 
 				</div>
