@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LIMS.WebApp.Areas.Identity.Pages.UserAdmin
 {
-    [Authorize(Roles = "Administrators")]
+    [Authorize(Roles = "Administrator")]
     public class IndexModel : PageModel
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
