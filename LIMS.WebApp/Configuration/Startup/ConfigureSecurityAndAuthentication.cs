@@ -23,7 +23,7 @@ namespace LIMS.WebApp.Configuration.Startup
 
 		public static IApplicationBuilder ConfigureSecurityHeaders(this IApplicationBuilder app)
 		{
-			app.UseHsts(options => options.MaxAge(minutes: 15));
+			app.UseHsts(options => options.MaxAge(minutes: 5));
 			app.UseXContentTypeOptions();
 			app.UseReferrerPolicy(options => options.NoReferrer());
 			app.UseXXssProtection(options => options.EnabledWithBlockMode());
