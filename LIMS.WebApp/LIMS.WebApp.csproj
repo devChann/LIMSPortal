@@ -23,9 +23,13 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\fonts\**" />
+    <Compile Remove="wwwroot\lims-assets\images\pages\**" />
     <Content Remove="wwwroot\fonts\**" />
+    <Content Remove="wwwroot\lims-assets\images\pages\**" />
     <EmbeddedResource Remove="wwwroot\fonts\**" />
+    <EmbeddedResource Remove="wwwroot\lims-assets\images\pages\**" />
     <None Remove="wwwroot\fonts\**" />
+    <None Remove="wwwroot\lims-assets\images\pages\**" />
   </ItemGroup>
 
 	
@@ -59,11 +63,9 @@
   </ItemGroup>
   
 <ItemGroup>
-  <Folder Include="HealthChecks\" />
   <Folder Include="Properties\PublishProfiles\" />
   <Folder Include="wwwroot\lib\bootstrap\" />
   <Folder Include="wwwroot\lims-assets\images\logo\" />
-  <Folder Include="wwwroot\lims-assets\images\pages\" />
 </ItemGroup>
   
 <ItemGroup>

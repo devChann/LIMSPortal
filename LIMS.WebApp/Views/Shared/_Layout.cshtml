@@ -179,6 +179,7 @@
 		</div>
 	</nav>
 	<!-- END: Header-->
+
 	<!-- BEGIN: Main Menu-->
 	<!-- main menu-->
 	<div class="main-menu menu-fixed menu-light menu-accordion menu-border" data-scroll-to-active="true">
@@ -189,11 +190,14 @@
 			<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
 				<li class=" nav-item">
-					<a asp-controller="Home" asp-action="Index"><i class="ft-home"></i><span class="menu-title" data-i18n="">Home</span>@*<span class="badge badge badge-primary badge-pill float-right mr-2">5</span>*@</a>
+					<a asp-controller="Home" asp-action="Index"><i class="ft-home"></i><span class="menu-title" data-i18n="">Home</span></a>
 				</li>
 
 				@if (SignInManager.IsSignedIn(User))
 				{
+					<li class=" nav-item">
+						<a asp-page="/admin/dashboard"><i class="ft-bar-chart-2"></i><span class="menu-title" data-i18n="">Admin Dashboard</span></a>
+					</li>
 
 					<li class=" nav-item">
 						<a href="#"><i class="ft-zap"></i><span class="menu-title" data-i18n="">Actions</span></a>
@@ -258,21 +262,19 @@
 
 	<!-- BEGIN: Footer-->
 	<footer class="footer fixed-bottom footer-light navbar-border">
-		<p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; @DateTime.Now.Year <a class="text-bold-800 grey darken-2" href="https://www.osl.co.ke" target="_blank">Oakar Services Ltd. </a></span><span class="float-md-right d-none d-lg-block">Version @AppVersionService.Version @*<i class="ft-heart pink"></i>*@</span></p>
+		<p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; @DateTime.Now.Year <a class="text-bold-800 grey darken-2" href="https://www.osl.co.ke" target="_blank">Oakar Services Ltd. </a></span><span class="float-md-right d-none d-lg-block">Version @AppVersionService.Version </span></p>
 	</footer>
 	<!-- END: Footer-->
+
 	<!-- BEGIN: Vendor JS-->
 	<script src="../../../lims-assets/vendors/js/vendors.min.js"></script>
 	<!-- BEGIN Vendor JS-->
-	<!-- BEGIN: Page Vendor JS-->
-	<!-- END: Page Vendor JS-->
+	
 	<!-- BEGIN: Theme JS-->
 	<script src="../../../lims-assets/js/core/app-menu.js"></script>
 	<script src="../../../lims-assets/js/core/app.js"></script>
 	<script src="../../../lims-assets/js/scripts/customizer.js"></script>
-	<!-- END: Theme JS-->
-	<!-- BEGIN: Page JS-->
-	<!-- END: Page JS-->
+	<!-- END: Theme JS-->	
 
 
 	@RenderSection("Scripts", required: false)

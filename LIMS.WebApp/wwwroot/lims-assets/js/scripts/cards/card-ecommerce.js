@@ -19,7 +19,7 @@
 
     require.config({
         paths: {
-            echarts: '../../../app-assets/vendors/js/charts/echarts'
+            echarts: '../../../lims-assets/vendors/js/charts/echarts'
         }
     });
 
