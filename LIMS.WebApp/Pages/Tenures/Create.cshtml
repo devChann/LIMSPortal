@@ -1,0 +1,78 @@
+﻿@page
+@model CreateModel
+@{
+}
+
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a asp-page="Index">Tenure</a>
+		</li>
+		<li class="breadcrumb-item active">Create-Tenure</li>
+	</ol>
+</div>
+
+<section id="">
+	<h2 class="text-info">Create New Tenure</h2>
+	<br />
+
+	<div class="border">
+		<form method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="container" style="padding:30px;">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-2">
+							<label asp-for="Tenure.TenureType"></label>
+						</div>
+						<div class="col-sm-4">
+							<input asp-for="Tenure.TenureType" class="form-control" />
+							@*<select name="authorId" asp-items="Model.TenureTypes"></select>*@
+						</div>
+						<span asp-validation-for="Tenure.TenureType" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-2">
+							<label asp-for="Tenure.TenureBeginDate"></label>
+						</div>
+						<div class="col-sm-4">
+							<input asp-for="Tenure.TenureBeginDate" class="form-control" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-2">
+							<label asp-for="Tenure.TenureEndDate"></label>
+						</div>
+						<div class="col-sm-4">
+							<input asp-for="Tenure.TenureEndDate" class="form-control" />
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-2 offset-sm-2">
+							<input type="submit" value="Create" class="btn btn-primary form-control" />
+						</div>
+						<div class="col-sm-2">
+							<a asp-page="Index" class="btn btn-success form-control">Back to List</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+
+</section>
+
+@section Scripts{
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

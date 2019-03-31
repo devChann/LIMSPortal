@@ -48,7 +48,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="3.0.0-preview.19074.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.0-preview3-19153-02" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.10" />
-  
       
     <PackageReference Include="MpesaLib" Version="3.2.4" />    
     <PackageReference Include="NLog" Version="4.6.0-rc3" />
@@ -63,6 +62,9 @@
   </ItemGroup>
   
 <ItemGroup>
+  <Folder Include="Pages\Property\" />
+  <Folder Include="Pages\RRR\" />
+  <Folder Include="Pages\Ownership\" />
   <Folder Include="Properties\PublishProfiles\" />
   <Folder Include="wwwroot\lib\bootstrap\" />
   <Folder Include="wwwroot\lims-assets\images\logo\" />
