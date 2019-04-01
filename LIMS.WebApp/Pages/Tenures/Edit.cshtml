@@ -6,19 +6,31 @@
 <div>
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
-			<a asp-controller="Home" asp-action="Index">Home</a>
+			<a asp-controller="Home" asp-action="Index">Tenures</a>
 		</li>
-		<li class="breadcrumb-item active">Admin-Dashboard</li>
+		<li class="breadcrumb-item active">Edit-Tenure</li>
 	</ol>
 </div>
 
-<section id="">
-	
+<section class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">Edit Tenure</h4>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<form method="post"></form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
 </section>
 
 @section Scripts{
-	
-
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
 

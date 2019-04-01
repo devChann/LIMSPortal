@@ -3,8 +3,36 @@
 @{
 }
 
-<h2>Add Role</h2>
-<form method="post">
-	<div>Role name:<input asp-for="@Model.RoleName" /></div>
-	<input type="submit" />
-</form>
+
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a asp-controller="Home" asp-action="Index">Home</a>
+		</li>
+		<li class="breadcrumb-item active">Role</li>
+	</ol>
+</div>
+
+<section class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">Add Role</h4>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<form method="post">
+						<div>Role name:<input asp-for="@Model.RoleName" /></div>
+						<input class="btn btn-pr" type="submit" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts{
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
