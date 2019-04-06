@@ -140,6 +140,11 @@
     <LastGenOutput>Resources.Designer.cs</LastGenOutput>
   </EmbeddedResource>
 </ItemGroup>
+
+<ItemGroup>
+		<None Include="appsettings.development.json" CopyToPublishDirectory="Always" />
+		<None Include="appsettings.production.json" CopyToPublishDirectory="Always" />
+</ItemGroup>
   
 
 </Project>
