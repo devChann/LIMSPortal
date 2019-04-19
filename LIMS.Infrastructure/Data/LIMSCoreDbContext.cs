@@ -10,10 +10,6 @@ namespace LIMS.Infrastructure.Data
 {
     public partial class LIMSCoreDbContext : IdentityDbContext<ApplicationUser>
 	{
-        public LIMSCoreDbContext()
-        {
-        }
-
         public LIMSCoreDbContext(DbContextOptions<LIMSCoreDbContext> options)
             : base(options)
         {

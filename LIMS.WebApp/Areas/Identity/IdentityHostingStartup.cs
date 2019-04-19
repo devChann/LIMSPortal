@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 [assembly: HostingStartup(typeof(LIMS.WebApp.Areas.Identity.IdentityHostingStartup))]
 namespace LIMS.WebApp.Areas.Identity
@@ -20,51 +21,51 @@ namespace LIMS.WebApp.Areas.Identity
             builder.ConfigureServices((context, services) => {
 
 				//Application Db context - users database
-				services.AddDbContext<LIMSCoreDbContext>(options =>
-                    options.UseSqlServer(context.Configuration.GetConnectionString("LIMSCoreDbConnection"),
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 5,
-                        maxRetryDelay: TimeSpan.FromSeconds(30),
-                        errorNumbersToAdd: null);
-                    }
-                    ));				
+				//services.AddDbContext<LIMSCoreDbContext>(options =>
+    //                options.UseSqlServer(context.Configuration.GetConnectionString("LIMSCoreDbConnection"),
+    //                sqlServerOptionsAction: sqlOptions =>
+    //                {
+    //                    sqlOptions.EnableRetryOnFailure(
+    //                    maxRetryCount: 5,
+    //                    maxRetryDelay: TimeSpan.FromSeconds(30),
+    //                    errorNumbersToAdd: null);
+    //                }
+    //                ));				
 
-				services.AddDefaultIdentity<ApplicationUser>(options =>
-				{
-					options.Stores.MaxLengthForKeys = 128;
-					// Password settings
-					options.Password.RequireDigit = true;
-					options.Password.RequiredLength = 8;
-					options.Password.RequireNonAlphanumeric = true;
-					options.Password.RequireUppercase = false;
-					options.Password.RequireLowercase = true;
-					options.Password.RequiredUniqueChars = 1;
+				//services.AddDefaultIdentity<ApplicationUser>(options =>
+				//{
+				//	options.Stores.MaxLengthForKeys = 128;
+				//	// Password settings
+				//	options.Password.RequireDigit = true;
+				//	options.Password.RequiredLength = 8;
+				//	options.Password.RequireNonAlphanumeric = true;
+				//	options.Password.RequireUppercase = false;
+				//	options.Password.RequireLowercase = true;
+				//	options.Password.RequiredUniqueChars = 1;
 
-					// Lockout settings
-					options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-					options.Lockout.MaxFailedAccessAttempts = 5;
-					options.Lockout.AllowedForNewUsers = true;
+				//	// Lockout settings
+				//	options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+				//	options.Lockout.MaxFailedAccessAttempts = 5;
+				//	options.Lockout.AllowedForNewUsers = true;
 
-					//sign in settings
-					options.SignIn.RequireConfirmedEmail = true;
-					options.SignIn.RequireConfirmedPhoneNumber = false;
+				//	//sign in settings
+				//	options.SignIn.RequireConfirmedEmail = true;
+				//	options.SignIn.RequireConfirmedPhoneNumber = false;
 
-				})
-				.AddRoles<ApplicationRole>()
-				.AddDefaultUI(UIFramework.Bootstrap4)
-				.AddEntityFrameworkStores<LIMSCoreDbContext>()
-				.AddDefaultTokenProviders();	
+				//})
+				//.AddRoles<ApplicationRole>()
+				//.AddDefaultUI(UIFramework.Bootstrap4)
+				//.AddEntityFrameworkStores<LIMSCoreDbContext>()
+				//.AddDefaultTokenProviders();	
 
-				services.ConfigureApplicationCookie(options =>
-				{
-					options.LoginPath = "/Identity/Account/Login";
-					options.LogoutPath = "/Identity/Account/Logout";
-					options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-					options.SlidingExpiration = true;
-					options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
-				});
+				//services.ConfigureApplicationCookie(options =>
+				//{
+				//	options.LoginPath = "/Identity/Account/Login";
+				//	options.LogoutPath = "/Identity/Account/Logout";
+				//	options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+				//	options.SlidingExpiration = true;
+				//	options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
+				//});
 
 				//services.AddAuthentication()
 				//.AddGoogle(googleOptions =>
@@ -78,7 +79,7 @@ namespace LIMS.WebApp.Areas.Identity
 				//	microsoftOptions.ClientSecret = context.Configuration["Authentication:Miscrosoft:Password"];
 				//});
 
-				services.AddAuthorization(AuthorizationPolicy.Execute);
+				//services.AddAuthorization(AuthorizationPolicy.Execute);
 
             });
         }

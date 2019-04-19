@@ -4,7 +4,10 @@ using LIMS.Infrastructure.Services.Properties;
 using LIMS.WebApp.Configuration.Startup;
 using LIMS.WebApp.Hubs;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,21 +18,22 @@ namespace LIMS.WebApp
 {
 	public class Startup
     {
-        public Startup(IConfiguration configuration, IHostEnvironment hostingEnvironment)
+		
+
+		public Startup(IConfiguration configuration, IWebHostEnvironment hostingEnvironment)
         {
             Configuration = configuration;
-			HostingEnvironment = hostingEnvironment;		
-
+			HostingEnvironment = hostingEnvironment;
 		}
 
-        public IConfiguration Configuration { get; }
-		public IHostEnvironment HostingEnvironment { get; }
+		public IConfiguration Configuration { get; }
+		public IWebHostEnvironment HostingEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
-			services.ConfigureDatabase(Configuration);
+			services.ConfigureDatabase(Configuration, HostingEnvironment);
 
 			services.ConfigureSecurityAndAuthentication();
 
@@ -43,11 +47,12 @@ namespace LIMS.WebApp
 
 			services.AddCors();
 
-			services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+			//services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-			services.AddTransient<IAppVersionService, AppVersionService>();
+			services.AddControllersWithViews()
+			   .AddNewtonsoftJson();
 
-			services.AddScoped<IParcelService, ParcelService>();
+			services.AddRazorPages();		
 
 			services.AddSignalR();	
 
@@ -56,47 +61,55 @@ namespace LIMS.WebApp
        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void  Configure(IApplicationBuilder app, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public void  Configure(IApplicationBuilder app, IWebHostEnvironment env,
+			UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {           
 
             //Stripe configuration
             StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["StripeSecretKey"]);			
 
-            if (HostingEnvironment.IsDevelopment())
+            if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();			
-
-				//app.useDatabaseErrorPage();             
-            }
+                app.UseDeveloperExceptionPage();
+				//app.UseDatabaseErrorPage();
+			}
             else
             {              				
                 app.UseExceptionHandler("/Home/Error");             
-              
-				app.ConfigureSecurityHeaders();
             }
 
-            app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");      
+			app.ConfigureSecurityHeaders();
+
+			app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");      
           
-            app.UseStaticFiles();			
+            app.UseStaticFiles();
+
+            app.UseFileServer();
 
 			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager, Configuration);
 
 			authenticationTask.GetAwaiter().GetResult();
-
-            app.UseFileServer();
-
 
 			//use local signalR service
 			app.UseSignalR(routes =>
 			{
 				routes.MapHub<PaymentsHub>("/Payments");
 			});
-			
 
-            app.UseMvc(routes =>
-			{		
-				routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+			app.UseRouting();
+
+			app.UseAuthorization();
+
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
+				endpoints.MapRazorPages();
 			});
+
+			
            
         }
 

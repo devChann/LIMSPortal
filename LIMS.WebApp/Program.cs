@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 using System;
@@ -21,7 +22,7 @@ namespace LIMS.WebApp
 			{
 				logger.Debug("init main");				
 
-				var host = CreateWebHostBuilder(args).Build();
+				var host = CreateHostBuilder(args).Build();
 
 				//database seeder
 				/*using (var scope = host.Services.CreateScope())
@@ -55,15 +56,15 @@ namespace LIMS.WebApp
 		}
 
 
-		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)				
-			.UseStartup<Startup>()
-			.ConfigureLogging(logging => {
-				logging.ClearProviders();
-				logging.SetMinimumLevel(LogLevel.Trace);
-			})
-			.UseNLog();
-
+		public static IHostBuilder CreateHostBuilder(string[] args) =>
+			Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webbuilder =>
+			{
+				webbuilder.UseStartup<Startup>()
+					.ConfigureLogging(logging => {
+						logging.ClearProviders();
+						logging.SetMinimumLevel(LogLevel.Trace);
+					}).UseNLog();
+			});
 
 
 	}
