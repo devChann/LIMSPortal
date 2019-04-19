@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Stripe;
+using System;
+using LIMS.Infrastructure.Data;
 
 namespace LIMS.WebApp
 {
@@ -32,7 +34,6 @@ namespace LIMS.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
 			services.ConfigureDatabase(Configuration, HostingEnvironment);
 
 			services.ConfigureSecurityAndAuthentication();
@@ -47,12 +48,12 @@ namespace LIMS.WebApp
 
 			services.AddCors();
 
-			//services.AddMvc().AddNewtonsoftJson().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+			//services.AddControllersWithViews()
+			//   .AddNewtonsoftJson();
 
-			services.AddControllersWithViews()
-			   .AddNewtonsoftJson();
+			//services.AddRazorPages();
 
-			services.AddRazorPages();		
+			services.AddMvc().AddNewtonsoftJson();
 
 			services.AddSignalR();	
 
@@ -97,20 +98,18 @@ namespace LIMS.WebApp
 			});
 
 
-			app.UseRouting();
+			//app.UseRouting();			
 
-			app.UseAuthorization();
+			//app.UseEndpoints(endpoints =>
+			//{
+			//	endpoints.MapControllerRoute(
+			//		name: "default",
+			//		pattern: "{controller=Home}/{action=Index}/{id?}");
+			//	endpoints.MapRazorPages();
+			//});
 
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
-				endpoints.MapRazorPages();
-			});
-
-			
-           
+			app.UseMvcWithDefaultRoute();
+       
         }
 
     }

@@ -3,7 +3,6 @@ using System;
 using LIMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LIMS.Infrastructure.Migrations
@@ -15,9 +14,7 @@ namespace LIMS.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0-preview.19074.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "3.0.0-preview4.19216.3");
 
             modelBuilder.Entity("LIMS.Core.Billing.Checkout", b =>
                 {
@@ -48,7 +45,8 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<DateTime>("DateDue");
 
-                    b.Property<decimal>("InvoiceAmount");
+                    b.Property<decimal>("InvoiceAmount")
+                        .HasColumnType("decimal(9,2)");
 
                     b.Property<string>("InvoiceNumber");
 
@@ -143,9 +141,7 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<string>("BeaconType");
 
-                    b.Property<DateTime>("DateSet")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("DateSet");
 
                     b.Property<double>("Hcoordinate");
 
@@ -212,11 +208,9 @@ namespace LIMS.Infrastructure.Migrations
                     b.Property<Guid>("BuildingRegulationId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<double>("GCR")
-                        .HasColumnName("GCR");
+                    b.Property<double>("GCR");
 
-                    b.Property<double>("PCR")
-                        .HasColumnName("PCR");
+                    b.Property<double>("PCR");
 
                     b.Property<double>("PlotFrontage");
 
@@ -234,8 +228,7 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<double>("InterestRate");
 
-                    b.Property<string>("Lender")
-                        .HasColumnName("lender");
+                    b.Property<string>("Lender");
 
                     b.Property<int>("Ranking");
 
@@ -297,18 +290,13 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<string>("LeadershipRole");
 
-                    b.Property<DateTime>("LeadershipSince")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("LeadershipSince");
 
                     b.Property<string>("LeadershipStatus");
 
-                    b.Property<DateTime>("LeadershipUntil")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("LeadershipUntil");
 
-                    b.Property<Guid>("PersonId")
-                        .HasColumnName("PersonId");
+                    b.Property<Guid>("PersonId");
 
                     b.HasKey("GroupLeadershipId");
 
@@ -322,15 +310,11 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<double>("MembershipShare");
 
-                    b.Property<DateTime>("MembershipSince")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("MembershipSince");
 
                     b.Property<string>("MembershipStatus");
 
-                    b.Property<DateTime>("MembershipUntil")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("MembershipUntil");
 
                     b.HasKey("GroupMembershipId");
 
@@ -342,13 +326,9 @@ namespace LIMS.Infrastructure.Migrations
                     b.Property<Guid>("InsitutionLeadershipId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("MemberSince")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("MemberSince");
 
-                    b.Property<DateTime>("MemberUntil")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("MemberUntil");
 
                     b.Property<string>("MembershipRole");
 
@@ -391,9 +371,7 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<Guid>("BuildingRegulationId");
 
-                    b.Property<DateTime?>("EndDate")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime?>("EndDate");
 
                     b.Property<string>("LandUseStatus");
 
@@ -401,9 +379,7 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<string>("RegulationAgency");
 
-                    b.Property<DateTime?>("StartDate")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime?>("StartDate");
 
                     b.Property<Guid>("ZoneId");
 
@@ -472,8 +448,7 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<string>("OwnerType");
 
-                    b.Property<string>("PIN")
-                        .HasColumnName("PIN");
+                    b.Property<string>("PIN");
 
                     b.Property<string>("PostalAddress");
 
@@ -638,9 +613,7 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<string>("Jurisdiction");
 
-                    b.Property<DateTime>("RegistrationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime>("RegistrationDate");
 
                     b.Property<string>("RegistrationSection");
 
@@ -688,14 +661,11 @@ namespace LIMS.Infrastructure.Migrations
                     b.Property<Guid>("RestrictionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("ChargeId")
-                        .HasColumnName("ChargeId");
+                    b.Property<Guid>("ChargeId");
 
-                    b.Property<Guid>("MortgageId")
-                        .HasColumnName("MortgageId");
+                    b.Property<Guid>("MortgageId");
 
-                    b.Property<Guid>("ReserveId")
-                        .HasColumnName("ReserveId");
+                    b.Property<Guid>("ReserveId");
 
                     b.Property<string>("RestrictionType");
 
@@ -718,13 +688,11 @@ namespace LIMS.Infrastructure.Migrations
                 {
                     b.Property<Guid>("ServiceId");
 
-                    b.Property<DateTime?>("DateCreated")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime?>("DateCreated");
 
                     b.Property<bool>("IsComplete");
 
-                    b.Property<Guid>("OperationId")
-                        .HasColumnName("OperationId");
+                    b.Property<Guid>("OperationId");
 
                     b.Property<Guid>("Progress");
 
@@ -824,14 +792,11 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<string>("CompsNo");
 
-                    b.Property<DateTime?>("DateOfEntry")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime?>("DateOfEntry");
 
                     b.Property<string>("ParcelNumber");
 
-                    b.Property<int>("PdpRefNo")
-                        .HasColumnName("PDPRefNo");
+                    b.Property<int>("PdpRefNo");
 
                     b.Property<string>("PlansNo");
 
@@ -873,9 +838,7 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.Property<string>("ValuationBookNo");
 
-                    b.Property<DateTime?>("ValuationDate")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<DateTime?>("ValuationDate");
 
                     b.Property<double?>("Value");
 
@@ -900,8 +863,7 @@ namespace LIMS.Infrastructure.Migrations
 
             modelBuilder.Entity("LIMS.Infrastructure.Identity.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<int>("AccessFailedCount");
 
@@ -955,16 +917,14 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -982,8 +942,7 @@ namespace LIMS.Infrastructure.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
 
@@ -993,8 +952,7 @@ namespace LIMS.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -1013,8 +971,7 @@ namespace LIMS.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -1097,8 +1054,8 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fb2f242e-1c1b-4e4b-8b15-64523ff4eeb2",
-                            ConcurrencyStamp = "a789559f-667d-42b4-90ab-10b9a5f57d10",
+                            Id = "6cf25225-70b9-4f45-ad2f-73bad9cc367d",
+                            ConcurrencyStamp = "450fbb5a-2dcd-4889-803c-0f344041d5bb",
                             Name = "Authors",
                             NormalizedName = "AUTHORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1106,8 +1063,8 @@ namespace LIMS.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = "8797dd26-73d6-4b1a-8d6e-8a14d3bfb569",
-                            ConcurrencyStamp = "80143886-2f5a-408b-ba13-e2d53bc4af1f",
+                            Id = "fc65dd06-cb3a-4539-a334-737cef590fb0",
+                            ConcurrencyStamp = "aa0cdc17-7f4a-4b20-9147-7aa41f5a9364",
                             Name = "Editors",
                             NormalizedName = "EDITORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1115,8 +1072,8 @@ namespace LIMS.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = "c0f4df27-80cb-419c-9c37-8ba8881b98e0",
-                            ConcurrencyStamp = "1199f719-21a2-4e67-ba74-348309e8f626",
+                            Id = "d00d9831-075f-4985-9964-6cde9ad642e0",
+                            ConcurrencyStamp = "209ebca3-3fa5-4ea6-a85d-4282c9d6a0ef",
                             Name = "Administrators",
                             NormalizedName = "ADMINISTRATORS",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1129,7 +1086,8 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Billing.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Billing.Invoice", b =>
@@ -1137,7 +1095,8 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Parcel", "Parcel")
                         .WithMany("Invoices")
                         .HasForeignKey("ParcelId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Billing.Payment", b =>
@@ -1145,7 +1104,8 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Billing.Invoice", "Invoice")
                         .WithMany("Payments")
                         .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.BoundaryBeacon", b =>
@@ -1153,12 +1113,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Beacon", "Beacon")
                         .WithMany("BoundaryBeacons")
                         .HasForeignKey("BeaconId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Boundary", "Boundary")
                         .WithMany("BoundaryBeacons")
                         .HasForeignKey("BoundaryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.Building", b =>
@@ -1166,12 +1128,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Apartment", "Apartment")
                         .WithMany("Building")
                         .HasForeignKey("ApartmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.SpatialUnit", "SpatialUnit")
                         .WithMany("Buildings")
                         .HasForeignKey("SpatialUnitId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.Group", b =>
@@ -1179,7 +1143,8 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Owner", "Owner")
                         .WithMany("Groups")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.GroupGroupLeadership", b =>
@@ -1187,12 +1152,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.GroupLeadership", "GroupLeadership")
                         .WithMany("GroupGroupLeadership")
                         .HasForeignKey("GroupLeadershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.GroupGroupMembership", b =>
@@ -1200,12 +1167,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.GroupMembership", "GroupMembership")
                         .WithMany("GroupGroupMemberships")
                         .HasForeignKey("GroupMembershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.InstitutionInstitutionLeadership", b =>
@@ -1213,12 +1182,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Institution", "Institution")
                         .WithMany("InstitutionInstitutionLeadership")
                         .HasForeignKey("InstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.InsitutionLeadership", "InstitutionLeadership")
                         .WithMany("InstitutionInstitutionLeadership")
                         .HasForeignKey("InstitutionLeadershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.LandUse", b =>
@@ -1226,12 +1197,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.BuildingRegulation", "BuildingRegulation")
                         .WithMany("LandUses")
                         .HasForeignKey("BuildingRegulationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Zone", "Zone")
                         .WithMany("LandUses")
                         .HasForeignKey("ZoneId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.Operation", b =>
@@ -1240,7 +1213,8 @@ namespace LIMS.Infrastructure.Migrations
                         .WithMany("Operations")
                         .HasForeignKey("ParcelId")
                         .HasConstraintName("FK_Operation_Parcel")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.Parcel", b =>
@@ -1248,57 +1222,68 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Administration", "Administration")
                         .WithMany("Parcels")
                         .HasForeignKey("AdministrationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.LandUse", "LandUse")
                         .WithMany("Parcels")
                         .HasForeignKey("LandUseId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Owner", "Owner")
                         .WithMany("Parcels")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.OwnershipRight", "OwnershipRight")
                         .WithMany("Parcels")
                         .HasForeignKey("OwnershipRightId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Rate", "Rate")
                         .WithMany("Parcels")
                         .HasForeignKey("RateId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Registration", "Registration")
                         .WithMany("Parcels")
                         .HasForeignKey("RegistrationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Responsibility", "Responsibility")
                         .WithMany("Parcels")
                         .HasForeignKey("ResponsibilityId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Restriction", "Restriction")
                         .WithMany("Parcels")
                         .HasForeignKey("RestrictionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.SpatialUnit", "SpatialUnit")
                         .WithMany("Parcels")
                         .HasForeignKey("SpatialUnitId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Tenure", "Tenure")
                         .WithOne("Parcel")
                         .HasForeignKey("LIMS.Core.Entities.Parcel", "TenureId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Valuation", "Valuation")
                         .WithMany("Parcels")
                         .HasForeignKey("ValuationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.Person", b =>
@@ -1306,7 +1291,8 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Owner", "Owner")
                         .WithMany("Persons")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.PersonGroupLeadership", b =>
@@ -1314,12 +1300,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.GroupLeadership", "GroupLeadership")
                         .WithMany("PersonGroupLeaderships")
                         .HasForeignKey("GroupLeadershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Person", "Person")
                         .WithMany("PersonGroupLeaderships")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.PersonGroupMembership", b =>
@@ -1327,12 +1315,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.GroupMembership", "GroupMembership")
                         .WithMany("PersonGroupMemberships")
                         .HasForeignKey("GroupMembershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Person", "Person")
                         .WithMany("PersonGroupMemberships")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.PersonInstitutionLeadership", b =>
@@ -1340,12 +1330,14 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.InsitutionLeadership", "InstitutionLeadership")
                         .WithMany("PersonInstitutionLeaderships")
                         .HasForeignKey("InstitutionLeadershipId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Person", "Person")
                         .WithMany("PersonInstitutionLeaderships")
                         .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.Restriction", b =>
@@ -1354,25 +1346,29 @@ namespace LIMS.Infrastructure.Migrations
                         .WithMany("Restrictions")
                         .HasForeignKey("ChargeId")
                         .HasConstraintName("FK_Restriction_Charge")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Mortgage", "Mortgage")
                         .WithMany("Restrictions")
                         .HasForeignKey("MortgageId")
                         .HasConstraintName("FK_Restriction_Mortgage")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Reserve", "Reserve")
                         .WithMany("Restrictions")
                         .HasForeignKey("ReserveId")
                         .HasConstraintName("FK_Restriction_Reserve")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.StatutoryRestriction", "StatutoryRestriction")
                         .WithMany("Restrictions")
                         .HasForeignKey("StatutoryRestrictionId")
                         .HasConstraintName("FK_Restriction_StatutoryRestriction")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.Service", b =>
@@ -1380,7 +1376,8 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Operation", "Operation")
                         .WithMany("Services")
                         .HasForeignKey("OperationId")
-                        .HasConstraintName("FK_Service_Operation");
+                        .HasConstraintName("FK_Service_Operation")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.SpatialUnit", b =>
@@ -1388,22 +1385,26 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Boundary", "Boundary")
                         .WithOne("SpatialUnit")
                         .HasForeignKey("LIMS.Core.Entities.SpatialUnit", "BoundaryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.MapIndex", "MapIndex")
                         .WithMany("SpatialUnits")
                         .HasForeignKey("MapIndexId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.SpatialUnitSet", "SpatialUnitSet")
                         .WithMany("SpatialUnits")
                         .HasForeignKey("SpatialUnitSetId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.Survey", "Survey")
                         .WithMany("SpatialUnits")
                         .HasForeignKey("SurveyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LIMS.Core.Entities.SpatialUnitSetRegistration", b =>
@@ -1411,57 +1412,65 @@ namespace LIMS.Infrastructure.Migrations
                     b.HasOne("LIMS.Core.Entities.Registration", "Registration")
                         .WithMany("SpatialUnitSetRegistrations")
                         .HasForeignKey("RegistrationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("LIMS.Core.Entities.SpatialUnitSet", "SpatialUnitSet")
                         .WithMany("SpatialUnitSetRegistrations")
                         .HasForeignKey("SpatialUnitSetId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("LIMS.Infrastructure.Identity.ApplicationUser")
+                    b.HasOne("LIMS.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("LIMS.Infrastructure.Identity.ApplicationUser")
+                    b.HasOne("LIMS.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("LIMS.Infrastructure.Identity.ApplicationUser")
+                    b.HasOne("LIMS.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("LIMS.Infrastructure.Identity.ApplicationUser")
+                    b.HasOne("LIMS.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

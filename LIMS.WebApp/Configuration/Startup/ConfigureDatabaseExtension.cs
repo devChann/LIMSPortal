@@ -18,36 +18,24 @@ namespace LIMS.WebApp.Configuration.Startup
 	public static partial class ConfigureDatabaseExtension
 	{
 		
-		public static IServiceCollection ConfigureDatabase(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env)
+		public static IServiceCollection ConfigureDatabase(this IServiceCollection services, IConfiguration Configuration, IWebHostEnvironment env)
 		{
-			var connectionString = config.GetConnectionString("DefaultConnection").Replace("~", env.ContentRootPath);
+			var connectionString = Configuration.GetConnectionString("SQLiteConnection").Replace("~", env.ContentRootPath);
 
-
-			Action<DbContextOptionsBuilder> optionsBuilder;
-			switch (config["DatabaseProvider"].ToLowerInvariant())
+			switch (Configuration["DatabaseProvider"].ToLowerInvariant())
 			{
 				case "postgres":
-					services.AddEntityFrameworkNpgsql();
-					optionsBuilder = options => options.UseNpgsql(connectionString);
+					services.AddDbContextPool<LIMSCoreDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgreSQLConnection"), o => o.UseNetTopologySuite()));
 					break;
 				case "mssql":
-					services.AddEntityFrameworkSqlServer();
-					optionsBuilder = options =>
-					{
-						options.UseSqlServer(connectionString);
-					};
+					services.AddDbContextPool<LIMSCoreDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MSQLConnection")));
 					break;
 				default:
-					services.AddEntityFrameworkSqlite();
-					connectionString = !string.IsNullOrEmpty(connectionString) ? connectionString : $"DataSource={env.ContentRootPath}\\App_Data\\Majidata.db";
-					optionsBuilder = options => options.UseSqlite(connectionString);
+					connectionString = !string.IsNullOrEmpty(connectionString) ? connectionString : $"DataSource={env.ContentRootPath}\\App_Data\\LIMSCore.db";
+
+					services.AddDbContextPool<LIMSCoreDbContext>(options => options.UseSqlite(connectionString));
 					break;
 			}
-
-			services.AddDbContextPool<LIMSCoreDbContext>(options => {
-				optionsBuilder(options);
-				options.EnableSensitiveDataLogging();
-			});
 
 			return services;
 		}

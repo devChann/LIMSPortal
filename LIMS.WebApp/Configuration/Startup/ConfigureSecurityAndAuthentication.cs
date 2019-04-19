@@ -89,7 +89,10 @@ namespace LIMS.WebApp.Configuration.Startup
 		public static async Task<IApplicationBuilder> ConfigureAuthentication(this IApplicationBuilder app, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IConfiguration config)
 		{
 			app.UseCookiePolicy();
+
 			app.UseAuthentication();
+			app.UseAuthorization();
+
 			await SeedDefaultAdminUserToAdminRole.Seed(userManager, roleManager, config);
 			return app;
 		}

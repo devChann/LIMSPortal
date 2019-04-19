@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LIMS.Infrastructure.Migrations
@@ -91,7 +90,7 @@ namespace LIMS.Infrastructure.Migrations
                     BeaconId = table.Column<Guid>(nullable: false),
                     BeaconNum = table.Column<string>(nullable: true),
                     BeaconType = table.Column<string>(nullable: true),
-                    DateSet = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
+                    DateSet = table.Column<DateTime>(nullable: false),
                     Hcoordinate = table.Column<double>(nullable: false),
                     HorizontalDatum = table.Column<string>(nullable: true),
                     VerticalDatum = table.Column<string>(nullable: true),
@@ -136,7 +135,7 @@ namespace LIMS.Infrastructure.Migrations
                     ChargeId = table.Column<Guid>(nullable: false),
                     Amount = table.Column<double>(nullable: false),
                     InterestRate = table.Column<double>(nullable: false),
-                    lender = table.Column<string>(nullable: true),
+                    Lender = table.Column<string>(nullable: true),
                     Ranking = table.Column<int>(nullable: false),
                     RepaymentTerm = table.Column<int>(nullable: false)
                 },
@@ -151,9 +150,9 @@ namespace LIMS.Infrastructure.Migrations
                 {
                     GroupLeadershipId = table.Column<Guid>(nullable: false),
                     LeadershipRole = table.Column<string>(nullable: true),
-                    LeadershipSince = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
+                    LeadershipSince = table.Column<DateTime>(nullable: false),
                     LeadershipStatus = table.Column<string>(nullable: true),
-                    LeadershipUntil = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
+                    LeadershipUntil = table.Column<DateTime>(nullable: false),
                     PersonId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -167,9 +166,9 @@ namespace LIMS.Infrastructure.Migrations
                 {
                     GroupMembershipId = table.Column<Guid>(nullable: false),
                     MembershipShare = table.Column<double>(nullable: false),
-                    MembershipSince = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
+                    MembershipSince = table.Column<DateTime>(nullable: false),
                     MembershipStatus = table.Column<string>(nullable: true),
-                    MembershipUntil = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())")
+                    MembershipUntil = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,8 +180,8 @@ namespace LIMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     InsitutionLeadershipId = table.Column<Guid>(nullable: false),
-                    MemberSince = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
-                    MemberUntil = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
+                    MemberSince = table.Column<DateTime>(nullable: false),
+                    MemberUntil = table.Column<DateTime>(nullable: false),
                     MembershipRole = table.Column<string>(nullable: true),
                     MembershipStatus = table.Column<string>(nullable: true)
                 },
@@ -294,7 +293,7 @@ namespace LIMS.Infrastructure.Migrations
                 {
                     RegistrationId = table.Column<Guid>(nullable: false),
                     Jurisdiction = table.Column<string>(nullable: true),
-                    RegistrationDate = table.Column<DateTime>(nullable: false, defaultValueSql: "(getdate())"),
+                    RegistrationDate = table.Column<DateTime>(nullable: false),
                     RegistrationSection = table.Column<string>(nullable: true),
                     RegistrationType = table.Column<string>(nullable: true),
                     TitleNo = table.Column<string>(nullable: true)
@@ -362,8 +361,8 @@ namespace LIMS.Infrastructure.Migrations
                 {
                     SurveyId = table.Column<Guid>(nullable: false),
                     CompsNo = table.Column<string>(nullable: true),
-                    DateOfEntry = table.Column<DateTime>(nullable: true, defaultValueSql: "(getdate())"),
-                    PDPRefNo = table.Column<int>(nullable: false),
+                    DateOfEntry = table.Column<DateTime>(nullable: true),
+                    PdpRefNo = table.Column<int>(nullable: false),
                     PlansNo = table.Column<string>(nullable: true),
                     SurveyorsName = table.Column<string>(nullable: true),
                     TypeOfSurvey = table.Column<string>(nullable: true),
@@ -397,7 +396,7 @@ namespace LIMS.Infrastructure.Migrations
                     Remarks = table.Column<string>(nullable: true),
                     SerialNo = table.Column<string>(nullable: true),
                     ValuationBookNo = table.Column<string>(nullable: true),
-                    ValuationDate = table.Column<DateTime>(nullable: true, defaultValueSql: "(getdate())"),
+                    ValuationDate = table.Column<DateTime>(nullable: true),
                     Value = table.Column<double>(nullable: true),
                     Valuer = table.Column<string>(nullable: true)
                 },
@@ -423,7 +422,7 @@ namespace LIMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -444,7 +443,7 @@ namespace LIMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -731,8 +730,8 @@ namespace LIMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     LandUseId = table.Column<Guid>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: true, defaultValueSql: "(getdate())"),
-                    EndDate = table.Column<DateTime>(nullable: true, defaultValueSql: "(getdate())"),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
                     LandUseStatus = table.Column<string>(nullable: true),
                     LandUseType = table.Column<string>(nullable: true),
                     RegulationAgency = table.Column<string>(nullable: true),
@@ -998,7 +997,7 @@ namespace LIMS.Infrastructure.Migrations
                 {
                     InvoiceId = table.Column<Guid>(nullable: false),
                     InvoiceNumber = table.Column<string>(nullable: true),
-                    InvoiceAmount = table.Column<decimal>(nullable: false),
+                    InvoiceAmount = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateDue = table.Column<DateTime>(nullable: false),
                     ParcelId = table.Column<Guid>(nullable: false)
@@ -1060,7 +1059,7 @@ namespace LIMS.Infrastructure.Migrations
                 columns: table => new
                 {
                     ServiceId = table.Column<Guid>(nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime", nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: true),
                     IsComplete = table.Column<bool>(nullable: false),
                     Progress = table.Column<Guid>(nullable: false),
                     OperationId = table.Column<Guid>(nullable: false)
@@ -1100,17 +1099,17 @@ namespace LIMS.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName", "CreatedDate", "Description", "IPAddress", "Users" },
-                values: new object[] { "fb2f242e-1c1b-4e4b-8b15-64523ff4eeb2", "a789559f-667d-42b4-90ab-10b9a5f57d10", "ApplicationRole", "Authors", "AUTHORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
+                values: new object[] { "6cf25225-70b9-4f45-ad2f-73bad9cc367d", "450fbb5a-2dcd-4889-803c-0f344041d5bb", "ApplicationRole", "Authors", "AUTHORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName", "CreatedDate", "Description", "IPAddress", "Users" },
-                values: new object[] { "8797dd26-73d6-4b1a-8d6e-8a14d3bfb569", "80143886-2f5a-408b-ba13-e2d53bc4af1f", "ApplicationRole", "Editors", "EDITORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
+                values: new object[] { "fc65dd06-cb3a-4539-a334-737cef590fb0", "aa0cdc17-7f4a-4b20-9147-7aa41f5a9364", "ApplicationRole", "Editors", "EDITORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName", "CreatedDate", "Description", "IPAddress", "Users" },
-                values: new object[] { "c0f4df27-80cb-419c-9c37-8ba8881b98e0", "1199f719-21a2-4e67-ba74-348309e8f626", "ApplicationRole", "Administrators", "ADMINISTRATORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
+                values: new object[] { "d00d9831-075f-4985-9964-6cde9ad642e0", "209ebca3-3fa5-4ea6-a85d-4282c9d6a0ef", "ApplicationRole", "Administrators", "ADMINISTRATORS", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -1121,8 +1120,7 @@ namespace LIMS.Infrastructure.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -1148,8 +1146,7 @@ namespace LIMS.Infrastructure.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_BoundaryBeacon_BeaconId",
