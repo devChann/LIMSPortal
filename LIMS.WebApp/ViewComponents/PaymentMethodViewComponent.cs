@@ -22,7 +22,7 @@ namespace LIMS.WebApp.ViewComponents
         {
 			var gateway = _braintreeService.GetGateway();
 
-			var clientToken = gateway.ClientToken.Generate();
+			var clientToken = await Task.Run( () => gateway.ClientToken.Generate());
 
 			ViewBag.ClientToken = clientToken;
 

@@ -19,10 +19,7 @@
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
 			<a asp-controller="Home" asp-action="Index">Home</a>
-		</li>
-		<li class="breadcrumb-item">
-			<a asp-controller="" asp-action="">admin-dashboard</a>
-		</li>
+		</li>		
 		<li class="breadcrumb-item active">parcel-management</li>
 	</ol>
 </div>
@@ -30,7 +27,7 @@
 
 <h4 class="text-muted">Land Parcels</h4>
 
-@if (await UserManager.IsInRoleAsync(user, "Administrators"))
+@if (await UserManager.IsInRoleAsync(user, "Administrator"))
 {
 	<a class=" btn btn-sm btn-primary mb-2" asp-action="Create"><i class="fa fa-plus-circle"></i> Add Parcel</a>
 }

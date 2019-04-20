@@ -12,41 +12,41 @@ namespace LIMS.Core.Entities
 			Invoices = new HashSet<Invoice>();
         }
 
-        public int ParcelId { get; set; }        
+        public Guid ParcelId { get; set; }        
         public double? Area { get; set; }                  
         public string ParcelNum { get; set; }
 
-		public int AdministrationId { get; set; }
+		public Guid AdministrationId { get; set; }
 		public Administration Administration { get; set; }
 
-		public int LandUseId { get; set; }
+		public Guid LandUseId { get; set; }
 		public LandUse LandUse { get; set; }
 
-		public int OwnerId { get; set; }
+		public Guid OwnerId { get; set; }
 		public Owner Owner { get; set; }
 
-		public int OwnershipRightId { get; set; }
+		public Guid OwnershipRightId { get; set; }
 		public OwnershipRight OwnershipRight { get; set; }
 
-		public int? RateId { get; set; }
+		public Guid RateId { get; set; }
 		public Rate Rate { get; set; }
 
-		public int RegistrationId { get; set; }
+		public Guid RegistrationId { get; set; }
 		public Registration Registration { get; set; }
 
-		public int ResponsibilityId { get; set; }
+		public Guid ResponsibilityId { get; set; }
 		public Responsibility Responsibility { get; set; }
 
-		public int RestrictionId { get; set; }
+		public Guid RestrictionId { get; set; }
 		public Restriction Restriction { get; set; }
 
-		public int SpatialUnitId { get; set; }
+		public Guid SpatialUnitId { get; set; }
 		public SpatialUnit SpatialUnit { get; set; }
 
-		public int TenureId { get; set; }
+		public Guid TenureId { get; set; }
 		public Tenure Tenure { get; set; }
 
-		public int ValuationId { get; set; }
+		public Guid ValuationId { get; set; }
 		public Valuation Valuation { get; set; }
 
         public ICollection<Operation> Operations { get; set; }

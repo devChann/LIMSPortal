@@ -36,7 +36,11 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account.Manage
         }
 
         public string Username { get; set; }
-        public string Email { get; set; }
+
+		public string FirstName { get; set; }
+		public string Middlename { get; set; }
+		public string LastName { get; set; }
+		public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public IFormFile Photo { get; set; }
 
@@ -54,7 +58,15 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account.Manage
             [EmailAddress]
             public string Email { get; set; }
 
-			
+			[Display(Name = "First Name")]
+			public string FirstName { get; set; }
+
+			[Display(Name = "Middle Name")]
+			public string Middlename { get; set; }
+
+			[Display(Name = "Last Name")]
+			public string LastName { get; set; }
+
 			[Display(Name = "KRA PIN")]
 			public string KRAPIN { get; set; }
 
@@ -81,7 +93,10 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account.Manage
             {
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-				KRAPIN = user.KRAPIN
+				KRAPIN = user.KRAPIN,
+				FirstName = user.FirstName,
+				Middlename = user.MiddleName,
+				LastName = user.LastName
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -111,6 +126,37 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+			if (Input.FirstName != user.FirstName)
+			{
+				user.FirstName = Input.FirstName;
+				var updateFirstName = await _userManager.UpdateAsync(user);
+				if (!updateFirstName.Succeeded)
+				{
+					throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
+				}
+			}
+
+			if (Input.Middlename != user.MiddleName)
+			{
+				user.MiddleName = Input.Middlename;
+				var updateMiddleName = await _userManager.UpdateAsync(user);
+				if (!updateMiddleName.Succeeded)
+				{
+					throw new InvalidOperationException($"Unexpected error occurred updating Middle Name for user with ID '{user.Id}'.");
+				}
+			}
+
+			if (Input.LastName != user.LastName)
+			{
+				user.LastName = Input.LastName;
+
+				var updateuser = await _userManager.UpdateAsync(user);
+				if (!updateuser.Succeeded)
+				{
+					throw new InvalidOperationException($"Unexpected error occurred updating Last Name for user with ID '{user.Id}'.");
+				}
+			}
+
 			if (Input.KRAPIN != user.KRAPIN)
 			{
 				user.KRAPIN = Input.KRAPIN;
@@ -135,29 +181,30 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account.Manage
 
             // Convert the user uploaded Photo as Byte Array before save to DB
             var Image = Input.Photo;
+			if(Image != null)
+			{
+				if (Image.Length > 0)
+				{
+					using (var filestream = Image.OpenReadStream())
+					using (var memorystream = new MemoryStream())
+					{
+						await filestream.CopyToAsync(memorystream);
+						var UserPhoto = memorystream.ToArray();
 
-            if (Image.Length > 0)
-            {                                  
-
-                byte[] PhotoByte = null;
-                using (var filestream = Image.OpenReadStream())
-                using (var memorystream = new MemoryStream())
-                {
-                    await filestream.CopyToAsync(memorystream);
-                    PhotoByte = memorystream.ToArray();
-
-                    user.Photo = PhotoByte;                   
-                    try
-                    {                       
-                        user.Photo = DbImageAPI.Imaging.ScaleImage(memorystream.ToArray(), 50, 50, System.Drawing.Imaging.ImageFormat.Png);
-                        await _userManager.UpdateAsync(user);
-                        _cache.Set(user.Id, user.Photo);
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
+						user.Photo = UserPhoto;
+						try
+						{
+							user.Photo = DbImageAPI.Imaging.ScaleImage(memorystream.ToArray(), 50, 50, System.Drawing.Imaging.ImageFormat.Png);
+							await _userManager.UpdateAsync(user);
+							_cache.Set(user.Id, user.Photo);
+						}
+						catch
+						{
+						}
+					}
+				}
+			}
+          
 
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

@@ -5,8 +5,20 @@
     ViewData["ReturnUrl"] = "./Home";
 }
 
-<header>
-    <h1>@ViewData["Title"]</h1>
-    <p>You have successfully logged out of the application.</p>
-    <a asp-controller="Home" asp-action="Index">Go to Home Page</a>
-</header>
+<section class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h1 class="card-title">@ViewData["Title"]</h1>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<header>
+						<p>You have successfully logged out of the application.</p>
+						<a asp-controller="Home" asp-action="Index">Go to Home Page</a>
+					</header>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

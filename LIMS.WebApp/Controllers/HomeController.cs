@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using System.IO;
 using LIMS.Infrastructure.Services.GeoServices;
 using Microsoft.Extensions.Configuration;
-using LIMS.Infrastructure.Services.Property;
+using LIMS.Infrastructure.Services.Properties;
 
 namespace LIMS.WebApp.Controllers
 {

@@ -12,7 +12,7 @@ namespace LIMS.Core.Entities
             Persons = new HashSet<Person>();
         }
 
-        public int OwnerId { get; set; }
+        public Guid OwnerId { get; set; }
         public string Name { get; set; }
         public string OwnerType { get; set; }
         public string PIN { get; set; }

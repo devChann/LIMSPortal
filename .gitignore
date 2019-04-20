@@ -326,3 +326,5 @@ ASALocalRun/
 /LIMSInfrastructure/Identity
 *.cshtml
 /LIMSInfrastructure/Services/PDFGenerator/PdfGenerator.cs
+LIMS.WebApp/appsettings.production.json
+LIMS.WebApp/appsettings.development.json

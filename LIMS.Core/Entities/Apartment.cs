@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             Building = new HashSet<Building>();
         }
 
-        public int ApartmentId { get; set; }
+        public Guid ApartmentId { get; set; }
         public string ApartmentName { get; set; }
 
         public ICollection<Building> Building { get; set; }

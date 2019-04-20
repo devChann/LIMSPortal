@@ -9,6 +9,7 @@ using LIMS.Core.Entities;
 using LIMS.Infrastructure.Data;
 using LIMS.WebApp.ViewModels.ParcelViewModels;
 using Microsoft.AspNetCore.Authorization;
+using LIMS.Infrastructure.Services.Properties;
 
 namespace LIMS.WebApp.Controllers
 {
@@ -16,52 +17,31 @@ namespace LIMS.WebApp.Controllers
 	public class ParcelController : Controller
 	{
 		private readonly LIMSCoreDbContext _context;
+		private readonly IParcelService _parcelService;
 
-		public ParcelController(LIMSCoreDbContext context)
+		public ParcelController(LIMSCoreDbContext context, IParcelService parcelService)
 		{
 			_context = context;
+			_parcelService = parcelService;
 		}
 
-		// GET: Parcel
+		// GET: Parcels
 		public async Task<IActionResult> Index()
-		{
-			var LIMSCoreDbContext = _context.Parcel
-				.Include(p => p.Administration)
-				.Include(p => p.LandUse)
-				.Include(p => p.Owner)
-				.Include(p => p.OwnershipRight)
-				.Include(p => p.Rate)
-				.Include(p => p.Registration)
-				.Include(p => p.Responsibility)
-				.Include(p => p.Restriction)
-				.Include(p => p.SpatialUnit)
-				.Include(p => p.Tenure)
-				.Include(p => p.Valuation);
-
-			return View(await LIMSCoreDbContext.ToListAsync());
+		{		
+			return View(await _parcelService.GetParcels());
 		}
 
 		// GET: Parcel/Details/5
-		public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> Details(Guid? id)
 		{
+			//this check is not honest
 			if (id == null)
 			{
-				return NotFound();
+				return BadRequest();
 			}
 
-			var parcel = await _context.Parcel
-				.Include(p => p.Administration)
-				.Include(p => p.LandUse)
-				.Include(p => p.Owner)
-				.Include(p => p.OwnershipRight)
-				.Include(p => p.Rate)
-				.Include(p => p.Registration)
-				.Include(p => p.Responsibility)
-				.Include(p => p.Restriction)
-				.Include(p => p.SpatialUnit)
-				.Include(p => p.Tenure)
-				.Include(p => p.Valuation)
-				.FirstOrDefaultAsync(m => m.ParcelId == id);
+			var parcel = await _parcelService.GetParcel(id);
+
 			if (parcel == null)
 			{
 				return NotFound();
@@ -71,7 +51,7 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// GET: Parcel/Create
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		public IActionResult Create()
 		{
 			ViewData["AdministrationId"] = new SelectList(_context.Administration, "AdministrationId", "AdministrationId");
@@ -91,7 +71,7 @@ namespace LIMS.WebApp.Controllers
 		// POST: Parcel/Create
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("ParcelId,Area,ParcelNum,AdministrationId,LandUseId,OwnerId,OwnershipRightId,RateId,RegistrationId,ResponsibilityId,RestrictionId,SpatialUnitId,TenureId,ValuationId")] Parcel parcel)
@@ -117,12 +97,12 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// GET: Parcel/Edit/5
-		[Authorize(Roles = "Administrators")]
-		public async Task<IActionResult> Edit(int? id)
+		[Authorize(Roles = "Administrator")]
+		public async Task<IActionResult> Edit(Guid? id)
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return BadRequest();
 			}
 
 			var parcel = await _context.Parcel.FindAsync(id);
@@ -161,12 +141,42 @@ namespace LIMS.WebApp.Controllers
 				ParcelId = parcel.ParcelId,
 				ParcelNumber = parcel.ParcelNum,
 				Area = parcel.Area,
+
 				SelectedBlock = parcel.AdministrationId,
 				Blocks = Blocks,
+
 				SelectedDistrict = parcel.AdministrationId,
 				Districts = Districts,
+
 				SelectedLandUse = parcel.LandUseId,
 				LandUses = LandUses,
+
+				SelectedOwner = parcel.OwnerId,
+				Owners = Owners,
+
+				SelectedRight = parcel.OwnershipRightId,
+				Rights =Rights,
+
+				SelectedRate = parcel.RateId,
+				Rates = Rates,
+
+				SelectedRegistration = parcel.RegistrationId,
+				Registrations = Registrations,
+
+				SelectedResponsibility = parcel.ResponsibilityId,
+				Responsibilities = Responsibilities,
+
+				SelectedRestriction = parcel.RestrictionId,
+				Restrictions = Restrictions,
+
+				SelectedSpatialUnit = parcel.SpatialUnitId,
+				SpatialUnits = SpatialUnits,
+
+				SelectedTenure = parcel.TenureId,
+				Tenures = Tenures,
+
+				SelectedValuation = parcel.ValuationId,
+				Valuations = valuations
 
 
 			};
@@ -177,7 +187,7 @@ namespace LIMS.WebApp.Controllers
 		// POST: Parcel/Edit/5
 		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(ParcelEditViewModel parceledit)
@@ -229,12 +239,12 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// GET: Parcel/Delete/5
-		[Authorize(Roles = "Administrators")]
-		public async Task<IActionResult> Delete(int? id)
+		[Authorize(Roles = "Administrator")]
+		public async Task<IActionResult> Delete(Guid? id)
 		{
 			if (id == null)
 			{
-				return NotFound();
+				return BadRequest();
 			}
 
 			var parcel = await _context.Parcel
@@ -259,7 +269,7 @@ namespace LIMS.WebApp.Controllers
 		}
 
 		// POST: Parcel/Delete/5
-		[Authorize(Roles = "Administrators")]
+		[Authorize(Roles = "Administrator")]
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
@@ -270,7 +280,7 @@ namespace LIMS.WebApp.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		private bool ParcelExists(int id)
+		private bool ParcelExists(Guid id)
 		{
 			return _context.Parcel.Any(e => e.ParcelId == id);
 		}

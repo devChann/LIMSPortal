@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             Parcels = new HashSet<Parcel>();
         }
 
-        public int RateId { get; set; }
+        public Guid RateId { get; set; }
         public decimal? Amount { get; set; }
 
         public ICollection<Parcel> Parcels { get; set; }

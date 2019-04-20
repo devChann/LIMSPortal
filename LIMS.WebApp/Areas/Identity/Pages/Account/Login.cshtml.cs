@@ -106,16 +106,18 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                //Require the user to have a confirmed email before they can log on.
-                //var user = await _userManager.FindByNameAsync(Input.UserName);
-                //var roles = await _userManager.GetRolesAsync(user);
+				//Require the user to have a confirmed email before they can log on.
+				//var user = await _userManager.FindByNameAsync(Input.Email);
+				
 
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+				// This doesn't count login failures towards account lockout
+				// To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
 
-                //User can sign in by UserName or email
-                var userName = Input.Email;
+				//User can sign in by UserName or email
+				var userName = Input.Email;
+
+				IList<string> roles = new List<string>();
 
                 if (userName.IndexOf('@') > -1)
                 {
@@ -127,8 +129,9 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                       userName = user.UserName;
-                    }
+						userName = user.UserName;
+						roles = await _userManager.GetRolesAsync(user);
+					}
                 }
 
                 
@@ -139,32 +142,32 @@ namespace LIMS.WebApp.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation($"{User} logged in.");
                     return LocalRedirect(returnUrl);
                 }
 
-               
-                //if (result.Succeeded && roles.Contains("Admin"))
-                //{
-                //    _logger.LogInformation("User logged in.");
 
-                //    return RedirectToAction("AdminDashboard", "Account");
-                //}
+				if (result.Succeeded && roles.Contains("Administrator"))
+				{
+					_logger.LogInformation("User logged in.");
 
-                //if (result.Succeeded && roles.Contains("Surveyor"))
-                //{
-                //    _logger.LogInformation("User logged in.");
+					return RedirectToAction("AdminDashboard", "Account");
+				}
 
-                //    return RedirectToAction("Index", "Surveyor");
-                //}
+				//if (result.Succeeded && roles.Contains("Surveyor"))
+				//{
+				//    _logger.LogInformation("User logged in.");
 
-                //if (result.Succeeded)
-                //{
-                //    _logger.LogInformation("User logged in.");
-                //    return RedirectToAction("UserProfile", "Account");
-                //}
+				//    return RedirectToAction("Index", "Surveyor");
+				//}
 
-                if (result.RequiresTwoFactor)
+				//if (result.Succeeded)
+				//{
+				//    _logger.LogInformation("User logged in.");
+				//    return RedirectToAction("UserProfile", "Account");
+				//}
+
+				if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }

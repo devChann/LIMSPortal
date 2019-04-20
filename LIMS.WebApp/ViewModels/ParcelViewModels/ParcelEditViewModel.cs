@@ -11,7 +11,7 @@ namespace LIMS.WebApp.ViewModels.ParcelViewModels
 	public class ParcelEditViewModel
 	{
 
-		public int ParcelId { get; set; }
+		public Guid ParcelId { get; set; }
 
 		[Required]
 		[Display(Name = "Parcel Number")]
@@ -23,17 +23,65 @@ namespace LIMS.WebApp.ViewModels.ParcelViewModels
 
 		[Required]
 		[Display(Name = "District")]
-		public int SelectedDistrict { get; set; }
+		public Guid SelectedDistrict { get; set; }
 		public IEnumerable<SelectListItem> Districts { get; set; }
 
 		[Required]
 		[Display(Name = "Block")]
-		public int SelectedBlock { get; set; }
+		public Guid SelectedBlock { get; set; }
 		public IEnumerable<SelectListItem> Blocks { get; set; }		
 
 		[Required]
 		[Display(Name = "Land Use")]
-		public int SelectedLandUse { get; set; }
+		public Guid SelectedLandUse { get; set; }
 		public IEnumerable<SelectListItem> LandUses { get; set; }
+
+		[Required]
+		[Display(Name = "Owners")]
+		public Guid SelectedOwner { get; set; }
+		public IEnumerable<SelectListItem> Owners { get; set; }
+
+		[Required]
+		[Display(Name = "Rights")]
+		public Guid SelectedRight { get; set; }
+		public IEnumerable<SelectListItem> Rights { get; set; }
+
+		[Required]
+		[Display(Name = "Rates")]
+		public Guid SelectedRate{ get; set; }
+		public IEnumerable<SelectListItem> Rates { get; set; }
+
+		[Required]
+		[Display(Name = "Registrations")]
+		public Guid SelectedRegistration { get; set; }
+		public IEnumerable<SelectListItem> Registrations { get; set; }
+
+
+		[Required]
+		[Display(Name = "Responsibilities")]
+		public Guid SelectedResponsibility { get; set; }
+		public IEnumerable<SelectListItem> Responsibilities { get; set; }
+
+		[Required]
+		[Display(Name = "Restrictions")]
+		public Guid SelectedRestriction { get; set; }
+		public IEnumerable<SelectListItem> Restrictions { get; set; }
+
+		[Required]
+		[Display(Name = "SpatialUnits")]
+		public Guid SelectedSpatialUnit { get; set; }
+		public IEnumerable<SelectListItem> SpatialUnits { get; set; }
+
+		[Required]
+		[Display(Name = "Tenures")]
+		public Guid SelectedTenure { get; set; }
+		public IEnumerable<SelectListItem> Tenures { get; set; }
+
+
+		[Required]
+		[Display(Name = "Valuations")]
+		public Guid SelectedValuation { get; set; }
+		public IEnumerable<SelectListItem> Valuations { get; set; }
+
 	}
 }

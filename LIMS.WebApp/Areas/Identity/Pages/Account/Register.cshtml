@@ -5,110 +5,155 @@
 }
 
 
-<div class="row justify-content-center">
-	<div class="col-md-6">
-		<div class="card bg-light">
-			<div class="card-header text-center"><h4>Register</h4></div>
-			<div class="card-body text-center">
-				<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-					<div asp-validation-summary="All" class="alert-danger"></div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.FirstName"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.FirstName" class="form-control" />
-							<span asp-validation-for="Input.FirstName" class="alert-danger"></span>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.LastName"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.LastName" class="form-control" />
-							<span asp-validation-for="Input.LastName" class="alert-danger"></span>
-
-						</div>										
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.MiddleName"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.MiddleName" class="form-control" />
-							<span asp-validation-for="Input.MiddleName" class="alert-danger"></span>
-						</div>						
-						
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.UserName"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.UserName" class="form-control" />
-							<span asp-validation-for="Input.UserName" class="alert-danger"></span>
-						</div>					
-						
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.IDNumber"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.IDNumber" class="form-control" />
-							<span asp-validation-for="Input.IDNumber" class="alert-danger"></span>
-						</div>										
-						
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.KRAPIN"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.KRAPIN" class="form-control" />
-							<span asp-validation-for="Input.KRAPIN" class="alert-danger"></span>
-						</div>						
-						
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.Email"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.Email" class="form-control" />
-							<span asp-validation-for="Input.Email" class="alert-danger"></span>
-						</div>					
-						
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.PhoneNumber"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.PhoneNumber" class="form-control" />
-							<span asp-validation-for="Input.PhoneNumber" class="alert-danger"></span>
-						</div>						
-						
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.Password"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.Password" class="form-control" />
-							<span asp-validation-for="Input.Password" class="alert-danger"></span>
-						</div>						
-						
-					</div>
-
-					<div class="form-group row">
-						<label class="col-md-4 col-form-label text-md-right" asp-for="Input.ConfirmPassword"></label>
-						<div class="col-md-6">
-							<input asp-for="Input.ConfirmPassword" class="form-control" />
-							<span asp-validation-for="Input.ConfirmPassword" class="alert-danger"></span>
-						</div>						
-						
-					</div>
-
-					<button type="submit" class="btn btn-lg btn-info top5">Register</button>
-				</form>
-
+<section class="row justify-content-md-center">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title" id="horz-layout-colored-controls">Register</h4>
+				<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+				<div class="heading-elements">
+					<ul class="list-inline mb-0">						
+						<li><a data-action="expand"><i class="ft-maximize"></i></a></li>						
+					</ul>
+				</div>
 			</div>
+
+			<div class="card-content collapse show">
+				<div class="card-body">
+					<div class="card-text">
+						<p>Fill in form to register a new account.</p>
+					</div>
+
+					<form class="form form-horizontal" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+						<div class="form-body">
+							<div asp-validation-summary="All" class="alert-danger"></div>
+							@*<h4 class="form-section"><i class="fa fa-eye"></i> About User</h4>*@
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.FirstName"></label>
+										<div class="col-md-9">
+											<input type="text" asp-for="Input.FirstName" class="form-control" placeholder="First Name">
+											<span asp-validation-for="Input.FirstName" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.LastName"></label>
+										<div class="col-md-9">
+											<input type="text" asp-for="Input.LastName" class="form-control" placeholder="Last Name">
+											<span asp-validation-for="Input.LastName" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.MiddleName"></label>
+										<div class="col-md-9">
+											<input type="text" asp-for="Input.MiddleName" class="form-control" placeholder="Other Name">
+											<span asp-validation-for="Input.MiddleName" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.UserName"></label>
+										<div class="col-md-9">
+											<input type="text" asp-for="Input.UserName" class="form-control" placeholder="Username">
+											<span asp-validation-for="Input.UserName" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.Email"></label>
+										<div class="col-md-9">
+											<input type="email" asp-for="Input.Email" class="form-control" placeholder="Email">
+											<span asp-validation-for="Input.Email" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.PhoneNumber"></label>
+										<div class="col-md-9">
+											<input type="text" asp-for="Input.PhoneNumber" class="form-control" placeholder="Phone Number">
+											<span asp-validation-for="Input.PhoneNumber" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.IDNumber"></label>
+										<div class="col-md-9">
+											<input type="text" asp-for="Input.IDNumber" class="form-control" placeholder="Id Number">
+											<span asp-validation-for="Input.IDNumber" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.KRAPIN"></label>
+										<div class="col-md-9">
+											<input type="text" asp-for="Input.KRAPIN" class="form-control" placeholder="KRA PIN">
+											<span asp-validation-for="Input.KRAPIN" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.Password"></label>
+										<div class="col-md-9">
+											<input type="password" asp-for="Input.Password" class="form-control" placeholder="Password">
+											<span asp-validation-for="Input.Password" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-md-3 label-control" asp-for="Input.ConfirmPassword"></label>
+										<div class="col-md-9">
+											<input type="password" asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password">
+											<span asp-validation-for="Input.ConfirmPassword" class="alert-danger"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="form-actions right">
+							<button type="submit" class="btn btn-primary">
+								<i class="fa fa-check-square-o"></i> Register
+							</button>
+							
+						</div>
+						
+					</form>
+
+				</div>
+			</div>
+			
 		</div>		
 	</div>
-</div>
+</section>
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />

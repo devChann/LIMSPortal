@@ -11,8 +11,8 @@ namespace LIMS.WebApp.ViewModels.LIMSViewModels
     public class ParcelSearchViewModel
 
     {
-        public int ID { get; set; }
-        public int id1 { get; set; }
+        public Guid ID { get; set; }
+        public Guid id1 { get; set; }
 
         [Display(Name="Title Number")]
         public string ParcelNumber { get; set; }
@@ -49,7 +49,7 @@ namespace LIMS.WebApp.ViewModels.LIMSViewModels
         public decimal? Amount { get; set; }
         public string ModeOfPayment { get; set; }
         public DateTime? PaymentDate { get; set; }
-        public int Rateid { get; set; }
+        public Guid Rateid { get; set; }
         public string ReceiptNo { get; set; }
 
         public ICollection<Invoice> Invoices { get; set; }

@@ -1,5 +1,5 @@
 ﻿using LIMS.Infrastructure.Services.Notification;
-using LIMS.Infrastructure.Services.Property;
+using LIMS.Infrastructure.Services.Properties;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -22,14 +22,14 @@ namespace LIMS.WebApp.Hubs
 
 		public Task RegisterProduct(string query)
 		{
-			_parcelService.GetFilteredParcels(query);
-			return Clients.All.SendAsync("UpdateParcels", _parcelService.GetAllParcels());
+			_parcelService.GetParcelbyFilter(query);
+			return Clients.All.SendAsync("UpdateParcels", _parcelService.GetParcels());
 		}
 
 		public async Task SellProduct(string query)
 		{
-			_parcelService.GetFilteredParcels(query);
-			await Clients.All.SendAsync("UpdateParcels", _parcelService.GetAllParcels());
+			_parcelService.GetParcelbyFilter(query);
+			await Clients.All.SendAsync("UpdateParcels", _parcelService.GetParcels());
 		}
 
 

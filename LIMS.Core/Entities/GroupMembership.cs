@@ -11,7 +11,7 @@ namespace LIMS.Core.Entities
             PersonGroupMemberships = new HashSet<PersonGroupMembership>();
         }
 
-        public int Id { get; set; }
+        public Guid GroupMembershipId { get; set; }
         public double MembershipShare { get; set; }
         public DateTime MembershipSince { get; set; }
         public string MembershipStatus { get; set; }

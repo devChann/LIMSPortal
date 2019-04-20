@@ -7,10 +7,10 @@ namespace LIMS.Core.Entities
 	{
 		//public int PersonGroupLeadershipId { get; set; }
 
-		public int GroupLeadershipId { get; set; }       
+		public Guid GroupLeadershipId { get; set; }       
         public GroupLeadership GroupLeadership { get; set; }
 
-		public int PersonId { get; set; }
+		public Guid PersonId { get; set; }
 		public Person Person { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             SpatialUnits = new HashSet<SpatialUnit>();
         }
 
-        public int MapIndexId { get; set; }
+        public Guid MapIndexId { get; set; }
         public string MapSheetNum { get; set; }
        
 

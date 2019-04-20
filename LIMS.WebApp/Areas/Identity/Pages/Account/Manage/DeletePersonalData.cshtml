@@ -5,29 +5,54 @@
     ViewData["ActivePage"] = ManageNavPages.DeletePersonalData;
 }
 
-<h4>@ViewData["Title"]</h4>
 
-<div class="alert alert-warning" role="alert">
-    <p>
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-    </p>
-</div>
 
-<div>
-    <form method="post" class="form-group">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        @if (Model.RequirePassword)
-        {
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-        }       
-        <button class="btn btn-danger" type="submit">Delete data and close my account</button>
-    </form>
-</div>
+<section class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">@ViewData["Title"]</h4>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<div class="alert alert-warning" role="alert">
+						<p>
+							<i class="fa fa-warning"></i>
+							<strong>
+							Deleting this data will permanently remove your account, and this cannot be recovered.
+							</strong>
+						</p>
+					</div>
+
+					<div>
+						<form method="post" class="form-group">
+							<div asp-validation-summary="All" class="text-danger"></div>
+							@if (Model.RequirePassword)
+							{
+								<div class="form-group">
+									<label asp-for="Input.Password"></label>
+									<input asp-for="Input.Password" class="form-control" />
+									<span asp-validation-for="Input.Password" class="text-danger"></span>
+								</div>
+							}
+						<div class="form-actions right">
+							<button type="submit" class="btn btn-danger">
+								<i class="fa fa-exclamation-circle"></i> Delete data and close my account
+							</button>
+
+						</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

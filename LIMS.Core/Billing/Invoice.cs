@@ -12,46 +12,20 @@ namespace LIMS.Core.Billing
 	{
 		public Guid InvoiceId { get; set; }
 		public string InvoiceNumber { get; set; }
-		public double InvoiceAmount { get; set; } //should be generated yearly based on land rates		
-
-		public ICollection<Checkout> Checkouts { get; set; }
-
-		//[NotMapped]
-		//public string Status { get { return InvoiceStatus; } }
+		public decimal InvoiceAmount { get; set; } //should be generated yearly based on land rates	
 
 		public DateTime DateCreated { get; set; } = DateTime.Now;
 
 		public DateTime DateDue
 		{
-			get {
-				return Next4Months();
-			}
-			set {
-				var date = Next4Months();
-				date = value;
-			}
+			get => Next4Months();
+			set => _ = Next4Months();
 		}
 
-		public int ParcelId { get; set; }
+		public Guid ParcelId { get; set; }
 		public Parcel Parcel { get; set; }
 
 		public ICollection<Payment> Payments { get; set; }
-
-		//private double GetAmountPaid()
-		//{
-		//	if (Checkouts != null)
-		//	{
-		//		return Checkouts.Sum(x => x.AmountPaid);
-		//	}
-		//	else
-		//	{
-		//		return 0.0;
-		//	}
-
-		//}
-
-		//[NotMapped]
-		//private string InvoiceStatus => GetAmountPaid() < InvoiceAmount ? "Paid" : "Not Paid";
 
 		[NotMapped]
 		private DateTime DateGenerated => DateCreated;

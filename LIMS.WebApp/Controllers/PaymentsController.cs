@@ -242,18 +242,26 @@ namespace LIMS.WebApp.Controllers
 
 			//Get invoice and add a checkout			
 			var invoice = _limsDbcontext.Invoice
-				.Include(i => i.Checkouts)
+				.Include(i => i.Payments)
 				.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
 
 			var InvoiceCheckout = new Checkout {
 				CheckoutId = Guid.NewGuid(),
 				CheckoutDate = DateTime.Now,
-				CheckoutRequest = res.CheckoutRequestID,				
+				CheckoutRequestId = res.CheckoutRequestID,				
 			};
 
-			if(invoice != null)
-			{			
-				invoice.Checkouts.Add(InvoiceCheckout);	
+			var checkout = _limsDbcontext.Checkout.FirstOrDefaultAsync(i => i.CheckoutId == InvoiceCheckout.CheckoutId);
+
+			
+
+			if(invoice != null )
+			{
+				if (_limsDbcontext.Checkout.Any(a => a.CheckoutId != InvoiceCheckout.CheckoutId))
+				{
+					_limsDbcontext.Checkout.Add(InvoiceCheckout);
+				}
+					
 				_limsDbcontext.SaveChanges();
 			}
 			

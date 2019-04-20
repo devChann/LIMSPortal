@@ -10,7 +10,7 @@ namespace LIMS.Core.Entities
             LandUses = new HashSet<LandUse>();
         }
 
-        public int ZoneId { get; set; }        
+        public Guid ZoneId { get; set; }        
         public string ZoneType { get; set; }		
 
 		public ICollection<LandUse> LandUses { get; set; }

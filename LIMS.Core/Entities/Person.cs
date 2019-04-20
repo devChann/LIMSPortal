@@ -12,14 +12,14 @@ namespace LIMS.Core.Entities
             PersonGroupMemberships = new HashSet<PersonGroupMembership>();
         }
 
-        public int PersonId { get; set; }
+        public Guid PersonId { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }       
         public string PersonType { get; set; }
         public string Phone { get; set; }
         public string PIN { get; set; }
 
-		public int OwnerId { get; set; }
+		public Guid OwnerId { get; set; }
 		public Owner Owner { get; set; }
 
         public ICollection<PersonGroupLeadership> PersonGroupLeaderships { get; set; }
