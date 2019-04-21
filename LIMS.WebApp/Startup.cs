@@ -48,12 +48,12 @@ namespace LIMS.WebApp
 
 			services.AddCors();
 
-			//services.AddControllersWithViews()
-			//   .AddNewtonsoftJson();
+			services.AddControllersWithViews()
+			   .AddNewtonsoftJson();
 
-			//services.AddRazorPages();
+			services.AddRazorPages();
 
-			services.AddMvc().AddNewtonsoftJson();
+			//services.AddMvc().AddNewtonsoftJson();
 
 			services.AddSignalR();	
 
@@ -98,19 +98,19 @@ namespace LIMS.WebApp
 			});
 
 
-			//app.UseRouting();			
+			app.UseRouting();
 
-			//app.UseEndpoints(endpoints =>
-			//{
-			//	endpoints.MapControllerRoute(
-			//		name: "default",
-			//		pattern: "{controller=Home}/{action=Index}/{id?}");
-			//	endpoints.MapRazorPages();
-			//});
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllerRoute(
+					name: "default",
+					pattern: "{controller=Home}/{action=Index}/{id?}");
+				endpoints.MapRazorPages();
+			});
 
-			app.UseMvcWithDefaultRoute();
-       
-        }
+			//app.UseMvcWithDefaultRoute();
+
+		}
 
     }
 }
