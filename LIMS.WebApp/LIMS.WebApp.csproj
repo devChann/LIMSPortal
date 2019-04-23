@@ -152,10 +152,6 @@
 </ItemGroup>
 
 <ItemGroup>
-		<None Include="appsettings.production.json" CopyToPublishDirectory="Always" />
-</ItemGroup>
-
-<ItemGroup>
   <None Update="App_Data\LIMSCore.db">
     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
   </None>
