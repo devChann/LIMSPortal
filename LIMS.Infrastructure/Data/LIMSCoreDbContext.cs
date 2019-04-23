@@ -10,10 +10,6 @@ namespace LIMS.Infrastructure.Data
 {
     public partial class LIMSCoreDbContext : IdentityDbContext<ApplicationUser>
 	{
-        public LIMSCoreDbContext()
-        {
-        }
-
         public LIMSCoreDbContext(DbContextOptions<LIMSCoreDbContext> options)
             : base(options)
         {
@@ -110,6 +106,7 @@ namespace LIMS.Infrastructure.Data
 
 			modelBuilder.Entity<Invoice>(entity =>
 			{
+				entity.Property(p => p.InvoiceAmount).HasColumnType("decimal(9,2)");
 				entity.HasOne(k => k.Parcel);
 				entity.HasMany(p => p.Payments);
 
@@ -121,7 +118,7 @@ namespace LIMS.Infrastructure.Data
 			
 			modelBuilder.Entity<Beacon>(entity =>
             {
-                entity.Property(e => e.DateSet).HasDefaultValueSql("(getdate())");               
+                //entity.Property(e => e.DateSet).HasDefaultValueSql("(getdate())");               
             });
 
 			modelBuilder.Entity<BoundaryBeacon>(entity =>
@@ -147,14 +144,12 @@ namespace LIMS.Infrastructure.Data
 
             modelBuilder.Entity<BuildingRegulation>(entity =>
             {
-                entity.Property(e => e.GCR).HasColumnName("GCR");
-
-                entity.Property(e => e.PCR).HasColumnName("PCR");
+               
             });
 
             modelBuilder.Entity<Charge>(entity =>
             {
-                entity.Property(e => e.Lender).HasColumnName("lender");
+                //entity.Property(e => e.Lender).HasColumnName("lender");
             });
 
             
@@ -177,11 +172,11 @@ namespace LIMS.Infrastructure.Data
 
 			modelBuilder.Entity<GroupLeadership>(entity =>
             {
-                entity.Property(e => e.LeadershipSince).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.LeadershipSince).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.LeadershipUntil).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.LeadershipUntil).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.PersonId).HasColumnName("PersonId");
+                //entity.Property(e => e.PersonId).HasColumnName("PersonId");
             });
 
 			modelBuilder.Entity<PersonGroupLeadership>(entity =>
@@ -194,22 +189,22 @@ namespace LIMS.Infrastructure.Data
 
 			modelBuilder.Entity<GroupMembership>(entity =>
             {
-                entity.Property(e => e.MembershipSince).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.MembershipSince).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.MembershipUntil).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.MembershipUntil).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<Group>(entity =>
             {
-                entity.ToTable("Group");
+                //entity.ToTable("Group");
                 entity.HasIndex(e => e.OwnerId);              
             });
 
             modelBuilder.Entity<InsitutionLeadership>(entity =>
             {
-                entity.Property(e => e.MemberSince).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.MemberSince).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.MemberUntil).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.MemberUntil).HasDefaultValueSql("(getdate())");
             });
 
 			modelBuilder.Entity<InstitutionInstitutionLeadership>(entity =>
@@ -241,9 +236,9 @@ namespace LIMS.Infrastructure.Data
 
                 entity.HasIndex(e => e.ZoneId);
 
-                entity.Property(e => e.EndDate).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.EndDate).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.StartDate).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.StartDate).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.BuildingRegulation)
                     .WithMany(p => p.LandUses)
@@ -269,7 +264,7 @@ namespace LIMS.Infrastructure.Data
 
             modelBuilder.Entity<Owner>(entity =>
             {
-                entity.Property(e => e.PIN).HasColumnName("PIN");
+                //entity.Property(e => e.PIN).HasColumnName("PIN");
             });
 
             modelBuilder.Entity<Parcel>(entity =>
@@ -335,7 +330,7 @@ namespace LIMS.Infrastructure.Data
 
             modelBuilder.Entity<Registration>(entity =>
             {
-                entity.Property(e => e.RegistrationDate).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.RegistrationDate).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<Restriction>(entity =>
@@ -348,11 +343,11 @@ namespace LIMS.Infrastructure.Data
 
                 entity.HasIndex(e => e.StatutoryRestrictionId);
 
-                entity.Property(e => e.ChargeId).HasColumnName("ChargeId");               
+                //entity.Property(e => e.ChargeId).HasColumnName("ChargeId");               
 
-                entity.Property(e => e.MortgageId).HasColumnName("MortgageId");
+                //entity.Property(e => e.MortgageId).HasColumnName("MortgageId");
 
-                entity.Property(e => e.ReserveId).HasColumnName("ReserveId");
+                //entity.Property(e => e.ReserveId).HasColumnName("ReserveId");
 
                 entity.HasOne(d => d.Charge)
                     .WithMany(p => p.Restrictions)
@@ -381,9 +376,9 @@ namespace LIMS.Infrastructure.Data
 
                 entity.Property(e => e.ServiceId).ValueGeneratedNever();
 
-                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+                //entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
-                entity.Property(e => e.OperationId).HasColumnName("OperationId");
+                //entity.Property(e => e.OperationId).HasColumnName("OperationId");
 
                 entity.HasOne(d => d.Operation)
                     .WithMany(p => p.Services)
@@ -437,14 +432,14 @@ namespace LIMS.Infrastructure.Data
 
 			modelBuilder.Entity<Survey>(entity =>
             {
-                entity.Property(e => e.DateOfEntry).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.DateOfEntry).HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.PdpRefNo).HasColumnName("PDPRefNo");
+                //entity.Property(e => e.PdpRefNo).HasColumnName("PDPRefNo");
             });
 
             modelBuilder.Entity<Valuation>(entity =>
             {
-                entity.Property(e => e.ValuationDate).HasDefaultValueSql("(getdate())");
+                //entity.Property(e => e.ValuationDate).HasDefaultValueSql("(getdate())");
             });
 		
         }
@@ -452,6 +447,12 @@ namespace LIMS.Infrastructure.Data
 		public static void SeedData(LIMSCoreDbContext context)
 		{
 			context.Database.Migrate();
+		}
+
+		public override int SaveChanges()
+		{
+			ChangeTracker.DetectChanges();
+			return base.SaveChanges();
 		}
 	}
 }
