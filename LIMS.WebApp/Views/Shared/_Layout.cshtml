@@ -193,7 +193,7 @@
 				@if (SignInManager.IsSignedIn(User))
 				{
 					<li class=" nav-item">
-						<a asp-page="/admin/dashboard"><i class="ft-bar-chart-2"></i><span class="menu-title" data-i18n="">Admin Dashboard</span></a>
+						<a asp-area="Admin" asp-page="/dashboard"><i class="ft-bar-chart-2"></i><span class="menu-title" data-i18n="">Admin Dashboard</span></a>
 					</li>
 
 					<li class=" nav-item">
@@ -287,12 +287,16 @@
 	</footer>
 	<!-- END: Footer-->
 	<!-- BEGIN: Vendor JS-->
-	<script src="../../../lims-assets/vendors/js/vendors.min.js"></script>
+	
+	<script src="~/lims-assets/vendors/js/vendors.min.js"></script>
 	<!-- BEGIN Vendor JS-->
 	<!-- BEGIN: Theme JS-->
-	<script src="../../../lims-assets/js/core/app-menu.js"></script>
-	<script src="../../../lims-assets/js/core/app.js"></script>
-	<script src="../../../lims-assets/js/scripts/customizer.js"></script>
+	
+	<script src="~/lims-assets/js/core/app-menu.js"></script>
+	
+	<script src="~/lims-assets/js/core/app.js"></script>
+
+	<script src="~/lims-assets/js/scripts/customizer.js"></script>
 	<!-- END: Theme JS-->
 
 
