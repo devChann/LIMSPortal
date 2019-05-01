@@ -54,16 +54,25 @@ namespace LIMS.WebApp.Controllers
 		[Authorize(Roles = "Administrator")]
 		public IActionResult Create()
 		{
-			ViewData["AdministrationId"] = new SelectList(_context.Administration, "AdministrationId", "AdministrationId");
-			ViewData["LandUseId"] = new SelectList(_context.LandUse, "LandUseId", "LandUseId");
-			ViewData["OwnerId"] = new SelectList(_context.Owner, "OwnerId", "OwnerId");
-			ViewData["OwnershipRightId"] = new SelectList(_context.OwnershipRight, "OwnershipRightId", "OwnershipRightId");
-			ViewData["RateId"] = new SelectList(_context.Rate, "RateId", "RateId");
-			ViewData["RegistrationId"] = new SelectList(_context.Registration, "RegistrationId", "RegistrationId");
-			ViewData["ResponsibilityId"] = new SelectList(_context.Responsibility, "ResponsibilityId", "ResponsibilityId");
-			ViewData["RestrictionId"] = new SelectList(_context.Restriction, "RestrictionId", "RestrictionId");
+			ViewData["AdministrationId"] = new SelectList(_context.Administration, "AdministrationId", "BlockName");
+
+			ViewData["LandUseId"] = new SelectList(_context.LandUse, "LandUseId", "LandUseType");
+
+			ViewData["OwnerId"] = new SelectList(_context.Owner, "OwnerId", "PIN");
+
+			ViewData["OwnershipRightId"] = new SelectList(_context.OwnershipRight, "OwnershipRightId", "RightType");
+
+			ViewData["RateId"] = new SelectList(_context.Rate, "RateId", "Amount");
+			ViewData["RegistrationId"] = new SelectList(_context.Registration, "RegistrationId", "Jurisdiction");
+
+			ViewData["ResponsibilityId"] = new SelectList(_context.Responsibility, "ResponsibilityId", "ResponsibilityType");
+
+			ViewData["RestrictionId"] = new SelectList(_context.Restriction, "RestrictionId", "RestrictionType");
+
 			ViewData["SpatialUnitId"] = new SelectList(_context.SpatialUnit, "SpatialUnitId", "SpatialUnitId");
-			ViewData["TenureId"] = new SelectList(_context.Tenure, "TenureId", "TenureId");
+
+			ViewData["TenureId"] = new SelectList(_context.Parcel, "TenureId", "TenureType");
+
 			ViewData["ValuationId"] = new SelectList(_context.Valuation, "ValuationId", "ValuationId");
 			return View();
 		}
@@ -91,7 +100,7 @@ namespace LIMS.WebApp.Controllers
 			ViewData["ResponsibilityId"] = new SelectList(_context.Responsibility, "ResponsibilityId", "ResponsibilityId", parcel.ResponsibilityId);
 			ViewData["RestrictionId"] = new SelectList(_context.Restriction, "RestrictionId", "RestrictionId", parcel.RestrictionId);
 			ViewData["SpatialUnitId"] = new SelectList(_context.SpatialUnit, "SpatialUnitId", "SpatialUnitId", parcel.SpatialUnitId);
-			ViewData["TenureId"] = new SelectList(_context.Tenure, "TenureId", "TenureId", parcel.TenureId);
+			ViewData["TenureId"] = new SelectList(_context.Parcel, "TenureId", "TenureId", parcel.TenureId);
 			ViewData["ValuationId"] = new SelectList(_context.Valuation, "ValuationId", "ValuationId", parcel.ValuationId);
 			return View(parcel);
 		}
@@ -132,7 +141,7 @@ namespace LIMS.WebApp.Controllers
 
 			var SpatialUnits = new SelectList(_context.SpatialUnit, "SpatialUnitId", "SpatialUnitId", parcel.SpatialUnitId);
 
-			var Tenures = new SelectList(_context.Tenure, "TenureId", "TenureId", parcel.TenureId);
+			var Tenures = new SelectList(_context.Parcel, "TenureId", "TenureId", parcel.TenureId);
 
 			var valuations = new SelectList(_context.Valuation, "ValuationId", "ValuationId", parcel.ValuationId);
 

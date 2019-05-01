@@ -204,22 +204,20 @@
 						<ul class="menu-content">
 
 							<li>
-								<a class="menu-item" href="#">Property Manager</a>
+								<a class="menu-item" href="#">Manage Land Parcels</a>
 								<ul class="menu-content">
 									<li>
-										<a class="menu-item" asp-controller="Parcel" asp-action="Index">Property List</a>
+										<a class="menu-item" asp-area="" asp-page="/landparcel/index">Parcels List</a>
 									</li>
 									<li>
-										<a class="menu-item" href="#">Register Property</a>
+										<a class="menu-item" asp-area="" asp-page="/landparcel/create">Register Land Parcel</a>
 									</li>
-									<li>
-										<a class="menu-item" href="#">Update Property</a>
-									</li>
+									
 								</ul>
 							</li>
 
 							<li>
-								<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.main">Ownership</a>
+								<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.main">Manage Land Ownership</a>
 								<ul class="menu-content">
 									<li>
 										<a class="menu-item" href="#" data-i18n="nav.starter_kit.3_columns_detached.3_columns_detached_left_sidebar">Register Party</a>
