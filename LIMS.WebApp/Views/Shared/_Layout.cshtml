@@ -38,9 +38,11 @@
 	<!-- BEGIN: Page CSS-->
 	<link rel="stylesheet" type="text/css" href="../../../lims-assets/css/core/menu/menu-types/vertical-menu.css">
 	<link rel="stylesheet" type="text/css" href="../../../lims-assets/css/core/colors/palette-gradient.css">
+	<link rel="stylesheet" type="text/css" href="../../../lims-assets/css/plugins/forms/wizard.css">
 	<!-- END: Page CSS-->
 	<!-- BEGIN: Custom CSS-->
 	<link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+	<link href="~/css/site.css" rel="stylesheet" />
 	<!-- END: Custom CSS-->
 
 </head>
@@ -78,7 +80,7 @@
 
 						<ul class="nav navbar-nav float-right">
 
-							<li class="dropdown dropdown-notification nav-item">
+							@*<li class="dropdown dropdown-notification nav-item">
 								<a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-bell"></i><span class="badge badge-pill badge-danger badge-up">5</span></a>
 								<ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
 									<li class="dropdown-menu-header">
@@ -137,7 +139,7 @@
 									</li>
 									<li class="dropdown-menu-footer"><a class="dropdown-item text-muted text-center" href="javascript:void(0)">Read all notifications</a></li>
 								</ul>
-							</li>
+							</li>*@
 
 							<li class="dropdown dropdown-user nav-item">
 								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="avatar avatar-online"><img asp-controller="Photo" asp-action="Index" src="~/photo" class="img-fluid" alt="avatar" /><i></i></span><span class="user-name">@username </span></a>
@@ -147,7 +149,7 @@
 										<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" title="Manage Account">
 											<i class="fa fa-user-circle" aria-hidden="true"></i> Manage Account
 										</a>
-										<a class="dropdown-item" href="#"><i class="fa fa-envelope"></i> My Inbox</a>
+										<a class="dropdown-item" href="#"><i class="fa fa-envelope"></i> My Inbox <span class="badge badge-pill badge-danger">3</span></a>
 										<div class="dropdown-divider"></div>
 
 										<button type="submit" class="dropdown-item"><i class="ft-power" aria-hidden="true"></i> Logout </button>
@@ -198,7 +200,7 @@
 					</li>
 
 					<li class=" nav-item">
-						<a asp-area="" asp-page="/user-dashboard"><i class="ft-bar-chart-2"></i><span class="menu-title" data-i18n="">My Dashboard</span></a>
+						<a asp-controller="Properties" asp-action="Index"><i class="ft-bar-chart-2"></i><span class="menu-title" data-i18n="">My Dashboard</span></a>
 					</li>
 
 					<li class=" nav-item">
@@ -245,6 +247,19 @@
 							<li>
 								<a class="menu-item" asp-area="Identity" asp-page="/UserAdmin/Index">Manage Users</a>
 							</li>
+							
+
+							<li>
+								<a class="menu-item" href="#">Make Application</a>
+								<ul class="menu-content">
+									<li>
+										<a class="menu-item" asp-area="" asp-page="/Workflows/Lease/Index">Lease Extention</a>
+									</li>
+									<li>
+										<a class="menu-item"  asp-page="/Workflows/Allocation/Index">Land Allocation</a>
+									</li>
+								</ul>
+							</li>
 
 							<li class="navigation-divider"></li>
 							<li>
@@ -265,9 +280,9 @@
 
 			</ul>
 
-			
+
 		</div>
-		
+
 		<!-- /main menu content-->
 		<!-- main menu footer-->@*<i class="fas fa-user-secret"></i>*@
 		<!-- main menu footer-->
@@ -276,16 +291,15 @@
 	<!-- END: Main Menu-->
 	<!-- BEGIN: Content-->
 	<div class="app-content content">
+
+		<span class="nav-item float-left d-none d-md-block mt-2">
+			<a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#">
+				@*<i class="ft-menu"></i>*@
+				<i class="fa fa-bars"></i>
+			</a>
+		</span>
+
 		<div class="content-wrapper">
-
-			@*<div class="nav navbar-nav mr-auto float-left">*@
-			<span class="nav-item float-left d-none d-md-block">
-				<a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#">
-					<i class="ft-menu"></i>
-				</a>
-			</span>
-			@*</div>*@
-
 			<div class="content-body">
 				@RenderBody()
 			</div>
@@ -302,15 +316,12 @@
 	</footer>
 	<!-- END: Footer-->
 	<!-- BEGIN: Vendor JS-->
-
 	<script src="~/lims-assets/vendors/js/vendors.min.js"></script>
+	<script src="~/lims-assets/vendors/js/extensions/jquery.steps.min.js"></script>
 	<!-- BEGIN Vendor JS-->
 	<!-- BEGIN: Theme JS-->
-
 	<script src="~/lims-assets/js/core/app-menu.js"></script>
-
 	<script src="~/lims-assets/js/core/app.js"></script>
-
 	<script src="~/lims-assets/js/scripts/customizer.js"></script>
 	<!-- END: Theme JS-->
 
