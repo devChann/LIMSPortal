@@ -71,44 +71,37 @@ namespace LIMS.WebApp
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-				//app.UseDatabaseErrorPage();
+                app.UseDeveloperExceptionPage();				
 			}
             else
             {              				
                 app.UseExceptionHandler("/Home/Error");             
             }
 
-			app.ConfigureSecurityHeaders();
-
+			
 			app.UseStatusCodePagesWithReExecute("/Error", "?statusCode={0}");      
           
             app.UseStaticFiles();
 
-            app.UseFileServer();
-
-			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager, Configuration);
-
-			authenticationTask.GetAwaiter().GetResult();
-
-			//use local signalR service
-			app.UseSignalR(routes =>
-			{
-				routes.MapHub<PaymentsHub>("/Payments");
-			});
-
+            app.UseFileServer();		
 
 			app.UseRouting();
 
+			var authenticationTask = app.ConfigureAuthentication(userManager, roleManager, Configuration);
+			authenticationTask.GetAwaiter().GetResult();
+			app.ConfigureSecurityHeaders();
+
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapHub<PaymentsHub>("/Payments"); //signalr
+
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
+
 				endpoints.MapRazorPages();
 			});
-
-			//app.UseMvcWithDefaultRoute();
+			
 
 		}
 
