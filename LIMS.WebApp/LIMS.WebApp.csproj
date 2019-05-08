@@ -22,12 +22,20 @@
 
 
   <ItemGroup>
+    <Compile Remove="Pages\Ownership\**" />
+    <Compile Remove="Pages\Rights\**" />
     <Compile Remove="wwwroot\fonts\**" />
     <Compile Remove="wwwroot\lims-assets\images\pages\**" />
+    <Content Remove="Pages\Ownership\**" />
+    <Content Remove="Pages\Rights\**" />
     <Content Remove="wwwroot\fonts\**" />
     <Content Remove="wwwroot\lims-assets\images\pages\**" />
+    <EmbeddedResource Remove="Pages\Ownership\**" />
+    <EmbeddedResource Remove="Pages\Rights\**" />
     <EmbeddedResource Remove="wwwroot\fonts\**" />
     <EmbeddedResource Remove="wwwroot\lims-assets\images\pages\**" />
+    <None Remove="Pages\Ownership\**" />
+    <None Remove="Pages\Rights\**" />
     <None Remove="wwwroot\fonts\**" />
     <None Remove="wwwroot\lims-assets\images\pages\**" />
   </ItemGroup>
@@ -74,8 +82,6 @@
 <ItemGroup>
   <Folder Include="App_Data\" />
   <Folder Include="Logs\Temp\" />
-  <Folder Include="Pages\Rights\" />
-  <Folder Include="Pages\Ownership\" />
   <Folder Include="Properties\PublishProfiles\" />
   <Folder Include="wwwroot\lib\bootstrap\" />
   <Folder Include="wwwroot\lims-assets\images\logo\" />
