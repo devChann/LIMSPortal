@@ -1,0 +1,39 @@
+﻿@page
+@model EditModel
+@{
+}
+
+<div>
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a asp-controller="Home" asp-action="Index">Parcels</a>
+		</li>
+		<li class="breadcrumb-item active">Edit-Parcel</li>
+	</ol>
+</div>
+
+<section class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">Edit Parcel</h4>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<form method="post">
+
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+@section Scripts{
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

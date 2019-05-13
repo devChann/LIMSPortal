@@ -48,12 +48,9 @@ namespace LIMS.WebApp
 
 			services.AddCors();
 
-			services.AddControllersWithViews();
-			  // .AddNewtonsoftJson();
+			services.AddControllersWithViews().AddNewtonsoftJson();
 
-			services.AddRazorPages();
-
-			//services.AddMvc().AddNewtonsoftJson();
+			services.AddRazorPages();			
 
 			services.AddSignalR();	
 
